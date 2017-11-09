@@ -1,6 +1,11 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">My Personnal inventory</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="liste1">Liste 1</string>
+    <string name="liste2">Liste 2</string>
+    <string name="liste3">Liste 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
