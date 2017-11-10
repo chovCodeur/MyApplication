@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.michelparis.myapplication.ModifierPersonne">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarMesInfos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:title="Mes Infos" />
+
+    <EditText
+        android:id="@+id/editNom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:text="Nom" />
+
+    <EditText
+        android:id="@+id/editPrenom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:text="Prenom" />
+    <!--EditText
+        android:id="@+id/editText5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date"
+        android:textAlignment="center"
+        android:text="Date" /-->
+    <DatePicker
+        android:id="@+id/dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:layout_marginLeft="75dp"
+        android:layout_marginRight="75dp"
+        android:datePickerMode="spinner" />
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:textAlignment="center"
+        android:text="Adresse mail" />
+    <EditText
+        android:id="@+id/editAdresse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPostalAddress"
+        android:textAlignment="center"
+        android:text="Adresse Postale" />
+
+    <EditText
+        android:id="@+id/editTelephone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textAlignment="center"
+        android:inputType="phone"
+        android:text="Téléphone" />
+
+    <Button
+        android:id="@+id/buttonAjoutInfos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="130dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginTop="30dp"
+        android:layout_weight="0.09"
+        android:text="Ajouter" />
+
+
+</LinearLayout>

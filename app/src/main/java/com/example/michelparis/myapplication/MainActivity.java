@@ -15,7 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class
+MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
 
-        myToolbar.setTitle("");
+        myToolbar.setTitle("typuo");
         setSupportActionBar(myToolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

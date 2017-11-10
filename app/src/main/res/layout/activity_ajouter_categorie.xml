@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.michelparis.myapplication.AjouterCategorie"
+    android:weightSum="1">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarCategorie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:title="Nouvelle Catégorie" />
+
+    <EditText
+        android:id="@+id/editCategorie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.08"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_marginTop="25dp"
+        android:text="Nom"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/editDescriptif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.08"
+        android:inputType="textPersonName"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:text="Descriptif"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/buttonAjoutCategorie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.09"
+        android:layout_marginLeft="130dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginTop="300dp"
+        android:text="Ajouter" />
+
+
+</LinearLayout>

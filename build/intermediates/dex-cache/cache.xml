@@ -3,21 +3,156 @@
 
     <item
         is-multidex="true"
-        jar="/Users/rodnor/Documents/MASI/Applications_mobiles/AndroidGroupe/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jar="C:\Users\TANGUY\.android\build-cache\878b5dfed83d0b24521899942172096b64d6a7e2\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="26.0.2"
-        sha1="cc10fdce0d19692bdf31b935c0f96938b11c349c">
-        <dex dex="/Users/rodnor/Documents/MASI/Applications_mobiles/AndroidGroupe/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_38daa26f1a5c851fde47759aeefaf438be967a0a/classes.dex" />
+        sha1="8df0e365e40beb151bc42dee20817721a6cab7b0">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f6c6e12770ffe8ea6545ef779bd0fab4c2b30b65\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/rodnor/Documents/MASI/Applications_mobiles/AndroidGroupe/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="C:\Users\TANGUY\.android\build-cache\9fb2b907e61dd74f735b9506593ae38a7abf8e71\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="2e92aa0163544a804a0b34f169ca61801770839a">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f68a395d864ad7739cbb4ecde432afc32f9a8909\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\.android\build-cache\4cc12027116a6c44653f041c1fb8a1f4c0671db2\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="fcd01fd11233459f546c437ec927e9b61bf7caf1">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b37cce4747b253095b00f157cc2f319d19dd8782\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\.android\build-cache\3de2b1440ddba769bd1b40cb0fd2f7a75ec2c9c0\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="88246166d5afb106f532f6e6deae683c66b42c89">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_175fd8ec8385162ca8f3eada78e25ca87ff10d13\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\.android\build-cache\e4d5ae5428e7c01c239b12bf95ecfebaa071236d\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9f3e6bcbcabebf435087e743bc35bc0a06454da7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\.android\build-cache\aed3a30e518d5c82e0c578899f7752d8e37ceb83\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="cddcd0fb93bc70e27325f2f715b2710332004ebb">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_18d59ffac002493fe078acd0432ff5820a172158\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\.android\build-cache\9628b082627f900d09953079eba400dff69499ce\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_56d635fbabdc73a63e76b29085f9ce4eb4bb1877\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\26.0.0-alpha1\support-annotations-26.0.0-alpha1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="023ee503b631f69511e335a061ea008f8da60f40">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-26.0.0-alpha1_354c558c2b129760957ef25d9ccdf26e2eeeabcb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\.android\build-cache\5c74397fa6333b9efc822a91190a3f491866506d\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="47471eb19df288158b00b8d9cfa41bce7373f5cc">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b8471640a1fbba4952790fd421172e4e04215d47\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\.android\build-cache\14b3189e15b9970dcbf03e93bd6a71a5571bc2a4\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="9935891f23923f39d002087085d9696568a9f657">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_c3a0d3f2a6513b3ce3d0428a28e653b43b04fa0e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\.android\build-cache\09d7646c6e199086b1f1bbfcbf78d89075f4ddf8\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="6a022bf00ccd0948a8180c505e8e458bbddd43a6">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a9fd73a76800d56e1035dadc54841888a6279cc0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="26.0.2"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="/Users/rodnor/Documents/MASI/Applications_mobiles/AndroidGroupe/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_f313b742f1c871e436c5c9f7beda1548b1cf1dc6/classes.dex" />
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_32aed4362e07eed768726fbc5d7dc1ab0ff3cffa\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\.android\build-cache\cfe1a7a4845391e23bc1433dd0f1175a710cd1bb\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="952944218ecedea1554a513dec0c14d570642843">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f86c9f459123da02a7b025cca99b3db4486f7c76\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="0ece0a288b37193db8cc6926c7c5781d644dc747">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_e803aecb20cc8487c1a41899860bc84e70df227b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\constraint-layout-solver-1.0.2_0f545748dd90cbe1a74506ec4e1735e2dfc93da5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\.android\build-cache\1b058bfe8279672796e1ebe50923d7f47b7a307a\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="18d31838aa4fcc768a8a0516e22cc13b94655d89">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_0fa046c9d213031287ea2aa7859391e3745c7b55\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\TANGUY\.android\build-cache\2a51e12232dec1d41d6b9544d2e5b66208a1e38f\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="c4f45092eee6cdf1a5dbd597b2b6819be652ce2e">
+        <dex dex="C:\Users\TANGUY\Desktop\MASI 2017-2018\SE Mobile Android\MyApplication\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_1558edbd84d45f8875b4940d67521fc97e5aca7b\classes.dex" />
     </item>
 
 </items>
