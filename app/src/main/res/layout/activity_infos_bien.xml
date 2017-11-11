@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/photoPrincipaleBien"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/bibi300" />
+
+    <TextView
+        android:id="@+id/nomBien"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:text="Nom du bien"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/categorieBien"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="24sp"
+        tools:text="Catégorie du bien"
+        android:layout_below="@+id/nomBien"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/informationsBien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Informations sur le bien"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="30sp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/descriptionBien"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:text="Ceci est la description du bien de l'utilisateur de cette application."
+        android:layout_below="@+id/categorieBien"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/commentairesBien"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Cette zone est réservée à d'éventuels commentaires concernant l'objet saisi par son propriétaire."
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/commentairesBien"
+        android:layout_alignParentStart="true"
+        android:text="Commentaires :"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/informationsBien"
+        android:layout_marginTop="14dp"
+        android:text="Listes d'appartenance :"
+        android:textSize="18sp"
+        android:id="@+id/textViewListesBien" />
+
+    <Spinner
+        android:id="@+id/spinnerListesAppartenanceBien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewListesBien"
+        android:dropDownWidth="match_parent" />
+
+    <TextView
+        android:id="@+id/dateAcquisitionBien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date d'acquisition : "
+        android:textSize="18sp"
+        android:layout_below="@+id/spinnerListesAppartenanceBien"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/numeroSerieBien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/prixBien"
+        android:layout_marginTop="10dp"
+        android:text="Numéro de série : "
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/prixBien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/dateSaisieBien"
+        android:layout_marginTop="12dp"
+        android:text="Prix du bien : "
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/dateSaisieBien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/dateAcquisitionBien"
+        android:layout_marginTop="12dp"
+        android:text="Date de saisie : "
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/Photo3Bien"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/bibi300"
+        android:layout_alignTop="@+id/Photo2Bien"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:id="@+id/Photo2Bien"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/bibi300"
+        android:layout_below="@+id/photoPrincipaleBien"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/Photo1Bien"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/photoPrincipaleBien"
+        app:srcCompat="@drawable/bibi300" />
+
+    <Button
+        android:id="@+id/buttonFactureBien"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="Afficher la facture"
+        android:layout_below="@+id/descriptionBien"
+        android:layout_alignStart="@+id/descriptionBien"
+        android:layout_marginStart="21dp" />
+
+</RelativeLayout>
