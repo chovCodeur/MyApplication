@@ -86,6 +86,9 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         return true;
     }
 
-    // Mi PA com
+    public void testAfficherBien(View view){
+        Intent testAfficherBien = new Intent(this, InfosBien.class);
+        startActivity(testAfficherBien);
+    }
 
 }

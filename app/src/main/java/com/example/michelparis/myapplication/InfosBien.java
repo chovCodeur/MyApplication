@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 public class InfosBien extends AppCompatActivity {
 
-    private BienManager bm;
-    private CategorieManager cm;
+   // private BienManager bm;
+   // private CategorieManager cm;
     private int id = 0;
     private Bien bien;
     private TextView nomBien;
@@ -31,7 +31,9 @@ public class InfosBien extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infos_bien);
 
-        Bundle extras = getIntent().getExtras();
+        bien = new Bien(1, "Lunettes de soleil", "12-11-2017", "23-02-2012", "Ce sont des lunettes de soleil Rayban de type Aviator", 120.99f, 1);
+
+     /*   Bundle extras = getIntent().getExtras();
 
         if(extras != null) {
             id = (extras.getInt("id"));
@@ -40,7 +42,7 @@ public class InfosBien extends AppCompatActivity {
         if(id != 0) {
             bm.open();
             bien = bm.getBienById(id);
-            bm.close();
+            bm.close();*/
 
             // Mise à jour de l'image principale
 
@@ -50,13 +52,14 @@ public class InfosBien extends AppCompatActivity {
 
             // On met à jour le nom de la catégorie du bien
             categorieBien = (TextView) findViewById(R.id.categorieBien);
-            cm.open();
-            categorieBien.setText(cm.getNomCategorieById(bien.getId_categorie_bien()));
-            cm.close();
+           // cm.open();
+            categorieBien.setText(String.valueOf(bien.getId_categorie_bien()));
+            //categorieBien.setText(cm.getNomCategorieById(bien.getId_categorie_bien()));
+            //cm.close();
 
             // On met à jour la description du bien
-            descriptionBien = (TextView) findViewById(R.id.descriptionBien);
-            descriptionBien.setText(bien.getDescription());
+            //descriptionBien = (TextView) findViewById(R.id.descriptionBien);
+           // descriptionBien.setText(bien.getDescription());
 
             // Affichage de la facture au clic du bouton
             facture = (Button) findViewById(R.id.buttonFactureBien);
@@ -82,12 +85,12 @@ public class InfosBien extends AppCompatActivity {
             prix.setText("Prix du bien : "+bien.getPrix_bien());
 
             // Mise à jour numéro de série du bien
-            numeroSerie = (TextView) findViewById(R.id.numeroSerieBien);
-            numeroSerie.setText("Numéro de série : "+bien.getNumeroDeSerie());
+           // numeroSerie = (TextView) findViewById(R.id.numeroSerieBien);
+            //numeroSerie.setText("Numéro de série : "+bien.getNumeroDeSerie());
 
             // Mise à jour commentaire du bien
             commentaire = (TextView) findViewById(R.id.commentairesBien);
             commentaire.setText(bien.getCommentaire_bien());
-        }
+       // }
     }
 }

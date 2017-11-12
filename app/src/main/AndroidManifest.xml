@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".AjouterCategorie" />
         <activity android:name=".ModifierPersonne"></activity>
+        <activity android:name=".InfosBien"></activity>
     </application>
 
 </manifest>
