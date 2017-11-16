@@ -8,12 +8,12 @@ public class Categorie {
 
     private int id_Categorie;
     private String nom_Categorie;
-    private String descriptif;
+    private String description;
 
-    public Categorie(int id_Categorie, String categorie, String descriptif) {
+    public Categorie(int id_Categorie, String categorie, String description) {
         this.id_Categorie = id_Categorie;
         this.nom_Categorie = nom_Categorie;
-        this.descriptif = descriptif;
+        this.description = description;
 
     }
     public String getNom_Categorie() {
@@ -24,10 +24,10 @@ public class Categorie {
     public void setNom_Categorie(String  nom_Categorie) {
         this.nom_Categorie = nom_Categorie;
     }
-    public String getDescriptif(){
-        return  descriptif;
+    public String getDescription(){
+        return  description;
     }
-    public void setDescriptif(String descriptif){
-        this.descriptif = descriptif;
+    public void setDescription(String description){
+        this.description = description;
     }
 }

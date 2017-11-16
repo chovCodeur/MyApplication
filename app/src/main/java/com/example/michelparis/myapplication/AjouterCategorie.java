@@ -13,7 +13,7 @@ public class AjouterCategorie extends AppCompatActivity {
 
     Button addCategorie;
     EditText editCategorie;
-    EditText editDescriptif;
+    EditText editDescription;
 
 
     @Override
@@ -23,7 +23,7 @@ public class AjouterCategorie extends AppCompatActivity {
 
 
         editCategorie = (EditText) findViewById(R.id.editCategorie);
-        editDescriptif = (EditText) findViewById(R.id.editDescriptif);
+        editDescription = (EditText) findViewById(R.id.editDescription);
 
         addCategorie = (Button) findViewById(R.id.buttonAddCategorie);
         addCategorie.setOnClickListener(new View.OnClickListener() {
@@ -31,13 +31,13 @@ public class AjouterCategorie extends AppCompatActivity {
             public void onClick(View v) {
 
                 String categorie = editCategorie.getText().toString();
-                String descriptif = editDescriptif.getText().toString();
+                String description = editDescription.getText().toString();
             }
         });
 
 
         /*editCategorie.setText(categorie.categorie);
-        editDescriptif.setText(categorie.descriptif);*/
+        editDescription.setText(categorie.description);*/
 
     }
 

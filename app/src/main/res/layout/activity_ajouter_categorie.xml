@@ -30,14 +30,14 @@
         android:textAlignment="center" />
 
     <EditText
-        android:id="@+id/editDescriptif"
+        android:id="@+id/editDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.08"
         android:inputType="textPersonName"
         android:layout_marginTop="25dp"
         android:ems="10"
-        android:text="Descriptif"
+        android:text="Description"
         android:textAlignment="center" />
 
     <Button
