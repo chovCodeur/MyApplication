@@ -50,6 +50,13 @@ public class MySQLite extends SQLiteOpenHelper {
     private static final String KEY_MAIL = "mail";
     private static final String KEY_TELEPHONE = "telephone";
 
+    private static MySQLite sInstance;
+
+    public static synchronized MySQLite getInstance(Context context) {
+        if (sInstance == null) { sInstance = new MySQLite(context); }
+        return sInstance;
+    }
+
     public MySQLite(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
