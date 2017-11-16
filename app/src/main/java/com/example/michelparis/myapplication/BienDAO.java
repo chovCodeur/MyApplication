@@ -34,23 +34,23 @@ public class BienDAO {
     //public static final String PHOTO = "photo";
     public static final String IDCATEGORIE = "id_categorie";
 
-   // private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
+    private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
     private SQLiteDatabase db;
 
     /**
      * Contructeur de la classe BienDAO
      * @param context le contexte
      */
-    /*public BienDAO (Context context){
+    public BienDAO (Context context){
         maBaseSQLite = MySQLite.getInstance(context);
-    }*/
+    }
 
     /**
      * Méthode permettant l'ouverture de la table en lecture/ecriture
      */
-    /*public void open(){
+    public void open(){
         db=maBaseSQLite.getWritableDatabase();
-    }*/
+    }
 
     /**
      * Méthode permettant la fermeture de la base de données

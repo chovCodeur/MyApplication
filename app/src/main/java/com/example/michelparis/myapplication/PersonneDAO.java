@@ -79,12 +79,12 @@ public class PersonneDAO {
 
 
     /*public Bien getPersonne(int id){
-        Bien a=new Bien(0, "", "", "", "", 0.0f, 0, "", "");
+        Personne a=new Personne(0, "", "", "", "", 0.0f, 0, "", "");
 
         Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+ID+"="+id, null);
         if (c.moveToFirst()) {
             a.setId_bien(c.getInt(c.getColumnIndex(ID)));
-            a.setNom_bien(c.getString(c.getColumnIndex(NOM)));
+            a.set(c.getString(c.getColumnIndex(NOM)));
             a.setDate_saisie_bien(c.getString(c.getColumnIndex(DATESAISIE)));
             a.setDate_achat_bien(c.getString(c.getColumnIndex(DATEACHAT)));
             a.setCommentaire_bien(c.getString(c.getColumnIndex(COMMENTAIRE)));
