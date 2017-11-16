@@ -1,7 +1,7 @@
 package com.example.michelparis.myapplication;
 
 /**
- * Created by TANGUY on 16-11-17.
+ * Created by TANGUY on 16-11-17. z
  */
 
 public class Categorie {
