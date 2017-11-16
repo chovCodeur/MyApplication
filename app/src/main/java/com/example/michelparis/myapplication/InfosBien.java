@@ -38,7 +38,7 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infos_bien);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        /*Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
 
@@ -59,7 +59,7 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
             @Override
             public void onClick(View v) {
             }
-        });
+        });*/
 
         bien = new Bien(1, "Lunettes de soleil", "12-11-2017", "23-02-2012", "Ce sont des lunettes de soleil Rayban de type Aviator", 120.99f, 1);
 
