@@ -38,7 +38,7 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infos_bien);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        /*Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
 
@@ -59,9 +59,9 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
             @Override
             public void onClick(View v) {
             }
-        });
+        });*/
 
-        bien = new Bien(1, "Lunettes de soleil", "12-11-2017", "23-02-2012", "Ce sont des lunettes de soleil Rayban de type Aviator", 120.99f, 1);
+        bien = new Bien(1, "Lunettes de soleil", "12-11-2017", "23-02-2012", "Ce sont des lunettes de soleil Rayban de type Aviator", 120.99f, 1,"Ces lunettes ont le verre droit rayé","123456789");
 
      /*   Bundle extras = getIntent().getExtras();
 
@@ -88,8 +88,8 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
             //cm.close();
 
             // On met à jour la description du bien
-            //descriptionBien = (TextView) findViewById(R.id.descriptionBien);
-           // descriptionBien.setText(bien.getDescription());
+            descriptionBien = (TextView) findViewById(R.id.descriptionBien);
+            descriptionBien.setText(bien.getDescription_bien());
 
             // Affichage de la facture au clic du bouton
             facture = (Button) findViewById(R.id.buttonFactureBien);
@@ -115,8 +115,8 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
             prix.setText("Prix du bien : "+bien.getPrix_bien());
 
             // Mise à jour numéro de série du bien
-           // numeroSerie = (TextView) findViewById(R.id.numeroSerieBien);
-            //numeroSerie.setText("Numéro de série : "+bien.getNumeroDeSerie());
+            numeroSerie = (TextView) findViewById(R.id.numeroSerieBien);
+            numeroSerie.setText("Numéro de série : "+bien.getNumeroSerie_bien());
 
             // Mise à jour commentaire du bien
             commentaire = (TextView) findViewById(R.id.commentairesBien);
