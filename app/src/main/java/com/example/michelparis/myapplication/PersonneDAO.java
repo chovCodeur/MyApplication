@@ -78,7 +78,7 @@ public class PersonneDAO {
     }
 
 
-    public Bien getPersonne(int id){
+    public Personne getPersonne(int id){
         Personne p=new Personne(0,"","","","","","");
 
         Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+ID+"="+id, null);
