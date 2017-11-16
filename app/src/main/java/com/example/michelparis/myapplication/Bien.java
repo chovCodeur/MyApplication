@@ -12,13 +12,13 @@ public class Bien {
     private String date_achat_bien;
     //private XXXX facture_bien;
     private String commentaire_bien;
-    private float prix_bien;
+    private int prix_bien;
     //private XXXX photo_bien;
     private int id_categorie_bien;
     private String description_bien;
     private String numeroSerie_bien;
 
-    public Bien(int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String commentaire_bien, float prix_bien, int id_categorie_bien, String description_bien, String numeroSerie_bien) {
+    public Bien(int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String commentaire_bien, int prix_bien, int id_categorie_bien, String description_bien, String numeroSerie_bien) {
         this.id_bien = id_bien;
         this.nom_bien = nom_bien;
         this.date_saisie_bien = date_saisie_bien;
@@ -70,11 +70,11 @@ public class Bien {
         this.commentaire_bien = commentaire_bien;
     }
 
-    public float getPrix_bien() {
+    public int getPrix_bien() {
         return prix_bien;
     }
 
-    public void setPrix_bien(float prix_bien) {
+    public void setPrix_bien(int prix_bien) {
         this.prix_bien = prix_bien;
     }
 
