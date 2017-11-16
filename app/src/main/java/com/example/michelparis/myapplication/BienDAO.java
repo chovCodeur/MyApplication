@@ -106,7 +106,7 @@ public class BienDAO {
 
 
     public Bien getBien(int id){
-        Bien a=new Bien(0, "", "", "", "", 0.0f, 0, "", "");
+        Bien a=new Bien(0, "", "", "", "", 0, 0, "", "");
 
         Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+ID+"="+id, null);
         if (c.moveToFirst()) {
@@ -115,7 +115,7 @@ public class BienDAO {
             a.setDate_saisie_bien(c.getString(c.getColumnIndex(DATESAISIE)));
             a.setDate_achat_bien(c.getString(c.getColumnIndex(DATEACHAT)));
             a.setCommentaire_bien(c.getString(c.getColumnIndex(COMMENTAIRE)));
-            a.setPrix_bien(c.getFloat(c.getColumnIndex(PRIX)));
+            a.setPrix_bien(c.getInt(c.getColumnIndex(PRIX)));
             a.setId_categorie_bien(c.getInt(c.getColumnIndex(IDCATEGORIE)));
             a.setDescription_bien(c.getString(c.getColumnIndex(DESCRIPTION)));
             a.setNumeroSerie_bien(c.getString(c.getColumnIndex(NUMSERIE)));
@@ -158,7 +158,7 @@ public class BienDAO {
                         curseurBien.getString(curseurBien.getColumnIndex(DATESAISIE)),
                         curseurBien.getString(curseurBien.getColumnIndex(DATEACHAT)),
                         curseurBien.getString(curseurBien.getColumnIndex(COMMENTAIRE)),
-                        curseurBien.getFloat(curseurBien.getColumnIndex(PRIX)),
+                        curseurBien.getInt(curseurBien.getColumnIndex(PRIX)),
                         curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)),
                         curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)),
                         curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE))
