@@ -29,7 +29,7 @@ public class BienDAO {
     //public static final String FACTURE = "facture";
     public static final String COMMENTAIRE = "commentaire";
     public static final String DESCRIPTION = "description";
-    public static final int PRIX = "prix";
+    public static final String PRIX = "prix";
     public static final String NUMSERIE = "numero_serie";
     //public static final String PHOTO = "photo";
     public static final String IDCATEGORIE = "id_categorie";
