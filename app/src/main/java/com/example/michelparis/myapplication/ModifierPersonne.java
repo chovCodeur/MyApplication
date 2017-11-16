@@ -36,11 +36,11 @@ public class ModifierPersonne extends AppCompatActivity {
         editTextdate = (EditText)findViewById(R.id.editTextDate);
 
 
-        editNom.setText(personne.nom);
+       /* editNom.setText(personne.nom);
         editPrenom.setText(personne.prenom);
         editAddress.setText(personne.address);
         editMail.setText(personne.mail);
-        editPhoneNumber.setText(personne.phoneNumber);
+        editPhoneNumber.setText(personne.phoneNumber);*/
 
         editTextdate = (EditText)findViewById(R.id.editTextDate);
         editTextdate.setOnClickListener(new View.OnClickListener() {
@@ -59,12 +59,19 @@ public class ModifierPersonne extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-
-
-
-
-
         ajoutInfos = (Button) findViewById(R.id.buttonAjoutInfos);
-        ajoutInfos.setOnClickListener(this);
+        ajoutInfos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String nom = editNom.getText().toString();
+                String prenom = editPrenom.getText().toString();
+                String address = editAddress.getText().toString();
+                String mail = editMail.getText().toString();
+                String phoneNumber = editPhoneNumber.getText().toString();
+                String date = editTextdate.getText().toString();
+            }
+        });
+
     }
 }

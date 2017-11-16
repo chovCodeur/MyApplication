@@ -38,7 +38,7 @@ public class Personne {
         return prenom;
     }
 
-    public void setPrenomf(String prenom) {
+    public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
 
