@@ -1,7 +1,7 @@
 package com.example.michelparis.myapplication;
 
 /**
- * Created by Kevin on 16/11/2017.
+ * Created by Kevin on 16/11/2017. ok
  */
 
 import android.content.ContentValues;
