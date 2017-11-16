@@ -6,21 +6,23 @@ package com.example.michelparis.myapplication;
 
 public class Categorie {
 
-    private String categorie;
+    private int id_Categorie;
+    private String nom_Categorie;
     private String descriptif;
 
-    public Categorie(String categorie, String descriptif) {
-        this.categorie = categorie;
+    public Categorie(int id_Categorie, String categorie, String descriptif) {
+        this.id_Categorie = id_Categorie;
+        this.nom_Categorie = nom_Categorie;
         this.descriptif = descriptif;
 
     }
-    public String getCategorie() {
+    public String getNom_Categorie() {
 
-        return categorie;
+        return nom_Categorie;
     }
 
-    public void setCategorie(String  categorie) {
-        this.categorie = categorie;
+    public void setNom_Categorie(String  nom_Categorie) {
+        this.nom_Categorie = nom_Categorie;
     }
     public String getDescriptif(){
         return  descriptif;
