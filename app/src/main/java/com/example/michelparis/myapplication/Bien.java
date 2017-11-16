@@ -15,8 +15,10 @@ public class Bien {
     private float prix_bien;
     //private XXXX photo_bien;
     private int id_categorie_bien;
+    private String description_bien;
+    private String numeroSerie_bien;
 
-    public Bien(int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String commentaire_bien, float prix_bien, int id_categorie_bien) {
+    public Bien(int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String commentaire_bien, float prix_bien, int id_categorie_bien, String description_bien, String numeroSerie_bien) {
         this.id_bien = id_bien;
         this.nom_bien = nom_bien;
         this.date_saisie_bien = date_saisie_bien;
@@ -24,6 +26,8 @@ public class Bien {
         this.commentaire_bien = commentaire_bien;
         this.prix_bien = prix_bien;
         this.id_categorie_bien = id_categorie_bien;
+        this.description_bien = description_bien;
+        this.numeroSerie_bien = numeroSerie_bien;
     }
 
     public int getId_bien() {
@@ -80,5 +84,21 @@ public class Bien {
 
     public void setId_categorie_bien(int id_categorie_bien) {
         this.id_categorie_bien = id_categorie_bien;
+    }
+
+    public String getDescription_bien() {
+        return description_bien;
+    }
+
+    public void setDescription_bien(String description_bien) {
+        this.description_bien = description_bien;
+    }
+
+    public String getNumeroSerie_bien() {
+        return numeroSerie_bien;
+    }
+
+    public void setNumeroSerie_bien(String numeroSerie_bien) {
+        this.numeroSerie_bien = numeroSerie_bien;
     }
 }
