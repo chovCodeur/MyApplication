@@ -78,24 +78,23 @@ public class PersonneDAO {
     }
 
 
-    /*public Bien getPersonne(int id){
-        Personne a=new Personne(0, "", "", "", "", 0.0f, 0, "", "");
+    public Bien getPersonne(int id){
+        Personne p=new Personne(0,"","","","","","");
 
         Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+ID+"="+id, null);
         if (c.moveToFirst()) {
-            a.setId_bien(c.getInt(c.getColumnIndex(ID)));
-            a.set(c.getString(c.getColumnIndex(NOM)));
-            a.setDate_saisie_bien(c.getString(c.getColumnIndex(DATESAISIE)));
-            a.setDate_achat_bien(c.getString(c.getColumnIndex(DATEACHAT)));
-            a.setCommentaire_bien(c.getString(c.getColumnIndex(COMMENTAIRE)));
-            a.setPrix_bien(c.getFloat(c.getColumnIndex(PRIX)));
-            a.setId_categorie_bien(c.getInt(c.getColumnIndex(IDCATEGORIE)));
-            a.setDescription_bien(c.getString(c.getColumnIndex(DESCRIPTION)));
-            a.setNumeroSerie_bien(c.getString(c.getColumnIndex(NUMSERIE)));
+            p.setId_Personne(c.getInt(c.getColumnIndex(ID)));
+            p.setNom(c.getString(c.getColumnIndex(NOM)));
+            p.setPrenom(c.getString(c.getColumnIndex(PRENOM)));
+            p.setDate(c.getString(c.getColumnIndex(DATENAISSANCE)));
+            p.setAddress(c.getString(c.getColumnIndex(ADRESSE)));
+            p.setMail(c.getString(c.getColumnIndex(MAIL)));
+            p.setPhoneNumber(c.getString(c.getColumnIndex(TELEPHONE)));
+
             c.close();
         }
 
-        return a;
-    }*/
+        return p;
+    }
 }
 
