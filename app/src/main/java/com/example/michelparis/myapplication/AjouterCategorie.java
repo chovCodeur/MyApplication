@@ -29,4 +29,5 @@ public class AjouterCategorie extends AppCompatActivity {
         editDescriptif.setText(categorie.descriptif);
 
     }
+
 }

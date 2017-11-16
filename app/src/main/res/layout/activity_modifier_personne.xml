@@ -40,15 +40,28 @@
         android:ems="10"
         android:inputType="date"
         android:textAlignment="center"
-        android:text="Date" /-->
-    <DatePicker
-        android:id="@+id/datePicker"
+        android:text="Date" />
+    DatePicker
+        android:id="@+id/editTextDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
         android:layout_marginLeft="75dp"
         android:layout_marginRight="75dp"
-        android:datePickerMode="spinner" />
+        android:datePickerMode="spinner" /-->
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:textAlignment="center"
+        android:hint="Select date"
+        android:inputType="date"
+        android:textStyle="italic"
+       />
+
     <EditText
         android:id="@+id/editEmail"
         android:layout_width="match_parent"
@@ -78,12 +91,11 @@
     <Button
         android:id="@+id/buttonAjoutInfos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_gravity="bottom"
         android:layout_marginLeft="130dp"
         android:layout_marginRight="130dp"
-        android:layout_marginTop="30dp"
-        android:layout_weight="0.09"
+        android:layout_marginTop="130dp"
         android:text="Ajouter" />
 
 
