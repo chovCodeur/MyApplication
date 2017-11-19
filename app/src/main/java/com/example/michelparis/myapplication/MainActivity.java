@@ -13,17 +13,47 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class
 MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
+    private CustomAdapter mAdapter;
+    private ListView lv_listeBiens;
+
+    //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien,
+    // String commentaire_bien, float prix_bien, int id_categorie_bien, String description_bien, String numeroSerie_bien
+    Bien bien1 = new Bien(1,"bien1","19/11/2017","","",0f,1,"","");
+    Bien bien2 = new Bien(2,"bien2","19/11/2017","","",0f,1,"","");
+    Bien bien3 = new Bien(3,"bien3","19/11/2017","","",0f,1,"","");
+    Bien bien4 = new Bien(4,"bien4","19/11/2017","","",0f,1,"","");
+    Bien bien5 = new Bien(5,"bien5","19/11/2017","","",0f,2,"","");
+    Bien bien6 = new Bien(6,"bien6","19/11/2017","","",0f,2,"","");
+
+    //int id_Categorie, String categorie, String description
+    Categorie categorie1 = new Categorie(1, "Categorie 1","");
+    Categorie categorie2 = new Categorie(2, "Categorie 2","");
+
+    ArrayList<Bien> listeBiens = new ArrayList<Bien>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        lv_listeBiens = (ListView)findViewById(R.id.listeBiens);
+
+        listeBiens.add(bien1);
+        listeBiens.add(bien2);
+        listeBiens.add(bien3);
+        listeBiens.add(bien4);
+        listeBiens.add(bien5);
+        listeBiens.add(bien6);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
@@ -47,6 +77,21 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             public void onClick(View v) {
             }
         });
+
+        mAdapter = new CustomAdapter(this);
+        mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(0).getId_categorie_bien());
+
+        int idCat = 1;
+        for (int i = 0; i < listeBiens.size(); i++) {
+
+            if (idCat!=listeBiens.get(i).getId_categorie_bien()) {
+                mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(i).getId_categorie_bien());
+            }
+            mAdapter.addItem(listeBiens.get(i).getNom_bien());
+            idCat=listeBiens.get(i).getId_categorie_bien();
+        }
+        lv_listeBiens.setAdapter(mAdapter);
+
     }
 
     @Override
