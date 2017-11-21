@@ -33,10 +33,10 @@ public class BienDAO {
     public static final String DESCRIPTION = "description";
     public static final String PRIX = "prix";
     public static final String NUMSERIE = "numero_serie";
-    public static final String PHOTO_PRINCIPALE = "photo";
-    public static final String PHOTO_SEC1 = "photo";
-    public static final String PHOTO_SEC2 = "photo";
-    public static final String PHOTO_SEC3 = "photo";
+    public static final String PHOTO_PRINCIPALE = "photo_principale";
+    public static final String PHOTO_SEC1 = "photo_sec1";
+    public static final String PHOTO_SEC2 = "photo_sec2";
+    public static final String PHOTO_SEC3 = "photo_sec3";
     public static final String IDCATEGORIE = "id_categorie";
 
     private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
