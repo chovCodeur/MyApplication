@@ -22,7 +22,8 @@
         <activity android:name=".AjouterCategorie" />
         <activity android:name=".ModifierPersonne" />
         <activity android:name=".InfosBien" />
-        <activity android:name=".AjouterBien"></activity>
+        <activity android:name=".AjouterBien" />
+        <activity android:name=".ReadPDF"></activity>
     </application>
 
 </manifest>

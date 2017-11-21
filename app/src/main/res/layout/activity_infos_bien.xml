@@ -34,13 +34,16 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
 
                 <ImageView
                     android:id="@+id/photoPrincipaleBien"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    app:srcCompat="@drawable/bibi300" />
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="20dp"
+                    app:srcCompat="@drawable/no_image" />
 
                 <TextView
                     android:id="@+id/nomBien"
@@ -88,20 +91,20 @@
                     android:id="@+id/commentairesBien"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentStart="true"
+                    android:text="Cette zone est réservée à d'éventuels commentaires concernant l'objet saisi par son propriétaire."
                     android:layout_below="@+id/labelCommentaires"
-                    android:text="Cette zone est réservée à d'éventuels commentaires concernant l'objet saisi par son propriétaire." />
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="11dp" />
 
                 <TextView
                     android:id="@+id/labelCommentaires"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/numeroSerieBien"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="22dp"
                     android:text="Commentaires :"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:layout_below="@+id/numeroSerieBien"
+                    android:layout_alignParentStart="true" />
 
                 <TextView
                     android:id="@+id/textViewListesBien"
@@ -124,40 +127,41 @@
                     android:id="@+id/dateAcquisitionBien"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/spinnerListesAppartenanceBien"
                     android:text="Date d'acquisition : "
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:layout_below="@+id/spinnerListesAppartenanceBien"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="15dp" />
 
                 <TextView
                     android:id="@+id/numeroSerieBien"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/prixBien"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="22dp"
                     android:text="Numéro de série : "
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:layout_below="@+id/prixBien"
+                    android:layout_alignParentStart="true" />
 
                 <TextView
                     android:id="@+id/prixBien"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/dateSaisieBien"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="20dp"
                     android:text="Prix du bien : "
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:layout_below="@+id/dateSaisieBien"
+                    android:layout_alignParentStart="true" />
 
                 <TextView
                     android:id="@+id/dateSaisieBien"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/dateAcquisitionBien"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="23dp"
                     android:text="Date de saisie : "
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:layout_below="@+id/dateAcquisitionBien"
+                    android:layout_alignParentStart="true" />
 
                 <ImageView
                     android:id="@+id/Photo3Bien"
@@ -165,7 +169,8 @@
                     android:layout_height="100dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@+id/Photo2Bien"
-                    app:srcCompat="@drawable/bibi300" />
+                    android:layout_marginRight="20dp"
+                    app:srcCompat="@drawable/no_image" />
 
                 <ImageView
                     android:id="@+id/Photo2Bien"
@@ -173,7 +178,7 @@
                     android:layout_height="100dp"
                     android:layout_below="@+id/buttonFactureBien"
                     android:layout_centerHorizontal="true"
-                    app:srcCompat="@drawable/bibi300" />
+                    app:srcCompat="@drawable/no_image" />
 
                 <ImageView
                     android:id="@+id/Photo1Bien"
@@ -181,12 +186,13 @@
                     android:layout_height="100dp"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/buttonFactureBien"
-                    app:srcCompat="@drawable/bibi300" />
+                    android:layout_marginLeft="20dp"
+                    app:srcCompat="@drawable/no_image" />
 
                 <Button
                     android:id="@+id/buttonFactureBien"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="45dp"
                     android:layout_alignStart="@+id/descriptionBien"
                     android:layout_below="@+id/descriptionBien"
                     android:layout_marginStart="21dp"

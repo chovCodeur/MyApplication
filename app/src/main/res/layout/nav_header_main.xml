@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="135dp"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            app:srcCompat="@drawable/bibi300" />
+            app:srcCompat="@drawable/no_image" />
 
         <TextView
             android:id="@+id/nom"
