@@ -1,10 +1,7 @@
 package com.example.michelparis.myapplication;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,16 +15,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class
 MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-    private CustomAdapter mAdapter;
+    private BienAdapter mAdapter;
     private ListView lv_listeBiens;
 
     //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien,
@@ -84,7 +79,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             }
         });
 
-        mAdapter = new CustomAdapter(this);
+        mAdapter = new BienAdapter(this);
         mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(0).getId_categorie_bien());
         int cpt = 0;
         int idCat = 1;
