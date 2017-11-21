@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -91,6 +92,15 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             idCat=listeBiens.get(i).getId_categorie_bien();
         }
         lv_listeBiens.setAdapter(mAdapter);
+        lv_listeBiens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent i = new Intent(getApplicationContext(), InfosBien.class);
+                i.putExtra("IDBIEN", listeBiens.get(position).getId_bien());
+                startActivity(i);
+            }
+        });
 
     }
 
