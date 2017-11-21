@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -27,12 +28,15 @@ public class BienDAO {
     public static final String NOM = "nom";
     public static final String DATESAISIE = "date_saisie";
     public static final String DATEACHAT = "date_achat";
-    //public static final String FACTURE = "facture";
+    public static final String FACTURE = "facture";
     public static final String COMMENTAIRE = "commentaire";
     public static final String DESCRIPTION = "description";
     public static final String PRIX = "prix";
     public static final String NUMSERIE = "numero_serie";
-    //public static final String PHOTO = "photo";
+    public static final String PHOTO_PRINCIPALE = "photo";
+    public static final String PHOTO_SEC1 = "photo";
+    public static final String PHOTO_SEC2 = "photo";
+    public static final String PHOTO_SEC3 = "photo";
     public static final String IDCATEGORIE = "id_categorie";
 
     private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
@@ -109,7 +113,7 @@ public class BienDAO {
 
 
     public Bien getBien(int id){
-        Bien a=new Bien(0, "", "", "", "", 0, 0, "", "");
+        Bien a=new Bien(0, "", "", "", "","", 0,null,null,null,null,0, "", "");
 
         Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+ID+"="+id, null);
         if (c.moveToFirst()) {
@@ -160,8 +164,13 @@ public class BienDAO {
                         curseurBien.getString(curseurBien.getColumnIndex(NOM)),
                         curseurBien.getString(curseurBien.getColumnIndex(DATESAISIE)),
                         curseurBien.getString(curseurBien.getColumnIndex(DATEACHAT)),
+                        curseurBien.getString(curseurBien.getColumnIndex(FACTURE)),
                         curseurBien.getString(curseurBien.getColumnIndex(COMMENTAIRE)),
                         curseurBien.getFloat(curseurBien.getColumnIndex(PRIX)),
+                        BitmapFactory.decodeByteArray(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_PRINCIPALE)), 0, curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_PRINCIPALE)).length),
+                        BitmapFactory.decodeByteArray(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC1)), 0, curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC1)).length),
+                        BitmapFactory.decodeByteArray(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC2)), 0, curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC2)).length),
+                        BitmapFactory.decodeByteArray(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC3)), 0, curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC3)).length),
                         curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)),
                         curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)),
                         curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE))
