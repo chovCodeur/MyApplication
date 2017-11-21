@@ -3,6 +3,7 @@ package com.example.michelparis.myapplication;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 /**
@@ -14,7 +15,7 @@ public class MySQLite extends SQLiteOpenHelper {
     // Version de la BDD
     private static final int DATABASE_VERSION = 1;
     // Nom de la BDD
-    private static final String DATABASE_NAME = "listerBiens.sqlite";
+    private static final String DATABASE_NAME = "listerBiens1.sqlite";
     // Nom des Tables de la BDD
     private static final String TABLE_LISTE = "LISTE";
     private static final String TABLE_BIEN = "BIEN";
@@ -53,7 +54,10 @@ public class MySQLite extends SQLiteOpenHelper {
     private static MySQLite sInstance;
 
     public static synchronized MySQLite getInstance(Context context) {
-        if (sInstance == null) { sInstance = new MySQLite(context); }
+        Log.d("TEST CREATION", "");
+        if (sInstance == null) {
+            Log.d("TEST 2", "");
+            sInstance = new MySQLite(context); }
         return sInstance;
     }
 
@@ -64,6 +68,7 @@ public class MySQLite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("creation base", "");
         String CREATE_TABLE_LISTE = "CREATE TABLE " + TABLE_LISTE + "("
                 + KEY_ID_LISTE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_LIBELLE + " TEXT, " + KEY_COMMENTAIRE + " TEXT )";
         db.execSQL(CREATE_TABLE_LISTE);

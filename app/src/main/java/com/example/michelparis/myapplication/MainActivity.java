@@ -24,6 +24,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     private DrawerLayout drawer;
     private BienAdapter mAdapter;
     private ListView lv_listeBiens;
+    public MySQLite maBaseSQLite;
 
     //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien,
     // String commentaire_bien, float prix_bien, int id_categorie_bien, String description_bien, String numeroSerie_bien
@@ -46,7 +47,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
+        maBaseSQLite = MySQLite.getInstance(this);
         lv_listeBiens = (ListView)findViewById(R.id.listeBiens);
 
         listeBiens.add(bien1);
