@@ -93,19 +93,22 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             if (idCat!=listeBiens.get(i).getId_categorie_bien()) {
                 cpt++;
                 mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(i).getId_categorie_bien());
-                listCorrespondance.put(Integer.valueOf(listeBiens.get(i).getId_categorie_bien()),Integer.valueOf(cpt));
+
             }
+            listCorrespondance.put(mAdapter.getCount(),Integer.valueOf(cpt));
             mAdapter.addItem(listeBiens.get(i).getNom_bien());
             idCat=listeBiens.get(i).getId_categorie_bien();
         }
+        //listCorrespondance.remove(1);
+        Log.d("liste",listCorrespondance.toString());
         lv_listeBiens.setAdapter(mAdapter);
         lv_listeBiens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent i = new Intent(getApplicationContext(), InfosBien.class);
-
-                i.putExtra("IDBIEN", position-(int)(listCorrespondance.get(listeBiens.get(position).getId_categorie_bien())));
+                Log.d("id-debugkt",String.valueOf(listCorrespondance.get(position)));
+                i.putExtra("IDBIEN", (position)-listCorrespondance.get((position)));
                 startActivity(i);
             }
         });
