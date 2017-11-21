@@ -1,5 +1,6 @@
 package com.example.michelparis.myapplication;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -15,7 +16,7 @@ public class MySQLite extends SQLiteOpenHelper {
     // Version de la BDD
     private static final int DATABASE_VERSION = 1;
     // Nom de la BDD
-    private static final String DATABASE_NAME = "listerBiens1.sqlite";
+    private static final String DATABASE_NAME = "listerBiens.sqlite";
     // Nom des Tables de la BDD
     private static final String TABLE_LISTE = "LISTE";
     private static final String TABLE_BIEN = "BIEN";
@@ -86,8 +87,18 @@ public class MySQLite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_PERSONNE);
 
         String CREATE_TABLE_APPARTIENT = "CREATE TABLE " + TABLE_APPARTIENT + "("
-                + KEY_ID_BIEN + " INTEGER, " + KEY_ID_LISTE + " INTEGER PRIMARY KEY (" + KEY_ID_BIEN + " , " + KEY_ID_LISTE + "))";
+                + KEY_ID_BIEN + " INTEGER, " + KEY_ID_LISTE + " INTEGER, PRIMARY KEY (" + KEY_ID_BIEN + " , " + KEY_ID_LISTE + "))";
+
         db.execSQL(CREATE_TABLE_APPARTIENT);
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_PERSONNE,1);
+        values.put(KEY_PRENOM,"");
+        values.put(KEY_NAISSANCE,"");
+        values.put(KEY_ADRESSE,"");
+        values.put(KEY_MAIL,"");
+        values.put(KEY_TELEPHONE,"");
+        db.insert(TABLE_PERSONNE, null, values);
     }
 
     @Override
@@ -100,4 +111,6 @@ public class MySQLite extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPARTIENT);
         onCreate(db);
     }
+
+
 }

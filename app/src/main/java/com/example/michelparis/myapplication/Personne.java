@@ -78,4 +78,17 @@ public class Personne {
     public void setDate(String  date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "Personne{" +
+                "id_Personne=" + id_Personne +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", mail='" + mail + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }

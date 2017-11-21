@@ -48,13 +48,29 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+
         maBaseSQLite = new MySQLite(this);
         maBaseSQLite.getInstance(this);
+
 
         Log.e("","miPa"+maBaseSQLite.getDatabaseName());
 
         lv_listeBiens = (ListView)findViewById(R.id.listeBiens);
 
+
+//       bienDAO.addBien(bien1);
+
+        PersonneDAO personneDAO = new PersonneDAO(this);
+
+        personneDAO.open();
+        Log.e("MiPaAA",personneDAO.getPersonne(1).toString());
+
+
+        personneDAO.modPersonne(1, "nom", "prenom", "12/04/1995", "adresse", "mail", "0607");
+
+
+        Log.e("MiPaAA",personneDAO.getPersonne(1).toString());
+        personneDAO.close();
         listeBiens.add(bien1);
         listeBiens.add(bien2);
         listeBiens.add(bien3);
