@@ -1,5 +1,7 @@
 package com.example.michelparis.myapplication;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by Kevin on 11/11/2017.
  */
@@ -10,21 +12,31 @@ public class Bien {
     private String nom_bien;
     private String date_saisie_bien;
     private String date_achat_bien;
-    //private XXXX facture_bien;
+    private String facture_bien;
     private String commentaire_bien;
     private float prix_bien;
-    //private XXXX photo_bien;
+    private Bitmap photo_bien_principal;
+    private Bitmap photo_bien_miniature1;
+    private Bitmap photo_bien_miniature2;
+    private Bitmap photo_bien_miniature3;
     private int id_categorie_bien;
     private String description_bien;
     private String numeroSerie_bien;
 
-    public Bien(int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String commentaire_bien, float prix_bien, int id_categorie_bien, String description_bien, String numeroSerie_bien) {
+    public Bien(int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String facture_bien,
+                String commentaire_bien, float prix_bien, Bitmap photo_bien_principal, Bitmap photo_bien_miniature1,
+                Bitmap photo_bien_miniature2, Bitmap photo_bien_miniature3, int id_categorie_bien, String description_bien, String numeroSerie_bien) {
         this.id_bien = id_bien;
         this.nom_bien = nom_bien;
         this.date_saisie_bien = date_saisie_bien;
         this.date_achat_bien = date_achat_bien;
+        this.facture_bien = facture_bien;
         this.commentaire_bien = commentaire_bien;
         this.prix_bien = prix_bien;
+        this.photo_bien_principal = photo_bien_principal;
+        this.photo_bien_miniature1 = photo_bien_miniature1;
+        this.photo_bien_miniature2 = photo_bien_miniature2;
+        this.photo_bien_miniature3 = photo_bien_miniature3;
         this.id_categorie_bien = id_categorie_bien;
         this.description_bien = description_bien;
         this.numeroSerie_bien = numeroSerie_bien;
@@ -100,6 +112,46 @@ public class Bien {
 
     public void setNumeroSerie_bien(String numeroSerie_bien) {
         this.numeroSerie_bien = numeroSerie_bien;
+    }
+
+    public String getFacture_bien() {
+        return facture_bien;
+    }
+
+    public void setFacture_bien(String facture_bien) {
+        this.facture_bien = facture_bien;
+    }
+
+    public Bitmap getPhoto_bien_principal() {
+        return photo_bien_principal;
+    }
+
+    public void setPhoto_bien_principal(Bitmap photo_bien_principal) {
+        this.photo_bien_principal = photo_bien_principal;
+    }
+
+    public Bitmap getPhoto_bien_miniature1() {
+        return photo_bien_miniature1;
+    }
+
+    public void setPhoto_bien_miniature1(Bitmap photo_bien_miniature1) {
+        this.photo_bien_miniature1 = photo_bien_miniature1;
+    }
+
+    public Bitmap getPhoto_bien_miniature2() {
+        return photo_bien_miniature2;
+    }
+
+    public void setPhoto_bien_miniature2(Bitmap photo_bien_miniature2) {
+        this.photo_bien_miniature2 = photo_bien_miniature2;
+    }
+
+    public Bitmap getPhoto_bien_miniature3() {
+        return photo_bien_miniature3;
+    }
+
+    public void setPhoto_bien_miniature3(Bitmap photo_bien_miniature3) {
+        this.photo_bien_miniature3 = photo_bien_miniature3;
     }
 
     @Override
