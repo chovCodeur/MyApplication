@@ -28,12 +28,12 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
     //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien,
     // String commentaire_bien, float prix_bien, int id_categorie_bien, String description_bien, String numeroSerie_bien
-    Bien bien1 = new Bien(1,"bien1","19/11/2017","","",0f,1,"ddddd","");
-    Bien bien2 = new Bien(2,"bien2","19/11/2017","","",0f,1,"aaaaa","");
-    Bien bien3 = new Bien(3,"bien3","19/11/2017","","",0f,1,"vbbbb","");
-    Bien bien4 = new Bien(4,"bien4","19/11/2017","","",0f,1,"ezezeez","");
-    Bien bien5 = new Bien(5,"bien5","19/11/2017","","",0f,2,"zeezfefz","");
-    Bien bien6 = new Bien(6,"bien6","19/11/2017","","",0f,2,"zeezez","");
+    Bien bien1 = new Bien(1,"bien1","19/11/2017","","","",0f,null,null,null,null,1,"ddddd","");
+    Bien bien2 = new Bien(2,"bien2","19/11/2017","","","",0f,null,null,null,null,1,"aaaaa","");
+    Bien bien3 = new Bien(3,"bien3","19/11/2017","","","",0f,null,null,null,null,1,"vbbbb","");
+    Bien bien4 = new Bien(4,"bien4","19/11/2017","","","",0f,null,null,null,null,1,"ezezeez","");
+    Bien bien5 = new Bien(5,"bien5","19/11/2017","","","",0f,null,null,null,null,2,"zeezfefz","");
+    Bien bien6 = new Bien(6,"bien6","19/11/2017","","","",0f,null,null,null,null,2,"zeezez","");
 
     //int id_Categorie, String categorie, String description
     Categorie categorie1 = new Categorie(1, "Categorie 1","");
