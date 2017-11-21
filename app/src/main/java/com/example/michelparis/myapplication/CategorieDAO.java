@@ -52,7 +52,7 @@ public class CategorieDAO {
      * @param description String : la description de la catégorie
      * @return int : le nombre de lignes affectées par la requête
      */
-    public int modBien(int id_categorie, String nom, String description){
+    public int modCategorie(int id_categorie, String nom, String description){
         ContentValues values = new ContentValues();
         values.put(NOM,nom);
         values.put(DESCRIPTION, description);
