@@ -38,7 +38,10 @@ public class MySQLite extends SQLiteOpenHelper {
     private static final String KEY_DATESAISIE = "date_saisie";
     private static final String KEY_DATEACHAT = "date_achat";
     private static final String KEY_PRIX = "prix";
-    private static final String KEY_PHOTO = "photo";
+    private static final String KEY_PHOTO_PRINCIPALE = "photo_principale";
+    private static final String KEY_PHOTO_MINIATURE_1 = "photo_mini_1";
+    private static final String KEY_PHOTO_MINIATURE_2 = "photo_mini_2";
+    private static final String KEY_PHOTO_MINIATURE_3 = "photo_mini_3";
     private static final String KEY_CATEGORIE_BIEN= "id_categorie";
 
     // Nom des colonnes de la table Catégorie
