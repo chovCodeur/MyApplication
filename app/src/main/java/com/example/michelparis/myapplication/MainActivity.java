@@ -47,7 +47,12 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        maBaseSQLite = MySQLite.getInstance(this);
+
+        maBaseSQLite = new MySQLite(this);
+        maBaseSQLite.getInstance(this);
+
+        Log.e("","miPa"+maBaseSQLite.getDatabaseName());
+
         lv_listeBiens = (ListView)findViewById(R.id.listeBiens);
 
         listeBiens.add(bien1);
