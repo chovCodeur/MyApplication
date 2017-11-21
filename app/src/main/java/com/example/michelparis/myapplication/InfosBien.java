@@ -57,14 +57,6 @@ public class InfosBien extends FragmentActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infos_bien);
 
-        final View thumb1View = findViewById(R.id.photoPrincipaleBien);
-        thumb1View.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(thumb1View, R.drawable.no_image);
-            }
-        });
-
         // Retrieve and cache the system's default "short" animation time.
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -171,7 +163,6 @@ public class InfosBien extends FragmentActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ReadPDF.class);
-                //Intent intent = new Intent(getApplicationContext(), ZoomActivity.class);
                 startActivity(intent);
             }
         });
