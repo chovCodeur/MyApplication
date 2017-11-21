@@ -1,8 +1,10 @@
 package com.example.michelparis.myapplication;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 /**
@@ -53,7 +55,10 @@ public class MySQLite extends SQLiteOpenHelper {
     private static MySQLite sInstance;
 
     public static synchronized MySQLite getInstance(Context context) {
-        if (sInstance == null) { sInstance = new MySQLite(context); }
+        Log.d("TEST CREATION", "");
+        if (sInstance == null) {
+            Log.d("TEST 2", "");
+            sInstance = new MySQLite(context); }
         return sInstance;
     }
 
@@ -64,12 +69,13 @@ public class MySQLite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("creation base", "");
         String CREATE_TABLE_LISTE = "CREATE TABLE " + TABLE_LISTE + "("
                 + KEY_ID_LISTE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_LIBELLE + " TEXT, " + KEY_COMMENTAIRE + " TEXT )";
         db.execSQL(CREATE_TABLE_LISTE);
 
         String CREATE_TABLE_BIEN = "CREATE TABLE " + TABLE_BIEN + "("
-                + KEY_ID_BIEN + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM + " TEXT, " + KEY_DATESAISIE + " TEXT, " + KEY_DATEACHAT + " TEXT," + KEY_NUMERO_SERIE + " TEXT, " + KEY_PRIX + " REAL, " + KEY_DESCRIPTION + " TEXT, " + KEY_CATEGORIE_BIEN + " INTEGER, FOREIGN KEY (" + KEY_CATEGORIE_BIEN + ") REFERENCES " + TABLE_CATEGORIE + "(" + KEY_ID_CATEGORIE + "))";
+                + KEY_ID_BIEN + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM + " TEXT, " + KEY_DATESAISIE + " TEXT, " + KEY_DATEACHAT + " TEXT," + KEY_NUMERO_SERIE + " TEXT, " + KEY_PRIX + " REAL, " + KEY_DESCRIPTION + " TEXT, " + KEY_COMMENTAIRE + " TEXT, " + KEY_CATEGORIE_BIEN + " INTEGER, FOREIGN KEY (" + KEY_CATEGORIE_BIEN + ") REFERENCES " + TABLE_CATEGORIE + "(" + KEY_ID_CATEGORIE + "))";
         db.execSQL(CREATE_TABLE_BIEN);
 
         String CREATE_TABLE_CATEGORIE = "CREATE TABLE " + TABLE_CATEGORIE + "("
@@ -81,8 +87,18 @@ public class MySQLite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_PERSONNE);
 
         String CREATE_TABLE_APPARTIENT = "CREATE TABLE " + TABLE_APPARTIENT + "("
-                + KEY_ID_BIEN + " INTEGER, " + KEY_ID_LISTE + " INTEGER PRIMARY KEY (" + KEY_ID_BIEN + " , " + KEY_ID_LISTE + "))";
+                + KEY_ID_BIEN + " INTEGER, " + KEY_ID_LISTE + " INTEGER, PRIMARY KEY (" + KEY_ID_BIEN + " , " + KEY_ID_LISTE + "))";
+
         db.execSQL(CREATE_TABLE_APPARTIENT);
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_PERSONNE,1);
+        values.put(KEY_PRENOM,"");
+        values.put(KEY_NAISSANCE,"");
+        values.put(KEY_ADRESSE,"");
+        values.put(KEY_MAIL,"");
+        values.put(KEY_TELEPHONE,"");
+        db.insert(TABLE_PERSONNE, null, values);
     }
 
     @Override
@@ -95,4 +111,6 @@ public class MySQLite extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPARTIENT);
         onCreate(db);
     }
+
+
 }

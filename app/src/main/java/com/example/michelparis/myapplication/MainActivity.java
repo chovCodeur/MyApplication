@@ -24,6 +24,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     private DrawerLayout drawer;
     private BienAdapter mAdapter;
     private ListView lv_listeBiens;
+    public MySQLite maBaseSQLite;
 
     //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien,
     // String commentaire_bien, float prix_bien, int id_categorie_bien, String description_bien, String numeroSerie_bien
@@ -47,8 +48,29 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+
+        maBaseSQLite = new MySQLite(this);
+        maBaseSQLite.getInstance(this);
+
+
+        Log.e("","miPa"+maBaseSQLite.getDatabaseName());
+
         lv_listeBiens = (ListView)findViewById(R.id.listeBiens);
 
+
+//       bienDAO.addBien(bien1);
+
+        PersonneDAO personneDAO = new PersonneDAO(this);
+
+        personneDAO.open();
+        Log.e("MiPaAA",personneDAO.getPersonne(1).toString());
+
+
+        personneDAO.modPersonne(1, "nom", "prenom", "12/04/1995", "adresse", "mail", "0607");
+
+
+        Log.e("MiPaAA",personneDAO.getPersonne(1).toString());
+        personneDAO.close();
         listeBiens.add(bien1);
         listeBiens.add(bien2);
         listeBiens.add(bien3);

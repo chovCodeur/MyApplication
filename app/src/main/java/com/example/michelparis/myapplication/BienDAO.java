@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -65,6 +66,7 @@ public class BienDAO {
      * @return long l'id du nouvel enregistrement inséré, ou -1 en cas d'erreur
      */
     public long addBien(Bien bien){
+        Log.e("MiPa","addBien"+bien.toString());
         ContentValues values = new ContentValues();
         values.put(NOM,bien.getNom_bien());
         values.put(DATESAISIE,bien.getDate_saisie_bien());
@@ -75,6 +77,7 @@ public class BienDAO {
         values.put(PRIX, bien.getPrix_bien());
         values.put(NUMSERIE, bien.getNumeroSerie_bien());
         values.put(IDCATEGORIE, bien.getId_categorie_bien());
+
 
         return db.insert(TABLE_NAME,null,values);
     }

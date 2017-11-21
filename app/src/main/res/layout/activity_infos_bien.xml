@@ -22,11 +22,12 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />-->
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -38,11 +39,12 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp">
 
-                <ImageView
+                <com.example.michelparis.myapplication.TouchHighlightImageButton
                     android:id="@+id/photoPrincipaleBien"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_marginTop="20dp"
+                    android:scaleType="fitXY"
                     app:srcCompat="@drawable/no_image" />
 
                 <TextView
@@ -163,30 +165,33 @@
                     android:layout_below="@+id/dateAcquisitionBien"
                     android:layout_alignParentStart="true" />
 
-                <ImageView
+                <com.example.michelparis.myapplication.TouchHighlightImageButton
                     android:id="@+id/Photo3Bien"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@+id/Photo2Bien"
                     android:layout_marginRight="20dp"
+                    android:scaleType="fitXY"
                     app:srcCompat="@drawable/no_image" />
 
-                <ImageView
+                <com.example.michelparis.myapplication.TouchHighlightImageButton
                     android:id="@+id/Photo2Bien"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_below="@+id/buttonFactureBien"
                     android:layout_centerHorizontal="true"
+                    android:scaleType="fitXY"
                     app:srcCompat="@drawable/no_image" />
 
-                <ImageView
+                <com.example.michelparis.myapplication.TouchHighlightImageButton
                     android:id="@+id/Photo1Bien"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/buttonFactureBien"
                     android:layout_marginLeft="20dp"
+                    android:scaleType="fitXY"
                     app:srcCompat="@drawable/no_image" />
 
                 <Button
@@ -200,5 +205,13 @@
                     android:text="Afficher la facture" />
             </RelativeLayout>
         </ScrollView>
-    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:contentDescription="@string/description_zoom_touch_close" />
+
+    </FrameLayout>
     <!--</android.support.v4.widget.DrawerLayout>-->

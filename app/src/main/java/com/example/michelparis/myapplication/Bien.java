@@ -101,4 +101,19 @@ public class Bien {
     public void setNumeroSerie_bien(String numeroSerie_bien) {
         this.numeroSerie_bien = numeroSerie_bien;
     }
+
+    @Override
+    public String toString() {
+        return "Bien{" +
+                "id_bien=" + id_bien +
+                ", nom_bien='" + nom_bien + '\'' +
+                ", date_saisie_bien='" + date_saisie_bien + '\'' +
+                ", date_achat_bien='" + date_achat_bien + '\'' +
+                ", commentaire_bien='" + commentaire_bien + '\'' +
+                ", prix_bien=" + prix_bien +
+                ", id_categorie_bien=" + id_categorie_bien +
+                ", description_bien='" + description_bien + '\'' +
+                ", numeroSerie_bien='" + numeroSerie_bien + '\'' +
+                '}';
+    }
 }
