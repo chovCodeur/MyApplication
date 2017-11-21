@@ -11,13 +11,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class
 MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +44,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     Categorie categorie2 = new Categorie(2, "Categorie 2","");
 
     ArrayList<Bien> listeBiens = new ArrayList<Bien>();
+    HashMap<Integer, Integer> listCorrespondance = new HashMap<>();
 
 
     @Override
@@ -81,12 +86,14 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
         mAdapter = new CustomAdapter(this);
         mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(0).getId_categorie_bien());
-
+        int cpt = 0;
         int idCat = 1;
         for (int i = 0; i < listeBiens.size(); i++) {
 
             if (idCat!=listeBiens.get(i).getId_categorie_bien()) {
+                cpt++;
                 mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(i).getId_categorie_bien());
+                listCorrespondance.put(Integer.valueOf(listeBiens.get(i).getId_categorie_bien()),Integer.valueOf(cpt));
             }
             mAdapter.addItem(listeBiens.get(i).getNom_bien());
             idCat=listeBiens.get(i).getId_categorie_bien();
@@ -97,7 +104,8 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent i = new Intent(getApplicationContext(), InfosBien.class);
-                i.putExtra("IDBIEN", listeBiens.get(position).getId_bien());
+
+                i.putExtra("IDBIEN", position-(int)(listCorrespondance.get(listeBiens.get(position).getId_categorie_bien())));
                 startActivity(i);
             }
         });
