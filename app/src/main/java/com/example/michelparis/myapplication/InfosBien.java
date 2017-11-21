@@ -85,8 +85,9 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
 
         /*if(id != 0) {
             bm.open();
-            bien = bm.getBienById(id);
-            bm.close();*/
+            bien = bm.getBien(id);
+            bm.close();
+        }*/
 
         // Mise à jour de l'image principale
 
