@@ -9,9 +9,9 @@ import com.joanzapata.pdfview.listener.OnPageChangeListener;
 import static java.lang.String.format;
 
 public class ReadPDF extends AppCompatActivity implements OnPageChangeListener {
-    public static final String SAMPLE_FILE = "test.pdf";
+    //public static final String SAMPLE_FILE = "test.pdf";
     public static final String ABOUT_FILE = "about.pdf";
-    String pdfName = SAMPLE_FILE;
+    String pdfName;// = SAMPLE_FILE;
     Integer pageNumber = 1;
     PDFView pdfView;
 
@@ -22,7 +22,13 @@ public class ReadPDF extends AppCompatActivity implements OnPageChangeListener {
 
         pdfView = (PDFView) findViewById(R.id.pdfview);
 
-        display(SAMPLE_FILE, true);
+        Bundle extras = getIntent().getExtras();
+
+        if(extras != null) {
+            pdfName = extras.getString("nomPDF");
+        }
+
+        display(pdfName, true);
     }
 
     void afterViews() {
@@ -53,7 +59,7 @@ public class ReadPDF extends AppCompatActivity implements OnPageChangeListener {
     @Override
     public void onBackPressed() {
         if (ABOUT_FILE.equals(pdfName)) {
-            display(SAMPLE_FILE, true);
+            display(pdfName, true);
         } else {
             super.onBackPressed();
         }
