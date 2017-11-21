@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 class BienAdapter extends BaseAdapter {
@@ -69,28 +70,35 @@ class BienAdapter extends BaseAdapter {
         int rowType = getItemViewType(position);
 
         if (convertView == null) {
+            String[] str = mData.get(position).split("#~#");
             holder = new ViewHolder();
             switch (rowType) {
                 case TYPE_ITEM:
                     convertView = mInflater.inflate(R.layout.item_bien, null);
-                    holder.textView = (TextView) convertView.findViewById(R.id.text);
+                    holder.imageView = (ImageView) convertView.findViewById(R.id.imageBien);
+                    holder.textView = (TextView) convertView.findViewById(R.id.nomBien);
+                    holder.textView2 = (TextView) convertView.findViewById(R.id.descriptionBien);
+                    holder.textView.setText(str[0]);
+                    holder.textView2.setText(str[1]);
                     break;
                 case TYPE_SEPARATOR:
                     convertView = mInflater.inflate(R.layout.separator_bien, null);
                     holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
+                    holder.textView.setText(str[0]);
                     break;
             }
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.textView.setText(mData.get(position));
 
         return convertView;
     }
 
     public static class ViewHolder {
         public TextView textView;
+        public ImageView imageView;
+        public TextView textView2;
     }
 
 }
