@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
+    android:layout_height="250dp"
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -14,31 +14,33 @@
     android:weightSum="1">
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="135dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="-50dp"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             app:srcCompat="@drawable/no_image" />
 
-        <TextView
-            android:id="@+id/nom"
+        <Button
+            android:id="@+id/btnAjouterCategorie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="90dp"
-            android:text="Un texte comme ça"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:layout_marginTop="120dp"
+            android:text="Ajouter une catégorie"
+            android:onClick="ajouterCategorie"/>
 
-        <TextView
-            android:id="@+id/mail"
+        <Button
+            android:id="@+id/btnImportExport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="105dp"
-            android:text="Un autre texte" />
+            android:layout_marginTop="170dp"
+            android:text="Exporter une liste"
+            android:onClick="exporterListe"/>
 
     </FrameLayout>
 
