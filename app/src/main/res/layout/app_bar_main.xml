@@ -34,6 +34,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<include layout="@layout/main" />-->
+    <include layout="@layout/liste_biens" />
 
 </android.support.design.widget.CoordinatorLayout>
