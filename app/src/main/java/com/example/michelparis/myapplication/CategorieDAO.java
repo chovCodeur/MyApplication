@@ -4,6 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 /**
  * Created by Thib on 16/11/2017.
@@ -79,16 +83,39 @@ public class CategorieDAO {
 
     public String getNomCategorieByIdBien(int id) {
         String nom="";
-        String selectQuery = "SELECT " + NOM +" FROM " + TABLE_NAME + " WHERE " + ID + "=" +id ;
+        String selectQuery = "SELECT " + NOM +" FROM " + TABLE_NAME + " WHERE " + ID + "= " +id ;
 
+        Log.e("MiPa","avant :"+selectQuery);
         Cursor c = db.rawQuery(selectQuery, null);
 
         if (c.moveToFirst()) {
+            Log.e("MiPa","dans le IF");
+
             nom = c.getString(c.getColumnIndex(NOM));
             c.close();
         }
 
         return nom;
+    }
+
+    public ArrayList<Categorie> getAllCategorie(){
+        ArrayList<Categorie> liste = new ArrayList<Categorie>();
+        Cursor curseurCategorie = db.rawQuery("SELECT * FROM "+TABLE_NAME, null);
+
+        Categorie categorie;
+        if (curseurCategorie.moveToFirst()) {
+            do {
+                categorie = new Categorie(
+                        curseurCategorie.getInt(curseurCategorie.getColumnIndex(ID)),
+                        curseurCategorie.getString(curseurCategorie.getColumnIndex(NOM)),
+                        curseurCategorie.getString(curseurCategorie.getColumnIndex(DESCRIPTION))
+                );
+
+                liste.add(categorie);
+            } while (curseurCategorie.moveToNext());
+        }
+        curseurCategorie.close();
+        return liste;
     }
 
     /**

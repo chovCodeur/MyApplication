@@ -16,7 +16,7 @@ public class MySQLite extends SQLiteOpenHelper {
     // Version de la BDD
     private static final int DATABASE_VERSION = 1;
     // Nom de la BDD
-    private static final String DATABASE_NAME = "listerBiens.sqlite";
+    private static final String DATABASE_NAME = "listerrrBien.sqlite";
     // Nom des Tables de la BDD
     private static final String TABLE_LISTE = "LISTE";
     private static final String TABLE_BIEN = "BIEN";
@@ -33,7 +33,7 @@ public class MySQLite extends SQLiteOpenHelper {
     private static final String KEY_ID_BIEN = "id_bien";
     private static final String KEY_NOM = "nom";
     private static final String KEY_DESCRIPTION = "description";
-    private static final String KEY_NUMERO_SERIE = "numéro_serie";
+    private static final String KEY_NUMERO_SERIE = "numero_serie";
     private static final String KEY_FACTURE = "facture";
     private static final String KEY_DATESAISIE = "date_saisie";
     private static final String KEY_DATEACHAT = "date_achat";
@@ -58,9 +58,9 @@ public class MySQLite extends SQLiteOpenHelper {
     private static MySQLite sInstance;
 
     public static synchronized MySQLite getInstance(Context context) {
-        Log.d("TEST CREATION", "");
+        Log.e("TEST CREATION", "MICPA");
         if (sInstance == null) {
-            Log.d("TEST 2", "");
+            Log.e("TEST 2", "AH");
             sInstance = new MySQLite(context); }
         return sInstance;
     }
@@ -72,7 +72,7 @@ public class MySQLite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("creation base", "");
+        Log.e("creation base", "MiPas");
         String CREATE_TABLE_LISTE = "CREATE TABLE " + TABLE_LISTE + "("
                 + KEY_ID_LISTE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_LIBELLE + " TEXT, " + KEY_COMMENTAIRE + " TEXT )";
         db.execSQL(CREATE_TABLE_LISTE);
@@ -82,7 +82,7 @@ public class MySQLite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_BIEN);
 
         String CREATE_TABLE_CATEGORIE = "CREATE TABLE " + TABLE_CATEGORIE + "("
-                + KEY_ID_CATEGORIE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM + " TEXT, " + KEY_DESCRIPTION + "TEXT )";
+                + KEY_ID_CATEGORIE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM + " TEXT, " + KEY_DESCRIPTION + " TEXT )";
         db.execSQL(CREATE_TABLE_CATEGORIE);
 
         String CREATE_TABLE_PERSONNE = "CREATE TABLE " + TABLE_PERSONNE + "("

@@ -15,17 +15,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
 public class AjouterBien extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener{
 
     private DrawerLayout drawer;
-    String[] CategorieName={"BOI","SBI","HDFC","PNB","OBC"};
-    String[] ListeName={"L1","L2","L3"};
+    ArrayList<Categorie> categorieName = new ArrayList<Categorie>();
+    String[] listeName={"L1","L2","L3"};
     Spinner spinnerCategorie;
     Spinner spinnerListe;
     String nomCategorieSelectionne = "";
+    Categorie categorieSelectionne;
     String nomListeSelectionne = "";
 
 
@@ -34,6 +36,34 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_bien);
 
+        CategorieDAO categorieDAO = new CategorieDAO(this);
+        categorieDAO.open();
+        Log.e("MiPa","Salut"+categorieDAO.getNomCategorieByIdBien(1));
+        if (categorieDAO.getNomCategorieByIdBien(1).equals("")) {
+
+            Categorie cuisine = new Categorie(0, "Cuisine", "Tous mes objets de la cuisine");
+            Categorie salon = new Categorie(0, "Salon", "Tous mes objets du Salon");
+            categorieDAO.addCategorie(cuisine);
+            categorieDAO.addCategorie(salon);
+
+        }
+
+
+        Log.e("MiPa",categorieDAO.getNomCategorieByIdBien(1));
+
+
+        ArrayList<Categorie> listeCategorieEnBase = new ArrayList<Categorie>();
+
+        listeCategorieEnBase = categorieDAO.getAllCategorie();
+
+       // int nbCategorie = listeCategorieEnBase.size();
+
+        categorieName.addAll(listeCategorieEnBase);
+
+
+        //categorieName = new String[]{"A","B"};
+
+        categorieDAO.close();
 
         // Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
@@ -44,16 +74,25 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         //  toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
         spinnerCategorie =(Spinner) findViewById(R.id.select_categorie);
         spinnerCategorie.setOnItemSelectedListener(this);
-        ArrayAdapter arrayAdapterListe = new ArrayAdapter(this,android.R.layout.simple_spinner_item, CategorieName);
+
+        ArrayList<String> listeCategorieName = new ArrayList<String>();
+        int i =0;
+        for (Categorie categorie: categorieName) {
+            listeCategorieName.add(i,categorie.getNom_Categorie());
+        }
+
+        ArrayAdapter arrayAdapterListe = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listeCategorieName);
         arrayAdapterListe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategorie.setAdapter(arrayAdapterListe);
 
 
         spinnerListe = (Spinner) findViewById(R.id.select_liste);
         spinnerListe.setOnItemSelectedListener(this);
-        ArrayAdapter arrayAdapterCategorie = new ArrayAdapter(this,android.R.layout.simple_spinner_item, ListeName);
+        ArrayAdapter arrayAdapterCategorie = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listeName);
         arrayAdapterCategorie.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerListe.setAdapter(arrayAdapterCategorie);
+
+
 
 /**
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -137,12 +176,13 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         String descriptionBien = textViewDescriptionBien.getText().toString();
         Float prixBien = Float.valueOf(textViewPrixBien.getText().toString());
         String numeroSerie = textViewNumeroSerie.getText().toString();
+        int idCategorieSelectionne = categorieSelectionne.getId_Categorie();
 
         Date dateSaisie = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String dateDeSaisie = sdf.format(dateSaisie);
 
-        Bien bien = new Bien(0,
+        Bien bien = new Bien(idCategorieSelectionne,
                 nomBien,
                 dateDeSaisie,
                 dateAchatSaisie,
@@ -158,25 +198,35 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
                 numeroSerie
                 );
 
-        Categorie cuisine = new Categorie(0,"Cuisine", "Tous mes objets de la cuisine");
-        Categorie salon = new Categorie(0,"Salon", "Tous mes objets du Salon");
-
         CategorieDAO categorieDAO = new CategorieDAO(this);
 
         categorieDAO.open();
-        categorieDAO.addCategorie(cuisine);
-        categorieDAO.addCategorie(salon);
+        Log.e("MiPa","Salut"+categorieDAO.getNomCategorieByIdBien(1));
+        if (categorieDAO.getNomCategorieByIdBien(1).equals("")) {
+
+            Categorie cuisine = new Categorie(0, "Cuisine", "Tous mes objets de la cuisine");
+            Categorie salon = new Categorie(0, "Salon", "Tous mes objets du Salon");
+            categorieDAO.addCategorie(cuisine);
+            categorieDAO.addCategorie(salon);
+
+        }
+
+
+
+
+        Log.e("MiPa",categorieDAO.getNomCategorieByIdBien(1));
+
         categorieDAO.close();
 
+        BienDAO bienDAO = new BienDAO(this);
+
+        bienDAO.open();
+
+        bienDAO.addBien(bien);
         Log.e("MiPa",bien.toString());
 
+        bienDAO.close();
 
-        /*
-
-        int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String facture_bien,
-                String commentaire_bien, float prix_bien, Bitmap photo_bien_principal, Bitmap photo_bien_miniature1,
-                Bitmap photo_bien_miniature2, Bitmap photo_bien_miniature3, int id_categorie_bien, String description_bien, String numeroSerie_bien
-         */
     }
 
     @Override
@@ -185,10 +235,10 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         Spinner spinnerCategorie = (Spinner)parent;
 
         if(spinnerCategorie.getId() == R.id.select_categorie) {
-            nomCategorieSelectionne = CategorieName[position];
+             categorieSelectionne = categorieName.get(position);
             //Toast.makeText(getApplicationContext(), CategorieName[position], Toast.LENGTH_SHORT).show();
         } else {
-            nomListeSelectionne = ListeName[position];
+            nomListeSelectionne = listeName[position];
             //Toast.makeText(getApplicationContext(), ListeName[position], Toast.LENGTH_SHORT).show();
         }
     }
