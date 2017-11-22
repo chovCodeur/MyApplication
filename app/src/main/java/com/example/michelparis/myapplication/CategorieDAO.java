@@ -3,6 +3,7 @@ package com.example.michelparis.myapplication;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.Cursor;
 
 /**
  * Created by Thib on 16/11/2017.
@@ -76,5 +77,14 @@ public class CategorieDAO {
         return db.delete(TABLE_NAME, where, whereArgs);
     }
 
+    public int recupCategeorieBien(Categorie categorie) {
+        int resultat=0;
+        String selectQuery = "SELECT " + NOM +" FROM " + TABLE_NAME + " WHERE " + ID + " = " +ID ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            resultat = cursor.getInt(0);
+        }
+        return resultat;
+    }
 
 }
