@@ -1,14 +1,11 @@
 package com.example.michelparis.myapplication;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
+
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +13,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class AjouterBien extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener{
 
@@ -25,6 +25,9 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
     String[] ListeName={"L1","L2","L3"};
     Spinner spinnerCategorie;
     Spinner spinnerListe;
+    String nomCategorieSelectionne = "";
+    String nomListeSelectionne = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +35,13 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         setContentView(R.layout.activity_ajouter_bien);
 
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        // Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
         //spinnerListe.
-        myToolbar.setTitle("NomAppli");
-        setSupportActionBar(myToolbar);
-        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
+        //myToolbar.setTitle("NomAppli");
+        //setSupportActionBar(myToolbar);
+        //    TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        //  toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
         spinnerCategorie =(Spinner) findViewById(R.id.select_categorie);
         spinnerCategorie.setOnItemSelectedListener(this);
         ArrayAdapter arrayAdapterListe = new ArrayAdapter(this,android.R.layout.simple_spinner_item, CategorieName);
@@ -52,8 +55,8 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         arrayAdapterCategorie.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerListe.setAdapter(arrayAdapterCategorie);
 
-
-        /** drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+/**
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
          ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
          this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
          drawer.setDrawerListener(toggle);
@@ -68,7 +71,7 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         public void onClick(View v) {
         }
         });
-         */
+*/
 
 
     }
@@ -109,15 +112,71 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+/*
 
+    private String facture_bien;
+
+    private Bitmap photo_bien_principal;
+    private Bitmap photo_bien_miniature1;
+    private Bitmap photo_bien_miniature2;
+    private Bitmap photo_bien_miniature3;
+    private int id_categorie_bien;
+    private String numeroSerie_bien;
+ */
     public void onClickAjouterBien(View view){
         TextView textViewNomBien = (TextView) findViewById(R.id.nom_bien);
         TextView textViewDateAchatBien = (TextView) findViewById(R.id.date_achat_bien);
         TextView textViewDescriptionBien = (TextView) findViewById(R.id.description_bien);
+        TextView textViewCommentaireBien = (TextView) findViewById(R.id.commentaire_bien);
         TextView textViewPrixBien = (TextView) findViewById(R.id.prix_bien);
+        TextView textViewNumeroSerie = (TextView) findViewById(R.id.numero_serie);
+
+        String nomBien = textViewNomBien.getText().toString();
+        String dateAchatSaisie = textViewDateAchatBien.getText().toString();
+        String commentaireBien = textViewCommentaireBien.getText().toString();
+        String descriptionBien = textViewDescriptionBien.getText().toString();
+        Float prixBien = Float.valueOf(textViewPrixBien.getText().toString());
+        String numeroSerie = textViewNumeroSerie.getText().toString();
+
+        Date dateSaisie = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String dateDeSaisie = sdf.format(dateSaisie);
+
+        Bien bien = new Bien(0,
+                nomBien,
+                dateDeSaisie,
+                dateAchatSaisie,
+                null,
+                commentaireBien,
+                prixBien,
+                null,
+                null,
+                null,
+                null,
+                1,
+                descriptionBien,
+                numeroSerie
+                );
+
+        Categorie cuisine = new Categorie(0,"Cuisine", "Tous mes objets de la cuisine");
+        Categorie salon = new Categorie(0,"Salon", "Tous mes objets du Salon");
+
+        CategorieDAO categorieDAO = new CategorieDAO(this);
+
+        categorieDAO.open();
+        categorieDAO.addCategorie(cuisine);
+        categorieDAO.addCategorie(salon);
+        categorieDAO.close();
+
+        Log.e("MiPa",bien.toString());
 
 
-        Log.e("MiPA","ici"+textViewNomBien.getText());
+        /*
+
+        int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String facture_bien,
+                String commentaire_bien, float prix_bien, Bitmap photo_bien_principal, Bitmap photo_bien_miniature1,
+                Bitmap photo_bien_miniature2, Bitmap photo_bien_miniature3, int id_categorie_bien, String description_bien, String numeroSerie_bien
+         */
     }
 
     @Override
@@ -126,9 +185,11 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         Spinner spinnerCategorie = (Spinner)parent;
 
         if(spinnerCategorie.getId() == R.id.select_categorie) {
-            Toast.makeText(getApplicationContext(), CategorieName[position], Toast.LENGTH_SHORT).show();
+            nomCategorieSelectionne = CategorieName[position];
+            //Toast.makeText(getApplicationContext(), CategorieName[position], Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(), ListeName[position], Toast.LENGTH_SHORT).show();
+            nomListeSelectionne = ListeName[position];
+            //Toast.makeText(getApplicationContext(), ListeName[position], Toast.LENGTH_SHORT).show();
         }
     }
 
