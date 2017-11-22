@@ -170,7 +170,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
     // A UTILISER A CHAQUE AJOUT DE BIEN OU DE CATEGORIE
     public void refreshAdapterView() {
-/*
+
         // On détruit l'affichage courant
         lv_listeBiens.destroyDrawingCache();
         lv_listeBiens.setVisibility(ListView.INVISIBLE);
@@ -179,29 +179,17 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         // ici clear de la liste des biens
         listeBiens.clear();
 
-        // Ouverture du BienDAO
+        // Ouverture du BienDAO, on retrouve la liste des biens de la liste désignée et on ferme le DAO
         bdao.open();
-
-        // on fait un curseur qui parcourt tous les biens pour la liste courante (je mets 1 par défaut)
-        Cursor c = bdao.getBiensByListe(1);
-        if (c.moveToFirst()) {
-            do {
-                // On construit un nouveau Bien et on l'ajoute à la liste
-                Bien bien = new Bien();
-                bien.setId_bien(c.getColumnIndex());
-
-                //listeBiens.add(bien);
-            }
-            while (c.moveToNext());
-        }
-        // on close curseur et dao
-        c.close();
+        // Je mets liste 1 par défaut, faudra rendre dynamique
+        listeBiens = bdao.getBiensByListe(1);
         bdao.close();
 
+        // On refait la bonne liste de correspondance
+
         // On refait un nouvel adapteur et on le set sur la liste
-        mAdapter = new BienAdapter(this, listeBiens);
-        lv_listeBiens.setAdapter(mAdapter);
-        */
+       // mAdapter = new BienAdapter(this);
+       // lv_listeBiens.setAdapter(mAdapter);
     }
 
     public void ajouterCategorie(View v) {
