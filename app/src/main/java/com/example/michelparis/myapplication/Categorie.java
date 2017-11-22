@@ -10,7 +10,7 @@ public class Categorie {
     private String nom_Categorie;
     private String description;
 
-    public Categorie(int id_Categorie, String categorie, String description) {
+    public Categorie(int id_Categorie, String nom_Categorie, String description) {
         this.id_Categorie = id_Categorie;
         this.nom_Categorie = nom_Categorie;
         this.description = description;
