@@ -48,15 +48,19 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
+        myToolbar.setTitle("Inventaire personnel");
+        setSupportActionBar(myToolbar);
+
+        lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
 
         maBaseSQLite = new MySQLite(this);
         maBaseSQLite.getInstance(this);
 
 
         Log.e("","miPa"+maBaseSQLite.getDatabaseName());
-
-        lv_listeBiens = (ListView)findViewById(R.id.listeBiens);
-
 
 //       bienDAO.addBien(bien1);
 
@@ -78,12 +82,8 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         listeBiens.add(bien5);
         listeBiens.add(bien6);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
-
-        myToolbar.setTitle("typuo");
-        setSupportActionBar(myToolbar);
+        String item;
+        mAdapter = new BienAdapter(this);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -100,8 +100,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             public void onClick(View v) {
             }
         });
-        String item;
-        mAdapter = new BienAdapter(this);
+
         mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(0).getId_categorie_bien());
         int cpt = 0;
         int idCat = 1;
@@ -147,23 +146,17 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-       /* if (id == R.id.youtube) {
-            Intent youtube = new Intent(Intent.ACTION_VIEW);
-            youtube.setData(Uri.parse("https://www.youtube.com/user/bibi300"));
-            startActivity(youtube);
+        if (id == R.id.liste1) {
+            Log.d("CLIC", "Liste 1");
         }
 
-        if (id == R.id.twitch) {
-            Intent twitch = new Intent(Intent.ACTION_VIEW);
-            twitch.setData(Uri.parse("https://go.twitch.tv/bibi300"));
-            startActivity(twitch);
+        if (id == R.id.liste2) {
+            Log.d("CLIC", "Liste 2");
         }
 
-        if (id == R.id.dailymotion) {
-            Intent dailymotion = new Intent(Intent.ACTION_VIEW);
-            dailymotion.setData(Uri.parse("https://www.dailymotion.com/bibi300"));
-            startActivity(dailymotion);
-        }*/
+        if (id == R.id.liste3) {
+            Log.d("CLIC", "Liste 3");
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

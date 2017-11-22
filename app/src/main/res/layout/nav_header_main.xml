@@ -25,20 +25,19 @@
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             app:srcCompat="@drawable/no_image" />
 
-        <TextView
-            android:id="@+id/nom"
+        <Button
+            android:id="@+id/btnAjouterCategorie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="90dp"
-            android:text="Un texte comme ça"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:layout_marginTop="0dp"
+            android:text="Ajouter une catégorie" />
 
-        <TextView
-            android:id="@+id/mail"
+        <Button
+            android:id="@+id/btnImportExport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="105dp"
-            android:text="Un autre texte" />
+            android:layout_marginTop="60dp"
+            android:text="Exporter une liste" />
 
     </FrameLayout>
 
