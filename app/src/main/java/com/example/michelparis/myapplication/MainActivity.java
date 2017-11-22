@@ -51,7 +51,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
-        myToolbar.setTitle("Inventaire personnel");
+        //myToolbar.setTitle("Inventaire personnel");
         setSupportActionBar(myToolbar);
 
         lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
@@ -91,9 +91,9 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        /*NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View headerview = navigationView.getHeaderView(0);
+        /*View headerview = navigationView.getHeaderView(0);
 
         headerview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,15 +146,18 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         int id = item.getItemId();
 
         if (id == R.id.liste1) {
-            Log.d("CLIC", "Liste 1");
+            Intent intent = new Intent(this, InfosBien.class);
+            startActivity(intent);
         }
 
         if (id == R.id.liste2) {
-            Log.d("CLIC", "Liste 2");
+            Intent intent = new Intent(this, InfosBien.class);
+            startActivity(intent);
         }
 
         if (id == R.id.liste3) {
-            Log.d("CLIC", "Liste 3");
+            Intent intent = new Intent(this, InfosBien.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
