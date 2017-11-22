@@ -39,9 +39,9 @@ public class MySQLite extends SQLiteOpenHelper {
     private static final String KEY_DATEACHAT = "date_achat";
     private static final String KEY_PRIX = "prix";
     private static final String KEY_PHOTO_PRINCIPALE = "photo_principale";
-    private static final String KEY_PHOTO_MINIATURE_1 = "photo_mini_1";
-    private static final String KEY_PHOTO_MINIATURE_2 = "photo_mini_2";
-    private static final String KEY_PHOTO_MINIATURE_3 = "photo_mini_3";
+    private static final String KEY_PHOTO_SEC1 = "photo_sec1";
+    private static final String KEY_PHOTO_SEC2 = "photo_sec2";
+    private static final String KEY_PHOTO_SEC3 = "photo_sec3";
     private static final String KEY_CATEGORIE_BIEN= "id_categorie";
 
     // Nom des colonnes de la table Catégorie
@@ -78,7 +78,7 @@ public class MySQLite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_LISTE);
 
         String CREATE_TABLE_BIEN = "CREATE TABLE " + TABLE_BIEN + "("
-                + KEY_ID_BIEN + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM + " TEXT, " + KEY_DATESAISIE + " TEXT, " + KEY_DATEACHAT + " TEXT," + KEY_NUMERO_SERIE + " TEXT, " + KEY_PRIX + " REAL, " + KEY_DESCRIPTION + " TEXT, " + KEY_COMMENTAIRE + " TEXT, " + KEY_CATEGORIE_BIEN + " INTEGER, FOREIGN KEY (" + KEY_CATEGORIE_BIEN + ") REFERENCES " + TABLE_CATEGORIE + "(" + KEY_ID_CATEGORIE + "))";
+                + KEY_ID_BIEN + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM + " TEXT, " + KEY_DATESAISIE + " TEXT, " + KEY_DATEACHAT + " TEXT," + KEY_NUMERO_SERIE + " TEXT, " + KEY_PRIX + " REAL, " + KEY_DESCRIPTION + " TEXT, " + KEY_COMMENTAIRE + " TEXT, " + KEY_CATEGORIE_BIEN + " INTEGER, " + KEY_PHOTO_PRINCIPALE + " TEXT," + KEY_PHOTO_SEC1 + " TEXT," + KEY_PHOTO_SEC2 + " TEXT," + KEY_PHOTO_SEC3 + " TEXT, FOREIGN KEY (" + KEY_CATEGORIE_BIEN + ") REFERENCES " + TABLE_CATEGORIE + "(" + KEY_ID_CATEGORIE + "))";
         db.execSQL(CREATE_TABLE_BIEN);
 
         String CREATE_TABLE_CATEGORIE = "CREATE TABLE " + TABLE_CATEGORIE + "("

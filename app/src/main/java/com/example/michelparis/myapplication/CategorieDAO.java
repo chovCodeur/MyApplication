@@ -87,4 +87,11 @@ public class CategorieDAO {
         return resultat;
     }
 
+    /**
+     * Méthode permettant l'ouverture de la table en lecture/ecriture
+     */
+    public void close(){
+        db.close();
+    }
+
 }
