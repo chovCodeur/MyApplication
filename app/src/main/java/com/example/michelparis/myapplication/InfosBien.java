@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class InfosBien extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
 
     // private BienDAO bdao;
-    // private CategorieDAO cdao;
+    private CategorieDAO cdao;
     private int id = 0;
     private Bien bien;
     private ImageButton photoPrincipale;
@@ -115,10 +115,9 @@ public class InfosBien extends FragmentActivity implements NavigationView.OnNavi
 
         // On met à jour le nom de la catégorie du bien
         categorieBien = (TextView) findViewById(R.id.categorieBien);
-        // cm.open();
-        categorieBien.setText(String.valueOf(bien.getId_categorie_bien()));
-        //categorieBien.setText(cm.getNomCategorieByIdBien(bien.getId_categorie_bien()));
-        //cm.close();
+        cdao.open();
+        categorieBien.setText(cdao.getNomCategorieByIdBien(bien.getId_categorie_bien()));
+        cdao.close();
 
         // On met à jour la description du bien
         descriptionBien = (TextView) findViewById(R.id.descriptionBien);
