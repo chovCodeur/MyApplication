@@ -56,6 +56,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
         lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
 
+        // WTF ça sert à rien ça ???
         maBaseSQLite = new MySQLite(this);
         maBaseSQLite.getInstance(this);
 
