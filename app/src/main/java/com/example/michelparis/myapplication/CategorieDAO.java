@@ -77,14 +77,18 @@ public class CategorieDAO {
         return db.delete(TABLE_NAME, where, whereArgs);
     }
 
-    public int recupCategeorieBien(Categorie categorie) {
-        int resultat=0;
-        String selectQuery = "SELECT " + NOM +" FROM " + TABLE_NAME + " WHERE " + ID + " = " +ID ;
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()) {
-            resultat = cursor.getInt(0);
+    public String getNomCategorieByIdBien(int id) {
+        String nom="";
+        String selectQuery = "SELECT " + NOM +" FROM " + TABLE_NAME + " WHERE " + ID + "=" +id ;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            nom = c.getString(c.getColumnIndex(NOM));
+            c.close();
         }
-        return resultat;
+
+        return nom;
     }
 
     /**
@@ -95,3 +99,4 @@ public class CategorieDAO {
     }
 
 }
+

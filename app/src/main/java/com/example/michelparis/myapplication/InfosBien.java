@@ -117,7 +117,7 @@ public class InfosBien extends FragmentActivity implements NavigationView.OnNavi
         categorieBien = (TextView) findViewById(R.id.categorieBien);
         // cm.open();
         categorieBien.setText(String.valueOf(bien.getId_categorie_bien()));
-        //categorieBien.setText(cm.getNomCategorieById(bien.getId_categorie_bien()));
+        //categorieBien.setText(cm.getNomCategorieByIdBien(bien.getId_categorie_bien()));
         //cm.close();
 
         // On met à jour la description du bien
