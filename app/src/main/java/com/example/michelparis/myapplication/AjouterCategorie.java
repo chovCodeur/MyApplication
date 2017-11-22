@@ -1,5 +1,6 @@
 package com.example.michelparis.myapplication;
 //
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -24,7 +25,6 @@ public class AjouterCategorie extends AppCompatActivity {
 
         editCategorie = (EditText) findViewById(R.id.editCategorie);
         editDescription = (EditText) findViewById(R.id.editDescription);
-
         addCategorie = (Button) findViewById(R.id.buttonAddCategorie);
         addCategorie.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +32,9 @@ public class AjouterCategorie extends AppCompatActivity {
 
                 String categorie = editCategorie.getText().toString();
                 String description = editDescription.getText().toString();
+                Intent intent = new Intent(AjouterCategorie.this, MainActivity.class);
+                    startActivity(intent);
+
             }
         });
 
