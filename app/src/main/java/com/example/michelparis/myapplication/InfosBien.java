@@ -12,7 +12,9 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
 
 public class InfosBien extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
 
-    // private BienDAO bdao;
+    private BienDAO bdao;
     private CategorieDAO cdao;
     private int id = 0;
     private Bien bien;
@@ -47,7 +49,7 @@ public class InfosBien extends FragmentActivity implements NavigationView.OnNavi
     private TextView prix;
     private TextView numeroSerie;
     private TextView commentaire;
-    //private DrawerLayout drawer;
+    private DrawerLayout drawer;
     private ImageButton photoMini1;
     private ImageButton photoMini2;
     private ImageButton photoMini3;
@@ -61,18 +63,11 @@ public class InfosBien extends FragmentActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infos_bien);
 
-        // Retrieve and cache the system's default "short" animation time.
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        listes.add("test 1");
-        listes.add("test 2");
-
-        /*Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
-
-        myToolbar.setTitle("typuo");
-        setSupportActionBar(myToolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -88,9 +83,11 @@ public class InfosBien extends FragmentActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
             }
-        });*/
+        });
 
-        bien = new Bien(1, "Lunettes de soleil", "12-11-2017", "23-02-2012", "test.pdf", "Ces lunettes ont le verre droit rayé", 120.99f, null,null,null,null, 1,"Ce sont des lunettes de soleil Rayban de type Aviator","123456789");
+        bdao = new BienDAO(this);
+
+        //bien = new Bien(1, "Lunettes de soleil", "12-11-2017", "23-02-2012", "test.pdf", "Ces lunettes ont le verre droit rayé", 120.99f, null,null,null,null, 1,"Ce sont des lunettes de soleil Rayban de type Aviator","123456789");
 
         Bundle extras = getIntent().getExtras();
 
@@ -99,11 +96,11 @@ public class InfosBien extends FragmentActivity implements NavigationView.OnNavi
             Log.d("ID BIEN", String.valueOf(id));
         }
 
-        /*if(id != 0) {
+        if(id != 0) {
             bdao.open();
             bien = bdao.getBien(id);
             bdao.close();
-        }*/
+        }
 
         // Mise à jour de l'image principale
         photoPrincipale = (ImageButton) findViewById(R.id.photoPrincipaleBien);
