@@ -1,6 +1,7 @@
 package com.example.michelparis.myapplication;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,6 +25,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     private DrawerLayout drawer;
     private BienAdapter mAdapter;
     private ListView lv_listeBiens;
+    private BienDAO bdao;
     public MySQLite maBaseSQLite;
 
     //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien,
@@ -164,6 +166,42 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    // A UTILISER A CHAQUE AJOUT DE BIEN OU DE CATEGORIE
+    public void refreshAdapterView() {
+/*
+        // On détruit l'affichage courant
+        lv_listeBiens.destroyDrawingCache();
+        lv_listeBiens.setVisibility(ListView.INVISIBLE);
+        lv_listeBiens.setVisibility(ListView.VISIBLE);
+
+        // ici clear de la liste des biens
+        listeBiens.clear();
+
+        // Ouverture du BienDAO
+        bdao.open();
+
+        // on fait un curseur qui parcourt tous les biens pour la liste courante (je mets 1 par défaut)
+        Cursor c = bdao.getBiensByListe(1);
+        if (c.moveToFirst()) {
+            do {
+                // On construit un nouveau Bien et on l'ajoute à la liste
+                Bien bien = new Bien();
+                bien.setId_bien(c.getColumnIndex());
+
+                //listeBiens.add(bien);
+            }
+            while (c.moveToNext());
+        }
+        // on close curseur et dao
+        c.close();
+        bdao.close();
+
+        // On refait un nouvel adapteur et on le set sur la liste
+        mAdapter = new BienAdapter(this, listeBiens);
+        lv_listeBiens.setAdapter(mAdapter);
+        */
     }
 
     public void ajouterCategorie(View v) {
