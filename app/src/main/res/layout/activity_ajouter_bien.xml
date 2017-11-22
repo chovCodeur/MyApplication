@@ -31,11 +31,6 @@
     tools:context="com.example.michelparis.myapplication.AjouterBien"
     android:weightSum="1">
 
-   <!-- <include
-        layout="@layout/app_bar_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" /> -->
-
 
  <EditText
      android:id="@+id/nom_bien"
@@ -49,12 +44,14 @@
     <Spinner
         android:id="@+id/select_liste"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_weight="0.11" />
 
     <Spinner
         android:id="@+id/select_categorie"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_weight="0.12" />
 
     <EditText
         android:id="@+id/date_achat_bien"

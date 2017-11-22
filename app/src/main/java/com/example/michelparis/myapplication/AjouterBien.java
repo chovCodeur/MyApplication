@@ -151,17 +151,7 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-/*
 
-    private String facture_bien;
-
-    private Bitmap photo_bien_principal;
-    private Bitmap photo_bien_miniature1;
-    private Bitmap photo_bien_miniature2;
-    private Bitmap photo_bien_miniature3;
-    private int id_categorie_bien;
-    private String numeroSerie_bien;
- */
     public void onClickAjouterBien(View view){
         TextView textViewNomBien = (TextView) findViewById(R.id.nom_bien);
         TextView textViewDateAchatBien = (TextView) findViewById(R.id.date_achat_bien);
