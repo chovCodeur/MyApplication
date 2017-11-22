@@ -1,6 +1,7 @@
 package com.example.michelparis.myapplication;
 //
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -70,6 +71,9 @@ public class ModifierPersonne extends AppCompatActivity {
                 String mail = editMail.getText().toString();
                 String phoneNumber = editPhoneNumber.getText().toString();
                 String date = editTextdate.getText().toString();
+
+                Intent intent = new Intent(ModifierPersonne.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 

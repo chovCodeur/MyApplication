@@ -91,7 +91,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        /*NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerview = navigationView.getHeaderView(0);
 
@@ -99,7 +99,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             @Override
             public void onClick(View v) {
             }
-        });
+        });*/
 
         mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(0).getId_categorie_bien());
         int cpt = 0;
@@ -122,7 +122,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         lv_listeBiens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Intent i = new Intent(getApplicationContext(), InfosBien.class);
                 Log.d("id-debugkt",String.valueOf(listCorrespondance.get(position)));
                 i.putExtra("IDBIEN", (position)-listCorrespondance.get((position)));
@@ -163,9 +162,12 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         return true;
     }
 
-    public void testAfficherBien(View view){
-        Intent testAfficherBien = new Intent(this, InfosBien.class);
-        startActivity(testAfficherBien);
+    public void ajouterCategorie(View v) {
+        Log.d("TEST", "Coucou du bouton 1");
+    }
+
+    public void exporterListe(View v) {
+        Log.d("TEST", "Coucou du bouton 2");
     }
 
 }
