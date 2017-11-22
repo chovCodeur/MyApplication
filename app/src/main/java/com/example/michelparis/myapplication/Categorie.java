@@ -29,18 +29,26 @@ public class Categorie {
         return description;
     }
 
+
+    public void setDescription(String description){
+        this.description = description;
+    }
+
     public String getNom_Categorie() {
 
         return nom_Categorie;
     }
-
     public void setNom_Categorie(String  nom_Categorie) {
         this.nom_Categorie = nom_Categorie;
     }
-    public String getDescription_Categorie(){
-        return  description;
+
+    public String toString() {
+        return "Categorie{" +
+                "id_Categorie=" + id_Categorie +
+                ", nom_Categorie='" + nom_Categorie + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
-    public void setDescription(String description){
-        this.description = description;
-    }
+
+
 }

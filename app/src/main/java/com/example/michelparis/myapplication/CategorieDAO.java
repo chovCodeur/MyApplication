@@ -41,7 +41,7 @@ public class CategorieDAO {
     public long addCategorie(Categorie categorie){
         ContentValues values = new ContentValues();
         values.put(NOM,categorie.getNom_Categorie());
-        values.put(DESCRIPTION, categorie.getDescription_Categorie());
+        values.put(DESCRIPTION, categorie.getDescription());
         return db.insert(TABLE_NAME, null, values);
     }
 
