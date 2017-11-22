@@ -86,6 +86,7 @@ public class InfosBien extends FragmentActivity implements NavigationView.OnNavi
         });
 
         bdao = new BienDAO(this);
+        cdao = new CategorieDAO(this);
 
         //bien = new Bien(1, "Lunettes de soleil", "12-11-2017", "23-02-2012", "test.pdf", "Ces lunettes ont le verre droit rayé", 120.99f, null,null,null,null, 1,"Ce sont des lunettes de soleil Rayban de type Aviator","123456789");
 
