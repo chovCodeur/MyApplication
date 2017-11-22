@@ -22,189 +22,192 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_marginTop="60dp">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <RelativeLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_marginTop="60dp">
 
-                <com.example.michelparis.myapplication.TouchHighlightImageButton
-                    android:id="@+id/photoPrincipaleBien"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_marginTop="20dp"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/no_image" />
-
-                <TextView
-                    android:id="@+id/nomBien"
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="Nom du bien"
-                    android:textAlignment="center"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/categorieBien"
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/nomBien"
-                    android:text="TextView"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    tools:text="Catégorie du bien" />
-
-                <TextView
-                    android:id="@+id/informationsBien"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Informations sur le bien"
-                    android:textAlignment="center"
-                    android:textSize="30sp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_below="@+id/Photo3Bien"
-                    android:layout_alignParentStart="true" />
-
-                <TextView
-                    android:id="@+id/descriptionBien"
-                    android:layout_width="230dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/categorieBien"
-                    android:text="Ceci est la description du bien de l'utilisateur de cette application."
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:id="@+id/commentairesBien"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Cette zone est réservée à d'éventuels commentaires concernant l'objet saisi par son propriétaire."
-                    android:layout_below="@+id/labelCommentaires"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="11dp" />
-
-                <TextView
-                    android:id="@+id/labelCommentaires"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:text="Commentaires :"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/numeroSerieBien"
-                    android:layout_alignParentStart="true" />
-
-                <TextView
-                    android:id="@+id/textViewListesBien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/informationsBien"
-                    android:text="Listes d'appartenance :"
-                    android:textSize="18sp" />
-
-                <Spinner
-                    android:id="@+id/spinnerListesAppartenanceBien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/textViewListesBien"
-                    android:dropDownWidth="match_parent" />
-
-                <TextView
-                    android:id="@+id/dateAcquisitionBien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Date d'acquisition : "
-                    android:textSize="18sp"
-                    android:layout_below="@+id/spinnerListesAppartenanceBien"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="15dp" />
-
-                <TextView
-                    android:id="@+id/numeroSerieBien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:text="Numéro de série : "
-                    android:textSize="18sp"
-                    android:layout_below="@+id/prixBien"
-                    android:layout_alignParentStart="true" />
-
-                <TextView
-                    android:id="@+id/prixBien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Prix du bien : "
-                    android:textSize="18sp"
-                    android:layout_below="@+id/dateSaisieBien"
-                    android:layout_alignParentStart="true" />
-
-                <TextView
-                    android:id="@+id/dateSaisieBien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="23dp"
-                    android:text="Date de saisie : "
-                    android:textSize="18sp"
-                    android:layout_below="@+id/dateAcquisitionBien"
-                    android:layout_alignParentStart="true" />
-
-                <com.example.michelparis.myapplication.TouchHighlightImageButton
-                    android:id="@+id/Photo3Bien"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignTop="@+id/Photo2Bien"
-                    android:layout_marginRight="20dp"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/no_image" />
-
-                <com.example.michelparis.myapplication.TouchHighlightImageButton
-                    android:id="@+id/Photo2Bien"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_below="@+id/buttonFactureBien"
-                    android:layout_centerHorizontal="true"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/no_image" />
-
-                <com.example.michelparis.myapplication.TouchHighlightImageButton
-                    android:id="@+id/Photo1Bien"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/buttonFactureBien"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/no_image" />
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="60dp">
 
-                <Button
-                    android:id="@+id/buttonFactureBien"
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:layout_alignStart="@+id/descriptionBien"
-                    android:layout_below="@+id/descriptionBien"
-                    android:layout_marginStart="21dp"
-                    android:layout_marginBottom="30dp"
-                    android:text="Afficher la facture" />
-            </RelativeLayout>
-        </ScrollView>
+                    <com.example.michelparis.myapplication.TouchHighlightImageButton
+                        android:id="@+id/photoPrincipaleBien"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="20dp"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/no_image" />
+
+                    <TextView
+                        android:id="@+id/nomBien"
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="Nom du bien"
+                        android:textAlignment="center"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/categorieBien"
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/nomBien"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        tools:text="Catégorie du bien" />
+
+                    <TextView
+                        android:id="@+id/informationsBien"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Informations sur le bien"
+                        android:textAlignment="center"
+                        android:textSize="30sp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_below="@+id/Photo3Bien"
+                        android:layout_alignParentStart="true" />
+
+                    <TextView
+                        android:id="@+id/descriptionBien"
+                        android:layout_width="230dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/categorieBien"
+                        android:text="Ceci est la description du bien de l'utilisateur de cette application."
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/commentairesBien"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Cette zone est réservée à d'éventuels commentaires concernant l'objet saisi par son propriétaire."
+                        android:layout_below="@+id/labelCommentaires"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="11dp" />
+
+                    <TextView
+                        android:id="@+id/labelCommentaires"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:text="Commentaires :"
+                        android:textSize="18sp"
+                        android:layout_below="@+id/numeroSerieBien"
+                        android:layout_alignParentStart="true" />
+
+                    <TextView
+                        android:id="@+id/textViewListesBien"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/informationsBien"
+                        android:text="Listes d'appartenance :"
+                        android:textSize="18sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerListesAppartenanceBien"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/textViewListesBien"
+                        android:dropDownWidth="match_parent" />
+
+                    <TextView
+                        android:id="@+id/dateAcquisitionBien"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Date d'acquisition : "
+                        android:textSize="18sp"
+                        android:layout_below="@+id/spinnerListesAppartenanceBien"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="15dp" />
+
+                    <TextView
+                        android:id="@+id/numeroSerieBien"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:text="Numéro de série : "
+                        android:textSize="18sp"
+                        android:layout_below="@+id/prixBien"
+                        android:layout_alignParentStart="true" />
+
+                    <TextView
+                        android:id="@+id/prixBien"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Prix du bien : "
+                        android:textSize="18sp"
+                        android:layout_below="@+id/dateSaisieBien"
+                        android:layout_alignParentStart="true" />
+
+                    <TextView
+                        android:id="@+id/dateSaisieBien"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="23dp"
+                        android:text="Date de saisie : "
+                        android:textSize="18sp"
+                        android:layout_below="@+id/dateAcquisitionBien"
+                        android:layout_alignParentStart="true" />
+
+                    <com.example.michelparis.myapplication.TouchHighlightImageButton
+                        android:id="@+id/Photo3Bien"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@+id/Photo2Bien"
+                        android:layout_marginRight="20dp"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/no_image" />
+
+                    <com.example.michelparis.myapplication.TouchHighlightImageButton
+                        android:id="@+id/Photo2Bien"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_below="@+id/buttonFactureBien"
+                        android:layout_centerHorizontal="true"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/no_image" />
+
+                    <com.example.michelparis.myapplication.TouchHighlightImageButton
+                        android:id="@+id/Photo1Bien"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/buttonFactureBien"
+                        android:layout_marginLeft="20dp"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/no_image" />
+
+                    <Button
+                        android:id="@+id/buttonFactureBien"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_alignStart="@+id/descriptionBien"
+                        android:layout_below="@+id/descriptionBien"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginBottom="30dp"
+                        android:text="Afficher la facture" />
+                </RelativeLayout>
+            </ScrollView>
 
     <ImageView
         android:id="@+id/expanded_image"
@@ -213,5 +216,5 @@
         android:visibility="invisible"
         android:contentDescription="@string/description_zoom_touch_close" />
 
-    </FrameLayout>
+    </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

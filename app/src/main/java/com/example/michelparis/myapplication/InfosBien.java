@@ -33,7 +33,7 @@ import java.util.ArrayList;
  * Created by Rodnor on 11/11/2017.
  */
 
-public class InfosBien extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
+public class InfosBien extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
 
     private BienDAO bdao;
     private CategorieDAO cdao;
@@ -68,6 +68,7 @@ public class InfosBien extends FragmentActivity implements NavigationView.OnNavi
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
+        setSupportActionBar(myToolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
