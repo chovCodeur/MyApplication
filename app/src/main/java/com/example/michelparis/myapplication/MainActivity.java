@@ -30,14 +30,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     private PersonneDAO pdao;
     private int idCurrentList=1;
 
-    //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien,
-    // String commentaire_bien, float prix_bien, int id_categorie_bien, String description_bien, String numeroSerie_bien
-    Bien bien1 = new Bien(1,"bien1","19/11/2017","","","",0f,null,null,null,null,1,"ddddd","");
-    Bien bien2 = new Bien(2,"bien2","19/11/2017","","","",0f,null,null,null,null,1,"aaaaa","");
-    Bien bien3 = new Bien(3,"bien3","19/11/2017","","","",0f,null,null,null,null,1,"vbbbb","");
-    Bien bien4 = new Bien(4,"bien4","19/11/2017","","","",0f,null,null,null,null,1,"ezezeez","");
-    Bien bien5 = new Bien(5,"bien5","19/11/2017","","","",0f,null,null,null,null,2,"zeezfefz","");
-    Bien bien6 = new Bien(6,"bien6","19/11/2017","","","",0f,null,null,null,null,2,"zeezez","");
+
 
     //int id_Categorie, String categorie, String description
     Categorie categorie1 = new Categorie(1, "Categorie 1","");
@@ -74,12 +67,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             refreshAdapterView();
         }
 
-        listeBiens.add(bien1);
-        listeBiens.add(bien2);
-        listeBiens.add(bien3);
-        listeBiens.add(bien4);
-        listeBiens.add(bien5);
-        listeBiens.add(bien6);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -209,7 +196,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
 
         pdao.open();
-        pdao.modPersonne(1, "nom", "prenom", "12/04/1995", "adresse", "mail", "0607");
+        pdao.modPersonne(1, "Jacky", "Philippe", "12/04/1995", "10 rue de la verge", "jk.phil@hotmail.com", "0607548796");
         pdao.close();
 
         Liste liste1 = new Liste(1,"Maison","La liste de ma maison");
@@ -217,9 +204,9 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         Liste liste3 = new Liste(3,"Magasin","La liste de mon magasin");
 
         ldao.open();
-        /*ldao.addListe(liste1);
-        ldao.addListe(liste2);
-        ldao.addListe(liste3);*/
+        ldao.ajouterListe(liste1);
+        ldao.ajouterListe(liste2);
+        ldao.ajouterListe(liste3);
         ldao.close();
 
         CategorieDAO categorieDAO = new CategorieDAO(this);
@@ -229,11 +216,33 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
             Categorie cuisine = new Categorie(0, "Cuisine", "Tous mes objets de la cuisine");
             Categorie salon = new Categorie(0, "Salon", "Tous mes objets du Salon");
+            Categorie chambre = new Categorie(0, "Chambre", "Tous mes objets de la chambre");
             categorieDAO.addCategorie(cuisine);
             categorieDAO.addCategorie(salon);
+            categorieDAO.addCategorie(chambre);
 
         }
         categorieDAO.close();
+
+        //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String facture_bien,
+        //String commentaire_bien, float prix_bien, Bitmap photo_bien_principal, Bitmap photo_bien_miniature1,
+         //       Bitmap photo_bien_miniature2, Bitmap photo_bien_miniature3, int id_categorie_bien, String description_bien, String numeroSerie_bien
+
+        Bien bien1 = new Bien(1,"Lunette","19/11/2017","21/11/2017","","Légèrement rayées sur le coté",251.6f,null,null,null,null,3,"Lunette de marque Rayban","");
+        Bien bien2 = new Bien(2,"Frigo connecté SAMSUNG","19/11/2017","23/11/2017","","",3599.99f,null,null,null,null,1,"Samsung Family Hub","45DG425845DA");
+        Bien bien3 = new Bien(3,"Ordinateur portable","19/11/2017","01/12/2017","","Manque une touche",1099.99f,null,null,null,null,2,"PC Portable Gamer de marque MSI","515D-TGH2336");
+        Bien bien4 = new Bien(4,"Vaisselle en porcelaine","20/11/2017","03/06/2017","","Vaisselle de Mémé",6902.30f,null,null,null,null,1,"En porcelaine chinoise datée de 1640","");
+        Bien bien5 = new Bien(5,"Robot patissier","21/11/2017","19/05/2016","","",350f,null,null,null,null,1,"Marque Kenwood","");
+        Bien bien6 = new Bien(6,"Home Cinema","21/11/2017","19/01/2017","","Une enceinte grésille un peu",400f,null,null,null,null,2,"Marque Pioneer","");
+
+        bdao.open();
+        bdao.addBien(bien1);
+        bdao.addBien(bien2);
+        bdao.addBien(bien3);
+        bdao.addBien(bien4);
+        bdao.addBien(bien5);
+        bdao.addBien(bien6);
+        bdao.close();
     }
 
 }
