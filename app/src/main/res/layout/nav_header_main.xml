@@ -17,14 +17,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/imageView"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_gravity="center"
             android:layout_marginTop="-50dp"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            app:srcCompat="@drawable/no_image" />
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/no_image"
+            android:onClick="modifierPersonne"/>
 
         <Button
             android:id="@+id/btnAjouterCategorie"
