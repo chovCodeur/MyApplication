@@ -72,7 +72,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         listeBiens.add(bien6);
 
 
-        mAdapter = new BienAdapter(this);
+
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -135,7 +135,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         lv_listeBiens.destroyDrawingCache();
         lv_listeBiens.setVisibility(ListView.INVISIBLE);
         lv_listeBiens.setVisibility(ListView.VISIBLE);
-
+        mAdapter = new BienAdapter(this);
         // ici clear de la liste des biens
         listeBiens.clear();
 
