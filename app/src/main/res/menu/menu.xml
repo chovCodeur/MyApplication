@@ -9,7 +9,7 @@
         android:id="@+id/home"
         android:title="home"
         android:orderInCategory="100"
-        android:icon="@android:drawable/ic_menu_revert"
+        android:icon="@drawable/home"
         app:showAsAction="always" />
 
     <item
