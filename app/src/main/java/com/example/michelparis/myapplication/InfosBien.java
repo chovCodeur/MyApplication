@@ -94,7 +94,7 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
         Bundle extras = getIntent().getExtras();
 
         if(extras != null) {
-            id = (extras.getInt("IDBIEN"));
+            id = extras.getInt("IDBIEN");
             Log.d("ID BIEN", String.valueOf(id));
         }
 

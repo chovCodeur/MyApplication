@@ -26,7 +26,9 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     private BienAdapter mAdapter;
     private ListView lv_listeBiens;
     private BienDAO bdao;
-    public MySQLite maBaseSQLite;
+    private ListeDAO ldao;
+    private PersonneDAO pdao;
+    private int idCurrentList=1;
 
     //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien,
     // String commentaire_bien, float prix_bien, int id_categorie_bien, String description_bien, String numeroSerie_bien
@@ -58,11 +60,17 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
         lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
 
-        PersonneDAO personneDAO = new PersonneDAO(this);
+        pdao = new PersonneDAO(this);
+        ldao = new ListeDAO(this);
+        bdao = new BienDAO(this);
 
-        personneDAO.open();
-        personneDAO.modPersonne(1, "nom", "prenom", "12/04/1995", "adresse", "mail", "0607");
-        personneDAO.close();
+       // ldao.open();
+        //listeBiens = ldao.getListeById(idCurrentList);
+       // ldao.close();
+
+        pdao.open();
+        pdao.modPersonne(1, "nom", "prenom", "12/04/1995", "adresse", "mail", "0607");
+        pdao.close();
 
         listeBiens.add(bien1);
         listeBiens.add(bien2);
@@ -70,9 +78,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         listeBiens.add(bien4);
         listeBiens.add(bien5);
         listeBiens.add(bien6);
-
-
-
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -109,19 +114,18 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         int id = item.getItemId();
 
         if (id == R.id.liste1) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("IDLISTE", id);
-            startActivity(intent);
+            idCurrentList = 1;
+            refreshAdapterView();
         }
 
         if (id == R.id.liste2) {
-            Intent intent = new Intent(this, InfosBien.class);
-            startActivity(intent);
+            idCurrentList = 2;
+            refreshAdapterView();
         }
 
         if (id == R.id.liste3) {
-            Intent intent = new Intent(this, InfosBien.class);
-            startActivity(intent);
+            idCurrentList = 3;
+            refreshAdapterView();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -139,11 +143,12 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         mAdapter = new BienAdapter(this);
         // ici clear de la liste des biens
         listeBiens.clear();
+        listCorrespondance.clear();
 
         // Ouverture du BienDAO, on retrouve la liste des biens de la liste désignée et on ferme le DAO
         bdao.open();
         // Je mets liste 1 par défaut, faudra rendre dynamique
-        listeBiens = bdao.getBiensByListe(1);
+        listeBiens = bdao.getBiensByListe(idCurrentList);
         bdao.close();
 
         // On refait la bonne liste de correspondance
