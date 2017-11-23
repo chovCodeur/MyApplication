@@ -135,7 +135,8 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         int id = item.getItemId();
 
         if (id == R.id.liste1) {
-            Intent intent = new Intent(this, InfosBien.class);
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("IDLISTE", id);
             startActivity(intent);
         }
 
