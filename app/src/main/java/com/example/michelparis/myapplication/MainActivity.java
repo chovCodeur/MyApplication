@@ -240,12 +240,12 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
         CategorieDAO categorieDAO = new CategorieDAO(this);
         categorieDAO.open();
-            Categorie cuisine = new Categorie(0, "Cuisine", "Tous mes objets de la cuisine");
-            Categorie salon = new Categorie(0, "Salon", "Tous mes objets du Salon");
-            Categorie chambre = new Categorie(0, "Chambre", "Tous mes objets de la chambre");
-            categorieDAO.addCategorie(cuisine);
-            categorieDAO.addCategorie(salon);
-            categorieDAO.addCategorie(chambre);
+        Categorie cuisine = new Categorie(0, "Cuisine", "Tous mes objets de la cuisine");
+        Categorie salon = new Categorie(0, "Salon", "Tous mes objets du Salon");
+        Categorie chambre = new Categorie(0, "Chambre", "Tous mes objets de la chambre");
+        categorieDAO.addCategorie(cuisine);
+        categorieDAO.addCategorie(salon);
+        categorieDAO.addCategorie(chambre);
         categorieDAO.close();
 
         //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String facture_bien,
@@ -259,6 +259,8 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         Bien bien5 = new Bien(5,"Robot patissier","21/11/2017","19/05/2016","","",350f,null,null,null,null,1,"Marque Kenwood","");
         Bien bien6 = new Bien(6,"Home Cinema","21/11/2017","19/01/2017","","Une enceinte grésille un peu",400f,null,null,null,null,2,"Marque Pioneer","");
 
+
+
         bdao.open();
         bdao.addBien(bien1, 1);
         bdao.addBien(bien2, 1);
@@ -267,11 +269,18 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         bdao.addBien(bien5, 1);
         bdao.addBien(bien6, 1);
 
-        bdao.addBien(bien2, 2);
-        bdao.addBien(bien3, 2);
+        Bien bienTemp = bdao.getBien(1);
+        bdao.addBien(bienTemp, 2);
 
-        bdao.addBien(bien4, 3);
-        bdao.addBien(bien5, 3);
+        bienTemp = bdao.getBien(2);
+        bdao.addBien(bienTemp, 2);
+
+        bienTemp = bdao.getBien(3);
+        bdao.addBien(bienTemp, 3);
+
+        bienTemp = bdao.getBien(4);
+        bdao.addBien(bienTemp, 3);
+
         bdao.close();
     }
 }
