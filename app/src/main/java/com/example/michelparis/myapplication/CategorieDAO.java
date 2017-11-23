@@ -84,13 +84,9 @@ public class CategorieDAO {
     public String getNomCategorieByIdBien(int id) {
         String nom="";
         String selectQuery = "SELECT " + NOM +" FROM " + TABLE_NAME + " WHERE " + ID + "= " +id ;
-
-        Log.e("MiPa","avant :"+selectQuery);
         Cursor c = db.rawQuery(selectQuery, null);
 
         if (c.moveToFirst()) {
-            Log.e("MiPa","dans le IF");
-
             nom = c.getString(c.getColumnIndex(NOM));
             c.close();
         }

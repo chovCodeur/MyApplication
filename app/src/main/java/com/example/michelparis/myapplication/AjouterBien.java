@@ -218,7 +218,7 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
 
         bienDAO.open();
 
-        bienDAO.addBien(bien);
+        //bienDAO.addBien(bien);
         Log.e("MiPa",bien.toString());
 
         bienDAO.close();
