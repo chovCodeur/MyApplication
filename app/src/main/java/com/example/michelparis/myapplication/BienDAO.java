@@ -7,6 +7,7 @@ package com.example.michelparis.myapplication;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -159,7 +160,7 @@ public class BienDAO {
      */
     public ArrayList<Bien> getBiensByListe(int id_liste){
         ArrayList<Bien> liste = new ArrayList<Bien>();
-        Cursor curseurBien = db.rawQuery("SELECT * FROM "+TABLE_NAME+" JOIN APPARTIENT ON APPARTIENT.id_bien="+TABLE_NAME+"."+ID+" WHERE id_liste = "+id_liste, null);
+        Cursor curseurBien = db.rawQuery("SELECT * FROM "+TABLE_NAME+" JOIN APPARTIENT ON APPARTIENT.id_bien="+TABLE_NAME+"."+ID+" WHERE id_liste = "+id_liste+" ORDER BY "+IDCATEGORIE, null);
 
         Bien bienTemp;
         if (curseurBien.moveToFirst()) {
@@ -212,9 +213,8 @@ public class BienDAO {
         return db.insert(TABLE_APPARTIENT,null,values);
     }
 
-    public int compterBienEnBase(){
-
-        return 0;
+    public long compterBienEnBase(){
+        return DatabaseUtils.queryNumEntries(db, TABLE_NAME);
     }
 }
 

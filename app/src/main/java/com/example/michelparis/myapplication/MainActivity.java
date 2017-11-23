@@ -55,15 +55,19 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         cdao = new CategorieDAO(this);
 
 
-        remplirBeDeForTest();
+        bdao.open();
+        if(bdao.compterBienEnBase()<=0){
+            remplirBeDeForTest();
+        }
 
+        bdao.close();
 
         Bundle extras = getIntent().getExtras();
 
-        if(extras != null) {
+       /* if(extras != null) {
             idCurrentList = extras.getInt("IDLISTE");
             refreshAdapterView();
-        }
+        } */
 
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -159,7 +163,9 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         bdao.close();
 
         // On refait la bonne liste de correspondance
-        mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(0).getId_categorie_bien());
+        cdao.open();
+        mAdapter.addSectionHeaderItem("Catégorie : "+cdao.getNomCategorieByIdBien(listeBiens.get(0).getId_bien()));
+        cdao.close();
         int cpt = 0;
         int idCat = 1;
         String item;
@@ -167,7 +173,9 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
             if (idCat!=listeBiens.get(i).getId_categorie_bien()) {
                 cpt++;
-                mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(i).getId_categorie_bien());
+                cdao.open();
+                mAdapter.addSectionHeaderItem("Catégorie : "+cdao.getNomCategorieByIdBien(listeBiens.get(i).getId_bien()));
+                cdao.close();
 
             }
             listCorrespondance.put(mAdapter.getCount(),Integer.valueOf(cpt));

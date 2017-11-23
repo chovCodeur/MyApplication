@@ -16,7 +16,7 @@ public class MySQLite extends SQLiteOpenHelper {
     // Version de la BDD
     private static final int DATABASE_VERSION = 1;
     // Nom de la BDD
-    private static final String DATABASE_NAME = "devvvv2.sqlite";
+    private static final String DATABASE_NAME = "keke.sqlite";
     // Nom des Tables de la BDD
     private static final String TABLE_LISTE = "LISTE";
     private static final String TABLE_BIEN = "BIEN";
