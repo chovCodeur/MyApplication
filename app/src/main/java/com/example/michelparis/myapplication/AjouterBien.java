@@ -1,11 +1,14 @@
 package com.example.michelparis.myapplication;
 
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,14 +67,13 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         //categorieName = new String[]{"A","B"};
 
         categorieDAO.close();
+/*
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
+        setSupportActionBar(myToolbar);
+*/
 
-        // Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-
-        //spinnerListe.
-        //myToolbar.setTitle("NomAppli");
-        //setSupportActionBar(myToolbar);
-        //    TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        //  toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
         spinnerCategorie =(Spinner) findViewById(R.id.select_categorie);
         spinnerCategorie.setOnItemSelectedListener(this);
 
@@ -85,17 +87,16 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         arrayAdapterListe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategorie.setAdapter(arrayAdapterListe);
 
-
+        /*
         spinnerListe = (Spinner) findViewById(R.id.select_liste);
         spinnerListe.setOnItemSelectedListener(this);
         ArrayAdapter arrayAdapterCategorie = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listeName);
         arrayAdapterCategorie.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerListe.setAdapter(arrayAdapterCategorie);
+*/
 
-
-
-/**
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+/*
+         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
          ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
          this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
          drawer.setDrawerListener(toggle);
@@ -103,15 +104,14 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
 
          NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
          navigationView.setNavigationItemSelectedListener(this);
-         View headerview = navigationView.getHeaderView(0);
+        /* View headerview = navigationView.getHeaderView(0);
 
          headerview.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
         }
         });
-*/
-
+        */
 
     }
 
@@ -129,23 +129,20 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-       /* if (id == R.id.youtube) {
-            Intent youtube = new Intent(Intent.ACTION_VIEW);
-            youtube.setData(Uri.parse("https://www.youtube.com/user/bibi300"));
-            startActivity(youtube);
+        if (id == R.id.liste1) {
+            Intent intent = new Intent(this, InfosBien.class);
+            startActivity(intent);
         }
 
-        if (id == R.id.twitch) {
-            Intent twitch = new Intent(Intent.ACTION_VIEW);
-            twitch.setData(Uri.parse("https://go.twitch.tv/bibi300"));
-            startActivity(twitch);
+        if (id == R.id.liste2) {
+            Intent intent = new Intent(this, InfosBien.class);
+            startActivity(intent);
         }
 
-        if (id == R.id.dailymotion) {
-            Intent dailymotion = new Intent(Intent.ACTION_VIEW);
-            dailymotion.setData(Uri.parse("https://www.dailymotion.com/bibi300"));
-            startActivity(dailymotion);
-        }*/
+        if (id == R.id.liste3) {
+            Intent intent = new Intent(this, InfosBien.class);
+            startActivity(intent);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -212,7 +209,7 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
 
         bienDAO.open();
 
-        bienDAO.addBien(bien);
+       // bienDAO.addBien(bien);
         Log.e("MiPa",bien.toString());
 
         bienDAO.close();
