@@ -200,4 +200,9 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         Log.d("TEST", "Coucou du bouton 2");
     }
 
+    public void modifierPersonne(View v) {
+        Intent intent = new Intent(this, ModifierPersonne.class);
+        startActivity(intent);
+    }
+
 }
