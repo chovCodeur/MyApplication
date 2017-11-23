@@ -150,7 +150,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
         // Ouverture du BienDAO, on retrouve la liste des biens de la liste désignée et on ferme le DAO
         bdao.open();
-        // Je mets liste 1 par défaut, faudra rendre dynamique
+        // Récupération de la liste en fonction l'id
         listeBiens = bdao.getBiensByListe(idCurrentList);
         bdao.close();
 
