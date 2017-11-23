@@ -6,10 +6,17 @@
     tools:context="com.example.michelparis.myapplication.InfosBien">
 
     <item
-        android:id="@+id/test"
+        android:id="@+id/home"
         android:title="home"
         android:orderInCategory="100"
         android:icon="@android:drawable/ic_menu_revert"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/plus"
+        android:title="plus"
+        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_input_add"
         app:showAsAction="always" />
 
 </menu>

@@ -232,10 +232,18 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
     @Override
     public boolean onOptionsItemSelected (MenuItem item) {
+        Intent intent;
         switch(item.getItemId()) {
-            case R.id.test:
+            case R.id.home:
 
-                Intent intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+
+                return true;
+
+            case R.id.plus:
+
+                intent = new Intent(this, AjouterBien.class);
                 startActivity(intent);
 
                 return true;
