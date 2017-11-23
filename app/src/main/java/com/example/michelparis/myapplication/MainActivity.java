@@ -64,14 +64,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
         bdao.close();
 
-        Bundle extras = getIntent().getExtras();
-
-       /* if(extras != null) {
-            idCurrentList = extras.getInt("IDLISTE");
-            refreshAdapterView();
-        } */
-
-
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
