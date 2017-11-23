@@ -216,7 +216,8 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     }
 
     public void ajouterCategorie(View v) {
-        Log.d("TEST", "Coucou du bouton 1");
+        Intent intent = new Intent(this, AjouterCategorie.class);
+        startActivity(intent);
     }
 
     public void exporterListe(View v) {
