@@ -26,7 +26,9 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     private BienAdapter mAdapter;
     private ListView lv_listeBiens;
     private BienDAO bdao;
-    public MySQLite maBaseSQLite;
+    private ListeDAO ldao;
+    private PersonneDAO pdao;
+    private int idCurrentList=1;
 
     //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien,
     // String commentaire_bien, float prix_bien, int id_categorie_bien, String description_bien, String numeroSerie_bien
@@ -58,35 +60,24 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
         lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
 
-        // WTF ça sert à rien ça ???
-        maBaseSQLite = new MySQLite(this);
-        maBaseSQLite.getInstance(this);
+        pdao = new PersonneDAO(this);
+        ldao = new ListeDAO(this);
+        bdao = new BienDAO(this);
 
+       // ldao.open();
+        //listeBiens = ldao.getListeById(idCurrentList);
+       // ldao.close();
 
-        Log.e("","miPa"+maBaseSQLite.getDatabaseName());
+        pdao.open();
+        pdao.modPersonne(1, "nom", "prenom", "12/04/1995", "adresse", "mail", "0607");
+        pdao.close();
 
-//       bienDAO.addBien(bien1);
-
-        PersonneDAO personneDAO = new PersonneDAO(this);
-
-        personneDAO.open();
-        Log.e("MiPaAA",personneDAO.getPersonne(1).toString());
-
-
-        personneDAO.modPersonne(1, "nom", "prenom", "12/04/1995", "adresse", "mail", "0607");
-
-
-        Log.e("MiPaAA",personneDAO.getPersonne(1).toString());
-        personneDAO.close();
         listeBiens.add(bien1);
         listeBiens.add(bien2);
         listeBiens.add(bien3);
         listeBiens.add(bien4);
         listeBiens.add(bien5);
         listeBiens.add(bien6);
-
-        String item;
-        mAdapter = new BienAdapter(this);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -104,9 +95,67 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             }
         });*/
 
+        refreshAdapterView();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.liste1) {
+            idCurrentList = 1;
+            refreshAdapterView();
+        }
+
+        if (id == R.id.liste2) {
+            idCurrentList = 2;
+            refreshAdapterView();
+        }
+
+        if (id == R.id.liste3) {
+            idCurrentList = 3;
+            refreshAdapterView();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    // A UTILISER A CHAQUE AJOUT DE BIEN OU DE CATEGORIE
+    public void refreshAdapterView() {
+
+        // On détruit l'affichage courant
+        lv_listeBiens.destroyDrawingCache();
+        lv_listeBiens.setVisibility(ListView.INVISIBLE);
+        lv_listeBiens.setVisibility(ListView.VISIBLE);
+        mAdapter = new BienAdapter(this);
+        // ici clear de la liste des biens
+        listeBiens.clear();
+        listCorrespondance.clear();
+
+        // Ouverture du BienDAO, on retrouve la liste des biens de la liste désignée et on ferme le DAO
+        bdao.open();
+        // Je mets liste 1 par défaut, faudra rendre dynamique
+        listeBiens = bdao.getBiensByListe(idCurrentList);
+        bdao.close();
+
+        // On refait la bonne liste de correspondance
         mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(0).getId_categorie_bien());
         int cpt = 0;
         int idCat = 1;
+        String item;
         for (int i = 0; i < listeBiens.size(); i++) {
 
             if (idCat!=listeBiens.get(i).getId_categorie_bien()) {
@@ -131,61 +180,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
                 startActivity(i);
             }
         });
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.liste1) {
-            Intent intent = new Intent(this, InfosBien.class);
-            startActivity(intent);
-        }
-
-        if (id == R.id.liste2) {
-            Intent intent = new Intent(this, InfosBien.class);
-            startActivity(intent);
-        }
-
-        if (id == R.id.liste3) {
-            Intent intent = new Intent(this, InfosBien.class);
-            startActivity(intent);
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    // A UTILISER A CHAQUE AJOUT DE BIEN OU DE CATEGORIE
-    public void refreshAdapterView() {
-
-        // On détruit l'affichage courant
-        lv_listeBiens.destroyDrawingCache();
-        lv_listeBiens.setVisibility(ListView.INVISIBLE);
-        lv_listeBiens.setVisibility(ListView.VISIBLE);
-
-        // ici clear de la liste des biens
-        listeBiens.clear();
-
-        // Ouverture du BienDAO, on retrouve la liste des biens de la liste désignée et on ferme le DAO
-        bdao.open();
-        // Je mets liste 1 par défaut, faudra rendre dynamique
-        listeBiens = bdao.getBiensByListe(1);
-        bdao.close();
-
-        // On refait la bonne liste de correspondance
 
         // On refait un nouvel adapteur et on le set sur la liste
        // mAdapter = new BienAdapter(this);
