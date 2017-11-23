@@ -28,6 +28,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     private BienDAO bdao;
     private ListeDAO ldao;
     private PersonneDAO pdao;
+    private CategorieDAO cdao;
     private int idCurrentList=1;
 
 
@@ -56,10 +57,13 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         pdao = new PersonneDAO(this);
         ldao = new ListeDAO(this);
         bdao = new BienDAO(this);
+        cdao = new CategorieDAO(this);
+        cdao.open();
+        if (cdao.getNomCategorieByIdBien(1).equals("")) {
 
-
-        remplirBeDeForTest();
-
+            remplirBeDeForTest();
+        }
+        cdao.close();
         Bundle extras = getIntent().getExtras();
 
         if(extras != null) {
@@ -87,7 +91,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         //refreshAdapterView();
 
         Intent intent = new Intent(this, AjouterBien.class);
-        startActivity(intent);
+       // startActivity(intent);
 
     }
 
@@ -211,17 +215,12 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
         CategorieDAO categorieDAO = new CategorieDAO(this);
         categorieDAO.open();
-
-        if (categorieDAO.getNomCategorieByIdBien(1).equals("")) {
-
             Categorie cuisine = new Categorie(0, "Cuisine", "Tous mes objets de la cuisine");
             Categorie salon = new Categorie(0, "Salon", "Tous mes objets du Salon");
             Categorie chambre = new Categorie(0, "Chambre", "Tous mes objets de la chambre");
             categorieDAO.addCategorie(cuisine);
             categorieDAO.addCategorie(salon);
             categorieDAO.addCategorie(chambre);
-
-        }
         categorieDAO.close();
 
         //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String facture_bien,

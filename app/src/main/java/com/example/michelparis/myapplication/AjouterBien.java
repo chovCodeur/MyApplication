@@ -26,19 +26,31 @@ import java.util.Date;
 public class AjouterBien extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener{
 
     private DrawerLayout drawer;
-    ArrayList<Categorie> categorieName = new ArrayList<Categorie>();
-    String[] listeName={"L1","L2","L3"};
+    ArrayList<Categorie> categoriesList = new ArrayList<Categorie>();
     Spinner spinnerCategorie;
-    Spinner spinnerListe;
-    String nomCategorieSelectionne = "";
     Categorie categorieSelectionne;
-    String nomListeSelectionne = "";
+    Boolean dansListe1 = false;
+    Boolean dansListe2 = false;
+    Boolean dansListe3 = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_bien);
+
+
+        Liste liste1 = new Liste(1,"Maison","La liste de ma maison");
+        Liste liste2 = new Liste(2,"Garage","La liste de mon garage");
+        Liste liste3 = new Liste(3,"Magasin","La liste de mon magasin");
+
+        ListeDAO listeDAO = new ListeDAO(this);
+
+        listeDAO.open();
+        listeDAO.ajouterListe(liste1);
+        listeDAO.ajouterListe(liste2);
+        listeDAO.ajouterListe(liste3);
+        listeDAO.close();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -49,7 +61,7 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
 
         ArrayList<String> listeCategorieName = new ArrayList<String>();
         int i =0;
-        for (Categorie categorie: categorieName) {
+        for (Categorie categorie: categoriesList) {
             listeCategorieName.add(i,categorie.getNom_Categorie());
         }
 
@@ -57,20 +69,32 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         arrayAdapterListe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategorie.setAdapter(arrayAdapterListe);
 
+        //ListeDAO listeDAO = new ListeDAO(this);
+        listeDAO.open();
+
+        ArrayList<Liste> listes  = listeDAO.getallListe();
+
+        listeDAO.close();
+
         final CheckedTextView ctvliste1 = (CheckedTextView) findViewById(R.id.checkListe1);
+
+        ctvliste1.setText(listes.get(0).getLibelle_liste());
+
         ctvliste1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ctvliste1.isChecked()) {
                     ctvliste1.setChecked(false);
+
                 } else {
                     ctvliste1.setChecked(true);
-
+                    dansListe1 = true;
                 }
             }
         });
 
         final CheckedTextView ctvliste2 = (CheckedTextView) findViewById(R.id.checkListe2);
+        ctvliste2.setText(listes.get(1).getLibelle_liste());
         ctvliste2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,12 +102,14 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
                     ctvliste2.setChecked(false);
                 } else {
                     ctvliste2.setChecked(true);
-
+                    dansListe2 = true;
                 }
             }
         });
 
         final CheckedTextView ctvliste3 = (CheckedTextView) findViewById(R.id.checkListe3);
+        ctvliste3.setText(listes.get(2).getLibelle_liste());
+
         ctvliste3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +117,7 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
                     ctvliste3.setChecked(false);
                 } else {
                     ctvliste3.setChecked(true);
+                    dansListe3 = true;
                 }
             }
         });
@@ -171,7 +198,7 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String dateDeSaisie = sdf.format(dateSaisie);
 
-        Bien bien = new Bien(idCategorieSelectionne,
+        Bien bien = new Bien(0,
                 nomBien,
                 dateDeSaisie,
                 dateAchatSaisie,
@@ -187,26 +214,6 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
                 numeroSerie
                 );
 
-        CategorieDAO categorieDAO = new CategorieDAO(this);
-
-        categorieDAO.open();
-        Log.e("MiPa","Salut"+categorieDAO.getNomCategorieByIdBien(1));
-        if (categorieDAO.getNomCategorieByIdBien(1).equals("")) {
-
-            Categorie cuisine = new Categorie(0, "Cuisine", "Tous mes objets de la cuisine");
-            Categorie salon = new Categorie(0, "Salon", "Tous mes objets du Salon");
-            categorieDAO.addCategorie(cuisine);
-            categorieDAO.addCategorie(salon);
-
-        }
-
-
-
-
-        Log.e("MiPa",categorieDAO.getNomCategorieByIdBien(1));
-
-        categorieDAO.close();
-
         BienDAO bienDAO = new BienDAO(this);
 
         bienDAO.open();
@@ -220,16 +227,7 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position,long id) {
-///            Spinner spinnerListe = (Spinner)parent;
-        Spinner spinnerCategorie = (Spinner)parent;
-
-        if(spinnerCategorie.getId() == R.id.select_categorie) {
-             categorieSelectionne = categorieName.get(position);
-            //Toast.makeText(getApplicationContext(), CategorieName[position], Toast.LENGTH_SHORT).show();
-        } else {
-            nomListeSelectionne = listeName[position];
-            //Toast.makeText(getApplicationContext(), ListeName[position], Toast.LENGTH_SHORT).show();
-        }
+        categorieSelectionne = categoriesList.get(position);
     }
 
     @Override
