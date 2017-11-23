@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,6 +32,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     private PersonneDAO pdao;
     private CategorieDAO cdao;
     private int idCurrentList=1;
+    private Menu m;
 
 
     ArrayList<Bien> listeBiens = new ArrayList<Bien>();
@@ -111,12 +113,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
@@ -135,13 +131,40 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             refreshAdapterView();
         }
 
-        if(id == R.id.test) {
-            Log.d("COUCOU", "COUCOU");
-        }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        m = menu;
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        Intent intent;
+        switch(item.getItemId()) {
+            case R.id.home:
+
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+
+                return true;
+
+            case R.id.plus:
+
+                intent = new Intent(this, AjouterBien.class);
+                startActivity(intent);
+
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // A UTILISER A CHAQUE AJOUT DE BIEN OU DE CATEGORIE
