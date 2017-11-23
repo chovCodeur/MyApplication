@@ -27,7 +27,6 @@ import java.util.Date;
 
 public class AjouterBien extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    //private DrawerLayout drawer;
     ArrayList<Categorie> categoriesList = new ArrayList<Categorie>();
     Spinner spinnerCategorie;
     Categorie categorieSelectionne;
@@ -118,24 +117,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                 }
             }
         });
-
-
-         /* drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-         this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-         drawer.setDrawerListener(toggle);
-         toggle.syncState();
-
-         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-         navigationView.setNavigationItemSelectedListener(this);
-       View headerview = navigationView.getHeaderView(0);
-
-         headerview.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-        }
-        }); */
-
     }
 
     @Override

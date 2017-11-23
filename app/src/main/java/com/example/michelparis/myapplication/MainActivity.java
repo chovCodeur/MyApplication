@@ -46,7 +46,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle(getResources().getString(R.string.app_name));
-        //myToolbar.setTitle("Inventaire personnel");
         setSupportActionBar(myToolbar);
 
         lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
@@ -156,7 +155,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         return super.onOptionsItemSelected(item);
     }
 
-    // A UTILISER A CHAQUE AJOUT DE BIEN OU DE CATEGORIE
     public void refreshAdapterView() {
 
         // On détruit l'affichage courant
@@ -209,10 +207,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
                 startActivity(i);
             }
         });
-
-        // On refait un nouvel adapteur et on le set sur la liste
-        // mAdapter = new BienAdapter(this);
-        // lv_listeBiens.setAdapter(mAdapter);
     }
 
     public void ajouterCategorie(View v) {
@@ -230,9 +224,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     }
 
     public void remplirBeDeForTest () {
-
-
-
         pdao.open();
         pdao.modPersonne(1, "Jacky", "Philippe", "12/04/1995", "10 rue de la verge", "jk.phil@hotmail.com", "0607548796");
         pdao.close();
@@ -283,5 +274,4 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         bdao.addBien(bien5, 3);
         bdao.close();
     }
-
 }

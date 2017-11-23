@@ -51,7 +51,6 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
     private TextView prix;
     private TextView numeroSerie;
     private TextView commentaire;
-    //private DrawerLayout drawer;
     private ImageButton photoMini1;
     private ImageButton photoMini2;
     private ImageButton photoMini3;
@@ -70,26 +69,8 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
-        /*drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerview = navigationView.getHeaderView(0);
-
-        headerview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });*/
-
         bdao = new BienDAO(this);
         cdao = new CategorieDAO(this);
-
-        //bien = new Bien(1, "Lunettes de soleil", "12-11-2017", "23-02-2012", "test.pdf", "Ces lunettes ont le verre droit rayé", 120.99f, null,null,null,null, 1,"Ce sont des lunettes de soleil Rayban de type Aviator","123456789");
 
         Bundle extras = getIntent().getExtras();
 

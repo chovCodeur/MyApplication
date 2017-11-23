@@ -9,14 +9,14 @@
         android:id="@+id/home"
         android:title="home"
         android:orderInCategory="100"
-        android:icon="@drawable/home"
+        android:icon="@drawable/ic_home"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/plus"
         android:title="plus"
         android:orderInCategory="100"
-        android:icon="@android:drawable/ic_input_add"
+        android:icon="@drawable/ic_add"
         app:showAsAction="always" />
 
 </menu>
