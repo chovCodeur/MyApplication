@@ -53,12 +53,11 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         ldao = new ListeDAO(this);
         bdao = new BienDAO(this);
         cdao = new CategorieDAO(this);
-        cdao.open();
-        if (cdao.getNomCategorieByIdBien(1).equals("")) {
 
-            remplirBeDeForTest();
-        }
-        cdao.close();
+
+        remplirBeDeForTest();
+
+
         Bundle extras = getIntent().getExtras();
 
         if(extras != null) {
@@ -247,12 +246,12 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         Bien bien6 = new Bien(6,"Home Cinema","21/11/2017","19/01/2017","","Une enceinte grésille un peu",400f,null,null,null,null,2,"Marque Pioneer","");
 
         bdao.open();
-        bdao.addBien(bien1);
-        bdao.addBien(bien2);
-        bdao.addBien(bien3);
-        bdao.addBien(bien4);
-        bdao.addBien(bien5);
-        bdao.addBien(bien6);
+        bdao.addBien(bien1, idCurrentList);
+        bdao.addBien(bien2, idCurrentList);
+        bdao.addBien(bien3, idCurrentList);
+        bdao.addBien(bien4, idCurrentList);
+        bdao.addBien(bien5, idCurrentList);
+        bdao.addBien(bien6, idCurrentList);
         bdao.close();
     }
 

@@ -210,7 +210,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         bienDAO.open();
 
-        bienDAO.addBien(bien);
+        //bienDAO.addBien(bien);
         Log.e("MiPa",bien.toString());
 
         bienDAO.close();

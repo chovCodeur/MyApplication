@@ -16,7 +16,7 @@ public class MySQLite extends SQLiteOpenHelper {
     // Version de la BDD
     private static final int DATABASE_VERSION = 1;
     // Nom de la BDD
-    private static final String DATABASE_NAME = "dev_bd.sqlite";
+    private static final String DATABASE_NAME = "devvvv2.sqlite";
     // Nom des Tables de la BDD
     private static final String TABLE_LISTE = "LISTE";
     private static final String TABLE_BIEN = "BIEN";
@@ -58,9 +58,7 @@ public class MySQLite extends SQLiteOpenHelper {
     private static MySQLite sInstance;
 
     public static synchronized MySQLite getInstance(Context context) {
-        Log.e("TEST CREATION", "MICPA");
         if (sInstance == null) {
-            Log.e("TEST 2", "AH");
             sInstance = new MySQLite(context); }
         return sInstance;
     }

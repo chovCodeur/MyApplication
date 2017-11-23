@@ -39,6 +39,11 @@ public class BienDAO {
     public static final String PHOTO_SEC3 = "photo_sec3";
     public static final String IDCATEGORIE = "id_categorie";
 
+    private static final String KEY_ID_LISTE = "id_liste";
+    private static final String TABLE_APPARTIENT = "APPARTIENT";
+
+
+
     private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
     private SQLiteDatabase db;
 
@@ -69,8 +74,8 @@ public class BienDAO {
      * @param bien Bien : l'bien à ajouter
      * @return long l'id du nouvel enregistrement inséré, ou -1 en cas d'erreur
      */
-    public long addBien(Bien bien){
-        Log.e("MiPa","addBien"+bien.toString());
+    public long addBien(Bien bien, int idListe){
+        //Log.e("MiPa","addBien"+bien.toString());
         ContentValues values = new ContentValues();
         values.put(NOM,bien.getNom_bien());
         values.put(DATESAISIE,bien.getDate_saisie_bien());
@@ -82,8 +87,8 @@ public class BienDAO {
         values.put(NUMSERIE, bien.getNumeroSerie_bien());
         values.put(IDCATEGORIE, bien.getId_categorie_bien());
 
-
-        return db.insert(TABLE_NAME,null,values);
+        long temp = db.insert(TABLE_NAME,null,values);
+        return addInAppartient(temp, idListe);
     }
 
     /**
@@ -159,7 +164,7 @@ public class BienDAO {
         Bien bienTemp;
         if (curseurBien.moveToFirst()) {
             do {
-                bienTemp = new Bien(
+               /* bienTemp = new Bien(
                         curseurBien.getInt(curseurBien.getColumnIndex(ID)),
                         curseurBien.getString(curseurBien.getColumnIndex(NOM)),
                         curseurBien.getString(curseurBien.getColumnIndex(DATESAISIE)),
@@ -174,6 +179,23 @@ public class BienDAO {
                         curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)),
                         curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)),
                         curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE))
+                ); */
+
+                bienTemp = new Bien(
+                        curseurBien.getInt(curseurBien.getColumnIndex(ID)),
+                        curseurBien.getString(curseurBien.getColumnIndex(NOM)),
+                        curseurBien.getString(curseurBien.getColumnIndex(DATESAISIE)),
+                        curseurBien.getString(curseurBien.getColumnIndex(DATEACHAT)),
+                        null,
+                        curseurBien.getString(curseurBien.getColumnIndex(COMMENTAIRE)),
+                        curseurBien.getFloat(curseurBien.getColumnIndex(PRIX)),
+                        null,
+                        null,
+                        null,
+                        null,
+                        curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)),
+                        curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)),
+                        curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE))
                 );
 
                 liste.add(bienTemp);
@@ -181,6 +203,18 @@ public class BienDAO {
         }
         curseurBien.close();
         return liste;
+    }
+
+    public long addInAppartient(long idBienInsere, int idListe){
+        ContentValues values = new ContentValues();
+        values.put(ID, idBienInsere);
+        values.put(KEY_ID_LISTE,idListe);
+        return db.insert(TABLE_APPARTIENT,null,values);
+    }
+
+    public int compterBienEnBase(){
+
+        return 0;
     }
 }
 
