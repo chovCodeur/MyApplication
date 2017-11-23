@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
  * Created by Rodnor on 11/11/2017.
  */
 
-public class InfosBien extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
+public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private BienDAO bdao;
     private CategorieDAO cdao;
@@ -58,6 +59,7 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
     private ArrayList<String> listes = new ArrayList<>();
     private Animator mCurrentAnimator;
     private int mShortAnimationDuration;
+    private Menu m = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,35 +223,26 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        m = menu;
+
         return true;
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    public boolean onOptionsItemSelected (MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.test:
 
-        /*if (id == R.id.liste1) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("IDLISTE", 1);
-            startActivity(intent);
+                // retour à l'accueil
+
+                return true;
+
         }
 
-        if (id == R.id.liste2) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("IDLISTE", 2);
-            startActivity(intent);
-        }
+        return super.onOptionsItemSelected(item);
 
-        if (id == R.id.liste3) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("IDLISTE", 3);
-            startActivity(intent);
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);*/
-        return true;
     }
 
     @Override
