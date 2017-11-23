@@ -235,14 +235,13 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         switch(item.getItemId()) {
             case R.id.test:
 
-                // retour à l'accueil
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
 
                 return true;
 
         }
-
         return super.onOptionsItemSelected(item);
-
     }
 
     @Override

@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,16 +25,16 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
-public class AjouterBien extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener{
+public class AjouterBien extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    private DrawerLayout drawer;
+    //private DrawerLayout drawer;
     ArrayList<Categorie> categoriesList = new ArrayList<Categorie>();
     Spinner spinnerCategorie;
     Categorie categorieSelectionne;
     Boolean dansListe1 = false;
     Boolean dansListe2 = false;
     Boolean dansListe3 = false;
-
+    private Menu m;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +55,9 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         listeDAO.close();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitle("Ajouter un bien");
         setSupportActionBar(myToolbar);
-        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
+
         spinnerCategorie =(Spinner) findViewById(R.id.select_categorie);
         spinnerCategorie.setOnItemSelectedListener(this);
 
@@ -123,7 +125,7 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         });
 
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+         /* drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
          ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
          this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
          drawer.setDrawerListener(toggle);
@@ -131,7 +133,7 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
 
          NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
          navigationView.setNavigationItemSelectedListener(this);
-        /* View headerview = navigationView.getHeaderView(0);
+       View headerview = navigationView.getHeaderView(0);
 
          headerview.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -143,41 +145,31 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        m = menu;
 
-        if (id == R.id.liste1) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("IDLISTE", 1);
-            startActivity(intent);
-        }
-
-        if (id == R.id.liste2) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("IDLISTE", 2);
-            startActivity(intent);
-        }
-
-        if (id == R.id.liste3) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("IDLISTE", 3);
-            startActivity(intent);
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.test:
+
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
     public void onClickAjouterBien(View view){
         TextView textViewNomBien = (TextView) findViewById(R.id.nom_bien);
         TextView textViewDateAchatBien = (TextView) findViewById(R.id.date_achat_bien);
