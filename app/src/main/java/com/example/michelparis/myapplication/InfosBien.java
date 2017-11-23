@@ -117,7 +117,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         // On met à jour le nom de la catégorie du bien
         categorieBien = (TextView) findViewById(R.id.categorieBien);
         cdao.open();
-        categorieBien.setText(cdao.getNomCategorieByIdBien(bien.getId_categorie_bien()));
+        categorieBien.setText(cdao.getNomCategorieByIdCategorie(bien.getId_categorie_bien()));
         cdao.close();
 
         // On met à jour la description du bien
