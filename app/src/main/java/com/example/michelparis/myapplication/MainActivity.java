@@ -64,9 +64,12 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         ldao = new ListeDAO(this);
         bdao = new BienDAO(this);
 
-       // ldao.open();
-        //listeBiens = ldao.getListeById(idCurrentList);
-       // ldao.close();
+        Bundle extras = getIntent().getExtras();
+
+        if(extras != null) {
+            idCurrentList = extras.getInt("IDLISTE");
+            refreshAdapterView();
+        }
 
         pdao.open();
         pdao.modPersonne(1, "nom", "prenom", "12/04/1995", "adresse", "mail", "0607");
