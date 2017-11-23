@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -107,6 +108,12 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
@@ -123,6 +130,10 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         if (id == R.id.liste3) {
             idCurrentList = 3;
             refreshAdapterView();
+        }
+
+        if(id == R.id.test) {
+            Log.d("COUCOU", "COUCOU");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

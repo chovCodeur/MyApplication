@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -213,16 +214,16 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
         });
     }
 
-    /*@Override
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }*/
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
