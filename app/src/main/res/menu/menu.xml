@@ -16,7 +16,7 @@
         android:id="@+id/plus"
         android:title="plus"
         android:orderInCategory="100"
-        android:icon="@android:drawable/ic_input_add"
+        android:icon="@drawable/home"
         app:showAsAction="always" />
 
 </menu>
