@@ -81,7 +81,7 @@ public class CategorieDAO {
         return db.delete(TABLE_NAME, where, whereArgs);
     }
 
-    public String getNomCategorieByIdBien(int id) {
+    public String getNomCategorieByIdCategorie(int id) {
         String nom="";
         String selectQuery = "SELECT " + NOM +" FROM " + TABLE_NAME + " WHERE " + ID + "= " +id ;
         Cursor c = db.rawQuery(selectQuery, null);

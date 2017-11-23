@@ -164,7 +164,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
         // On refait la bonne liste de correspondance
         cdao.open();
-        mAdapter.addSectionHeaderItem("Catégorie : "+cdao.getNomCategorieByIdBien(listeBiens.get(0).getId_bien()));
+        mAdapter.addSectionHeaderItem("Catégorie : "+cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
         cdao.close();
         int cpt = 0;
         int idCat = 1;
@@ -174,7 +174,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             if (idCat!=listeBiens.get(i).getId_categorie_bien()) {
                 cpt++;
                 cdao.open();
-                mAdapter.addSectionHeaderItem("Catégorie : "+cdao.getNomCategorieByIdBien(listeBiens.get(i).getId_bien()));
+                mAdapter.addSectionHeaderItem("Catégorie : "+cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
                 cdao.close();
 
             }
