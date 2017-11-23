@@ -32,11 +32,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     private int idCurrentList=1;
 
 
-
-    //int id_Categorie, String categorie, String description
-    Categorie categorie1 = new Categorie(1, "Categorie 1","");
-    Categorie categorie2 = new Categorie(2, "Categorie 2","");
-
     ArrayList<Bien> listeBiens = new ArrayList<Bien>();
     HashMap<Integer, Integer> listCorrespondance = new HashMap<>();
 
