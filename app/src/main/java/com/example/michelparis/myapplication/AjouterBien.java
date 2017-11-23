@@ -159,11 +159,11 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public boolean onOptionsItemSelected (MenuItem item) {
+        Intent intent;
         switch(item.getItemId()) {
             case R.id.home:
 
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                this.finish();
 
                 return true;
 

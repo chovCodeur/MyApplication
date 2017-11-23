@@ -151,9 +151,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         switch(item.getItemId()) {
             case R.id.home:
 
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-
                 return true;
 
             case R.id.plus:

@@ -236,8 +236,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         switch(item.getItemId()) {
             case R.id.home:
 
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                this.finish();
 
                 return true;
 
