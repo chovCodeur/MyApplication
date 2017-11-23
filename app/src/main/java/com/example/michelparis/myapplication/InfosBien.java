@@ -35,6 +35,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
     private BienDAO bdao;
     private CategorieDAO cdao;
+    private ListeDAO ldao;
     private int id = 0;
     private Bien bien;
     private ImageButton photoPrincipale;
@@ -76,6 +77,21 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
             if(id != 0) {
                 bdao.open();
                 bien = bdao.getBien(id);
+
+                // récupérer les id des listes d'appartenance du bien dans la table Appartient
+
+                // compter le nombre d'id
+
+                // récupérer le nom des listes dans lequel le bien existe
+                /*ldao.open();
+                for(int i=0;i<nombreID;i++) {
+                    String nom = ldao.getNomListeById(i);
+                    if(!nom.equals("")){
+                        listes.add(nom);
+                    }
+                }
+                ldao.close();*/
+
                 bdao.close();
 
                 myToolbar.setTitle(bien.getNom_bien());
