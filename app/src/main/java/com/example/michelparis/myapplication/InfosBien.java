@@ -65,12 +65,9 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
 
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        /*Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
-        setSupportActionBar(myToolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        /*drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -95,12 +92,15 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
 
         if(extras != null) {
             id = extras.getInt("IDBIEN");
-        }
 
-        if(id != 0) {
-            bdao.open();
-            bien = bdao.getBien(id);
-            bdao.close();
+            if(id != 0) {
+                bdao.open();
+                bien = bdao.getBien(id);
+                bdao.close();
+
+                myToolbar.setTitle(bien.getNom_bien());
+                setSupportActionBar(myToolbar);
+            }
         }
 
         // Mise à jour de l'image principale

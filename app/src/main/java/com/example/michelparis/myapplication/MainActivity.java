@@ -42,8 +42,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         setContentView(R.layout.main);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
+        myToolbar.setTitle(getResources().getString(R.string.app_name));
         //myToolbar.setTitle("Inventaire personnel");
         setSupportActionBar(myToolbar);
 
