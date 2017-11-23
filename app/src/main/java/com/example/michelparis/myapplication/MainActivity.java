@@ -92,6 +92,13 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        // on rafraichi simplement l'affichage
+        refreshAdapterView();
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
