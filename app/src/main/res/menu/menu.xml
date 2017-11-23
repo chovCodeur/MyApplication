@@ -3,12 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.menu">
+    tools:context="com.example.michelparis.myapplication.InfosBien">
 
     <item
         android:id="@+id/test"
+        android:title="home"
         android:orderInCategory="100"
-        android:title="test"
-        app:showAsAction="never" />
+        android:icon="@android:drawable/ic_menu_revert"
+        app:showAsAction="always" />
 
 </menu>
