@@ -2,7 +2,11 @@ package com.example.michelparis.myapplication;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Thib on 16/11/2017.
@@ -41,6 +45,28 @@ public class ListeDAO {
         db.close();
     }
 
+    /**
+     * Méthode permettant de retrouver l'intégralité des listes
+     * @return ArrayList<Liste> une liste de liste
+     */
+    public ArrayList<Liste> getallListe(){
+        ArrayList<Liste> liste = new ArrayList<Liste>();
+        Cursor curseurListe = db.rawQuery("SELECT * FROM "+TABLE_NAME, null);
+
+        Liste listeTemp;
+        if (curseurListe.moveToFirst()) {
+            do {
+                listeTemp = new Liste(
+                        curseurListe.getInt(curseurListe.getColumnIndex(ID)),
+                        curseurListe.getString(curseurListe.getColumnIndex(LIBELLE)),
+                        curseurListe.getString(curseurListe.getColumnIndex(COMMENTAIRE))
+                );
+                liste.add(listeTemp);
+            } while (curseurListe.moveToNext());
+        }
+        curseurListe.close();
+        return liste;
+    }
 
     /**
      * Méthode permettant de modifier une liste dans la table liste
