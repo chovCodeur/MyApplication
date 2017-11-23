@@ -190,8 +190,10 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getApplicationContext(), InfosBien.class);
-                Log.d("id-debugkt",String.valueOf(listCorrespondance.get(position)));
-                i.putExtra("IDBIEN", (position)-listCorrespondance.get((position)));
+                Log.e("id-debugkt",String.valueOf(listeBiens.get((position)-listCorrespondance.get((position))-1)));
+
+                //i.putExtra("IDBIEN", (position)-listCorrespondance.get((position)));
+                i.putExtra("IDBIEN", listeBiens.get((position)-listCorrespondance.get((position))-1).getId_bien());
                 startActivity(i);
             }
         });
