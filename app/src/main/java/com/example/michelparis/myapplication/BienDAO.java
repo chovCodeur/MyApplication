@@ -89,7 +89,8 @@ public class BienDAO {
         values.put(IDCATEGORIE, bien.getId_categorie_bien());
 
         long temp = db.insert(TABLE_NAME,null,values);
-        return addInAppartient(temp, idListe);
+        addInAppartient(temp, idListe);
+        return temp;
     }
 
     /**
