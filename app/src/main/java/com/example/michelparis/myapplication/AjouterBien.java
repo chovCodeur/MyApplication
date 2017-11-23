@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -66,13 +69,11 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
 
         categorieDAO.close();
 
-        // Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
-        //spinnerListe.
-        //myToolbar.setTitle("NomAppli");
-        //setSupportActionBar(myToolbar);
-        //    TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        //  toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
+        setSupportActionBar(myToolbar);
+        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
         spinnerCategorie =(Spinner) findViewById(R.id.select_categorie);
         spinnerCategorie.setOnItemSelectedListener(this);
 
@@ -86,16 +87,45 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         arrayAdapterListe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategorie.setAdapter(arrayAdapterListe);
 
+        final CheckedTextView ctvliste1 = (CheckedTextView) findViewById(R.id.checkListe1);
+        ctvliste1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ctvliste1.isChecked()) {
+                    ctvliste1.setChecked(false);
+                } else {
+                    ctvliste1.setChecked(true);
 
-        spinnerListe = (Spinner) findViewById(R.id.select_liste);
-        spinnerListe.setOnItemSelectedListener(this);
-        ArrayAdapter arrayAdapterCategorie = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listeName);
-        arrayAdapterCategorie.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerListe.setAdapter(arrayAdapterCategorie);
+                }
+            }
+        });
+
+        final CheckedTextView ctvliste2 = (CheckedTextView) findViewById(R.id.checkListe2);
+        ctvliste2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ctvliste2.isChecked()) {
+                    ctvliste2.setChecked(false);
+                } else {
+                    ctvliste2.setChecked(true);
+
+                }
+            }
+        });
+
+        final CheckedTextView ctvliste3 = (CheckedTextView) findViewById(R.id.checkListe3);
+        ctvliste3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ctvliste3.isChecked()) {
+                    ctvliste3.setChecked(false);
+                } else {
+                    ctvliste3.setChecked(true);
+                }
+            }
+        });
 
 
-
-/**
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
          ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
          this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -104,15 +134,13 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
 
          NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
          navigationView.setNavigationItemSelectedListener(this);
-         View headerview = navigationView.getHeaderView(0);
+        /* View headerview = navigationView.getHeaderView(0);
 
          headerview.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
         }
-        });
-*/
-
+        }); */
 
     }
 
