@@ -4,18 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -45,7 +41,6 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
     private TextView nomBien;
     private TextView categorieBien;
     private TextView descriptionBien;
-    private Button facture;
     private TextView dateAcquisition;
     private TextView dateSaisie;
     private TextView prix;
@@ -59,6 +54,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
     private Animator mCurrentAnimator;
     private int mShortAnimationDuration;
     private Menu m = null;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +102,18 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         descriptionBien.setText(bien.getDescription_bien());
 
         // Affichage de la facture au clic du bouton
-        facture = (Button) findViewById(R.id.buttonFactureBien);
+        Button facture = (Button) findViewById(R.id.buttonFactureBien);
         facture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(!bien.getFacture_bien().equals("")) {
+                    Intent intent = new Intent(getApplicationContext(), ReadPDF.class);
+                    intent.putExtra("nomPDF", bien.getFacture_bien());
+                    startActivity(intent);
+                } else {
+                    Toast toast = Toast.makeText(context, "Pas de facture pour ce bien", Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
         });
 
@@ -152,17 +155,6 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         commentaire = (TextView) findViewById(R.id.commentairesBien);
         commentaire.setText(bien.getCommentaire_bien());
         // }
-
-        Button btn = (Button) findViewById(R.id.buttonFactureBien);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ReadPDF.class);
-                intent.putExtra("nomPDF", bien.getFacture_bien());
-                //intent.putExtra("nomPDF", "test.pdf");
-                startActivity(intent);
-            }
-        });
 
         ImageButton imageButton = (ImageButton) findViewById(R.id.photoPrincipaleBien);
         imageButton.setOnClickListener(new View.OnClickListener() {
