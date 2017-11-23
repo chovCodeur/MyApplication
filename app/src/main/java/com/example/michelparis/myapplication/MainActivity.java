@@ -26,7 +26,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     private BienAdapter mAdapter;
     private ListView lv_listeBiens;
     private BienDAO bdao;
-    private ListeDAO ldao;
     private PersonneDAO pdao;
     private int idCurrentList=1;
 
@@ -61,7 +60,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
 
         pdao = new PersonneDAO(this);
-        ldao = new ListeDAO(this);
         bdao = new BienDAO(this);
 
         Bundle extras = getIntent().getExtras();
