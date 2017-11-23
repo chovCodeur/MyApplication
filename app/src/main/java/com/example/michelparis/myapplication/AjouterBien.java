@@ -40,37 +40,7 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_bien);
 
-        CategorieDAO categorieDAO = new CategorieDAO(this);
-        categorieDAO.open();
-        Log.e("MiPa","Salut"+categorieDAO.getNomCategorieByIdBien(1));
-        if (categorieDAO.getNomCategorieByIdBien(1).equals("")) {
-
-            Categorie cuisine = new Categorie(0, "Cuisine", "Tous mes objets de la cuisine");
-            Categorie salon = new Categorie(0, "Salon", "Tous mes objets du Salon");
-            categorieDAO.addCategorie(cuisine);
-            categorieDAO.addCategorie(salon);
-
-        }
-
-
-        Log.e("MiPa",categorieDAO.getNomCategorieByIdBien(1));
-
-
-        ArrayList<Categorie> listeCategorieEnBase = new ArrayList<Categorie>();
-
-        listeCategorieEnBase = categorieDAO.getAllCategorie();
-
-       // int nbCategorie = listeCategorieEnBase.size();
-
-        categorieName.addAll(listeCategorieEnBase);
-
-
-        //categorieName = new String[]{"A","B"};
-
-        categorieDAO.close();
-
-         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));

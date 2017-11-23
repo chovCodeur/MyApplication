@@ -26,6 +26,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     private BienAdapter mAdapter;
     private ListView lv_listeBiens;
     private BienDAO bdao;
+    private ListeDAO ldao;
     private PersonneDAO pdao;
     private int idCurrentList=1;
 
@@ -60,7 +61,11 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
 
         pdao = new PersonneDAO(this);
+        ldao = new ListeDAO(this);
         bdao = new BienDAO(this);
+
+
+        remplirBeDeForTest();
 
         Bundle extras = getIntent().getExtras();
 
@@ -68,10 +73,6 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             idCurrentList = extras.getInt("IDLISTE");
             refreshAdapterView();
         }
-
-        pdao.open();
-        pdao.modPersonne(1, "nom", "prenom", "12/04/1995", "adresse", "mail", "0607");
-        pdao.close();
 
         listeBiens.add(bien1);
         listeBiens.add(bien2);
@@ -98,8 +99,8 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
         //refreshAdapterView();
 
-       // Intent intent = new Intent(this, AjouterBien.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, AjouterBien.class);
+        startActivity(intent);
 
     }
 
@@ -186,8 +187,8 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         });
 
         // On refait un nouvel adapteur et on le set sur la liste
-       // mAdapter = new BienAdapter(this);
-       // lv_listeBiens.setAdapter(mAdapter);
+        // mAdapter = new BienAdapter(this);
+        // lv_listeBiens.setAdapter(mAdapter);
     }
 
     public void ajouterCategorie(View v) {
@@ -201,6 +202,38 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
     public void modifierPersonne(View v) {
         Intent intent = new Intent(this, ModifierPersonne.class);
         startActivity(intent);
+    }
+
+    public void remplirBeDeForTest () {
+
+
+
+        pdao.open();
+        pdao.modPersonne(1, "nom", "prenom", "12/04/1995", "adresse", "mail", "0607");
+        pdao.close();
+
+        Liste liste1 = new Liste(1,"Maison","La liste de ma maison");
+        Liste liste2 = new Liste(2,"Garage","La liste de mon garage");
+        Liste liste3 = new Liste(3,"Magasin","La liste de mon magasin");
+
+        ldao.open();
+        /*ldao.addListe(liste1);
+        ldao.addListe(liste2);
+        ldao.addListe(liste3);*/
+        ldao.close();
+
+        CategorieDAO categorieDAO = new CategorieDAO(this);
+        categorieDAO.open();
+
+        if (categorieDAO.getNomCategorieByIdBien(1).equals("")) {
+
+            Categorie cuisine = new Categorie(0, "Cuisine", "Tous mes objets de la cuisine");
+            Categorie salon = new Categorie(0, "Salon", "Tous mes objets du Salon");
+            categorieDAO.addCategorie(cuisine);
+            categorieDAO.addCategorie(salon);
+
+        }
+        categorieDAO.close();
     }
 
 }

@@ -87,15 +87,13 @@ public class ListeDAO {
 
     /**
      * Méthode permettant d'ajouter une liste dans la table liste
-     * @param id_liste int : l'id de la liste
-     * @param libelle String : le libelle de la liste
-     * @param commentaire String : commentaire sur la liste
+     * @param liste Liste : liste
      * @return int : le nombre de lignes affectées par la requête
      */
-    public long ajouterListe(int id_liste, String libelle, String commentaire){
+    public long ajouterListe(Liste liste){
         ContentValues values = new ContentValues();
-        values.put(LIBELLE,libelle);
-        values.put(COMMENTAIRE, commentaire);
+        values.put(LIBELLE,liste.getLibelle_liste());
+        values.put(COMMENTAIRE, liste.getCommentaire_liste());
         return db.insert(TABLE_NAME,null,values);
     }
 
