@@ -1,7 +1,6 @@
-package com.example.michelparis.myapplication;
+package com.application;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,7 +15,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.bien.AjouterBien;
+import com.bien.Bien;
+import com.bien.BienAdapter;
+import com.bien.InfosBien;
+import com.categorie.AjouterCategorie;
+import com.categorie.Categorie;
+import com.dao.BienDAO;
+import com.dao.CategorieDAO;
+import com.dao.ListeDAO;
+import com.dao.PersonneDAO;
+import com.example.michelparis.myapplication.R;
+import com.liste.Liste;
+import com.personne.ModifierPersonne;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -147,6 +159,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             case R.id.plus:
 
                 intent = new Intent(this, AjouterBien.class);
+                intent.putExtra("ID_CURRENT_LIST", idCurrentList);
                 startActivity(intent);
 
                 return true;

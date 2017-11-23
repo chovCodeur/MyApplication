@@ -1,11 +1,7 @@
-package com.example.michelparis.myapplication;
+package com.bien;
 
 
 import android.content.Intent;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.dao.BienDAO;
+import com.dao.CategorieDAO;
+import com.dao.ListeDAO;
+import com.categorie.Categorie;
+import com.liste.Liste;
+import com.application.MainActivity;
+import com.example.michelparis.myapplication.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,12 +80,25 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         ctvliste1.setText(listes.get(0).getLibelle_liste());
 
+        Bundle extras = getIntent().getExtras();
+
+        int fromIdListe = 0;
+        if(extras != null) {
+            fromIdListe = extras.getInt("ID_CURRENT_LIST");
+        }
+
+        if (fromIdListe == 1){
+            ctvliste1.setChecked(true);
+            dansListe1 = true;
+
+        }
+
         ctvliste1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ctvliste1.isChecked()) {
                     ctvliste1.setChecked(false);
-
+                    dansListe1 = false;
                 } else {
                     ctvliste1.setChecked(true);
                     dansListe1 = true;
@@ -89,13 +106,21 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
         });
 
+
         final CheckedTextView ctvliste2 = (CheckedTextView) findViewById(R.id.checkListe2);
         ctvliste2.setText(listes.get(1).getLibelle_liste());
+
+        if (fromIdListe == 2){
+            ctvliste2.setChecked(true);
+            dansListe2 = true;
+        }
+
         ctvliste2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ctvliste2.isChecked()) {
                     ctvliste2.setChecked(false);
+                    dansListe2 = false;
                 } else {
                     ctvliste2.setChecked(true);
                     dansListe2 = true;
@@ -106,11 +131,17 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         final CheckedTextView ctvliste3 = (CheckedTextView) findViewById(R.id.checkListe3);
         ctvliste3.setText(listes.get(2).getLibelle_liste());
 
+        if (fromIdListe == 3){
+            ctvliste3.setChecked(true);
+            dansListe3 = true;
+        }
+
         ctvliste3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ctvliste3.isChecked()) {
                     ctvliste3.setChecked(false);
+                    dansListe3 = false;
                 } else {
                     ctvliste3.setChecked(true);
                     dansListe3 = true;
@@ -145,8 +176,8 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
             case R.id.plus:
 
-                intent = new Intent(this, AjouterBien.class);
-                startActivity(intent);
+                //intent = new Intent(this, AjouterBien.class);
+                //startActivity(intent);
 
                 return true;
 

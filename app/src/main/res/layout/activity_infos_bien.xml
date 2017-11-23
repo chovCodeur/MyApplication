@@ -42,7 +42,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp">
 
-            <com.example.michelparis.myapplication.TouchHighlightImageButton
+            <com.utils.TouchHighlightImageButton
                 android:id="@+id/photoPrincipaleBien"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
@@ -168,7 +168,7 @@
                 android:layout_below="@+id/dateAcquisitionBien"
                 android:layout_alignParentStart="true" />
 
-            <com.example.michelparis.myapplication.TouchHighlightImageButton
+            <com.utils.TouchHighlightImageButton
                 android:id="@+id/Photo3Bien"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -178,7 +178,7 @@
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/no_image" />
 
-            <com.example.michelparis.myapplication.TouchHighlightImageButton
+            <com.utils.TouchHighlightImageButton
                 android:id="@+id/Photo2Bien"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -187,7 +187,7 @@
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/no_image" />
 
-            <com.example.michelparis.myapplication.TouchHighlightImageButton
+            <com.utils.TouchHighlightImageButton
                 android:id="@+id/Photo1Bien"
                 android:layout_width="100dp"
                 android:layout_height="100dp"

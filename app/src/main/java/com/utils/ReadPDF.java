@@ -1,7 +1,9 @@
-package com.example.michelparis.myapplication;
+package com.utils;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.michelparis.myapplication.R;
 import com.joanzapata.pdfview.PDFView;
 import com.joanzapata.pdfview.listener.OnPageChangeListener;
 

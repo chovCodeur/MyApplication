@@ -1,4 +1,4 @@
-package com.example.michelparis.myapplication;
+package com.personne;
 
 /**
  * Created by TANGUY on 16-11-17.

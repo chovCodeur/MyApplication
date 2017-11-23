@@ -1,4 +1,4 @@
-package com.example.michelparis.myapplication;
+package com.bien;
 
 /**
  * Created by Kevin on 19/11/2017.
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.michelparis.myapplication.R;
 
 public class BienAdapter extends BaseAdapter {
 

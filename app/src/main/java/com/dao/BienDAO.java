@@ -1,4 +1,4 @@
-package com.example.michelparis.myapplication;
+package com.dao;
 
 /**
  * Created by Kevin on 16/11/2017.
@@ -9,8 +9,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.BitmapFactory;
-import android.util.Log;
+
+import com.bien.Bien;
+import com.bd.MySQLite;
 
 import java.util.ArrayList;
 

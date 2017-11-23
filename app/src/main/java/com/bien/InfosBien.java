@@ -1,4 +1,4 @@
-package com.example.michelparis.myapplication;
+package com.bien;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -24,6 +24,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dao.BienDAO;
+import com.dao.CategorieDAO;
+import com.dao.ListeDAO;
+import com.application.MainActivity;
+import com.example.michelparis.myapplication.R;
+import com.utils.ReadPDF;
 
 import java.util.ArrayList;
 

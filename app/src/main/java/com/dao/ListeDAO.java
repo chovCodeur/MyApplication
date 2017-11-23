@@ -1,12 +1,14 @@
-package com.example.michelparis.myapplication;
+package com.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.liste.Liste;
+import com.bd.MySQLite;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Thib on 16/11/2017.

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:gravity="bottom"
-    tools:context="com.example.michelparis.myapplication.MainActivity">
+    tools:context="com.example.michelparis.myapplication.com.application.MainActivity">
 
     <ListView
         android:id="@+id/listeBiens"
