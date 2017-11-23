@@ -269,12 +269,18 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         Bien bien6 = new Bien(6,"Home Cinema","21/11/2017","19/01/2017","","Une enceinte grésille un peu",400f,null,null,null,null,2,"Marque Pioneer","");
 
         bdao.open();
-        bdao.addBien(bien1, idCurrentList);
-        bdao.addBien(bien2, idCurrentList);
-        bdao.addBien(bien3, idCurrentList);
-        bdao.addBien(bien4, idCurrentList);
-        bdao.addBien(bien5, idCurrentList);
-        bdao.addBien(bien6, idCurrentList);
+        bdao.addBien(bien1, 1);
+        bdao.addBien(bien2, 1);
+        bdao.addBien(bien3, 1);
+        bdao.addBien(bien4, 1);
+        bdao.addBien(bien5, 1);
+        bdao.addBien(bien6, 1);
+
+        bdao.addBien(bien2, 2);
+        bdao.addBien(bien3, 2);
+
+        bdao.addBien(bien4, 3);
+        bdao.addBien(bien5, 3);
         bdao.close();
     }
 
