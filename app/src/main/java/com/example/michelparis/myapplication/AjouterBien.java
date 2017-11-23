@@ -1,7 +1,6 @@
 package com.example.michelparis.myapplication;
 
 
-import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -130,23 +129,23 @@ public class AjouterBien extends AppCompatActivity implements NavigationView.OnN
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.liste1) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("IDLISTE", 1);
-            startActivity(intent);
+       /* if (id == R.id.youtube) {
+            Intent youtube = new Intent(Intent.ACTION_VIEW);
+            youtube.setData(Uri.parse("https://www.youtube.com/user/bibi300"));
+            startActivity(youtube);
         }
 
-        if (id == R.id.liste2) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("IDLISTE", 2);
-            startActivity(intent);
+        if (id == R.id.twitch) {
+            Intent twitch = new Intent(Intent.ACTION_VIEW);
+            twitch.setData(Uri.parse("https://go.twitch.tv/bibi300"));
+            startActivity(twitch);
         }
 
-        if (id == R.id.liste3) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("IDLISTE", 3);
-            startActivity(intent);
-        }
+        if (id == R.id.dailymotion) {
+            Intent dailymotion = new Intent(Intent.ACTION_VIEW);
+            dailymotion.setData(Uri.parse("https://www.dailymotion.com/bibi300"));
+            startActivity(dailymotion);
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
