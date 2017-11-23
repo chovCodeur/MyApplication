@@ -49,7 +49,7 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
     private TextView prix;
     private TextView numeroSerie;
     private TextView commentaire;
-    private DrawerLayout drawer;
+    //private DrawerLayout drawer;
     private ImageButton photoMini1;
     private ImageButton photoMini2;
     private ImageButton photoMini3;
@@ -65,7 +65,7 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
 
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        /*Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         toolbarTitle.setTextColor(getResources().getColor(R.color.toolbarTitle));
         setSupportActionBar(myToolbar);
@@ -84,7 +84,7 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
             @Override
             public void onClick(View v) {
             }
-        });
+        });*/
 
         bdao = new BienDAO(this);
         cdao = new CategorieDAO(this);
@@ -95,7 +95,6 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
 
         if(extras != null) {
             id = extras.getInt("IDBIEN");
-            Log.d("ID BIEN", String.valueOf(id));
         }
 
         if(id != 0) {
@@ -214,22 +213,22 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
         });
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         super.onBackPressed();
-        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }*/
-    }
+        }
+    }*/
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.liste1) {
+        /*if (id == R.id.liste1) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("IDLISTE", 1);
             startActivity(intent);
@@ -248,7 +247,7 @@ public class InfosBien extends AppCompatActivity implements NavigationView.OnNav
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        drawer.closeDrawer(GravityCompat.START);*/
         return true;
     }
 

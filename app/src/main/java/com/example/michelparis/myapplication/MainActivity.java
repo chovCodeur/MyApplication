@@ -98,8 +98,9 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
         //refreshAdapterView();
 
-       // Intent intent = new Intent(this, AjouterBien.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, InfosBien.class);
+        intent.putExtra("IDBIEN", 1);
+        startActivity(intent);
 
     }
 
