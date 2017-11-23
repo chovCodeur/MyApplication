@@ -71,7 +71,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         listeBiens.add(bien5);
         listeBiens.add(bien6);
 
-        String item;
+
         mAdapter = new BienAdapter(this);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -90,33 +90,7 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
             }
         });*/
 
-        mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(0).getId_categorie_bien());
-        int cpt = 0;
-        int idCat = 1;
-        for (int i = 0; i < listeBiens.size(); i++) {
-
-            if (idCat!=listeBiens.get(i).getId_categorie_bien()) {
-                cpt++;
-                mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(i).getId_categorie_bien());
-
-            }
-            listCorrespondance.put(mAdapter.getCount(),Integer.valueOf(cpt));
-            item=listeBiens.get(i).getNom_bien()+"#~#"+listeBiens.get(i).getDescription_bien();
-            mAdapter.addItem(item);
-            idCat=listeBiens.get(i).getId_categorie_bien();
-        }
-        //listCorrespondance.remove(1);
-        Log.d("liste",listCorrespondance.toString());
-        lv_listeBiens.setAdapter(mAdapter);
-        lv_listeBiens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getApplicationContext(), InfosBien.class);
-                Log.d("id-debugkt",String.valueOf(listCorrespondance.get(position)));
-                i.putExtra("IDBIEN", (position)-listCorrespondance.get((position)));
-                startActivity(i);
-            }
-        });
+        refreshAdapterView();
 
     }
 
@@ -172,6 +146,34 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
         bdao.close();
 
         // On refait la bonne liste de correspondance
+        mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(0).getId_categorie_bien());
+        int cpt = 0;
+        int idCat = 1;
+        String item;
+        for (int i = 0; i < listeBiens.size(); i++) {
+
+            if (idCat!=listeBiens.get(i).getId_categorie_bien()) {
+                cpt++;
+                mAdapter.addSectionHeaderItem("Catégorie : "+listeBiens.get(i).getId_categorie_bien());
+
+            }
+            listCorrespondance.put(mAdapter.getCount(),Integer.valueOf(cpt));
+            item=listeBiens.get(i).getNom_bien()+"#~#"+listeBiens.get(i).getDescription_bien();
+            mAdapter.addItem(item);
+            idCat=listeBiens.get(i).getId_categorie_bien();
+        }
+        //listCorrespondance.remove(1);
+        Log.d("liste",listCorrespondance.toString());
+        lv_listeBiens.setAdapter(mAdapter);
+        lv_listeBiens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getApplicationContext(), InfosBien.class);
+                Log.d("id-debugkt",String.valueOf(listCorrespondance.get(position)));
+                i.putExtra("IDBIEN", (position)-listCorrespondance.get((position)));
+                startActivity(i);
+            }
+        });
 
         // On refait un nouvel adapteur et on le set sur la liste
        // mAdapter = new BienAdapter(this);
