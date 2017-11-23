@@ -41,19 +41,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_bien);
 
-
-        Liste liste1 = new Liste(1,"Maison","La liste de ma maison");
-        Liste liste2 = new Liste(2,"Garage","La liste de mon garage");
-        Liste liste3 = new Liste(3,"Magasin","La liste de mon magasin");
-
-        ListeDAO listeDAO = new ListeDAO(this);
-
-        listeDAO.open();
-        listeDAO.ajouterListe(liste1);
-        listeDAO.ajouterListe(liste2);
-        listeDAO.ajouterListe(liste3);
-        listeDAO.close();
-
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle("Ajouter un bien");
         setSupportActionBar(myToolbar);
@@ -62,16 +49,24 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         spinnerCategorie.setOnItemSelectedListener(this);
 
         ArrayList<String> listeCategorieName = new ArrayList<String>();
+        CategorieDAO categorieDAO = new CategorieDAO(this);
+        categorieDAO.open();
+        categoriesList = categorieDAO.getAllCategorie();
+        categorieDAO.close();
+
+
         int i =0;
         for (Categorie categorie: categoriesList) {
             listeCategorieName.add(i,categorie.getNom_Categorie());
+            i++;
         }
 
         ArrayAdapter arrayAdapterListe = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listeCategorieName);
         arrayAdapterListe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategorie.setAdapter(arrayAdapterListe);
 
-        //ListeDAO listeDAO = new ListeDAO(this);
+        ListeDAO listeDAO = new ListeDAO(this);
+
         listeDAO.open();
 
         ArrayList<Liste> listes  = listeDAO.getallListe();
