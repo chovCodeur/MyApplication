@@ -40,7 +40,7 @@ public class AjouterCategorie extends AppCompatActivity {
 
                 String categorie = editCategorie.getText().toString();
                 String description = editDescription.getText().toString();
-                Intent intent = new Intent(AjouterCategorie.this, MainActivity.class);
+                Intent intent = new Intent(AjouterCategorie.this, com.application.MainActivity.class);
                     startActivity(intent);
 
             }
@@ -71,7 +71,7 @@ public class AjouterCategorie extends AppCompatActivity {
         Intent intent;
         switch(item.getItemId()) {
             case R.id.home:
-                Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intenthome = new Intent(getApplicationContext(), com.application.MainActivity.class);
                 intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intenthome);
 
@@ -79,7 +79,7 @@ public class AjouterCategorie extends AppCompatActivity {
 
             case R.id.plus:
 
-                intent = new Intent(this, AjouterBien.class);
+                intent = new Intent(this, com.bien.AjouterBien.class);
                 startActivity(intent);
 
                 return true;

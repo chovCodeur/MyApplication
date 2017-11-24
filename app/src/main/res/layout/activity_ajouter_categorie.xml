@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.categorie.AjouterCategorie"
-    android:weightSum="1">
+    android:weightSum="1"
+    tools:context="com.categorie.AjouterCategorie">
 
 
     <android.support.design.widget.AppBarLayout
@@ -64,7 +64,7 @@
         android:ems="10"
         android:hint="Description"
         android:layout_below="@+id/editCategorie"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:id="@+id/buttonAddCategorie"
