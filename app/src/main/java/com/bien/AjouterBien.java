@@ -184,6 +184,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         }
         return super.onOptionsItemSelected(item);
     }
+
     public void onClickAjouterBien(View view){
         TextView textViewNomBien = (TextView) findViewById(R.id.nom_bien);
         TextView textViewDateAchatBien = (TextView) findViewById(R.id.date_achat_bien);
@@ -228,6 +229,11 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         Log.e("MiPa",bien.toString());
 
         bienDAO.close();
+
+    }
+
+    public void oncClickAjouterPhotoPrincipale (View view){
+
 
     }
 

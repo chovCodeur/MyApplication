@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.michelparis.myapplication.com.categorie.AjouterCategorie"
+    tools:context="com.categorie.AjouterCategorie"
     android:weightSum="1">
 
 

@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="1"
-        tools:context="com.example.michelparis.myapplication.com.Bien.AjouterBien">
+        tools:context="com.bien.AjouterBien">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -156,15 +156,24 @@
                     android:inputType="number" />
 
                 <Button
+                    android:id="@+id/ajouterPhotoPrincipale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/prix_bien"
+                    android:layout_marginTop="6dp"
+                    android:onClick="oncClickAjouterPhotoPrincipale"
+                    android:text="Ajouter une photo principale" />
+
+                <Button
                     android:id="@+id/ajouterBien"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/numero_serie"
+                    android:layout_below="@+id/ajouterPhotoPrincipale"
                     android:layout_marginTop="6dp"
                     android:onClick="onClickAjouterBien"
                     android:text="Ajouter" />
-
             </RelativeLayout>
         </ScrollView>
 </LinearLayout>
