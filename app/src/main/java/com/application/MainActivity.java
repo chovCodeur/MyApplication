@@ -26,15 +26,14 @@ import com.dao.BienDAO;
 import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
 import com.dao.PersonneDAO;
-import com.example.michelparis.myapplication.R;
+import com.application.inventaire.R;
 import com.liste.Liste;
 import com.personne.ModifierPersonne;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class
-MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
     private BienAdapter mAdapter;

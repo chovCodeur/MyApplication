@@ -22,7 +22,7 @@ import com.dao.ListeDAO;
 import com.categorie.Categorie;
 import com.liste.Liste;
 import com.application.MainActivity;
-import com.example.michelparis.myapplication.R;
+import com.application.inventaire.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

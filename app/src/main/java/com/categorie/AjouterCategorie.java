@@ -13,7 +13,7 @@ import android.widget.EditText;
 
 import com.bien.AjouterBien;
 import com.application.MainActivity;
-import com.example.michelparis.myapplication.R;
+import com.application.inventaire.R;
 
 public class AjouterCategorie extends AppCompatActivity {
 

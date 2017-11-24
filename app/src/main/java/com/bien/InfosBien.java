@@ -29,7 +29,7 @@ import com.dao.BienDAO;
 import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
 import com.application.MainActivity;
-import com.example.michelparis.myapplication.R;
+import com.application.inventaire.R;
 import com.utils.ReadPDF;
 
 import java.util.ArrayList;
