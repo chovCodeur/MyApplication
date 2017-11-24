@@ -34,7 +34,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="60dp"
+        android:id="@+id/scrollView2">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -206,6 +207,16 @@
                 android:layout_marginStart="21dp"
                 android:layout_marginBottom="30dp"
                 android:text="Afficher la facture" />
+
+            <Button
+                android:id="@+id/modifierBienButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/commentairesBien"
+                android:layout_marginLeft="115dp"
+                android:text="Modifier"
+                android:onClick="modifierBien"/>
+
         </RelativeLayout>
     </ScrollView>
 

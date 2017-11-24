@@ -156,7 +156,7 @@
                     android:inputType="number" />
 
                 <Button
-                    android:id="@+id/ajouterPhotoPrincipale"
+                    android:id="@+id/modifierPhotoPrincipale"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -170,7 +170,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/ajouterPhotoPrincipale"
+                    android:layout_below="@+id/modifierPhotoPrincipale"
                     android:layout_marginTop="6dp"
                     android:onClick="onClickAjouterBien"
                     android:text="Ajouter" />

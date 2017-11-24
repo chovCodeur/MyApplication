@@ -24,6 +24,7 @@
         <activity android:name="com.personne.ModifierPersonne" />
         <activity android:name="com.bien.InfosBien" />
         <activity android:name="com.bien.AjouterBien" />
+        <activity android:name="com.bien.ModifierBien" />
         <activity android:name="com.utils.ReadPDF"></activity>
     </application>
 
