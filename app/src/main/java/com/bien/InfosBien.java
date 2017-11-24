@@ -1,4 +1,4 @@
-package com.example.michelparis.myapplication;
+package com.bien;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -24,6 +24,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dao.BienDAO;
+import com.dao.CategorieDAO;
+import com.dao.ListeDAO;
+import com.application.MainActivity;
+import com.application.inventaire.R;
+import com.utils.ReadPDF;
 
 import java.util.ArrayList;
 
@@ -231,7 +238,6 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 return true;
 
             case R.id.plus:
-
                 intent = new Intent(this, AjouterBien.class);
                 startActivity(intent);
 
@@ -351,5 +357,11 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 mCurrentAnimator = set;
             }
         });
+    }
+
+    public void modifierBien(View v) {
+        Intent intent = new Intent(this, ModifierBien.class);
+        intent.putExtra("IDBIEN",bien.getId_bien());
+        startActivity(intent);
     }
 }

@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="1"
-        tools:context="com.example.michelparis.myapplication.AjouterBien">
+        tools:context="com.bien.AjouterBien">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -91,14 +91,14 @@
                     android:id="@+id/checkListe3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/select_categorie"
+                    android:layout_marginStart="10dp"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:checked="true"
+                    android:checked="false"
                     android:text="L3"
                     android:textSize="18sp"
-                    android:visibility="visible"
-                    android:layout_below="@+id/select_categorie"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="10dp" />
+                    android:visibility="visible" />
 
                 <EditText
                     android:id="@+id/date_achat_bien"
@@ -156,15 +156,24 @@
                     android:inputType="number" />
 
                 <Button
+                    android:id="@+id/modifierPhotoPrincipale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/prix_bien"
+                    android:layout_marginTop="6dp"
+                    android:onClick="oncClickAjouterPhotoPrincipale"
+                    android:text="Ajouter une photo principale" />
+
+                <Button
                     android:id="@+id/ajouterBien"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/numero_serie"
+                    android:layout_below="@+id/modifierPhotoPrincipale"
                     android:layout_marginTop="6dp"
                     android:onClick="onClickAjouterBien"
                     android:text="Ajouter" />
-
             </RelativeLayout>
         </ScrollView>
 </LinearLayout>

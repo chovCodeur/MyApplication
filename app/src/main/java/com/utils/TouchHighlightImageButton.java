@@ -1,4 +1,4 @@
-package com.example.michelparis.myapplication;
+package com.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
