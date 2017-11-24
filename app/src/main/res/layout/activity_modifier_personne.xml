@@ -32,24 +32,37 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <EditText
-        android:id="@+id/editNom"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:text="Nom" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editPrenom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:text="Prenom" />
-    <!--EditText
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <EditText
+                android:id="@+id/editNom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="34dp"
+                android:ems="10"
+                android:hint="Nom"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editPrenom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editNom"
+                android:layout_marginTop="6dp"
+                android:layout_alignParentStart="true"
+                android:ems="10"
+                android:hint="Prenom"
+                android:inputType="textPersonName" />
+            <!--EditText
         android:id="@+id/editText5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,54 +78,62 @@
         android:layout_marginLeft="75dp"
         android:layout_marginRight="75dp"
         android:datePickerMode="spinner" /-->
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:ems="10"
-        android:textAlignment="center"
-        android:hint="Select date"
-        android:inputType="date"
-        android:textStyle="italic"
-       />
+            <EditText
+                android:id="@+id/editTextDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="6dp"
+                android:layout_below="@+id/editPrenom"
+                android:ems="10"
+                android:hint="Select date"
+                android:inputType="date"
+                android:textStyle="italic" />
 
-    <EditText
-        android:id="@+id/editEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:textAlignment="center"
-        android:text="Adresse mail" />
-    <EditText
-        android:id="@+id/editAdress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        android:textAlignment="center"
-        android:text="Adresse Postale" />
+            <EditText
+                android:id="@+id/editEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_below="@+id/editTextDate"
+                android:ems="10"
+                android:hint="Adresse mail"
+                android:inputType="textEmailAddress"
+                android:layout_alignParentEnd="true" />
 
-    <EditText
-        android:id="@+id/editPhon_Number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:textAlignment="center"
-        android:inputType="phone"
-        android:text="Téléphone" />
+            <EditText
+                android:id="@+id/editAdress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editEmail"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="6dp"
+                android:ems="10"
+                android:hint="Adresse Postale"
+                android:inputType="textPostalAddress" />
 
-    <Button
-        android:id="@+id/buttonAjoutInfos"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="130dp"
-        android:layout_marginRight="130dp"
-        android:layout_marginTop="130dp"
-        android:text="Ajouter" />
+            <EditText
+                android:id="@+id/editPhon_Number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/editAdress"
+                android:layout_marginTop="6dp"
+                android:ems="10"
+                android:hint="Téléphone"
+                android:inputType="phone" />
+
+            <Button
+                android:id="@+id/buttonAjoutInfos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="50dp"
+                android:layout_below="@+id/editPhon_Number"
+                android:onClick="onClickAjoutInfos"
+                android:text="Ajouter" />
 
 
+        </RelativeLayout>
+    </ScrollView>
 </LinearLayout>

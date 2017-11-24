@@ -262,21 +262,24 @@ MainActivity extends AppCompatActivity implements NavigationView.OnNavigationIte
 
 
         bdao.open();
-        long temp = bdao.addBien(bien1, 1);
-        bdao.addInAppartient(temp, 2);
-
-        temp = bdao.addBien(bien2, 1);
-        bdao.addInAppartient(temp, 2);
-
-        temp =bdao.addBien(bien3, 1);
-        bdao.addInAppartient(temp, 3);
-
-        temp =bdao.addBien(bien4, 1);
-        bdao.addInAppartient(temp, 3);
-
+        bdao.addBien(bien1, 1);
+        bdao.addBien(bien2, 1);
+        bdao.addBien(bien3, 1);
+        bdao.addBien(bien4, 1);
         bdao.addBien(bien5, 1);
         bdao.addBien(bien6, 1);
 
+        Bien bienTemp = bdao.getBien(1);
+        bdao.addBien(bienTemp, 2);
+
+        bienTemp = bdao.getBien(2);
+        bdao.addBien(bienTemp, 2);
+
+        bienTemp = bdao.getBien(3);
+        bdao.addBien(bienTemp, 3);
+
+        bienTemp = bdao.getBien(4);
+        bdao.addBien(bienTemp, 3);
 
         bdao.close();
     }
