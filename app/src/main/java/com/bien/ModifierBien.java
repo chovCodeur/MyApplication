@@ -1,8 +1,12 @@
 package com.bien;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,6 +14,7 @@ import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.application.MainActivity;
 import com.categorie.Categorie;
 import com.dao.BienDAO;
 import com.dao.CategorieDAO;
@@ -24,6 +29,7 @@ import java.util.Date;
 
 public class ModifierBien extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private Menu m;
     private int id=0;
     private BienDAO bdao;
     private Bien bien;
@@ -187,6 +193,41 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         // TODO Faire la modification de la liste d'appartenance
 
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        m = menu;
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        Intent intent;
+        switch(item.getItemId()) {
+            case R.id.home:
+                Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
+                intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intenthome);
+
+                return true;
+
+            case R.id.plus:
+                intent = new Intent(this, AjouterBien.class);
+                startActivity(intent);
+
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

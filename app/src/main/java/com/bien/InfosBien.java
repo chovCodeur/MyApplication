@@ -238,7 +238,6 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 return true;
 
             case R.id.plus:
-
                 intent = new Intent(this, AjouterBien.class);
                 startActivity(intent);
 
