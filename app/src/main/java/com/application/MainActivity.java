@@ -22,6 +22,7 @@ import com.bien.BienAdapter;
 import com.bien.InfosBien;
 import com.categorie.AjouterCategorie;
 import com.categorie.Categorie;
+import com.categorie.ModifierCategorie;
 import com.dao.BienDAO;
 import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ArrayList<Bien> listeBiens = new ArrayList<Bien>();
     HashMap<Integer, Integer> listCorrespondance = new HashMap<>();
+    HashMap<Integer, Integer> listeHeader = new HashMap<>();
 
 
     @Override
@@ -177,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // ici clear de la liste des biens
         listeBiens.clear();
         listCorrespondance.clear();
+        listeHeader.clear();
 
         // Ouverture du BienDAO, on retrouve la liste des biens de la liste désignée et on ferme le DAO
         bdao.open();
@@ -187,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // On refait la bonne liste de correspondance
         cdao.open();
         mAdapter.addSectionHeaderItem("Catégorie : "+cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
+        listeHeader.put(0,listeBiens.get(0).getId_categorie_bien());
         cdao.close();
         int cpt = 0;
         int idCat = 1;
@@ -197,9 +201,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 cpt++;
                 cdao.open();
                 mAdapter.addSectionHeaderItem("Catégorie : "+cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
+                listeHeader.put(i+cpt,listeBiens.get(i).getId_categorie_bien());
                 cdao.close();
 
             }
+
             listCorrespondance.put(mAdapter.getCount(),Integer.valueOf(cpt));
             item=listeBiens.get(i).getNom_bien()+"#~#"+listeBiens.get(i).getDescription_bien();
             mAdapter.addItem(item);
@@ -207,16 +213,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         //listCorrespondance.remove(1);
         Log.d("liste",listCorrespondance.toString());
+        Log.d("header",listeHeader.toString());
         lv_listeBiens.setAdapter(mAdapter);
         lv_listeBiens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getApplicationContext(), InfosBien.class);
-                Log.e("id-debugkt",String.valueOf(listeBiens.get((position)-listCorrespondance.get((position))-1)));
+                if(listeHeader.containsKey(position)){
+                    Intent i = new Intent(getApplicationContext(), ModifierCategorie.class);
+                    Log.e("idcat-debugkt", String.valueOf(listeHeader.get(position)));
+                    i.putExtra("IDCATEGORIE", listeHeader.get(position));
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(getApplicationContext(), InfosBien.class);
+                    Log.e("idbien-debugkt", String.valueOf(listeBiens.get((position) - listCorrespondance.get((position)) - 1)));
 
-                //i.putExtra("IDBIEN", (position)-listCorrespondance.get((position)));
-                i.putExtra("IDBIEN", listeBiens.get((position)-listCorrespondance.get((position))-1).getId_bien());
-                startActivity(i);
+                    //i.putExtra("IDBIEN", (position)-listCorrespondance.get((position)));
+                    i.putExtra("IDBIEN", listeBiens.get((position) - listCorrespondance.get((position)) - 1).getId_bien());
+                    startActivity(i);
+                }
             }
         });
     }
