@@ -183,6 +183,9 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         bdao.modBien(bien.getId_bien(), nomBien.getText().toString(), dateSaisie , dateAchat.getText().toString(), commentaireBien.getText().toString(), idCategorieSelectionne,
         descriptionBien.getText().toString(), Float.valueOf(prixBien.getText().toString()), numeroSerie.getText().toString());
         bdao.close();
+
+        // TODO Faire la modification de la liste d'appartenance
+
         finish();
     }
 

@@ -230,6 +230,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         bienDAO.close();
 
+        // TODO Faire ajout dans la liste d'appartenance
     }
 
     public void oncClickAjouterPhotoPrincipale (View view){
