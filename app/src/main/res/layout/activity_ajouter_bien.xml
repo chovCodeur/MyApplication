@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1"
-        tools:context="com.bien.AjouterBien">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context="com.bien.AjouterBien">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -17,175 +17,182 @@
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="0dp"
-            android:background="@color/colorPrimaryDark">
+            tools:layout_editor_absoluteY="0dp">
 
             <TextView
+                android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/toolbar_title" />
+                android:layout_height="wrap_content" />
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
-            <RelativeLayout
+            <EditText
+                android:id="@+id/nom_bien"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:ems="10"
+                android:hint="Nom"
+                android:inputType="textPersonName"
+                android:selectAllOnFocus="true" />
 
-                <EditText
-                    android:id="@+id/nom_bien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:ems="10"
-                    android:hint="Nom"
-                    android:inputType="textPersonName"
-                    android:selectAllOnFocus="true" />
+            <TextView
+                android:id="@+id/explicationCategorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/nom_bien"
+                android:layout_marginTop="6dp"
+                android:text="Selectionner une catégorie :" />
 
-                <Spinner
-                    android:id="@+id/select_categorie"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/nom_bien"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="12dp"/>
+            <Spinner
+                android:id="@+id/select_categorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/explicationCategorie"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="6dp" />
 
-                <CheckedTextView
-                    android:id="@+id/checkListe1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:checked="false"
-                    android:text="L1"
-                    android:textSize="18sp"
-                    android:visibility="visible"
-                    android:layout_below="@+id/select_categorie"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="12dp" />
+            <CheckedTextView
+                android:id="@+id/checkListe1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/select_categorie"
+                android:layout_marginEnd="12dp"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:checked="false"
+                android:text="L1"
+                android:textSize="18sp"
+                android:visibility="visible" />
 
-                <CheckedTextView
-                    android:id="@+id/checkListe2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/select_categorie"
-                    android:layout_centerHorizontal="true"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:checked="false"
-                    android:text="L2"
-                    android:textSize="18sp"
-                    android:visibility="visible" />
+            <CheckedTextView
+                android:id="@+id/checkListe2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/select_categorie"
+                android:layout_centerHorizontal="true"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:checked="false"
+                android:text="L2"
+                android:textSize="18sp"
+                android:visibility="visible" />
 
-                <CheckedTextView
-                    android:id="@+id/checkListe3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/select_categorie"
-                    android:layout_marginStart="10dp"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:checked="false"
-                    android:text="L3"
-                    android:textSize="18sp"
-                    android:visibility="visible" />
+            <CheckedTextView
+                android:id="@+id/checkListe3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/select_categorie"
+                android:layout_marginStart="10dp"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:checked="false"
+                android:text="L3"
+                android:textSize="18sp"
+                android:visibility="visible" />
 
-                <EditText
-                    android:id="@+id/date_achat_bien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/checkListe1"
-                    android:layout_marginTop="6dp"
-                    android:ems="10"
-                    android:hint="Date d'achat"
-                    android:inputType="date" />
+            <EditText
+                android:id="@+id/date_achat_bien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/checkListe1"
+                android:layout_marginTop="6dp"
+                android:ems="10"
+                android:hint="Date d'achat"
+                android:inputType="date" />
 
-                <EditText
-                    android:id="@+id/description_bien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/date_achat_bien"
-                    android:layout_marginTop="6dp"
-                    android:ems="10"
-                    android:hint="Description du bien"
-                    android:inputType="textMultiLine" />
+            <EditText
+                android:id="@+id/description_bien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/date_achat_bien"
+                android:layout_marginTop="6dp"
+                android:ems="10"
+                android:hint="Description du bien"
+                android:inputType="textMultiLine" />
 
-                <EditText
-                    android:id="@+id/commentaire_bien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/description_bien"
-                    android:layout_marginTop="6dp"
-                    android:ems="10"
-                    android:hint="Commentaire sur le bien"
-                    android:inputType="textMultiLine" />
+            <EditText
+                android:id="@+id/commentaire_bien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/description_bien"
+                android:layout_marginTop="6dp"
+                android:ems="10"
+                android:hint="Commentaire sur le bien"
+                android:inputType="textMultiLine" />
 
-                <EditText
-                    android:id="@+id/numero_serie"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/commentaire_bien"
-                    android:layout_marginTop="6dp"
-                    android:ems="10"
-                    android:hint="Numéro de serie"
-                    android:inputType="text" />
+            <EditText
+                android:id="@+id/numero_serie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/commentaire_bien"
+                android:layout_marginTop="6dp"
+                android:ems="10"
+                android:hint="Numéro de serie"
+                android:inputType="text" />
 
-                <EditText
-                    android:id="@+id/prix_bien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/numero_serie"
-                    android:layout_marginTop="6dp"
-                    android:ems="10"
-                    android:hint="Prix"
-                    android:inputType="number" />
+            <EditText
+                android:id="@+id/prix_bien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/numero_serie"
+                android:layout_marginTop="6dp"
+                android:ems="10"
+                android:hint="Prix"
+                android:inputType="number" />
 
-                <Button
-                    android:id="@+id/ajouterPhotoPrincipale"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/prix_bien"
-                    android:layout_marginTop="6dp"
-                    android:text="Ajouter une photo principale" />
+            <Button
+                android:id="@+id/ajouterPhotoPrincipale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/prix_bien"
+                android:layout_marginTop="6dp"
+                android:text="Ajouter une photo principale" />
 
-                <ImageView
-                    android:id="@+id/photoPrincipale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/ajouterPhotoPrincipale"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="40dp"
+            <ImageView
+                android:id="@+id/photoPrincipale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/ajouterPhotoPrincipale"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitCenter" />
 
-                    android:layout_marginTop="40dp" />
-
-                <Button
-                    android:id="@+id/ajouterBien"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/photoPrincipale"
-                    android:onClick="onClickAjouterBien"
-                    android:text="Ajouter le bien" />
+            <Button
+                android:id="@+id/ajouterBien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/photoPrincipale"
+                android:layout_marginTop="6dp"
+                android:onClick="onClickAjouterBien"
+                android:text="Ajouter le bien" />
 
 
-            </RelativeLayout>
-        </ScrollView>
+        </RelativeLayout>
+    </ScrollView>
 </LinearLayout>

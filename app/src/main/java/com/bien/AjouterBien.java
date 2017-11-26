@@ -1,12 +1,17 @@
 package com.bien;
 
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +27,7 @@ import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dao.BienDAO;
 import com.dao.CategorieDAO;
@@ -54,6 +60,11 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_bien);
+        Context context = this;
+
+        if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AjouterBien.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 4);
+        }
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle("Ajouter un bien");
@@ -160,11 +171,11 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
         });
 
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_youtube);
+
+
 
         //Initialise l'imageview on lui met une action
         imageVue = (ImageView) findViewById(R.id.photoPrincipale);
-        imageVue.setImageBitmap(bitmap);
 
         Button buttonAjouterPhotoPrincipale = (Button) findViewById(R.id.ajouterPhotoPrincipale);
 
