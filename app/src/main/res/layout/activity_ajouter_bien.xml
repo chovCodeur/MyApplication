@@ -156,24 +156,36 @@
                     android:inputType="number" />
 
                 <Button
-                    android:id="@+id/modifierPhotoPrincipale"
+                    android:id="@+id/ajouterPhotoPrincipale"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@+id/prix_bien"
                     android:layout_marginTop="6dp"
-                    android:onClick="oncClickAjouterPhotoPrincipale"
                     android:text="Ajouter une photo principale" />
+
+                <ImageView
+                    android:id="@+id/photoPrincipale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/ajouterPhotoPrincipale"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="40dp"
+
+                    android:layout_marginTop="40dp" />
 
                 <Button
                     android:id="@+id/ajouterBien"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/modifierPhotoPrincipale"
                     android:layout_marginTop="6dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/photoPrincipale"
                     android:onClick="onClickAjouterBien"
-                    android:text="Ajouter" />
+                    android:text="Ajouter le bien" />
+
+
             </RelativeLayout>
         </ScrollView>
 </LinearLayout>

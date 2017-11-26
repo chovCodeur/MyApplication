@@ -26,6 +26,12 @@
         <activity android:name="com.bien.AjouterBien" />
         <activity android:name="com.bien.ModifierBien" />
         <activity android:name="com.utils.ReadPDF"></activity>
+
+
     </application>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGEE" />
+
+
 
 </manifest>
