@@ -1,7 +1,17 @@
 package com.bien;
 
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,9 +22,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dao.BienDAO;
 import com.dao.CategorieDAO;
@@ -39,10 +52,19 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     Boolean dansListe3 = false;
     private Menu m;
 
+    final static int SELECT_PICTURE = 1;
+    ImageView imageVue;
+    public Bitmap bitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_bien);
+        Context context = this;
+
+        if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AjouterBien.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 4);
+        }
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle("Ajouter un bien");
@@ -148,7 +170,78 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                 }
             }
         });
+
+
+
+
+        //Initialise l'imageview on lui met une action
+        imageVue = (ImageView) findViewById(R.id.photoPrincipale);
+
+        Button buttonAjouterPhotoPrincipale = (Button) findViewById(R.id.ajouterPhotoPrincipale);
+
+        buttonAjouterPhotoPrincipale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btGalleryClick(v);
+            }
+        });
+
     }
+
+    /*
+        *Méthode pour ouvrir une galerie d'image
+     */
+    public void btGalleryClick(View v){
+
+        //creation et ouverture de la boite de dialogue
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Selectionnez une image"), SELECT_PICTURE);
+    }
+
+    /*
+        *Retour du resultat de la galerie
+     */
+    protected void onActivityResult(int request, int resultCode, Intent data) {
+        super.onActivityResult(request, resultCode, data);
+
+        if(resultCode == RESULT_OK) {
+            switch (request) {
+                case SELECT_PICTURE :
+                    String path = getRealPathFromUri(data.getData());
+                    Log.e("Choix d'image", "uri"+path);
+
+                    //Transforme l'image en jpg
+                    bitmap = BitmapFactory.decodeFile(path);
+
+                    imageVue.setImageBitmap(bitmap);
+
+                    break;
+
+            }
+        }
+    }
+
+    /*
+    *Methode pour récuperer l'Uri de l'image
+     */
+    private String getRealPathFromUri(Uri contentUri) {
+        String result;
+
+        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
+
+        if(cursor == null){
+            result = contentUri.getPath();
+        }else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
+
 
     @Override
     public void onBackPressed() {
