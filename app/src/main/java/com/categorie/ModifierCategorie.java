@@ -21,15 +21,15 @@ import com.dao.CategorieDAO;
 public class ModifierCategorie extends AppCompatActivity {
 
 
-    Button modifCategorie;
-    EditText editCategorie;
-    EditText editDescription;
-    int idcat;
+    private Button modifCategorie;
+    private EditText editCategorie;
+    private EditText editDescription;
+    private int idcat;
     private CategorieDAO cdao;
     private Categorie categorie;
     private Menu m;
-    String nomcat;
-    String nomdescrip;
+    private String nomcat;
+    private String nomdescrip;
 
 
     @Override
