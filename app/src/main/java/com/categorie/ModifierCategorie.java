@@ -29,6 +29,7 @@ public class ModifierCategorie extends AppCompatActivity {
     private Categorie categorie;
     private Menu m;
     String nomcat;
+    String nomdescrip;
 
 
     @Override
@@ -55,12 +56,16 @@ public class ModifierCategorie extends AppCompatActivity {
                 cdao.open();
                 //categorie = cdao.getCategorieById(idcat);
                 nomcat=cdao.getNomCategorieByIdCategorie(idcat);
+                nomdescrip=cdao.getDescriptionCategorieByIdCategorie(idcat);
+
                 Log.d("NOMCATEGORIE", cdao.getNomCategorieByIdCategorie(idcat));
                 cdao.close();
             }
         }
         editCategorie.setText(nomcat);
-        /*modifCategorie.setOnClickListener(new View.OnClickListener() {
+        editDescription.setText(nomdescrip);
+
+        modifCategorie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -68,9 +73,11 @@ public class ModifierCategorie extends AppCompatActivity {
                 String description = editDescription.getText().toString();
                 Intent intent = new Intent(ModifierCategorie.this, MainActivity.class);
                     startActivity(intent);
-
+                cdao.open();
+                cdao.modCategorie(idcat,categorie,description);
+                cdao.close();
             }
-        });*/
+        });
     }
 
     @Override

@@ -91,8 +91,19 @@ public class CategorieDAO {
             nom = c.getString(c.getColumnIndex(NOM));
             c.close();
         }
-
         return nom;
+    }
+
+    public String getDescriptionCategorieByIdCategorie(int id) {
+        String description="";
+        String selectQuery = "SELECT " + DESCRIPTION +" FROM " + TABLE_NAME + " WHERE " + ID + "= " +id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            description = c.getString(c.getColumnIndex(DESCRIPTION));
+            c.close();
+        }
+        return description;
     }
 
     public ArrayList<Categorie> getAllCategorie(){
