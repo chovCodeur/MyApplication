@@ -32,6 +32,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private Menu m;
     private int id=0;
     private BienDAO bdao;
+    private ListeDAO ldao;
     private Bien bien;
     private EditText nomBien;
     private EditText dateAchat;
@@ -42,6 +43,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private String dateSaisie;
     private ListeDAO listeDAO;
     private ArrayList<Liste> listes;
+    private ArrayList<String> nomListes = new ArrayList<>();;
     private Spinner spinnerCategorie;
     private ArrayList<Categorie> categoriesList = new ArrayList<Categorie>();
     private Categorie categorieSelectionne;
@@ -50,6 +52,10 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private Boolean dansListe2 = false;
     private Boolean dansListe3 = false;
     private int idListe=0;
+    private ArrayList<Integer> idlistes = new ArrayList<>();
+    private CheckedTextView ctvliste1=null;
+    private CheckedTextView ctvliste2=null;
+    private CheckedTextView ctvliste3=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
         bdao = new BienDAO(this);
+        ldao = new ListeDAO(this);
 
         Bundle extras = getIntent().getExtras();
 
@@ -69,6 +76,26 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 bdao.open();
                 bien = bdao.getBien(id);
 
+                // récupérer les id des listes d'appartenance du bien dans la table Appartient
+                idlistes = bdao.getAllIdListeByIdBien(bien.getId_bien());
+
+                // récupérer le nom des listes dans lequel le bien existe
+                ldao.open();
+                for(int i=0;i<idlistes.size();i++) {
+                    if(idlistes.get(i) == 1) {
+                        String nom = ldao.getNomListeById(1);
+                        nomListes.add(nom);
+                    }
+                    if(idlistes.get(i) == 2) {
+                        String nom = ldao.getNomListeById(2);
+                        nomListes.add(nom);
+                    }
+                    if(idlistes.get(i) == 3) {
+                        String nom = ldao.getNomListeById(3);
+                        nomListes.add(nom);
+                    }
+                }
+                ldao.close();
                 bdao.close();
 
                 myToolbar.setTitle(bien.getNom_bien());
@@ -99,7 +126,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 arrayAdapterListe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerCategorie.setAdapter(arrayAdapterListe);
 
-                final CheckedTextView ctvliste1 = (CheckedTextView) findViewById(R.id.checkListe1);
+                ctvliste1 = (CheckedTextView) findViewById(R.id.checkListe1);
                 ctvliste1.setText(listes.get(0).getLibelle_liste());
                 ctvliste1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -115,7 +142,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 });
 
 
-                final CheckedTextView ctvliste2 = (CheckedTextView) findViewById(R.id.checkListe2);
+                ctvliste2 = (CheckedTextView) findViewById(R.id.checkListe2);
                 ctvliste2.setText(listes.get(1).getLibelle_liste());
                 ctvliste2.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -130,7 +157,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     }
                 });
 
-                final CheckedTextView ctvliste3 = (CheckedTextView) findViewById(R.id.checkListe3);
+                ctvliste3 = (CheckedTextView) findViewById(R.id.checkListe3);
                 ctvliste3.setText(listes.get(2).getLibelle_liste());
                 ctvliste3.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -144,6 +171,18 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                         }
                     }
                 });
+
+                for(i=0;i<idlistes.size();i++) {
+                    if(idlistes.get(i) == 1) {
+                        ctvliste1.setChecked(true);
+                    }
+                    if(idlistes.get(i) == 2) {
+                        ctvliste2.setChecked(true);
+                    }
+                    if(idlistes.get(i) == 3) {
+                        ctvliste3.setChecked(true);
+                    }
+                }
 
                 nomBien = (EditText) findViewById(R.id.nom_bien);
                 nomBien.setText(bien.getNom_bien());
