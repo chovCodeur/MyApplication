@@ -228,5 +228,20 @@ public class BienDAO {
 
         return db.update("APPARTIENT", values, where, whereArgs);
     }
+
+    public ArrayList<Integer> getAllIdListeByIdBien(int id) {
+        ArrayList<Integer> idListes = new ArrayList<>();
+
+        Cursor curseur = db.rawQuery("SELECT id_liste FROM APPARTIENT WHERE id_bien = "+id,null);
+
+        if (curseur.moveToFirst()) {
+            do {
+                idListes.add(curseur.getInt(curseur.getColumnIndex("id_liste")));
+            } while (curseur.moveToNext());
+        }
+        curseur.close();
+
+        return idListes;
+    }
 }
 

@@ -70,6 +70,19 @@ public class ListeDAO {
         return liste;
     }
 
+    public String getNomListeById(int id){
+        String nom="";
+        Cursor curseurListe = db.rawQuery("SELECT libelle FROM "+TABLE_NAME+" WHERE id_liste = "+id, null);
+
+        if (curseurListe.moveToFirst()) {
+            do {
+                nom = curseurListe.getString(curseurListe.getColumnIndex(LIBELLE));
+            } while (curseurListe.moveToNext());
+        }
+        curseurListe.close();
+        return nom;
+    }
+
     /**
      * Méthode permettant de modifier une liste dans la table liste
      * @param id_liste int : l'id de la liste
