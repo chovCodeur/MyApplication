@@ -49,6 +49,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private Boolean dansListe1 = false;
     private Boolean dansListe2 = false;
     private Boolean dansListe3 = false;
+    private int idListe=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,20 +68,6 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             if(id != 0) {
                 bdao.open();
                 bien = bdao.getBien(id);
-
-                // récupérer les id des listes d'appartenance du bien dans la table Appartient
-
-                // compter le nombre d'id
-
-                // récupérer le nom des listes dans lequel le bien existe
-                /*ldao.open();
-                for(int i=0;i<nombreID;i++) {
-                    String nom = ldao.getNomListeById(i);
-                    if(!nom.equals("")){
-                        listes.add(nom);
-                    }
-                }
-                ldao.close();*/
 
                 bdao.close();
 
@@ -188,9 +175,20 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         bdao.close();
         bdao.modBien(bien.getId_bien(), nomBien.getText().toString(), dateSaisie , dateAchat.getText().toString(), commentaireBien.getText().toString(), idCategorieSelectionne,
         descriptionBien.getText().toString(), Float.valueOf(prixBien.getText().toString()), numeroSerie.getText().toString());
-        bdao.close();
 
-        // TODO Faire la modification de la liste d'appartenance
+        if(dansListe1) {
+            idListe = 1;
+        }
+        if(dansListe2) {
+            idListe = 2;
+        }
+        if(dansListe3) {
+            idListe = 3;
+        }
+
+        bdao.modifierListeAppartenance(bien.getId_bien(), idListe);
+
+        bdao.close();
 
         finish();
     }
