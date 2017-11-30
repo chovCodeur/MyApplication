@@ -13,9 +13,11 @@ import android.view.View;
 import com.application.MainActivity;
 import com.application.inventaire.R;
 import com.bien.AjouterBien;
+import com.dao.CategorieDAO;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AjouterCategorie extends AppCompatActivity {
@@ -91,6 +93,21 @@ public class AjouterCategorie extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+     public void onClickAddCategorie(View view){
+        TextView textViewNomCategorie = (TextView) findViewById(R.id.editCategorie);
+        TextView textViewDescription = (TextView) findViewById(R.id.editDescription);
+
+        String nomCategorie = textViewNomCategorie.getText().toString();
+        String description = textViewDescription.getText().toString();
+
+        Categorie categorie = new Categorie(0, nomCategorie, description);
+
+        CategorieDAO categorieDAO = new CategorieDAO(this);
+         categorieDAO.open();
+         categorieDAO.close();
+
+
     }
 
 }
