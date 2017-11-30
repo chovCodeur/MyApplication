@@ -218,5 +218,15 @@ public class BienDAO {
     public long compterBienEnBase(){
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME);
     }
+
+    public int modifierListeAppartenance(int idBien, int idListe) {
+        ContentValues values = new ContentValues();
+        values.put("id_liste",idListe);
+
+        String where = "id_bien"+" = ?";
+        String[] whereArgs = {String.valueOf(idBien)};
+
+        return db.update("APPARTIENT", values, where, whereArgs);
+    }
 }
 
