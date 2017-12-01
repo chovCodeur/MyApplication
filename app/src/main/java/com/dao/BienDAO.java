@@ -9,10 +9,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 
 import com.bien.Bien;
 import com.bd.MySQLite;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
@@ -242,6 +244,12 @@ public class BienDAO {
         curseur.close();
 
         return idListes;
+    }
+
+    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+        return outputStream.toByteArray();
     }
 }
 
