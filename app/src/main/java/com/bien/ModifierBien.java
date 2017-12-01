@@ -48,11 +48,8 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private ArrayList<Categorie> categoriesList = new ArrayList<Categorie>();
     private Categorie categorieSelectionne;
     private int idCategorieSelectionne;
-    private Boolean dansListe1 = false;
-    private Boolean dansListe2 = false;
-    private Boolean dansListe3 = false;
-    private int idListe=0;
-    private ArrayList<Integer> idlistes = new ArrayList<>();
+    private ArrayList<Integer> idPrevListes = new ArrayList<>();
+    private ArrayList<Integer> idNouvListes = new ArrayList<>();
     private CheckedTextView ctvliste1=null;
     private CheckedTextView ctvliste2=null;
     private CheckedTextView ctvliste3=null;
@@ -77,20 +74,20 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 bien = bdao.getBien(id);
 
                 // récupérer les id des listes d'appartenance du bien dans la table Appartient
-                idlistes = bdao.getAllIdListeByIdBien(bien.getId_bien());
+                idPrevListes = bdao.getAllIdListeByIdBien(bien.getId_bien());
 
                 // récupérer le nom des listes dans lequel le bien existe
                 ldao.open();
-                for(int i=0;i<idlistes.size();i++) {
-                    if(idlistes.get(i) == 1) {
+                for(int i=0;i<idPrevListes.size();i++) {
+                    if(idPrevListes.get(i) == 1) {
                         String nom = ldao.getNomListeById(1);
                         nomListes.add(nom);
                     }
-                    if(idlistes.get(i) == 2) {
+                    if(idPrevListes.get(i) == 2) {
                         String nom = ldao.getNomListeById(2);
                         nomListes.add(nom);
                     }
-                    if(idlistes.get(i) == 3) {
+                    if(idPrevListes.get(i) == 3) {
                         String nom = ldao.getNomListeById(3);
                         nomListes.add(nom);
                     }
@@ -133,10 +130,8 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     public void onClick(View v) {
                         if (ctvliste1.isChecked()) {
                             ctvliste1.setChecked(false);
-                            dansListe1 = false;
                         } else {
                             ctvliste1.setChecked(true);
-                            dansListe1 = true;
                         }
                     }
                 });
@@ -149,10 +144,8 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     public void onClick(View v) {
                         if (ctvliste2.isChecked()) {
                             ctvliste2.setChecked(false);
-                            dansListe2 = false;
                         } else {
                             ctvliste2.setChecked(true);
-                            dansListe2 = true;
                         }
                     }
                 });
@@ -164,22 +157,20 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     public void onClick(View v) {
                         if (ctvliste3.isChecked()) {
                             ctvliste3.setChecked(false);
-                            dansListe3 = false;
                         } else {
                             ctvliste3.setChecked(true);
-                            dansListe3 = true;
                         }
                     }
                 });
 
-                for(i=0;i<idlistes.size();i++) {
-                    if(idlistes.get(i) == 1) {
+                for(i=0;i<idPrevListes.size();i++) {
+                    if(idPrevListes.get(i) == 1) {
                         ctvliste1.setChecked(true);
                     }
-                    if(idlistes.get(i) == 2) {
+                    if(idPrevListes.get(i) == 2) {
                         ctvliste2.setChecked(true);
                     }
-                    if(idlistes.get(i) == 3) {
+                    if(idPrevListes.get(i) == 3) {
                         ctvliste3.setChecked(true);
                     }
                 }
@@ -211,21 +202,43 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     public void modifierBien(View v) {
         idCategorieSelectionne = categorieSelectionne.getId_Categorie();
-        bdao.close();
+        bdao.open();
         bdao.modBien(bien.getId_bien(), nomBien.getText().toString(), dateSaisie , dateAchat.getText().toString(), commentaireBien.getText().toString(), idCategorieSelectionne,
         descriptionBien.getText().toString(), Float.valueOf(prixBien.getText().toString()), numeroSerie.getText().toString());
 
-        if(dansListe1) {
-            idListe = 1;
+        if(ctvliste1.isChecked()) {
+            idNouvListes.add(1);
         }
-        if(dansListe2) {
-            idListe = 2;
+        if(ctvliste2.isChecked()) {
+            idNouvListes.add(2);
         }
-        if(dansListe3) {
-            idListe = 3;
+        if(ctvliste3.isChecked()) {
+            idNouvListes.add(3);
         }
 
-        bdao.modifierListeAppartenance(bien.getId_bien(), idListe);
+        for(int i=0;i<idPrevListes.size();i++) {
+            if(idPrevListes.get(i) == 1) {
+                bdao.supprimerListeAppartenance(bien.getId_bien(), 1);
+            }
+            if(idPrevListes.get(i) == 2) {
+                bdao.supprimerListeAppartenance(bien.getId_bien(), 2);
+            }
+            if(idPrevListes.get(i) == 3) {
+                bdao.supprimerListeAppartenance(bien.getId_bien(), 3);
+            }
+        }
+
+        for(int i=0;i<idNouvListes.size();i++) {
+            if(idNouvListes.get(i) == 1) {
+                bdao.addInAppartient(bien.getId_bien(), 1);
+            }
+            if(idNouvListes.get(i) == 2) {
+                bdao.addInAppartient(bien.getId_bien(), 2);
+            }
+            if(idNouvListes.get(i) == 3) {
+                bdao.addInAppartient(bien.getId_bien(), 3);
+            }
+        }
 
         bdao.close();
 

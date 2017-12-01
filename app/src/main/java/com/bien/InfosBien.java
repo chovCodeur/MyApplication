@@ -70,8 +70,30 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infos_bien);
 
-        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        m = menu;
+
+        return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        listes.clear();
+
+        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
         bdao = new BienDAO(this);
@@ -219,20 +241,6 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 zoomImageFromThumb(view, R.drawable.no_image);
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        m = menu;
-
-        return true;
     }
 
     @Override

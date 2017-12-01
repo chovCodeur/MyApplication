@@ -53,12 +53,21 @@
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true" />
 
+            <TextView
+                android:id="@+id/explicationCategorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/nom_bien"
+                android:layout_marginTop="6dp"
+                android:text="Selectionner une catégorie :" />
+
             <Spinner
                 android:id="@+id/select_categorie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/nom_bien"
+                android:layout_below="@+id/explicationCategorie"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="12dp"/>
 
