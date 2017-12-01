@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.application.MainActivity;
 import com.categorie.Categorie;
@@ -201,48 +203,53 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void modifierBien(View v) {
-        idCategorieSelectionne = categorieSelectionne.getId_Categorie();
-        bdao.open();
-        bdao.modBien(bien.getId_bien(), nomBien.getText().toString(), dateSaisie , dateAchat.getText().toString(), commentaireBien.getText().toString(), idCategorieSelectionne,
-        descriptionBien.getText().toString(), Float.valueOf(prixBien.getText().toString()), numeroSerie.getText().toString());
+        if(!nomBien.getText().toString().equals("") && !dateAchat.getText().toString().equals("") && !descriptionBien.getText().toString().equals("") && !commentaireBien.getText().toString().equals("") && !numeroSerie.getText().toString().equals("") && !prixBien.getText().toString().equals("") && isACheckboxIsChecked()) {
+            idCategorieSelectionne = categorieSelectionne.getId_Categorie();
+            bdao.open();
+            bdao.modBien(bien.getId_bien(), nomBien.getText().toString(), dateSaisie, dateAchat.getText().toString(), commentaireBien.getText().toString(), idCategorieSelectionne,
+                    descriptionBien.getText().toString(), Float.valueOf(prixBien.getText().toString()), numeroSerie.getText().toString());
 
-        if(ctvliste1.isChecked()) {
-            idNouvListes.add(1);
-        }
-        if(ctvliste2.isChecked()) {
-            idNouvListes.add(2);
-        }
-        if(ctvliste3.isChecked()) {
-            idNouvListes.add(3);
-        }
+            if (ctvliste1.isChecked()) {
+                idNouvListes.add(1);
+            }
+            if (ctvliste2.isChecked()) {
+                idNouvListes.add(2);
+            }
+            if (ctvliste3.isChecked()) {
+                idNouvListes.add(3);
+            }
 
-        for(int i=0;i<idPrevListes.size();i++) {
-            if(idPrevListes.get(i) == 1) {
-                bdao.supprimerListeAppartenance(bien.getId_bien(), 1);
+            for (int i = 0; i < idPrevListes.size(); i++) {
+                if (idPrevListes.get(i) == 1) {
+                    bdao.supprimerListeAppartenance(bien.getId_bien(), 1);
+                }
+                if (idPrevListes.get(i) == 2) {
+                    bdao.supprimerListeAppartenance(bien.getId_bien(), 2);
+                }
+                if (idPrevListes.get(i) == 3) {
+                    bdao.supprimerListeAppartenance(bien.getId_bien(), 3);
+                }
             }
-            if(idPrevListes.get(i) == 2) {
-                bdao.supprimerListeAppartenance(bien.getId_bien(), 2);
+
+            for (int i = 0; i < idNouvListes.size(); i++) {
+                if (idNouvListes.get(i) == 1) {
+                    bdao.addInAppartient(bien.getId_bien(), 1);
+                }
+                if (idNouvListes.get(i) == 2) {
+                    bdao.addInAppartient(bien.getId_bien(), 2);
+                }
+                if (idNouvListes.get(i) == 3) {
+                    bdao.addInAppartient(bien.getId_bien(), 3);
+                }
             }
-            if(idPrevListes.get(i) == 3) {
-                bdao.supprimerListeAppartenance(bien.getId_bien(), 3);
-            }
+
+            bdao.close();
+
+            finish();
+        } else {
+            Toast toast = Toast.makeText(this, "Tous les champs doivent être remplis pour pouvoir modifier un bien", Toast.LENGTH_LONG);
+            toast.show();
         }
-
-        for(int i=0;i<idNouvListes.size();i++) {
-            if(idNouvListes.get(i) == 1) {
-                bdao.addInAppartient(bien.getId_bien(), 1);
-            }
-            if(idNouvListes.get(i) == 2) {
-                bdao.addInAppartient(bien.getId_bien(), 2);
-            }
-            if(idNouvListes.get(i) == 3) {
-                bdao.addInAppartient(bien.getId_bien(), 3);
-            }
-        }
-
-        bdao.close();
-
-        finish();
     }
 
     @Override
@@ -288,5 +295,12 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
 
+    }
+
+    public boolean isACheckboxIsChecked() {
+        if(ctvliste1.isChecked() || ctvliste2.isChecked() || ctvliste3.isChecked()) {
+            return true;
+        }
+        return false;
     }
 }
