@@ -219,14 +219,11 @@ public class BienDAO {
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME);
     }
 
-    public int modifierListeAppartenance(int idBien, int idListe) {
-        ContentValues values = new ContentValues();
-        values.put("id_liste",idListe);
+    public int supprimerListeAppartenance(int idBien, int prevIdListe) {
+        String where = "id_bien = ? AND id_liste = ?";
+        String[] whereArgs = {idBien+"", prevIdListe+""};
 
-        String where = "id_bien"+" = ?";
-        String[] whereArgs = {String.valueOf(idBien)};
-
-        return db.update("APPARTIENT", values, where, whereArgs);
+        return db.delete("APPARTIENT", where, whereArgs);
     }
 
     public ArrayList<Integer> getAllIdListeByIdBien(int id) {
