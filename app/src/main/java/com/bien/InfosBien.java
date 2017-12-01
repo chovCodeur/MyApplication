@@ -59,6 +59,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
     private ImageButton photoMini3;
     private Spinner spinnerListe;
     private ArrayList<String> listes = new ArrayList<>();
+    private ArrayList<Integer> idlistes = new ArrayList<>();
     private Animator mCurrentAnimator;
     private int mShortAnimationDuration;
     private Menu m = null;
@@ -75,6 +76,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
         bdao = new BienDAO(this);
         cdao = new CategorieDAO(this);
+        ldao = new ListeDAO(this);
 
         Bundle extras = getIntent().getExtras();
 
@@ -86,18 +88,25 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 bien = bdao.getBien(id);
 
                 // récupérer les id des listes d'appartenance du bien dans la table Appartient
-
-                // compter le nombre d'id
+                idlistes = bdao.getAllIdListeByIdBien(bien.getId_bien());
 
                 // récupérer le nom des listes dans lequel le bien existe
-                /*ldao.open();
-                for(int i=0;i<nombreID;i++) {
-                    String nom = ldao.getNomListeById(i);
-                    if(!nom.equals("")){
+                ldao.open();
+                for(int i=0;i<idlistes.size();i++) {
+                    if(idlistes.get(i) == 1) {
+                        String nom = ldao.getNomListeById(1);
+                        listes.add(nom);
+                    }
+                    if(idlistes.get(i) == 2) {
+                        String nom = ldao.getNomListeById(2);
+                        listes.add(nom);
+                    }
+                    if(idlistes.get(i) == 3) {
+                        String nom = ldao.getNomListeById(3);
                         listes.add(nom);
                     }
                 }
-                ldao.close();*/
+                ldao.close();
 
                 bdao.close();
 

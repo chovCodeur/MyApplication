@@ -109,6 +109,7 @@
                 android:textSize="18sp"
                 android:visibility="visible" />
 
+
             <EditText
                 android:id="@+id/date_achat_bien"
                 android:layout_width="match_parent"

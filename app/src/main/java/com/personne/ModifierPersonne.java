@@ -12,10 +12,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.bien.AjouterBien;
 import com.application.MainActivity;
 import com.application.inventaire.R;
+import com.dao.PersonneDAO;
 
 import java.util.Calendar;
 
@@ -126,5 +128,29 @@ public class ModifierPersonne extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClickAjoutInfos (View view){
+
+        TextView textViewNomPersonne = (TextView) findViewById(R.id.editNom);
+        TextView textViewPrenomPersonne = (TextView) findViewById(R.id.editPrenom);
+        TextView textViewAddress =(TextView) findViewById(R.id.editAdress);
+        TextView textViewEmail = (TextView) findViewById(R.id.editEmail);
+        TextView textViewPhoneNumber = (TextView) findViewById(R.id.editPhon_Number);
+        TextView textViewDate =(TextView) findViewById(R.id.editTextDate);
+
+
+        String nomPersonne = textViewNomPersonne.getText().toString();
+        String prenomPersonne = textViewPrenomPersonne.getText().toString();
+        String address = textViewAddress.getText().toString();
+        String email = textViewEmail.getText().toString();
+        String phoneNumber = textViewPhoneNumber.getText().toString();
+        String date = textViewDate.getText().toString();
+
+        Personne personne = new Personne(0, nomPersonne, prenomPersonne, address, email, phoneNumber, date);
+
+        PersonneDAO personneDAO = new PersonneDAO(this);
+        personneDAO.open();
+        personneDAO.close();
     }
 }

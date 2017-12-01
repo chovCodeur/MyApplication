@@ -21,14 +21,15 @@ import com.dao.CategorieDAO;
 public class ModifierCategorie extends AppCompatActivity {
 
 
-    Button modifCategorie;
-    EditText editCategorie;
-    EditText editDescription;
-    int idcat;
+    private Button modifCategorie;
+    private EditText editCategorie;
+    private EditText editDescription;
+    private int idcat;
     private CategorieDAO cdao;
     private Categorie categorie;
     private Menu m;
-    String nomcat;
+    private String nomcat;
+    private String nomdescrip;
 
 
     @Override
@@ -55,12 +56,16 @@ public class ModifierCategorie extends AppCompatActivity {
                 cdao.open();
                 //categorie = cdao.getCategorieById(idcat);
                 nomcat=cdao.getNomCategorieByIdCategorie(idcat);
+                nomdescrip=cdao.getDescriptionCategorieByIdCategorie(idcat);
+
                 Log.d("NOMCATEGORIE", cdao.getNomCategorieByIdCategorie(idcat));
                 cdao.close();
             }
         }
         editCategorie.setText(nomcat);
-        /*modifCategorie.setOnClickListener(new View.OnClickListener() {
+        editDescription.setText(nomdescrip);
+
+        modifCategorie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -68,9 +73,11 @@ public class ModifierCategorie extends AppCompatActivity {
                 String description = editDescription.getText().toString();
                 Intent intent = new Intent(ModifierCategorie.this, MainActivity.class);
                     startActivity(intent);
-
+                cdao.open();
+                cdao.modCategorie(idcat,categorie,description);
+                cdao.close();
             }
-        });*/
+        });
     }
 
     @Override
@@ -107,6 +114,10 @@ public class ModifierCategorie extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+    public void onClickModifCategorie(View v){
+
+
     }
 
 }
