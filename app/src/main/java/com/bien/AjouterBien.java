@@ -52,6 +52,16 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     Boolean dansListe3 = false;
     private Menu m;
 
+    ImageView imagePhotoPrincipale ;
+    ImageView imagePhoto1 ;
+    ImageView imagePhoto2 ;
+    ImageView imagePhoto3 ;
+    Bitmap bitmapPrincipal;
+    Bitmap bitmapPhoto1;
+    Bitmap bitmapPhoto2;
+    Bitmap bitmapPhoto3;
+    int nbPhoto = 0;
+
     final static int SELECT_PICTURE = 1;
     ImageView imageVue;
     public Bitmap bitmap;
@@ -171,12 +181,30 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
         });
 
-
-
-
         //Initialise l'imageview on lui met une action
-        imageVue = (ImageView) findViewById(R.id.photoPrincipale);
+        imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
+        imagePhoto1 = (ImageView) findViewById(R.id.photo1);
+        imagePhoto2 = (ImageView) findViewById(R.id.photo2);
+        imagePhoto3 = (ImageView) findViewById(R.id.photo3);
 
+
+        Button buttonAjouterPhoto = (Button) findViewById(R.id.ajouterPhoto);
+
+        buttonAjouterPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent i = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                startActivityForResult(i, 1);
+
+            }
+        });
+
+/*
         Button buttonAjouterPhotoPrincipale = (Button) findViewById(R.id.ajouterPhotoPrincipale);
 
         buttonAjouterPhotoPrincipale.setOnClickListener(new View.OnClickListener() {
@@ -186,6 +214,56 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
         });
 
+        */
+
+    }
+
+    /*
+        *Méthode pour ouvrir une galerie d'image
+     */
+    public void ajouterPhoto(View v){
+
+    }
+
+    /*
+        *Retour du resultat de la galerie
+     */
+    protected void onActivityResult(int request, int resultCode, Intent data) {
+        super.onActivityResult(request, resultCode, data);
+
+        if(resultCode == RESULT_OK && request == SELECT_PICTURE) {
+
+            String path = getRealPathFromUri(data.getData());
+
+            Log.e("Choix d'image", "uri"+path);
+            switch (nbPhoto) {
+                case 0 :
+                    bitmapPrincipal = BitmapFactory.decodeFile(path);
+                    imagePhotoPrincipale.setImageBitmap(bitmapPrincipal);
+                    nbPhoto++;
+                    break;
+                case 1 :
+                    bitmapPhoto1 = BitmapFactory.decodeFile(path);
+                    imagePhoto1.setImageBitmap(bitmapPhoto1);
+                    nbPhoto++;
+
+                    break;
+                case 2 :
+                    bitmapPhoto2 = BitmapFactory.decodeFile(path);
+                    imagePhoto2.setImageBitmap(bitmapPhoto2);
+                    nbPhoto++;
+
+                    break;
+
+                case 3 :
+                    bitmapPhoto3 = BitmapFactory.decodeFile(path);
+                    imagePhoto3.setImageBitmap(bitmapPhoto3);
+                    nbPhoto++;
+
+                    break;
+
+            }
+        }
     }
 
     /*
@@ -200,32 +278,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         startActivityForResult(Intent.createChooser(intent, "Selectionnez une image"), SELECT_PICTURE);
     }
 
-    /*
-        *Retour du resultat de la galerie
-     */
-    protected void onActivityResult(int request, int resultCode, Intent data) {
-        super.onActivityResult(request, resultCode, data);
-
-        if(resultCode == RESULT_OK) {
-            switch (request) {
-                case SELECT_PICTURE :
-                    String path = getRealPathFromUri(data.getData());
-                    Log.e("Choix d'image", "uri"+path);
-
-                    //Transforme l'image en jpg
-                    bitmap = BitmapFactory.decodeFile(path);
-
-                    imageVue.setImageBitmap(bitmap);
-
-                    break;
-
-            }
-        }
-    }
-
-    /*
-    *Methode pour récuperer l'Uri de l'image
-     */
     private String getRealPathFromUri(Uri contentUri) {
         String result;
 
@@ -241,7 +293,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         }
         return result;
     }
-
 
     @Override
     public void onBackPressed() {
