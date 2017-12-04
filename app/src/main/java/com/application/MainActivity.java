@@ -1,6 +1,8 @@
 package com.application;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         bdao.open();
         if(bdao.compterBienEnBase()<=0){
+            Log.e("MiPa","On rempli la base");
             remplirBeDeForTest();
         }
 
@@ -278,16 +281,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //String commentaire_bien, float prix_bien, Bitmap photo_bien_principal, Bitmap photo_bien_miniature1,
          //       Bitmap photo_bien_miniature2, Bitmap photo_bien_miniature3, int id_categorie_bien, String description_bien, String numeroSerie_bien
 
-        Bien bien1 = new Bien(1,"Lunette","19/11/2017","21/11/2017","","Légèrement rayées sur le coté",251.6f,null,null,null,null,3,"Lunette de marque Rayban","");
-        Bien bien2 = new Bien(2,"Frigo connecté SAMSUNG","19/11/2017","23/11/2017","","",3599.99f,null,null,null,null,1,"Samsung Family Hub","45DG425845DA");
-        Bien bien3 = new Bien(3,"Ordinateur portable","19/11/2017","01/12/2017","","Manque une touche",1099.99f,null,null,null,null,2,"PC Portable Gamer de marque MSI","515D-TGH2336");
-        Bien bien4 = new Bien(4,"Vaisselle en porcelaine","20/11/2017","03/06/2017","","Vaisselle de Mémé",6902.30f,null,null,null,null,1,"En porcelaine chinoise datée de 1640","");
-        Bien bien5 = new Bien(5,"Robot patissier","21/11/2017","19/05/2016","","",350f,null,null,null,null,1,"Marque Kenwood","");
-        Bien bien6 = new Bien(6,"Home Cinema","21/11/2017","19/01/2017","","Une enceinte grésille un peu",400f,null,null,null,null,2,"Marque Pioneer","");
+        Bitmap icon1 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i1);
+        Bitmap icon2 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i2);
+        Bitmap icon3 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i3);
+        Bitmap icon4 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i4);
+        Bitmap icon5 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i5);
+        Bitmap icon6 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i6);
+
+
+        Bien bien1 = new Bien(1,"Lunette","19/11/2017","21/11/2017","","Légèrement rayées sur le coté",251.6f,icon1,null,null,null,3,"Lunette de marque Rayban","");
+        Bien bien2 = new Bien(2,"Frigo connecté SAMSUNG","19/11/2017","23/11/2017","","",3599.99f,icon2,null,null,null,1,"Samsung Family Hub","45DG425845DA");
+        Bien bien3 = new Bien(3,"Ordinateur portable","19/11/2017","01/12/2017","","Manque une touche",1099.99f,icon3,null,null,null,2,"PC Portable Gamer de marque MSI","515D-TGH2336");
+        Bien bien4 = new Bien(4,"Vaisselle en porcelaine","20/11/2017","03/06/2017","","Vaisselle de Mémé",6902.30f,icon4,null,null,null,1,"En porcelaine chinoise datée de 1640","");
+        Bien bien5 = new Bien(5,"Robot patissier","21/11/2017","19/05/2016","","",350f,icon5,null,null,null,1,"Marque Kenwood","");
+        Bien bien6 = new Bien(6,"Home Cinema","21/11/2017","19/01/2017","","Une enceinte grésille un peu",400f,icon6,null,null,null,2,"Marque Pioneer","");
 
 
 
         bdao.open();
+
         bdao.addBien(bien1, 1);
         bdao.addBien(bien2, 1);
         bdao.addBien(bien3, 1);

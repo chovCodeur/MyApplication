@@ -204,25 +204,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
         });
 
-/*
-        Button buttonAjouterPhotoPrincipale = (Button) findViewById(R.id.ajouterPhotoPrincipale);
-
-        buttonAjouterPhotoPrincipale.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btGalleryClick(v);
-            }
-        });
-
-        */
-
-    }
-
-    /*
-        *Méthode pour ouvrir une galerie d'image
-     */
-    public void ajouterPhoto(View v){
-
     }
 
     /*
@@ -356,7 +337,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                 null,
                 commentaireBien,
                 prixBien,
-                null,
+                bitmapPrincipal,
                 null,
                 null,
                 null,
@@ -369,7 +350,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         bienDAO.open();
 
-        //bienDAO.addBien(bien);
+        bienDAO.addBien(bien,1);
         Log.e("MiPa",bien.toString());
 
         bienDAO.close();

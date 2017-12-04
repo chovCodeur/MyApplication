@@ -10,6 +10,8 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.bien.Bien;
 import com.bd.MySQLite;
@@ -86,6 +88,9 @@ public class BienDAO {
         values.put(DATEACHAT, bien.getDate_achat_bien());
         //values.put(FACTURE, bien.getMagasinBien());
         values.put(COMMENTAIRE, bien.getCommentaire_bien());
+        if (bien.getPhoto_bien_principal() != null) {
+            values.put(PHOTO_PRINCIPALE, convertBitmapAsByteArray(bien.getPhoto_bien_principal()));
+        }
         values.put(DESCRIPTION, bien.getDescription_bien());
         values.put(PRIX, bien.getPrix_bien());
         values.put(NUMSERIE, bien.getNumeroSerie_bien());
@@ -132,6 +137,7 @@ public class BienDAO {
             a.setDate_saisie_bien(c.getString(c.getColumnIndex(DATESAISIE)));
             a.setDate_achat_bien(c.getString(c.getColumnIndex(DATEACHAT)));
             a.setCommentaire_bien(c.getString(c.getColumnIndex(COMMENTAIRE)));
+            a.setPhoto_bien_principal(convertByteArrayAsBitmap(c.getBlob(c.getColumnIndex(PHOTO_PRINCIPALE))));
             a.setPrix_bien(c.getFloat(c.getColumnIndex(PRIX)));
             a.setId_categorie_bien(c.getInt(c.getColumnIndex(IDCATEGORIE)));
             a.setDescription_bien(c.getString(c.getColumnIndex(DESCRIPTION)));
@@ -166,7 +172,8 @@ public class BienDAO {
         ArrayList<Bien> liste = new ArrayList<Bien>();
         Cursor curseurBien = db.rawQuery("SELECT * FROM "+TABLE_NAME+" JOIN APPARTIENT ON APPARTIENT.id_bien="+TABLE_NAME+"."+ID+" WHERE id_liste = "+id_liste+" ORDER BY "+IDCATEGORIE, null);
 
-        Bien bienTemp;
+        Bien bienTemp =new Bien(0, "", "", "", "","", 0,null,null,null,null,0, "", "");
+
         if (curseurBien.moveToFirst()) {
             do {
                /* bienTemp = new Bien(
@@ -186,6 +193,7 @@ public class BienDAO {
                         curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE))
                 ); */
 
+             /*
                 bienTemp = new Bien(
                         curseurBien.getInt(curseurBien.getColumnIndex(ID)),
                         curseurBien.getString(curseurBien.getColumnIndex(NOM)),
@@ -194,16 +202,32 @@ public class BienDAO {
                         null,
                         curseurBien.getString(curseurBien.getColumnIndex(COMMENTAIRE)),
                         curseurBien.getFloat(curseurBien.getColumnIndex(PRIX)),
-                        null,
+                        convertByteArrayAsBitmap(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_PRINCIPALE))),
                         null,
                         null,
                         null,
                         curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)),
                         curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)),
                         curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE))
-                );
+                ); */
+
+                Log.e("MiPa","Num"+curseurBien.getColumnIndex(PHOTO_PRINCIPALE));
+
+                bienTemp.setId_bien(curseurBien.getInt(curseurBien.getColumnIndex(ID)));
+                bienTemp.setNom_bien(curseurBien.getString(curseurBien.getColumnIndex(NOM)));
+                bienTemp.setDate_saisie_bien(curseurBien.getString(curseurBien.getColumnIndex(DATESAISIE)));
+                bienTemp.setDate_achat_bien(curseurBien.getString(curseurBien.getColumnIndex(DATEACHAT)));
+                bienTemp.setCommentaire_bien(curseurBien.getString(curseurBien.getColumnIndex(COMMENTAIRE)));
+                bienTemp.setPhoto_bien_principal(convertByteArrayAsBitmap(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_PRINCIPALE))));
+                bienTemp.setPrix_bien(curseurBien.getFloat(curseurBien.getColumnIndex(PRIX)));
+                bienTemp.setId_categorie_bien(curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)));
+                bienTemp.setDescription_bien(curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)));
+                bienTemp.setNumeroSerie_bien(curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE)));
+
+
 
                 liste.add(bienTemp);
+                bienTemp =new Bien(0, "", "", "", "","", 0,null,null,null,null,0, "", "");
             } while (curseurBien.moveToNext());
         }
         curseurBien.close();
@@ -243,10 +267,26 @@ public class BienDAO {
         return idListes;
     }
 
-    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
-        return outputStream.toByteArray();
+    public byte[] convertBitmapAsByteArray(Bitmap bitmap) {
+        if (bitmap != null ) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            return outputStream.toByteArray();
+        } else {
+            return null;
+        }
     }
+
+    public Bitmap convertByteArrayAsBitmap(byte[] bytes) {
+
+        if (bytes != null){
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        } else {
+            return null;
+        }
+
+    }
+
+
 }
 
