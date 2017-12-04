@@ -1,5 +1,7 @@
 package com.application;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,15 +10,21 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.bien.AjouterBien;
 import com.bien.Bien;
@@ -47,7 +55,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private CategorieDAO cdao;
     private int idCurrentList=1;
     private Menu m;
-
+    private AlertDialog dialog;
+    private AlertDialog.Builder builder;
+    private LinearLayout layout;
+    private Context context = this;
+    private NavigationView navigationView;
+    private Toolbar myToolbar;
 
     ArrayList<Bien> listeBiens = new ArrayList<Bien>();
     HashMap<Integer, Integer> listCorrespondance = new HashMap<>();
@@ -56,20 +69,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle(getResources().getString(R.string.app_name));
-        setSupportActionBar(myToolbar);
-
-        lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
 
         pdao = new PersonneDAO(this);
         ldao = new ListeDAO(this);
         bdao = new BienDAO(this);
         cdao = new CategorieDAO(this);
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        ldao.open();
+        myToolbar.setTitle(ldao.getNomListeById(idCurrentList));
+        ldao.close();
+        setSupportActionBar(myToolbar);
+
+        lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
 
         bdao.open();
         if(bdao.compterBienEnBase()<=0){
@@ -85,8 +100,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        ldao.open();
+        navigationView.getMenu().findItem(R.id.liste1).setTitle(ldao.getNomListeById(1));
+        navigationView.getMenu().findItem(R.id.liste2).setTitle(ldao.getNomListeById(2));
+        navigationView.getMenu().findItem(R.id.liste3).setTitle(ldao.getNomListeById(3));
+        ldao.close();
         /*View headerview = navigationView.getHeaderView(0);
 
         headerview.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+
         // on rafraichi simplement l'affichage
         refreshAdapterView();
     }
@@ -121,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
+     /*   int id = item.getItemId();
 
         if (id == R.id.liste1) {
             idCurrentList = 1;
@@ -139,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        drawer.closeDrawer(GravityCompat.START);*/
         return true;
     }
 
@@ -172,7 +193,88 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        ViewGroup navigationMenuView = (ViewGroup)navigationView.getChildAt(0);
+        ViewGroup navigationMenuItemView1 = (ViewGroup)navigationMenuView.getChildAt(1);
+        ViewGroup navigationMenuItemView2 = (ViewGroup)navigationMenuView.getChildAt(2);
+        ViewGroup navigationMenuItemView3 = (ViewGroup)navigationMenuView.getChildAt(3);
+        View appCompatCheckedTextView1 = navigationMenuItemView1.getChildAt(0);
+        View appCompatCheckedTextView2 = navigationMenuItemView2.getChildAt(0);
+        View appCompatCheckedTextView3 = navigationMenuItemView3.getChildAt(0);
+
+        appCompatCheckedTextView1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                idCurrentList = 1;
+
+                changerNomListe();
+
+                return true;
+            }
+        });
+
+        appCompatCheckedTextView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                idCurrentList = 1;
+                refreshAdapterView();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        appCompatCheckedTextView2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                idCurrentList = 2;
+
+                changerNomListe();
+
+                return true;
+            }
+        });
+
+        appCompatCheckedTextView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                idCurrentList = 2;
+                refreshAdapterView();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        appCompatCheckedTextView3.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                idCurrentList = 3;
+
+                changerNomListe();
+
+                return true;
+            }
+        });
+
+        appCompatCheckedTextView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                idCurrentList = 3;
+                refreshAdapterView();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     public void refreshAdapterView() {
+
+        ldao.open();
+        myToolbar.setTitle(ldao.getNomListeById(idCurrentList));
+        ldao.close();
 
         // On détruit l'affichage courant
         lv_listeBiens.destroyDrawingCache();
@@ -320,5 +422,51 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bdao.addBien(bienTemp, 3);
 
         bdao.close();
+    }
+
+    public void changerNomListe() {
+        final EditText libelle = new EditText(context);
+        libelle.setHint("Nom de la liste");
+
+        layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(libelle);
+
+        builder = new AlertDialog.Builder(context);
+        builder.setCancelable(true);
+        builder.setTitle("Changer le libellé");
+        builder.setView(layout);
+        // Si on clique sur "OK" et que toutes les conditions de modification requises sont remplies,
+        // On modifie la quantité et le nom de l'article suivant les choix de l'opérateur
+        builder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(!libelle.getText().toString().equals("")) {
+                            ldao.open();
+                            ldao.modifierListe(idCurrentList, libelle.getText().toString(), "");
+                            switch (idCurrentList) {
+                                case 1: navigationView.getMenu().findItem(R.id.liste1).setTitle(libelle.getText().toString());
+                                    break;
+                                case 2: navigationView.getMenu().findItem(R.id.liste2).setTitle(libelle.getText().toString());
+                                    break;
+                                case 3: navigationView.getMenu().findItem(R.id.liste3).setTitle(libelle.getText().toString());
+                                    break;
+                            }
+                            ldao.close();
+                        } else {
+                            Toast toast = Toast.makeText(context, "La liste doit avoir un nom", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+                    }
+                });
+        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        dialog = builder.create();
+        dialog.show();
     }
 }
