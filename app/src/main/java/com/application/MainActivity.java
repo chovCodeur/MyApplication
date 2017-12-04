@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private LinearLayout layout;
     private Context context = this;
     private NavigationView navigationView;
+    private Toolbar myToolbar;
 
     ArrayList<Bien> listeBiens = new ArrayList<Bien>();
     HashMap<Integer, Integer> listCorrespondance = new HashMap<>();
@@ -66,20 +67,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle(getResources().getString(R.string.app_name));
-        setSupportActionBar(myToolbar);
-
-        lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
 
         pdao = new PersonneDAO(this);
         ldao = new ListeDAO(this);
         bdao = new BienDAO(this);
         cdao = new CategorieDAO(this);
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        ldao.open();
+        myToolbar.setTitle(ldao.getNomListeById(idCurrentList));
+        ldao.close();
+        setSupportActionBar(myToolbar);
+
+        lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
 
         bdao.open();
         if(bdao.compterBienEnBase()<=0){
@@ -119,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+
         // on rafraichi simplement l'affichage
         refreshAdapterView();
     }
@@ -264,6 +268,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void refreshAdapterView() {
+
+        ldao.open();
+        myToolbar.setTitle(ldao.getNomListeById(idCurrentList));
+        ldao.close();
 
         // On détruit l'affichage courant
         lv_listeBiens.destroyDrawingCache();
