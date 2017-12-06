@@ -6,6 +6,8 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ import com.application.MainActivity;
 import com.application.inventaire.R;
 import com.utils.ReadPDF;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -138,8 +141,12 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         }
 
         // Mise à jour de l'image principale
-        photoPrincipale = (ImageButton) findViewById(R.id.photoPrincipaleBien);
-        //photoPrincipale.setImageBitmap(bien.getPhoto_bien_principal());
+        File imgFile = new  File(bien.getPhoto_bien_principal());
+        if(imgFile.exists()){
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            photoPrincipale = (ImageButton) findViewById(R.id.photoPrincipaleBien);
+            photoPrincipale.setImageBitmap(myBitmap);
+        }
 
         // On met à jour le nom du bien
         nomBien = (TextView) findViewById(R.id.nomBien);
@@ -172,15 +179,26 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         });
 
         // Mise à jour des 3 miniatures d'images
-        photoMini1 = (ImageButton) findViewById(R.id.Photo1Bien);
-       // photoMini1.setImageBitmap(bien.getPhoto_bien_miniature1());
+        imgFile = new  File(bien.getPhoto_bien_miniature1());
+        if(imgFile.exists()){
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            photoMini1 = (ImageButton) findViewById(R.id.Photo1Bien);
+            photoMini1.setImageBitmap(myBitmap);
+        }
 
-        photoMini2 = (ImageButton) findViewById(R.id.Photo2Bien);
-        //photoMini2.setImageBitmap(bien.getPhoto_bien_miniature2());
+        imgFile = new  File(bien.getPhoto_bien_miniature2());
+        if(imgFile.exists()){
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            photoMini2 = (ImageButton) findViewById(R.id.Photo2Bien);
+            photoMini2.setImageBitmap(myBitmap);
+        }
 
-        photoMini3 = (ImageButton) findViewById(R.id.Photo3Bien);
-        //photoMini3.setImageBitmap(bien.getPhoto_bien_miniature3());
-
+        imgFile = new  File(bien.getPhoto_bien_miniature3());
+        if(imgFile.exists()){
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            photoMini3 = (ImageButton) findViewById(R.id.Photo3Bien);
+            photoMini3.setImageBitmap(myBitmap);
+        }
         // Mise à jour des listes dans lequel l'objet apparaît
         spinnerListe = (Spinner) findViewById(R.id.spinnerListesAppartenanceBien);
         spinnerListe.setOnItemSelectedListener(this);
