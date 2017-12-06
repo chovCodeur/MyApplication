@@ -101,7 +101,7 @@ public class AjouterCategorie extends AppCompatActivity {
         String nomCategorie = textViewNomCategorie.getText().toString();
         String description = textViewDescription.getText().toString();
 
-        Categorie categorie = new Categorie(0, nomCategorie, description);
+        Categorie categorie = new Categorie(1, nomCategorie, description);
 
         CategorieDAO categorieDAO = new CategorieDAO(this);
          categorieDAO.open();
