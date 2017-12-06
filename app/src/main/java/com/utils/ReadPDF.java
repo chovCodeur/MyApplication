@@ -8,6 +8,8 @@ import com.joanzapata.pdfview.PDFView;
 import com.joanzapata.pdfview.listener.OnPageChangeListener;
 
 
+import java.io.File;
+
 import static java.lang.String.format;
 
 public class ReadPDF extends AppCompatActivity implements OnPageChangeListener {
@@ -46,7 +48,8 @@ public class ReadPDF extends AppCompatActivity implements OnPageChangeListener {
         if (jumpToFirstPage) pageNumber = 1;
         //setTitle(pdfName = assetFileName);
 
-        pdfView.fromAsset(assetFileName)
+        File file = new File (assetFileName);
+        pdfView.fromFile(file)
                 .defaultPage(pageNumber)
                 .onPageChange(this)
                 .load();
