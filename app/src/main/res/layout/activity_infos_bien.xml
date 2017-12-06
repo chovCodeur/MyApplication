@@ -49,6 +49,7 @@
                 android:layout_height="160dp"
                 android:layout_marginTop="20dp"
                 android:scaleType="fitXY"
+                android:rotation="90"
                 app:srcCompat="@drawable/no_image" />
 
             <TextView
@@ -177,6 +178,7 @@
                 android:layout_alignTop="@+id/Photo2Bien"
                 android:layout_marginRight="20dp"
                 android:scaleType="fitXY"
+                android:rotation="90"
                 app:srcCompat="@drawable/no_image" />
 
             <com.utils.TouchHighlightImageButton
@@ -186,6 +188,7 @@
                 android:layout_below="@+id/buttonFactureBien"
                 android:layout_centerHorizontal="true"
                 android:scaleType="fitXY"
+                android:rotation="90"
                 app:srcCompat="@drawable/no_image" />
 
             <com.utils.TouchHighlightImageButton
@@ -196,6 +199,7 @@
                 android:layout_below="@+id/buttonFactureBien"
                 android:layout_marginLeft="20dp"
                 android:scaleType="fitXY"
+                android:rotation="90"
                 app:srcCompat="@drawable/no_image" />
 
             <Button
