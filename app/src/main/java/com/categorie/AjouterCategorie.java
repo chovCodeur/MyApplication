@@ -22,12 +22,7 @@ import android.widget.Toast;
 
 public class AjouterCategorie extends AppCompatActivity {
 
-
-    private Button addCategorie;
-    private EditText editCategorie;
-    private EditText editDescription;
     private Menu m;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,25 +32,6 @@ public class AjouterCategorie extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle("Ajouter une catégorie");
         setSupportActionBar(myToolbar);
-
-        editCategorie = (EditText) findViewById(R.id.editCategorie);
-        editDescription = (EditText) findViewById(R.id.editDescription);
-        addCategorie = (Button) findViewById(R.id.buttonAddCategorie);
-        addCategorie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String categorie = editCategorie.getText().toString();
-                String description = editDescription.getText().toString();
-                Intent intent = new Intent(AjouterCategorie.this, com.application.MainActivity.class);
-                    startActivity(intent);
-
-            }
-        });
-
-
-        /*editCategorie.setText(categorie.categorie);
-        editDescription.setText(categorie.description);*/
 
     }
 
@@ -94,22 +70,23 @@ public class AjouterCategorie extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-     public void onClickAddCategorie(View view){
+
+    public void onClickAddCategorie(View view){
         TextView textViewNomCategorie = (TextView) findViewById(R.id.editCategorie);
         TextView textViewDescription = (TextView) findViewById(R.id.editDescription);
 
         String nomCategorie = textViewNomCategorie.getText().toString();
         String description = textViewDescription.getText().toString();
 
-        Categorie categorie = new Categorie(0, nomCategorie, description);
+        if(!textViewNomCategorie.getText().toString().equals("")) {
+            CategorieDAO categorieDAO = new CategorieDAO(this);
+            categorieDAO.open();
+            Categorie categorie = new Categorie(0, nomCategorie, description);
+            categorieDAO.addCategorie(categorie);
+            categorieDAO.close();
 
-        CategorieDAO categorieDAO = new CategorieDAO(this);
-         categorieDAO.open();
-         categorieDAO.addCategorie(categorie);
-         //categorieDAO.addCategorie(1,nomCategorie,description);
-         categorieDAO.close();
-
-
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
-
 }
