@@ -149,7 +149,7 @@ public class ModifierPersonne extends AppCompatActivity {
         String phoneNumber = textViewPhoneNumber.getText().toString();
 
 
-        Personne personne = new Personne(0, nomPersonne, prenomPersonne, date, address, email, phoneNumber);
+        Personne personne = new Personne(1, nomPersonne, prenomPersonne, date, address, email, phoneNumber);
 
         PersonneDAO personneDAO = new PersonneDAO(this);
         personneDAO.open();
