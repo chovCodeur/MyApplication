@@ -89,6 +89,10 @@ public class BienDAO {
         //values.put(FACTURE, bien.getMagasinBien());
         values.put(COMMENTAIRE, bien.getCommentaire_bien());
         values.put(PHOTO_PRINCIPALE, (bien.getPhoto_bien_principal()));
+        values.put(PHOTO_SEC1, (bien.getPhoto_bien_miniature1()));
+        values.put(PHOTO_SEC2, (bien.getPhoto_bien_miniature2()));
+        values.put(PHOTO_SEC3, (bien.getPhoto_bien_miniature3()));
+
         values.put(DESCRIPTION, bien.getDescription_bien());
         values.put(PRIX, bien.getPrix_bien());
         values.put(NUMSERIE, bien.getNumeroSerie_bien());
@@ -136,6 +140,9 @@ public class BienDAO {
             a.setDate_achat_bien(c.getString(c.getColumnIndex(DATEACHAT)));
             a.setCommentaire_bien(c.getString(c.getColumnIndex(COMMENTAIRE)));
             a.setPhoto_bien_principal(c.getString(c.getColumnIndex(PHOTO_PRINCIPALE)));
+            a.setPhoto_bien_miniature1(c.getString(c.getColumnIndex(PHOTO_SEC1)));
+            a.setPhoto_bien_miniature2(c.getString(c.getColumnIndex(PHOTO_SEC2)));
+            a.setPhoto_bien_miniature3(c.getString(c.getColumnIndex(PHOTO_SEC3)));
             a.setPrix_bien(c.getFloat(c.getColumnIndex(PRIX)));
             a.setId_categorie_bien(c.getInt(c.getColumnIndex(IDCATEGORIE)));
             a.setDescription_bien(c.getString(c.getColumnIndex(DESCRIPTION)));
@@ -217,6 +224,10 @@ public class BienDAO {
                 bienTemp.setDate_achat_bien(curseurBien.getString(curseurBien.getColumnIndex(DATEACHAT)));
                 bienTemp.setCommentaire_bien(curseurBien.getString(curseurBien.getColumnIndex(COMMENTAIRE)));
                 bienTemp.setPhoto_bien_principal((curseurBien.getString(curseurBien.getColumnIndex(PHOTO_PRINCIPALE))));
+                bienTemp.setPhoto_bien_miniature1((curseurBien.getString(curseurBien.getColumnIndex(PHOTO_SEC1))));
+                bienTemp.setPhoto_bien_miniature2((curseurBien.getString(curseurBien.getColumnIndex(PHOTO_SEC2))));
+                bienTemp.setPhoto_bien_miniature3((curseurBien.getString(curseurBien.getColumnIndex(PHOTO_SEC3))));
+
                 bienTemp.setPrix_bien(curseurBien.getFloat(curseurBien.getColumnIndex(PRIX)));
                 bienTemp.setId_categorie_bien(curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)));
                 bienTemp.setDescription_bien(curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)));

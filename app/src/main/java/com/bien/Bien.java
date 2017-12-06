@@ -161,8 +161,13 @@ public class Bien {
                 ", nom_bien='" + nom_bien + '\'' +
                 ", date_saisie_bien='" + date_saisie_bien + '\'' +
                 ", date_achat_bien='" + date_achat_bien + '\'' +
+                ", facture_bien='" + facture_bien + '\'' +
                 ", commentaire_bien='" + commentaire_bien + '\'' +
                 ", prix_bien=" + prix_bien +
+                ", photo_bien_principal='" + photo_bien_principal + '\'' +
+                ", photo_bien_miniature1='" + photo_bien_miniature1 + '\'' +
+                ", photo_bien_miniature2='" + photo_bien_miniature2 + '\'' +
+                ", photo_bien_miniature3='" + photo_bien_miniature3 + '\'' +
                 ", id_categorie_bien=" + id_categorie_bien +
                 ", description_bien='" + description_bien + '\'' +
                 ", numeroSerie_bien='" + numeroSerie_bien + '\'' +

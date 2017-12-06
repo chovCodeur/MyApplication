@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -111,6 +112,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
             if(id != 0) {
                 bdao.open();
                 bien = bdao.getBien(id);
+                Log.e("AA","aa"+bien.toString());
 
                 // récupérer les id des listes d'appartenance du bien dans la table Appartient
                 idlistes = bdao.getAllIdListeByIdBien(bien.getId_bien());
@@ -141,7 +143,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         }
 
         // Mise à jour de l'image principale
-        if(!bien.getPhoto_bien_principal().equals("")) {
+        if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
             File imgFile = new File(bien.getPhoto_bien_principal());
             if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -181,7 +183,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         });
 
         // Mise à jour des 3 miniatures d'images
-        if(!bien.getPhoto_bien_miniature1().equals("")) {
+        if(bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")) {
             File imgFile = new File(bien.getPhoto_bien_miniature1());
             if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -190,7 +192,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
             }
         }
 
-        if(!bien.getPhoto_bien_miniature2().equals("")) {
+        if(bien.getPhoto_bien_miniature2() != null && !bien.getPhoto_bien_miniature2().equals("")) {
             File imgFile = new File(bien.getPhoto_bien_miniature2());
             if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -199,7 +201,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
             }
         }
 
-        if(!bien.getPhoto_bien_miniature3().equals("")) {
+        if(bien.getPhoto_bien_miniature3() != null && !bien.getPhoto_bien_miniature3().equals("")) {
             File imgFile = new File(bien.getPhoto_bien_miniature3());
             if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -241,7 +243,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!bien.getPhoto_bien_principal().equals("")) {
+                if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
                     File file = new File(bien.getPhoto_bien_principal());
                     zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
                 }
@@ -252,7 +254,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         imageButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!bien.getPhoto_bien_miniature1().equals("")) {
+                if(bien.getPhoto_bien_miniature1() != null  && !bien.getPhoto_bien_miniature1().equals("")) {
                     File file = new File(bien.getPhoto_bien_miniature1());
                     zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
                 }
@@ -263,7 +265,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!bien.getPhoto_bien_miniature2().equals("")) {
+                if(bien.getPhoto_bien_miniature2() != null  && !bien.getPhoto_bien_miniature2().equals("")) {
                     File file = new File(bien.getPhoto_bien_miniature2());
                     zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
                 }
@@ -274,7 +276,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!bien.getPhoto_bien_miniature3().equals("")) {
+                if(bien.getPhoto_bien_miniature3() != null  && !bien.getPhoto_bien_miniature3().equals("")) {
                     File file = new File(bien.getPhoto_bien_miniature3());
                     zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
                 }

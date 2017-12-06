@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -60,12 +61,13 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     Boolean dansListe3 = false;
     private Menu m;
 
-    ImageView imagePhotoPrincipale ;
-    ImageView imagePhoto1 ;
-    ImageView imagePhoto2 ;
-    ImageView imagePhoto3 ;
+
 
     String pathPhotoPrincipale ;
+    String pathPhoto1 ;
+    String pathPhoto2 ;
+    String pathPhoto3 ;
+
 
     int nbPhoto = 0;
     private Context context = this;
@@ -188,11 +190,8 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
         });
 
-        //Initialise l'imageview on lui met une action
-        imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
-        imagePhoto1 = (ImageView) findViewById(R.id.photo1);
-        imagePhoto2 = (ImageView) findViewById(R.id.photo2);
-        imagePhoto3 = (ImageView) findViewById(R.id.photo3);
+
+
 
 
         Button buttonAjouterPhoto = (Button) findViewById(R.id.ajouterPhoto);
@@ -223,31 +222,72 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
             String path = getRealPathFromUri(data.getData());
 
+            ImageView imagePhotoPrincipale ;
+            ImageView imagePhoto1 ;
+            ImageView imagePhoto2 ;
+            ImageView imagePhoto3 ;
+
             Log.e("Choix d'image", "uri"+path);
             switch (nbPhoto) {
                 case 0 :
                     //bitmapPrincipal = BitmapFactory.decodeFile(path);
                     String format = s.format(new Date());
+                    pathPhotoPrincipale = savePicture(path, format.toString());
 
-                    pathPhotoPrincipale = format.toString();
-                    if (!savePicture(path, pathPhotoPrincipale)) {
-                        pathPhotoPrincipale = null;
+                    File imgFile = new  File(pathPhotoPrincipale);
+                    if(imgFile.exists()){
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
+                        imagePhotoPrincipale.setImageBitmap(myBitmap);
+
                     }
 
                     nbPhoto++;
                     break;
                 case 1 :
 
+                    format = s.format(new Date());
+                    pathPhoto1 = savePicture(path, format.toString());
+
+                    imgFile = new  File(pathPhoto1);
+                    if(imgFile.exists()){
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        imagePhoto1 = (ImageView) findViewById(R.id.photo1);
+                        imagePhoto1.setImageBitmap(myBitmap);
+
+                    }
+
                     nbPhoto++;
 
                     break;
                 case 2 :
+                    format = s.format(new Date());
+                    pathPhoto2 = savePicture(path, format.toString());
+
+                    imgFile = new  File(pathPhoto2);
+                    if(imgFile.exists()){
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        imagePhoto2 = (ImageView) findViewById(R.id.photo2);
+                        imagePhoto2.setImageBitmap(myBitmap);
+
+                    }
 
                     nbPhoto++;
 
                     break;
 
                 case 3 :
+
+                    format = s.format(new Date());
+                    pathPhoto3 = savePicture(path, format.toString());
+
+                    imgFile = new  File(pathPhoto3);
+                    if(imgFile.exists()){
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        imagePhoto3 = (ImageView) findViewById(R.id.photo3);
+                        imagePhoto3.setImageBitmap(myBitmap);
+
+                    }
 
                     nbPhoto++;
 
@@ -349,10 +389,10 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                 null,
                 commentaireBien,
                 prixBien,
-                null,
-                null,
-                null,
-                null,
+                pathPhotoPrincipale,
+                pathPhoto1,
+                pathPhoto2,
+                pathPhoto3,
                 idCategorieSelectionne,
                 descriptionBien,
                 numeroSerie
@@ -386,7 +426,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     }
 
 
-    private boolean savePicture (String pathFichierOrigine, String nomNouveauFichier) {
+    private String savePicture (String pathFichierOrigine, String nomNouveauFichier) {
 
         Log.e("MIpa","===============");
         String separator = "/";
@@ -423,7 +463,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         Log.e("MIpa","===============");
 
-        return true;
+        return fileDest.getAbsolutePath();
 
     }
 

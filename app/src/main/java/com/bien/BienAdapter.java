@@ -7,6 +7,7 @@ package com.bien;
 import java.util.ArrayList;
 import java.util.TreeSet;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,7 @@ public class BienAdapter extends BaseAdapter {
         int rowType = getItemViewType(position);
 
         if (convertView == null) {
+            Log.e("MiPA","a"+mData.get(position));
             String[] str = mData.get(position).split("#~#");
             holder = new ViewHolder();
             switch (rowType) {
