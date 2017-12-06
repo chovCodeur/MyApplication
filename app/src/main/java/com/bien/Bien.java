@@ -15,17 +15,17 @@ public class Bien {
     private String facture_bien;
     private String commentaire_bien;
     private float prix_bien;
-    private Bitmap photo_bien_principal;
-    private Bitmap photo_bien_miniature1;
-    private Bitmap photo_bien_miniature2;
-    private Bitmap photo_bien_miniature3;
+    private String photo_bien_principal;
+    private String photo_bien_miniature1;
+    private String photo_bien_miniature2;
+    private String photo_bien_miniature3;
     private int id_categorie_bien;
     private String description_bien;
     private String numeroSerie_bien;
 
     public Bien(int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String facture_bien,
-                String commentaire_bien, float prix_bien, Bitmap photo_bien_principal, Bitmap photo_bien_miniature1,
-                Bitmap photo_bien_miniature2, Bitmap photo_bien_miniature3, int id_categorie_bien, String description_bien, String numeroSerie_bien) {
+                String commentaire_bien, float prix_bien, String photo_bien_principal, String photo_bien_miniature1,
+                String photo_bien_miniature2, String photo_bien_miniature3, int id_categorie_bien, String description_bien, String numeroSerie_bien) {
         this.id_bien = id_bien;
         this.nom_bien = nom_bien;
         this.date_saisie_bien = date_saisie_bien;
@@ -122,35 +122,35 @@ public class Bien {
         this.facture_bien = facture_bien;
     }
 
-    public Bitmap getPhoto_bien_principal() {
+    public String getPhoto_bien_principal() {
         return photo_bien_principal;
     }
 
-    public void setPhoto_bien_principal(Bitmap photo_bien_principal) {
+    public void setPhoto_bien_principal(String photo_bien_principal) {
         this.photo_bien_principal = photo_bien_principal;
     }
 
-    public Bitmap getPhoto_bien_miniature1() {
+    public String getPhoto_bien_miniature1() {
         return photo_bien_miniature1;
     }
 
-    public void setPhoto_bien_miniature1(Bitmap photo_bien_miniature1) {
+    public void setPhoto_bien_miniature1(String photo_bien_miniature1) {
         this.photo_bien_miniature1 = photo_bien_miniature1;
     }
 
-    public Bitmap getPhoto_bien_miniature2() {
+    public String getPhoto_bien_miniature2() {
         return photo_bien_miniature2;
     }
 
-    public void setPhoto_bien_miniature2(Bitmap photo_bien_miniature2) {
+    public void setPhoto_bien_miniature2(String photo_bien_miniature2) {
         this.photo_bien_miniature2 = photo_bien_miniature2;
     }
 
-    public Bitmap getPhoto_bien_miniature3() {
+    public String getPhoto_bien_miniature3() {
         return photo_bien_miniature3;
     }
 
-    public void setPhoto_bien_miniature3(Bitmap photo_bien_miniature3) {
+    public void setPhoto_bien_miniature3(String photo_bien_miniature3) {
         this.photo_bien_miniature3 = photo_bien_miniature3;
     }
 

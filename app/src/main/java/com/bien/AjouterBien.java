@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -37,6 +38,13 @@ import com.liste.Liste;
 import com.application.MainActivity;
 import com.application.inventaire.R;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,15 +64,14 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     ImageView imagePhoto1 ;
     ImageView imagePhoto2 ;
     ImageView imagePhoto3 ;
-    Bitmap bitmapPrincipal;
-    Bitmap bitmapPhoto1;
-    Bitmap bitmapPhoto2;
-    Bitmap bitmapPhoto3;
+
+    String pathPhotoPrincipale ;
+
     int nbPhoto = 0;
+    private Context context = this;
 
     final static int SELECT_PICTURE = 1;
-    ImageView imageVue;
-    public Bitmap bitmap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,32 +220,35 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         super.onActivityResult(request, resultCode, data);
 
         if(resultCode == RESULT_OK && request == SELECT_PICTURE) {
-
+            SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
             String path = getRealPathFromUri(data.getData());
 
             Log.e("Choix d'image", "uri"+path);
             switch (nbPhoto) {
                 case 0 :
-                    bitmapPrincipal = BitmapFactory.decodeFile(path);
-                    imagePhotoPrincipale.setImageBitmap(bitmapPrincipal);
+                    //bitmapPrincipal = BitmapFactory.decodeFile(path);
+                    String format = s.format(new Date());
+
+                    pathPhotoPrincipale = format.toString();
+                    if (!savePicture(path, pathPhotoPrincipale)) {
+                        pathPhotoPrincipale = null;
+                    }
+
                     nbPhoto++;
                     break;
                 case 1 :
-                    bitmapPhoto1 = BitmapFactory.decodeFile(path);
-                    imagePhoto1.setImageBitmap(bitmapPhoto1);
+
                     nbPhoto++;
 
                     break;
                 case 2 :
-                    bitmapPhoto2 = BitmapFactory.decodeFile(path);
-                    imagePhoto2.setImageBitmap(bitmapPhoto2);
+
                     nbPhoto++;
 
                     break;
 
                 case 3 :
-                    bitmapPhoto3 = BitmapFactory.decodeFile(path);
-                    imagePhoto3.setImageBitmap(bitmapPhoto3);
+
                     nbPhoto++;
 
                     break;
@@ -330,6 +340,8 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String dateDeSaisie = sdf.format(dateSaisie);
 
+
+        Log.e("On va"," inserer : "+pathPhotoPrincipale);
         Bien bien = new Bien(0,
                 nomBien,
                 dateDeSaisie,
@@ -337,11 +349,11 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                 null,
                 commentaireBien,
                 prixBien,
-                bitmapPrincipal,
                 null,
                 null,
                 null,
-                1,
+                null,
+                idCategorieSelectionne,
                 descriptionBien,
                 numeroSerie
                 );
@@ -372,4 +384,61 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     public void onNothingSelected(AdapterView<?> arg0) {
 
     }
+
+
+    private boolean savePicture (String pathFichierOrigine, String nomNouveauFichier) {
+
+        Log.e("MIpa","===============");
+        String separator = "/";
+
+        String dirName = "imagesTLS";
+        File dir = new File (context.getFilesDir() + separator +dirName);
+
+        if (!dir.exists()) {
+            Log.e("MIpa","== CREATION du repertoire");
+
+            dir.mkdir();
+
+        } else {
+            Log.e("MIpa","== DIR EJA EXISTANT");
+
+        }
+
+        File fileSrc = new File(pathFichierOrigine);
+        Log.e("MIpa","fileSrc"+fileSrc.getAbsolutePath());
+
+        File fileDest = new File(dir.getAbsolutePath()+separator+nomNouveauFichier);
+
+        if (fileDest.exists()){
+            fileDest.delete();
+        }
+
+        if (fileSrc.exists()) {
+            try {
+                copy(fileSrc, fileDest);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Log.e("MIpa","===============");
+
+        return true;
+
+    }
+
+    public static void copy(File src, File dst) throws IOException {
+        try (InputStream in = new FileInputStream(src)) {
+            try (OutputStream out = new FileOutputStream(dst)) {
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            }
+        }
+    }
+
+
 }

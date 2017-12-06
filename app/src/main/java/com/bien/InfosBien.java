@@ -139,7 +139,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
         // Mise à jour de l'image principale
         photoPrincipale = (ImageButton) findViewById(R.id.photoPrincipaleBien);
-        photoPrincipale.setImageBitmap(bien.getPhoto_bien_principal());
+        //photoPrincipale.setImageBitmap(bien.getPhoto_bien_principal());
 
         // On met à jour le nom du bien
         nomBien = (TextView) findViewById(R.id.nomBien);
@@ -173,13 +173,13 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
         // Mise à jour des 3 miniatures d'images
         photoMini1 = (ImageButton) findViewById(R.id.Photo1Bien);
-        photoMini1.setImageBitmap(bien.getPhoto_bien_miniature1());
+       // photoMini1.setImageBitmap(bien.getPhoto_bien_miniature1());
 
         photoMini2 = (ImageButton) findViewById(R.id.Photo2Bien);
-        photoMini2.setImageBitmap(bien.getPhoto_bien_miniature2());
+        //photoMini2.setImageBitmap(bien.getPhoto_bien_miniature2());
 
         photoMini3 = (ImageButton) findViewById(R.id.Photo3Bien);
-        photoMini3.setImageBitmap(bien.getPhoto_bien_miniature3());
+        //photoMini3.setImageBitmap(bien.getPhoto_bien_miniature3());
 
         // Mise à jour des listes dans lequel l'objet apparaît
         spinnerListe = (Spinner) findViewById(R.id.spinnerListesAppartenanceBien);

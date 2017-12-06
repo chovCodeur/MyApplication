@@ -88,9 +88,7 @@ public class BienDAO {
         values.put(DATEACHAT, bien.getDate_achat_bien());
         //values.put(FACTURE, bien.getMagasinBien());
         values.put(COMMENTAIRE, bien.getCommentaire_bien());
-        if (bien.getPhoto_bien_principal() != null) {
-            values.put(PHOTO_PRINCIPALE, convertBitmapAsByteArray(bien.getPhoto_bien_principal()));
-        }
+        values.put(PHOTO_PRINCIPALE, (bien.getPhoto_bien_principal()));
         values.put(DESCRIPTION, bien.getDescription_bien());
         values.put(PRIX, bien.getPrix_bien());
         values.put(NUMSERIE, bien.getNumeroSerie_bien());
@@ -137,7 +135,7 @@ public class BienDAO {
             a.setDate_saisie_bien(c.getString(c.getColumnIndex(DATESAISIE)));
             a.setDate_achat_bien(c.getString(c.getColumnIndex(DATEACHAT)));
             a.setCommentaire_bien(c.getString(c.getColumnIndex(COMMENTAIRE)));
-            a.setPhoto_bien_principal(convertByteArrayAsBitmap(c.getBlob(c.getColumnIndex(PHOTO_PRINCIPALE))));
+            a.setPhoto_bien_principal(c.getString(c.getColumnIndex(PHOTO_PRINCIPALE)));
             a.setPrix_bien(c.getFloat(c.getColumnIndex(PRIX)));
             a.setId_categorie_bien(c.getInt(c.getColumnIndex(IDCATEGORIE)));
             a.setDescription_bien(c.getString(c.getColumnIndex(DESCRIPTION)));
@@ -218,7 +216,7 @@ public class BienDAO {
                 bienTemp.setDate_saisie_bien(curseurBien.getString(curseurBien.getColumnIndex(DATESAISIE)));
                 bienTemp.setDate_achat_bien(curseurBien.getString(curseurBien.getColumnIndex(DATEACHAT)));
                 bienTemp.setCommentaire_bien(curseurBien.getString(curseurBien.getColumnIndex(COMMENTAIRE)));
-                bienTemp.setPhoto_bien_principal(convertByteArrayAsBitmap(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_PRINCIPALE))));
+                bienTemp.setPhoto_bien_principal((curseurBien.getString(curseurBien.getColumnIndex(PHOTO_PRINCIPALE))));
                 bienTemp.setPrix_bien(curseurBien.getFloat(curseurBien.getColumnIndex(PRIX)));
                 bienTemp.setId_categorie_bien(curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)));
                 bienTemp.setDescription_bien(curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)));
@@ -266,7 +264,7 @@ public class BienDAO {
 
         return idListes;
     }
-
+/*
     public byte[] convertBitmapAsByteArray(Bitmap bitmap) {
         if (bitmap != null ) {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -287,6 +285,6 @@ public class BienDAO {
 
     }
 
-
+*/
 }
 
