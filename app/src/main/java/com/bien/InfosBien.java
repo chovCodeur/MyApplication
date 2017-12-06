@@ -232,7 +232,8 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(view, R.drawable.no_image);
+                File file = new  File(bien.getPhoto_bien_principal());
+                zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
             }
         });
 
@@ -240,7 +241,8 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         imageButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(view, R.drawable.no_image);
+                File file = new  File(bien.getPhoto_bien_miniature1());
+                zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
             }
         });
 
@@ -248,7 +250,8 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(view, R.drawable.no_image);
+                File file = new  File(bien.getPhoto_bien_miniature2());
+                zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
             }
         });
 
@@ -256,7 +259,8 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(view, R.drawable.no_image);
+                File file = new  File(bien.getPhoto_bien_miniature3());
+                zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
             }
         });
     }
@@ -292,13 +296,13 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
     }
 
-    private void zoomImageFromThumb(final View thumbView, int imageResId) {
+    private void zoomImageFromThumb(final View thumbView, Bitmap image) {
         if (mCurrentAnimator != null) {
             mCurrentAnimator.cancel();
         }
 
         final ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
-        expandedImageView.setImageResource(imageResId);
+        expandedImageView.setImageBitmap(image);
 
         final Rect startBounds = new Rect();
         final Rect finalBounds = new Rect();
