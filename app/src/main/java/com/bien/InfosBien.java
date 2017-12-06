@@ -141,11 +141,13 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         }
 
         // Mise à jour de l'image principale
-        File imgFile = new  File(bien.getPhoto_bien_principal());
-        if(imgFile.exists()){
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            photoPrincipale = (ImageButton) findViewById(R.id.photoPrincipaleBien);
-            photoPrincipale.setImageBitmap(myBitmap);
+        if(!bien.getPhoto_bien_principal().equals("")) {
+            File imgFile = new File(bien.getPhoto_bien_principal());
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                photoPrincipale = (ImageButton) findViewById(R.id.photoPrincipaleBien);
+                photoPrincipale.setImageBitmap(myBitmap);
+            }
         }
 
         // On met à jour le nom du bien
@@ -179,26 +181,33 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         });
 
         // Mise à jour des 3 miniatures d'images
-        imgFile = new  File(bien.getPhoto_bien_miniature1());
-        if(imgFile.exists()){
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            photoMini1 = (ImageButton) findViewById(R.id.Photo1Bien);
-            photoMini1.setImageBitmap(myBitmap);
+        if(!bien.getPhoto_bien_miniature1().equals("")) {
+            File imgFile = new File(bien.getPhoto_bien_miniature1());
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                photoMini1 = (ImageButton) findViewById(R.id.Photo1Bien);
+                photoMini1.setImageBitmap(myBitmap);
+            }
         }
 
-        imgFile = new  File(bien.getPhoto_bien_miniature2());
-        if(imgFile.exists()){
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            photoMini2 = (ImageButton) findViewById(R.id.Photo2Bien);
-            photoMini2.setImageBitmap(myBitmap);
+        if(!bien.getPhoto_bien_miniature2().equals("")) {
+            File imgFile = new File(bien.getPhoto_bien_miniature2());
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                photoMini2 = (ImageButton) findViewById(R.id.Photo2Bien);
+                photoMini2.setImageBitmap(myBitmap);
+            }
         }
 
-        imgFile = new  File(bien.getPhoto_bien_miniature3());
-        if(imgFile.exists()){
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            photoMini3 = (ImageButton) findViewById(R.id.Photo3Bien);
-            photoMini3.setImageBitmap(myBitmap);
+        if(!bien.getPhoto_bien_miniature3().equals("")) {
+            File imgFile = new File(bien.getPhoto_bien_miniature3());
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                photoMini3 = (ImageButton) findViewById(R.id.Photo3Bien);
+                photoMini3.setImageBitmap(myBitmap);
+            }
         }
+
         // Mise à jour des listes dans lequel l'objet apparaît
         spinnerListe = (Spinner) findViewById(R.id.spinnerListesAppartenanceBien);
         spinnerListe.setOnItemSelectedListener(this);
@@ -232,8 +241,10 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File file = new  File(bien.getPhoto_bien_principal());
-                zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                if(!bien.getPhoto_bien_principal().equals("")) {
+                    File file = new File(bien.getPhoto_bien_principal());
+                    zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                }
             }
         });
 
@@ -241,8 +252,10 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         imageButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File file = new  File(bien.getPhoto_bien_miniature1());
-                zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                if(!bien.getPhoto_bien_miniature1().equals("")) {
+                    File file = new File(bien.getPhoto_bien_miniature1());
+                    zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                }
             }
         });
 
@@ -250,8 +263,10 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File file = new  File(bien.getPhoto_bien_miniature2());
-                zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                if(!bien.getPhoto_bien_miniature2().equals("")) {
+                    File file = new File(bien.getPhoto_bien_miniature2());
+                    zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                }
             }
         });
 
@@ -259,8 +274,10 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File file = new  File(bien.getPhoto_bien_miniature3());
-                zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                if(!bien.getPhoto_bien_miniature3().equals("")) {
+                    File file = new File(bien.getPhoto_bien_miniature3());
+                    zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                }
             }
         });
     }
