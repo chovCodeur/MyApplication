@@ -322,6 +322,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
         final ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
         expandedImageView.setImageBitmap(image);
+        expandedImageView.setRotation(90);
 
         final Rect startBounds = new Rect();
         final Rect finalBounds = new Rect();
