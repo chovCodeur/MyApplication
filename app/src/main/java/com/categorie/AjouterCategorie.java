@@ -23,9 +23,9 @@ import android.widget.Toast;
 public class AjouterCategorie extends AppCompatActivity {
 
 
-    Button addCategorie;
-    EditText editCategorie;
-    EditText editDescription;
+    private Button addCategorie;
+    private EditText editCategorie;
+    private EditText editDescription;
     private Menu m;
 
 
@@ -105,6 +105,8 @@ public class AjouterCategorie extends AppCompatActivity {
 
         CategorieDAO categorieDAO = new CategorieDAO(this);
          categorieDAO.open();
+         categorieDAO.addCategorie(categorie);
+         //categorieDAO.addCategorie(1,nomCategorie,description);
          categorieDAO.close();
 
 

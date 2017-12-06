@@ -115,9 +115,6 @@ public class ModifierCategorie extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void onClickModifCategorie(View v){
 
-
-    }
 
 }

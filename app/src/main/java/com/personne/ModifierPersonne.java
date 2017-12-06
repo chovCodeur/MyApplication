@@ -23,14 +23,14 @@ import java.util.Calendar;
 
 public class ModifierPersonne extends AppCompatActivity {
 
-    Button ajoutInfos;
-    EditText editNom;
-    EditText editPrenom;
-    EditText editMail;
-    EditText editPhoneNumber;
-    EditText editAddress;
-    EditText editTextdate;
-    DatePickerDialog datePickerDialog;
+    private Button ajoutInfos;
+    private EditText editNom;
+    private EditText editPrenom;
+    private EditText editMail;
+    private EditText editPhoneNumber;
+    private EditText editAddress;
+    private EditText editTextdate;
+    private DatePickerDialog datePickerDialog;
    // DatePicker datePicker;
     private Menu m;
 
@@ -69,7 +69,7 @@ public class ModifierPersonne extends AppCompatActivity {
                 datePickerDialog = new DatePickerDialog(ModifierPersonne.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        editTextdate.setText(dayOfMonth + "/" +(month + 1) + "/" + year);
+                        editTextdate.setText(dayOfMonth + "-" +(month + 1) + "-" + year);
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -134,23 +134,27 @@ public class ModifierPersonne extends AppCompatActivity {
 
         TextView textViewNomPersonne = (TextView) findViewById(R.id.editNom);
         TextView textViewPrenomPersonne = (TextView) findViewById(R.id.editPrenom);
+        TextView textViewDate =(TextView) findViewById(R.id.editTextDate);
         TextView textViewAddress =(TextView) findViewById(R.id.editAdress);
         TextView textViewEmail = (TextView) findViewById(R.id.editEmail);
         TextView textViewPhoneNumber = (TextView) findViewById(R.id.editPhon_Number);
-        TextView textViewDate =(TextView) findViewById(R.id.editTextDate);
+
 
 
         String nomPersonne = textViewNomPersonne.getText().toString();
         String prenomPersonne = textViewPrenomPersonne.getText().toString();
+        String date = textViewDate.getText().toString();
         String address = textViewAddress.getText().toString();
         String email = textViewEmail.getText().toString();
         String phoneNumber = textViewPhoneNumber.getText().toString();
-        String date = textViewDate.getText().toString();
 
-        Personne personne = new Personne(0, nomPersonne, prenomPersonne, address, email, phoneNumber, date);
+
+        Personne personne = new Personne(0, nomPersonne, prenomPersonne, date, address, email, phoneNumber);
 
         PersonneDAO personneDAO = new PersonneDAO(this);
         personneDAO.open();
+        //personneDAO.modPersonne(personne);
+        personneDAO.modPersonne(1, nomPersonne, prenomPersonne, address, email, phoneNumber, date);
         personneDAO.close();
     }
 }
