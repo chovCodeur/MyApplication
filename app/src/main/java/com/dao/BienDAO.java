@@ -81,7 +81,6 @@ public class BienDAO {
      * @return long l'id du nouvel enregistrement inséré, ou -1 en cas d'erreur
      */
     public long addBien(Bien bien, ArrayList<Integer> listeIdListe){
-        //Log.e("MiPa","addBien"+bien.toString());
         ContentValues values = new ContentValues();
         values.put(NOM,bien.getNom_bien());
         values.put(DATESAISIE,bien.getDate_saisie_bien());
@@ -188,43 +187,6 @@ public class BienDAO {
 
         if (curseurBien.moveToFirst()) {
             do {
-               /* bienTemp = new Bien(
-                        curseurBien.getInt(curseurBien.getColumnIndex(ID)),
-                        curseurBien.getString(curseurBien.getColumnIndex(NOM)),
-                        curseurBien.getString(curseurBien.getColumnIndex(DATESAISIE)),
-                        curseurBien.getString(curseurBien.getColumnIndex(DATEACHAT)),
-                        curseurBien.getString(curseurBien.getColumnIndex(FACTURE)),
-                        curseurBien.getString(curseurBien.getColumnIndex(COMMENTAIRE)),
-                        curseurBien.getFloat(curseurBien.getColumnIndex(PRIX)),
-                        BitmapFactory.decodeByteArray(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_PRINCIPALE)), 0, curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_PRINCIPALE)).length),
-                        BitmapFactory.decodeByteArray(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC1)), 0, curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC1)).length),
-                        BitmapFactory.decodeByteArray(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC2)), 0, curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC2)).length),
-                        BitmapFactory.decodeByteArray(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC3)), 0, curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC3)).length),
-                        curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)),
-                        curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)),
-                        curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE))
-                ); */
-
-             /*
-                bienTemp = new Bien(
-                        curseurBien.getInt(curseurBien.getColumnIndex(ID)),
-                        curseurBien.getString(curseurBien.getColumnIndex(NOM)),
-                        curseurBien.getString(curseurBien.getColumnIndex(DATESAISIE)),
-                        curseurBien.getString(curseurBien.getColumnIndex(DATEACHAT)),
-                        null,
-                        curseurBien.getString(curseurBien.getColumnIndex(COMMENTAIRE)),
-                        curseurBien.getFloat(curseurBien.getColumnIndex(PRIX)),
-                        convertByteArrayAsBitmap(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_PRINCIPALE))),
-                        null,
-                        null,
-                        null,
-                        curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)),
-                        curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)),
-                        curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE))
-                ); */
-
-                Log.e("MiPa","Num"+curseurBien.getColumnIndex(PHOTO_PRINCIPALE));
-
                 bienTemp.setId_bien(curseurBien.getInt(curseurBien.getColumnIndex(ID)));
                 bienTemp.setNom_bien(curseurBien.getString(curseurBien.getColumnIndex(NOM)));
                 bienTemp.setDate_saisie_bien(curseurBien.getString(curseurBien.getColumnIndex(DATESAISIE)));
@@ -241,8 +203,6 @@ public class BienDAO {
                 bienTemp.setId_categorie_bien(curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)));
                 bienTemp.setDescription_bien(curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)));
                 bienTemp.setNumeroSerie_bien(curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE)));
-
-
 
                 liste.add(bienTemp);
                 bienTemp =new Bien(0, "", "", "", "","", 0,null,null,null,null,0, "", "");

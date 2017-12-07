@@ -68,15 +68,24 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/explicationCategorie"
-                android:layout_marginBottom="12dp"
-                android:layout_marginTop="6dp" />
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                android:id="@+id/explicationListe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/select_categorie"
+                android:layout_marginTop="6dp"
+                android:text="Selectionner une ou plusieurs listes :" />
 
             <CheckedTextView
                 android:id="@+id/checkListe1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/select_categorie"
+                android:layout_below="@+id/explicationListe"
                 android:layout_marginEnd="12dp"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:checked="false"
@@ -88,7 +97,7 @@
                 android:id="@+id/checkListe2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/select_categorie"
+                android:layout_below="@+id/explicationListe"
                 android:layout_centerHorizontal="true"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:checked="false"
@@ -101,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/select_categorie"
+                android:layout_below="@+id/explicationListe"
                 android:layout_marginStart="10dp"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:checked="false"
@@ -118,7 +127,7 @@
                 android:layout_below="@+id/checkListe1"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Date d'achat"
+                android:hint="Date d'achat (jj.mm.aaaa)"
                 android:inputType="date" />
 
             <EditText
@@ -136,9 +145,8 @@
                 android:id="@+id/commentaire_bien"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/description_bien"
-                android:layout_marginTop="6dp"
                 android:ems="10"
                 android:hint="Commentaire sur le bien"
                 android:inputType="textMultiLine" />
@@ -163,13 +171,14 @@
                 android:layout_marginTop="6dp"
                 android:ems="10"
                 android:hint="Prix"
-                android:inputType="number" />
+                android:maxLength="10"
+                android:inputType="numberDecimal" />
 
             <Button
                 android:id="@+id/ajouterPhoto"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/prix_bien"
                 android:layout_marginTop="6dp"
                 android:text="Ajouter une photo" />
@@ -184,13 +193,23 @@
                 android:layout_marginTop="6dp"
                 android:text="Ajouter une facture" />
 
+            <Button
+                android:id="@+id/ajouterBien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickAjouterBien"
+                android:text="Ajouter le bien"
+                android:layout_marginTop="6dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/ajouterFacture"
+                android:layout_alignParentStart="true" />
 
             <LinearLayout
                 android:id="@+id/linearPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/ajouterPhoto"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/ajouterBien"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
@@ -198,7 +217,6 @@
                     android:id="@+id/photoPrincipale"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:rotation="90"
                     android:layout_margin="5dp" />
 
                 <ImageView
@@ -206,7 +224,6 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="5dp"
-                    android:rotation="90"
                     android:scaleType="fitCenter" />
 
                 <ImageView
@@ -214,7 +231,6 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="5dp"
-                    android:rotation="90"
                     android:scaleType="fitCenter" />
 
 
@@ -223,19 +239,8 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="5dp"
-                    android:rotation="90"
                     android:scaleType="fitCenter" />
             </LinearLayout>
-
-            <Button
-                android:id="@+id/ajouterBien"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onClickAjouterBien"
-                android:text="Ajouter le bien"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/linearPhoto"
-                android:layout_alignParentStart="true" />
 
 
         </RelativeLayout>
