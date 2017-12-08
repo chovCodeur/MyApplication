@@ -41,6 +41,8 @@ import com.liste.Liste;
 import com.application.MainActivity;
 import com.application.inventaire.R;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -64,6 +66,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     private Boolean dansListe2 = false;
     private Boolean dansListe3 = false;
     private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
+    private Boolean checkPermissionActivite = false;
 
 
     private Menu m;
@@ -87,11 +90,13 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_bien);
-        final Context context = this;
 
+        /*
         if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(AjouterBien.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 4);
         }
+
+        */
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle("Ajouter un bien");
@@ -200,18 +205,47 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
 
         Button buttonAjouterPhoto = (Button) findViewById(R.id.ajouterPhoto);
-
         buttonAjouterPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                startActivityForResult(i, SELECT_IMAGE);
-
+                Boolean perm = verifierPermission();
+                if (perm) {
+                    recupererPhoto();
+                } else {
+                    Toast.makeText(getContext(), "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
+                }
             }
         });
+
+        Button buttonAjouterFacture = (Button) findViewById(R.id.ajouterFacture);
+        buttonAjouterFacture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Boolean perm = verifierPermission();
+                if (perm) {
+                    recupererFacture();
+                } else {
+                    Toast.makeText(getContext(), "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+    }
+
+    public Boolean verifierPermission(){
+        if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AjouterBien.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 4);
+        }
+
+        return ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public void recupererPhoto(){
+
+        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, SELECT_IMAGE);
+
 
     }
 
@@ -225,13 +259,16 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         if (resultCode == RESULT_OK && request == SELECT_PDF) {
 
-            //String path = "/storage/emulated/0/Download/exempleFactureMicroRemise.pdf";
-           // String path = getRealPathFromUri(data.getData());
-            String path = null;
+            String name = getRealPathFromUriPDF(data.getData());
+            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+
             if (path != null && !path.equals("")) {
                 String format = s.format(new Date());
-                pathPdf = saveFile(path, format.toString(), "pdf");
+                pathPdf = saveFile(path+"/"+name, format.toString(), "pdf");
             }
+
+            TextView tv_pathPdf = (TextView) findViewById(R.id.pathPdf);
+            tv_pathPdf.setText("Facture choisie : " + name);
 
         }
 
@@ -320,7 +357,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     }
 
 
-    private String getRealPathFromUri(Uri contentUri) {
+    public String getRealPathFromUri(Uri contentUri) {
         String result = "";
 
         Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
@@ -335,6 +372,48 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
             cursor.close();
         }
+        return result;
+    }
+
+    public String getRealPathFromUriPDF(Uri contentUri) {
+        String result = "";
+
+        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
+
+        if (cursor == null) {
+            result = contentUri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+            if (idx != -1) {
+                result = cursor.getString(idx);
+            }
+            cursor.close();
+        }
+
+            /*
+
+            String uriString = contentUri.toString();
+            File myFile = new File(uriString);
+            String path = myFile.getAbsolutePath();
+            String displayName = null;
+        Log.e("uri","u"+contentUri);
+
+            if (uriString.startsWith("content://")) {
+                Cursor cursor = null;
+                try {
+                    cursor = getContentResolver().query(contentUri, null, null, null, null);
+                    if (cursor != null && cursor.moveToFirst()) {
+                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    }
+                } finally {
+                    cursor.close();
+                }
+            } else if (uriString.startsWith("file://")) {
+                displayName = myFile.getName();
+            }
+
+        return displayName;*/
         return result;
     }
 
@@ -387,15 +466,12 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         String dateAchatSaisie = textViewDateAchatBien.getText().toString();
 
         if (dateAchatSaisie != null && !dateAchatSaisie.equals("")) {
-            Log.e("date","date"+dateAchatSaisie);
             if (!dateAchatSaisie.matches(regexDate)){
                 Toast.makeText(this, "La date doit être au format jj.mm.aaaa", Toast.LENGTH_SHORT).show();
                 erreurSaisie = true;
             } else {
-                Log.e("RE","place ici");
                 dateAchatSaisie = dateAchatSaisie.replace(".","-");
             }
-            Log.e("date","dateRemplace"+dateAchatSaisie);
 
         }
 
@@ -454,12 +530,9 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
             BienDAO bienDAO = new BienDAO(this);
 
-
-            Log.e("MiPa","a"+listeIdListe.toString());
             bienDAO.open();
 
             bienDAO.addBien(bien, listeIdListe);
-            Log.e("MiPa", bien.toString());
 
             bienDAO.close();
 
@@ -488,7 +561,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     private String saveFile(String pathFichierOrigine, String nomNouveauFichier, String type) {
 
-        Log.e("MIpa", "===============");
         String separator = "/";
         File dir = null;
 
@@ -497,32 +569,18 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             dir = new File(context.getFilesDir() + separator + dirName);
 
             if (!dir.exists()) {
-                Log.e("MIpa", "== CREATION du repertoire");
-
                 dir.mkdir();
-
-            } else {
-                Log.e("MIpa", "== DIR EJA EXISTANT");
-
             }
+
         } else if (type.equals("pdf")) {
             String dirName = "factures";
             dir = new File(context.getFilesDir() + separator + dirName);
-
             if (!dir.exists()) {
-                Log.e("MIpa", "== CREATION du repertoire");
-
                 dir.mkdir();
-
-            } else {
-                Log.e("MIpa", "== DIR EJA EXISTANT");
-
             }
         }
 
         File fileSrc = new File(pathFichierOrigine);
-        Log.e("MIpa", "fileSrc" + fileSrc.getAbsolutePath());
-
         File fileDest = new File(dir.getAbsolutePath() + separator + nomNouveauFichier);
 
         if (fileDest.exists()) {
@@ -531,19 +589,42 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         if (fileSrc.exists()) {
             try {
-                copy(fileSrc, fileDest);
+                if(type.equals("img")) {
+                    Log.e("a","compress");
+                    copyAndCompress(fileSrc, fileDest);
+                } else {
+                    copy(fileSrc,fileDest);
+                }
             } catch (IOException e) {
+
                 e.printStackTrace();
             }
         }
 
-        Log.e("MIpa", "===============");
-
-        return fileDest.getAbsolutePath();
+        return fileSrc.getAbsolutePath();
 
     }
 
+    public static void copyAndCompress(File src, File dst) throws IOException {
+
+        Bitmap bmp = BitmapFactory.decodeFile(src.getAbsolutePath());
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 4, bos);
+
+        try (InputStream in = new ByteArrayInputStream(bos.toByteArray())) {
+            try (OutputStream out = new FileOutputStream(dst)) {
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            }
+        }
+    }
+
     public static void copy(File src, File dst) throws IOException {
+
         try (InputStream in = new FileInputStream(src)) {
             try (OutputStream out = new FileOutputStream(dst)) {
                 // Transfer bytes from in to out
@@ -556,11 +637,15 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         }
     }
 
-    public void onClickAjouterFacture(View view) {
+    public void recupererFacture() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("*/*");
         startActivityForResult(intent, SELECT_PDF);
 
+    }
+
+    public Context getContext(){
+        return context;
     }
 
 }

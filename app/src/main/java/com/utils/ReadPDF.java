@@ -13,7 +13,6 @@ import java.io.File;
 import static java.lang.String.format;
 
 public class ReadPDF extends AppCompatActivity implements OnPageChangeListener {
-    //public static final String SAMPLE_FILE = "test.pdf";
     public static final String ABOUT_FILE = "about.pdf";
     String pdfName;// = SAMPLE_FILE;
     Integer pageNumber = 1;
