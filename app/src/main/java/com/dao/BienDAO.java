@@ -80,13 +80,12 @@ public class BienDAO {
      * @param bien Bien : l'bien à ajouter
      * @return long l'id du nouvel enregistrement inséré, ou -1 en cas d'erreur
      */
-    public long addBien(Bien bien, int idListe){
-        //Log.e("MiPa","addBien"+bien.toString());
+    public long addBien(Bien bien, ArrayList<Integer> listeIdListe){
         ContentValues values = new ContentValues();
         values.put(NOM,bien.getNom_bien());
         values.put(DATESAISIE,bien.getDate_saisie_bien());
         values.put(DATEACHAT, bien.getDate_achat_bien());
-        //values.put(FACTURE, bien.getMagasinBien());
+        values.put(FACTURE, bien.getFacture_bien());
         values.put(COMMENTAIRE, bien.getCommentaire_bien());
         values.put(PHOTO_PRINCIPALE, (bien.getPhoto_bien_principal()));
         values.put(PHOTO_SEC1, (bien.getPhoto_bien_miniature1()));
@@ -99,7 +98,13 @@ public class BienDAO {
         values.put(IDCATEGORIE, bien.getId_categorie_bien());
 
         long temp = db.insert(TABLE_NAME,null,values);
-        addInAppartient(temp, idListe);
+
+
+        for (Integer id: listeIdListe) {
+            addInAppartient(temp, id);
+
+        }
+
         return temp;
     }
 
@@ -110,12 +115,12 @@ public class BienDAO {
      * @return int : le nombre de lignes affectées par la requête
      */
     public int modBien(int id, String nom, String dateSaisie, String dateAchat, String commentaire, int idCategorie,
-                       String description, float prix, String numeroSerie){
+                       String description, float prix, String numeroSerie, String facture){
         ContentValues values = new ContentValues();
         values.put(NOM,nom);
         values.put(DATESAISIE,dateSaisie);
         values.put(DATEACHAT, dateAchat);
-        //values.put(FACTURE, bien.getMagasinBien());
+        values.put(FACTURE, facture);
         values.put(COMMENTAIRE, commentaire);
         values.put(DESCRIPTION, description);
         values.put(PRIX, prix);
@@ -139,6 +144,7 @@ public class BienDAO {
             a.setDate_saisie_bien(c.getString(c.getColumnIndex(DATESAISIE)));
             a.setDate_achat_bien(c.getString(c.getColumnIndex(DATEACHAT)));
             a.setCommentaire_bien(c.getString(c.getColumnIndex(COMMENTAIRE)));
+            a.setFacture_bien(c.getString(c.getColumnIndex(FACTURE)));
             a.setPhoto_bien_principal(c.getString(c.getColumnIndex(PHOTO_PRINCIPALE)));
             a.setPhoto_bien_miniature1(c.getString(c.getColumnIndex(PHOTO_SEC1)));
             a.setPhoto_bien_miniature2(c.getString(c.getColumnIndex(PHOTO_SEC2)));
@@ -181,48 +187,13 @@ public class BienDAO {
 
         if (curseurBien.moveToFirst()) {
             do {
-               /* bienTemp = new Bien(
-                        curseurBien.getInt(curseurBien.getColumnIndex(ID)),
-                        curseurBien.getString(curseurBien.getColumnIndex(NOM)),
-                        curseurBien.getString(curseurBien.getColumnIndex(DATESAISIE)),
-                        curseurBien.getString(curseurBien.getColumnIndex(DATEACHAT)),
-                        curseurBien.getString(curseurBien.getColumnIndex(FACTURE)),
-                        curseurBien.getString(curseurBien.getColumnIndex(COMMENTAIRE)),
-                        curseurBien.getFloat(curseurBien.getColumnIndex(PRIX)),
-                        BitmapFactory.decodeByteArray(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_PRINCIPALE)), 0, curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_PRINCIPALE)).length),
-                        BitmapFactory.decodeByteArray(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC1)), 0, curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC1)).length),
-                        BitmapFactory.decodeByteArray(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC2)), 0, curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC2)).length),
-                        BitmapFactory.decodeByteArray(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC3)), 0, curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_SEC3)).length),
-                        curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)),
-                        curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)),
-                        curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE))
-                ); */
-
-             /*
-                bienTemp = new Bien(
-                        curseurBien.getInt(curseurBien.getColumnIndex(ID)),
-                        curseurBien.getString(curseurBien.getColumnIndex(NOM)),
-                        curseurBien.getString(curseurBien.getColumnIndex(DATESAISIE)),
-                        curseurBien.getString(curseurBien.getColumnIndex(DATEACHAT)),
-                        null,
-                        curseurBien.getString(curseurBien.getColumnIndex(COMMENTAIRE)),
-                        curseurBien.getFloat(curseurBien.getColumnIndex(PRIX)),
-                        convertByteArrayAsBitmap(curseurBien.getBlob(curseurBien.getColumnIndex(PHOTO_PRINCIPALE))),
-                        null,
-                        null,
-                        null,
-                        curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)),
-                        curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)),
-                        curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE))
-                ); */
-
-                Log.e("MiPa","Num"+curseurBien.getColumnIndex(PHOTO_PRINCIPALE));
-
                 bienTemp.setId_bien(curseurBien.getInt(curseurBien.getColumnIndex(ID)));
                 bienTemp.setNom_bien(curseurBien.getString(curseurBien.getColumnIndex(NOM)));
                 bienTemp.setDate_saisie_bien(curseurBien.getString(curseurBien.getColumnIndex(DATESAISIE)));
                 bienTemp.setDate_achat_bien(curseurBien.getString(curseurBien.getColumnIndex(DATEACHAT)));
                 bienTemp.setCommentaire_bien(curseurBien.getString(curseurBien.getColumnIndex(COMMENTAIRE)));
+                bienTemp.setFacture_bien(curseurBien.getString(curseurBien.getColumnIndex(FACTURE)));
+
                 bienTemp.setPhoto_bien_principal((curseurBien.getString(curseurBien.getColumnIndex(PHOTO_PRINCIPALE))));
                 bienTemp.setPhoto_bien_miniature1((curseurBien.getString(curseurBien.getColumnIndex(PHOTO_SEC1))));
                 bienTemp.setPhoto_bien_miniature2((curseurBien.getString(curseurBien.getColumnIndex(PHOTO_SEC2))));
@@ -232,8 +203,6 @@ public class BienDAO {
                 bienTemp.setId_categorie_bien(curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)));
                 bienTemp.setDescription_bien(curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)));
                 bienTemp.setNumeroSerie_bien(curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE)));
-
-
 
                 liste.add(bienTemp);
                 bienTemp =new Bien(0, "", "", "", "","", 0,null,null,null,null,0, "", "");

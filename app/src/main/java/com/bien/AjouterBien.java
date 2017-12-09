@@ -8,9 +8,11 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.text.UnicodeSetSpanner;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -39,57 +41,68 @@ import com.liste.Liste;
 import com.application.MainActivity;
 import com.application.inventaire.R;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 
-public class AjouterBien extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class AjouterBien extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    ArrayList<Categorie> categoriesList = new ArrayList<Categorie>();
-    Spinner spinnerCategorie;
-    Categorie categorieSelectionne;
-    Boolean dansListe1 = false;
-    Boolean dansListe2 = false;
-    Boolean dansListe3 = false;
+    private ArrayList<Categorie> categoriesList = new ArrayList<Categorie>();
+    private Spinner spinnerCategorie;
+    private Categorie categorieSelectionne;
+    private Boolean dansListe1 = false;
+    private Boolean dansListe2 = false;
+    private Boolean dansListe3 = false;
+    private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
+    private Boolean checkPermissionActivite = false;
+
+
     private Menu m;
 
+    private String pathPdf;
+    private String pathPhotoPrincipale;
+    private String pathPhoto1;
+    private String pathPhoto2;
+    private String pathPhoto3;
 
-
-    String pathPhotoPrincipale ;
-    String pathPhoto1 ;
-    String pathPhoto2 ;
-    String pathPhoto3 ;
-
+    private ArrayList<Integer> listeIdListe = new ArrayList<Integer>();
 
     int nbPhoto = 0;
     private Context context = this;
 
-    final static int SELECT_PICTURE = 1;
+    final static int SELECT_IMAGE = 1;
+    final static int SELECT_PDF = 2;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_bien);
-        Context context = this;
 
+        /*
         if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(AjouterBien.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 4);
         }
+
+        */
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle("Ajouter un bien");
         setSupportActionBar(myToolbar);
 
-        spinnerCategorie =(Spinner) findViewById(R.id.select_categorie);
+        spinnerCategorie = (Spinner) findViewById(R.id.select_categorie);
         spinnerCategorie.setOnItemSelectedListener(this);
 
         ArrayList<String> listeCategorieName = new ArrayList<String>();
@@ -99,13 +112,13 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         categorieDAO.close();
 
 
-        int i =0;
-        for (Categorie categorie: categoriesList) {
-            listeCategorieName.add(i,categorie.getNom_Categorie());
+        int i = 0;
+        for (Categorie categorie : categoriesList) {
+            listeCategorieName.add(i, categorie.getNom_Categorie());
             i++;
         }
 
-        ArrayAdapter arrayAdapterListe = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listeCategorieName);
+        ArrayAdapter arrayAdapterListe = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listeCategorieName);
         arrayAdapterListe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategorie.setAdapter(arrayAdapterListe);
 
@@ -113,7 +126,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         listeDAO.open();
 
-        ArrayList<Liste> listes  = listeDAO.getallListe();
+        ArrayList<Liste> listes = listeDAO.getallListe();
 
         listeDAO.close();
 
@@ -124,11 +137,11 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         Bundle extras = getIntent().getExtras();
 
         int fromIdListe = 0;
-        if(extras != null) {
+        if (extras != null) {
             fromIdListe = extras.getInt("ID_CURRENT_LIST");
         }
 
-        if (fromIdListe == 1){
+        if (fromIdListe == 1) {
             ctvliste1.setChecked(true);
             dansListe1 = true;
 
@@ -151,7 +164,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         final CheckedTextView ctvliste2 = (CheckedTextView) findViewById(R.id.checkListe2);
         ctvliste2.setText(listes.get(1).getLibelle_liste());
 
-        if (fromIdListe == 2){
+        if (fromIdListe == 2) {
             ctvliste2.setChecked(true);
             dansListe2 = true;
         }
@@ -172,7 +185,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         final CheckedTextView ctvliste3 = (CheckedTextView) findViewById(R.id.checkListe3);
         ctvliste3.setText(listes.get(2).getLibelle_liste());
 
-        if (fromIdListe == 3){
+        if (fromIdListe == 3) {
             ctvliste3.setChecked(true);
             dansListe3 = true;
         }
@@ -191,24 +204,48 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         });
 
 
-
-
-
         Button buttonAjouterPhoto = (Button) findViewById(R.id.ajouterPhoto);
-
         buttonAjouterPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                startActivityForResult(i, 1);
-
+                Boolean perm = verifierPermission();
+                if (perm) {
+                    recupererPhoto();
+                } else {
+                    Toast.makeText(getContext(), "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
+                }
             }
         });
+
+        Button buttonAjouterFacture = (Button) findViewById(R.id.ajouterFacture);
+        buttonAjouterFacture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Boolean perm = verifierPermission();
+                if (perm) {
+                    recupererFacture();
+                } else {
+                    Toast.makeText(getContext(), "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+    }
+
+    public Boolean verifierPermission(){
+        if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AjouterBien.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 4);
+        }
+
+        return ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public void recupererPhoto(){
+
+        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, SELECT_IMAGE);
+
 
     }
 
@@ -218,110 +255,165 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     protected void onActivityResult(int request, int resultCode, Intent data) {
         super.onActivityResult(request, resultCode, data);
 
-        if(resultCode == RESULT_OK && request == SELECT_PICTURE) {
-            SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+
+        if (resultCode == RESULT_OK && request == SELECT_PDF) {
+
+            String name = getRealPathFromUriPDF(data.getData());
+            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+
+            if (path != null && !path.equals("")) {
+                String format = s.format(new Date());
+                pathPdf = saveFile(path+"/"+name, format.toString(), "pdf");
+            }
+
+            TextView tv_pathPdf = (TextView) findViewById(R.id.pathPdf);
+            tv_pathPdf.setText("Facture choisie : " + name);
+
+        }
+
+        if (resultCode == RESULT_OK && request == SELECT_IMAGE) {
             String path = getRealPathFromUri(data.getData());
 
-            ImageView imagePhotoPrincipale ;
-            ImageView imagePhoto1 ;
-            ImageView imagePhoto2 ;
-            ImageView imagePhoto3 ;
+            ImageView imagePhotoPrincipale;
+            ImageView imagePhoto1;
+            ImageView imagePhoto2;
+            ImageView imagePhoto3;
 
-            Log.e("Choix d'image", "uri"+path);
-            switch (nbPhoto) {
-                case 0 :
-                    //bitmapPrincipal = BitmapFactory.decodeFile(path);
-                    String format = s.format(new Date());
-                    pathPhotoPrincipale = savePicture(path, format.toString());
+            if (path != null && !path.equals("")) {
+                switch (nbPhoto) {
+                    case 0:
+                        //bitmapPrincipal = BitmapFactory.decodeFile(path);
+                        String format = s.format(new Date());
+                        pathPhotoPrincipale = saveFile(path, format.toString(), "img");
 
-                    File imgFile = new  File(pathPhotoPrincipale);
-                    if(imgFile.exists()){
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
-                        imagePhotoPrincipale.setImageBitmap(myBitmap);
+                        File imgFile = new File(pathPhotoPrincipale);
+                        if (imgFile.exists()) {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
+                            imagePhotoPrincipale.setImageBitmap(myBitmap);
 
-                    }
+                        }
 
-                    nbPhoto++;
-                    break;
-                case 1 :
+                        nbPhoto++;
+                        break;
+                    case 1:
 
-                    format = s.format(new Date());
-                    pathPhoto1 = savePicture(path, format.toString());
+                        format = s.format(new Date());
+                        pathPhoto1 = saveFile(path, format.toString(), "img");
 
-                    imgFile = new  File(pathPhoto1);
-                    if(imgFile.exists()){
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        imagePhoto1 = (ImageView) findViewById(R.id.photo1);
-                        imagePhoto1.setImageBitmap(myBitmap);
+                        imgFile = new File(pathPhoto1);
+                        if (imgFile.exists()) {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            imagePhoto1 = (ImageView) findViewById(R.id.photo1);
+                            imagePhoto1.setImageBitmap(myBitmap);
 
-                    }
+                        }
 
-                    nbPhoto++;
+                        nbPhoto++;
 
-                    break;
-                case 2 :
-                    format = s.format(new Date());
-                    pathPhoto2 = savePicture(path, format.toString());
+                        break;
+                    case 2:
+                        format = s.format(new Date());
+                        pathPhoto2 = saveFile(path, format.toString(), "img");
 
-                    imgFile = new  File(pathPhoto2);
-                    if(imgFile.exists()){
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        imagePhoto2 = (ImageView) findViewById(R.id.photo2);
-                        imagePhoto2.setImageBitmap(myBitmap);
+                        imgFile = new File(pathPhoto2);
+                        if (imgFile.exists()) {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            imagePhoto2 = (ImageView) findViewById(R.id.photo2);
+                            imagePhoto2.setImageBitmap(myBitmap);
 
-                    }
+                        }
 
-                    nbPhoto++;
+                        nbPhoto++;
 
-                    break;
+                        break;
 
-                case 3 :
+                    case 3:
 
-                    format = s.format(new Date());
-                    pathPhoto3 = savePicture(path, format.toString());
+                        format = s.format(new Date());
+                        pathPhoto3 = saveFile(path, format.toString(), "img");
 
-                    imgFile = new  File(pathPhoto3);
-                    if(imgFile.exists()){
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        imagePhoto3 = (ImageView) findViewById(R.id.photo3);
-                        imagePhoto3.setImageBitmap(myBitmap);
+                        imgFile = new File(pathPhoto3);
+                        if (imgFile.exists()) {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            imagePhoto3 = (ImageView) findViewById(R.id.photo3);
+                            imagePhoto3.setImageBitmap(myBitmap);
 
-                    }
+                        }
 
-                    nbPhoto++;
+                        nbPhoto++;
 
-                    break;
 
+                        Button buttonAjouterPhoto = (Button) findViewById(R.id.ajouterPhoto);
+
+                        buttonAjouterPhoto.setOnClickListener(null);
+
+                        break;
+                }
             }
         }
+
     }
 
-    /*
-        *Méthode pour ouvrir une galerie d'image
-     */
-    public void btGalleryClick(View v){
 
-        //creation et ouverture de la boite de dialogue
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Selectionnez une image"), SELECT_PICTURE);
-    }
-
-    private String getRealPathFromUri(Uri contentUri) {
-        String result;
+    public String getRealPathFromUri(Uri contentUri) {
+        String result = "";
 
         Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
 
-        if(cursor == null){
+        if (cursor == null) {
             result = contentUri.getPath();
-        }else {
+        } else {
             cursor.moveToFirst();
             int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(idx);
+            if (idx != -1) {
+                result = cursor.getString(idx);
+            }
             cursor.close();
         }
+        return result;
+    }
+
+    public String getRealPathFromUriPDF(Uri contentUri) {
+        String result = "";
+
+        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
+
+        if (cursor == null) {
+            result = contentUri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+            if (idx != -1) {
+                result = cursor.getString(idx);
+            }
+            cursor.close();
+        }
+
+            /*
+
+            String uriString = contentUri.toString();
+            File myFile = new File(uriString);
+            String path = myFile.getAbsolutePath();
+            String displayName = null;
+        Log.e("uri","u"+contentUri);
+
+            if (uriString.startsWith("content://")) {
+                Cursor cursor = null;
+                try {
+                    cursor = getContentResolver().query(contentUri, null, null, null, null);
+                    if (cursor != null && cursor.moveToFirst()) {
+                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    }
+                } finally {
+                    cursor.close();
+                }
+            } else if (uriString.startsWith("file://")) {
+                displayName = myFile.getName();
+            }
+
+        return displayName;*/
         return result;
     }
 
@@ -340,9 +432,9 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.home:
                 Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
                 intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -350,17 +442,14 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                 return true;
 
             case R.id.plus:
-
-                //intent = new Intent(this, AjouterBien.class);
-                //startActivity(intent);
-
                 return true;
 
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClickAjouterBien(View view){
+    public void onClickAjouterBien(View view) {
+        Boolean erreurSaisie = false;
         TextView textViewNomBien = (TextView) findViewById(R.id.nom_bien);
         TextView textViewDateAchatBien = (TextView) findViewById(R.id.date_achat_bien);
         TextView textViewDescriptionBien = (TextView) findViewById(R.id.description_bien);
@@ -369,10 +458,32 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         TextView textViewNumeroSerie = (TextView) findViewById(R.id.numero_serie);
 
         String nomBien = textViewNomBien.getText().toString();
+
+        if (nomBien == null || nomBien.equals("")) {
+            Toast.makeText(this, "Le nom ne peut être vide", Toast.LENGTH_SHORT).show();
+            erreurSaisie = true;
+        }
         String dateAchatSaisie = textViewDateAchatBien.getText().toString();
+
+        if (dateAchatSaisie != null && !dateAchatSaisie.equals("")) {
+            if (!dateAchatSaisie.matches(regexDate)){
+                Toast.makeText(this, "La date doit être au format jj.mm.aaaa", Toast.LENGTH_SHORT).show();
+                erreurSaisie = true;
+            } else {
+                dateAchatSaisie = dateAchatSaisie.replace(".","-");
+            }
+
+        }
+
         String commentaireBien = textViewCommentaireBien.getText().toString();
         String descriptionBien = textViewDescriptionBien.getText().toString();
-        Float prixBien = Float.valueOf(textViewPrixBien.getText().toString());
+
+        String prixSaisie =  textViewPrixBien.getText().toString();
+        float prixBien = -1 ;
+        if (prixSaisie != null  && !prixSaisie.equals("")) {
+            prixBien= Float.valueOf(prixSaisie);
+        }
+
         String numeroSerie = textViewNumeroSerie.getText().toString();
         int idCategorieSelectionne = categorieSelectionne.getId_Categorie();
 
@@ -380,43 +491,65 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String dateDeSaisie = sdf.format(dateSaisie);
 
+        if (dansListe1) {
+            listeIdListe.add(1);
+        }
+        if (dansListe2) {
+            listeIdListe.add(2);
+        }
+        if (dansListe3) {
+            listeIdListe.add(3);
+        }
 
-        Log.e("On va"," inserer : "+pathPhotoPrincipale);
-        Bien bien = new Bien(0,
-                nomBien,
-                dateDeSaisie,
-                dateAchatSaisie,
-                null,
-                commentaireBien,
-                prixBien,
-                pathPhotoPrincipale,
-                pathPhoto1,
-                pathPhoto2,
-                pathPhoto3,
-                idCategorieSelectionne,
-                descriptionBien,
-                numeroSerie
-                );
+        if (listeIdListe.size() == 0 ){
+            erreurSaisie = true;
+            Toast.makeText(this, "Veuillez selectionner au moins une liste", Toast.LENGTH_SHORT).show();
 
-        BienDAO bienDAO = new BienDAO(this);
+        }
 
-        bienDAO.open();
+        if (!erreurSaisie) {
 
-        bienDAO.addBien(bien,1);
-        Log.e("MiPa",bien.toString());
+            descriptionBien = "En attendant CTRL keke desc";
+            commentaireBien = "En attendant CTRL keke com";
 
-        bienDAO.close();
+            Bien bien = new Bien(0,
+                    nomBien,
+                    dateDeSaisie,
+                    dateAchatSaisie,
+                    pathPdf,
+                    commentaireBien,
+                    prixBien,
+                    pathPhotoPrincipale,
+                    pathPhoto1,
+                    pathPhoto2,
+                    pathPhoto3,
+                    idCategorieSelectionne,
+                    descriptionBien,
+                    numeroSerie
+            );
 
-        // TODO Faire ajout dans la liste d'appartenance
+            BienDAO bienDAO = new BienDAO(this);
+
+            bienDAO.open();
+
+            bienDAO.addBien(bien, listeIdListe);
+
+            bienDAO.close();
+
+            Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
+            intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intenthome);
+
+        }
+
+
+
+
     }
 
-    public void oncClickAjouterPhotoPrincipale (View view){
-
-
-    }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position,long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         categorieSelectionne = categoriesList.get(position);
     }
 
@@ -426,48 +559,72 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     }
 
 
-    private String savePicture (String pathFichierOrigine, String nomNouveauFichier) {
+    private String saveFile(String pathFichierOrigine, String nomNouveauFichier, String type) {
 
-        Log.e("MIpa","===============");
         String separator = "/";
+        File dir = null;
 
-        String dirName = "imagesTLS";
-        File dir = new File (context.getFilesDir() + separator +dirName);
+        if (type.equals("img")) {
+            String dirName = "images";
+            dir = new File(context.getFilesDir() + separator + dirName);
 
-        if (!dir.exists()) {
-            Log.e("MIpa","== CREATION du repertoire");
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
 
-            dir.mkdir();
-
-        } else {
-            Log.e("MIpa","== DIR EJA EXISTANT");
-
+        } else if (type.equals("pdf")) {
+            String dirName = "factures";
+            dir = new File(context.getFilesDir() + separator + dirName);
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
         }
 
         File fileSrc = new File(pathFichierOrigine);
-        Log.e("MIpa","fileSrc"+fileSrc.getAbsolutePath());
+        File fileDest = new File(dir.getAbsolutePath() + separator + nomNouveauFichier);
 
-        File fileDest = new File(dir.getAbsolutePath()+separator+nomNouveauFichier);
-
-        if (fileDest.exists()){
+        if (fileDest.exists()) {
             fileDest.delete();
         }
 
         if (fileSrc.exists()) {
             try {
-                copy(fileSrc, fileDest);
+                if(type.equals("img")) {
+                    Log.e("a","compress");
+                    copyAndCompress(fileSrc, fileDest);
+                } else {
+                    copy(fileSrc,fileDest);
+                }
             } catch (IOException e) {
+
                 e.printStackTrace();
             }
         }
 
-        Log.e("MIpa","===============");
-
-        return fileDest.getAbsolutePath();
+        return fileSrc.getAbsolutePath();
 
     }
 
+    public static void copyAndCompress(File src, File dst) throws IOException {
+
+        Bitmap bmp = BitmapFactory.decodeFile(src.getAbsolutePath());
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 4, bos);
+
+        try (InputStream in = new ByteArrayInputStream(bos.toByteArray())) {
+            try (OutputStream out = new FileOutputStream(dst)) {
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            }
+        }
+    }
+
     public static void copy(File src, File dst) throws IOException {
+
         try (InputStream in = new FileInputStream(src)) {
             try (OutputStream out = new FileOutputStream(dst)) {
                 // Transfer bytes from in to out
@@ -480,5 +637,15 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         }
     }
 
+    public void recupererFacture() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType("*/*");
+        startActivityForResult(intent, SELECT_PDF);
+
+    }
+
+    public Context getContext(){
+        return context;
+    }
 
 }

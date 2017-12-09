@@ -207,7 +207,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             idCategorieSelectionne = categorieSelectionne.getId_Categorie();
             bdao.open();
             bdao.modBien(bien.getId_bien(), nomBien.getText().toString(), dateSaisie, dateAchat.getText().toString(), commentaireBien.getText().toString(), idCategorieSelectionne,
-                    descriptionBien.getText().toString(), Float.valueOf(prixBien.getText().toString()), numeroSerie.getText().toString());
+                    descriptionBien.getText().toString(), Float.valueOf(prixBien.getText().toString()), numeroSerie.getText().toString(), null);
 
             if (ctvliste1.isChecked()) {
                 idNouvListes.add(1);

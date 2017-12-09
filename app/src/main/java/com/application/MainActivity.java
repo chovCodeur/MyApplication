@@ -404,26 +404,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+        ArrayList<Integer> listeIdListe1_2 = new ArrayList<Integer>();
+        listeIdListe1_2.add(1);
+        listeIdListe1_2.add(2);
+
+        ArrayList<Integer> listeIdListe1_3 = new ArrayList<Integer>();
+        listeIdListe1_3.add(1);
+        listeIdListe1_3.add(3);
+
         bdao.open();
 
-        bdao.addBien(bien1, 1);
-        bdao.addBien(bien2, 1);
-        bdao.addBien(bien3, 1);
-        bdao.addBien(bien4, 1);
-        bdao.addBien(bien5, 1);
-        bdao.addBien(bien6, 1);
+        bdao.addBien(bien1, listeIdListe1_2);
+        bdao.addBien(bien2, listeIdListe1_2);
+        bdao.addBien(bien3, listeIdListe1_2);
+        bdao.addBien(bien4, listeIdListe1_3);
+        bdao.addBien(bien5, listeIdListe1_3);
+        bdao.addBien(bien6, listeIdListe1_3);
 
-        Bien bienTemp = bdao.getBien(1);
-        bdao.addBien(bienTemp, 2);
-
-        bienTemp = bdao.getBien(2);
-        bdao.addBien(bienTemp, 2);
-
-        bienTemp = bdao.getBien(3);
-        bdao.addBien(bienTemp, 3);
-
-        bienTemp = bdao.getBien(4);
-        bdao.addBien(bienTemp, 3);
 
         bdao.close();
     }
