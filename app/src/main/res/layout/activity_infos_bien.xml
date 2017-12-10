@@ -48,8 +48,7 @@
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_marginTop="20dp"
-                android:scaleType="fitXY"
-                android:rotation="90"
+                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/no_image" />
 
             <TextView
