@@ -288,32 +288,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         listeBiens.clear();
         listCorrespondance.clear();
         listeHeader.clear();
+        //Log.e("listeBiens-debugkt", String.valueOf(listeBiens));
+        //Log.e("listCorrespon-debugkt", String.valueOf(listCorrespondance));
+        //Log.e("listeHeader-debugkt", String.valueOf(listeHeader));
 
         // Ouverture du BienDAO, on retrouve la liste des biens de la liste désignée et on ferme le DAO
         bdao.open();
         // Récupération de la liste en fonction l'id
         listeBiens = bdao.getBiensByListe(idCurrentList);
+        //Log.e("idCurrentList-debugkt", String.valueOf(idCurrentList));
+        //Log.e("listeBiens2-debugkt", String.valueOf(listeBiens));
         bdao.close();
 
         // On refait la bonne liste de correspondance
         cdao.open();
         mAdapter.addSectionHeaderItem("Catégorie : "+cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
         listeHeader.put(0,listeBiens.get(0).getId_categorie_bien());
-        cdao.close();
+
         int cpt = 0;
         int idCat = 1;
-        String item;
+        String item=null;
+        Log.e("header-debugkt", String.valueOf(idCat));
+        Log.e("header2-debugkt", String.valueOf(listeBiens.get(0).getId_categorie_bien()));
+        Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien())));
+        cdao.close();
+        //Log.e("size-debugkt", String.valueOf(listeBiens.size()));
         for (int i = 0; i < listeBiens.size(); i++) {
 
             if (idCat!=listeBiens.get(i).getId_categorie_bien()) {
                 cpt++;
                 cdao.open();
+                Log.e("header-debugkt", String.valueOf(idCat));
+                Log.e("header2-debugkt", String.valueOf(listeBiens.get(i).getId_categorie_bien()));
+                Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien())));
                 mAdapter.addSectionHeaderItem("Catégorie : "+cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
                 listeHeader.put(i+cpt,listeBiens.get(i).getId_categorie_bien());
                 cdao.close();
 
             }
-
+            Log.e("Biens-debugkt", String.valueOf(listeBiens.get(i)));
             listCorrespondance.put(mAdapter.getCount(),Integer.valueOf(cpt));
             item=listeBiens.get(i).getNom_bien()+"#~#"+listeBiens.get(i).getDescription_bien();
             mAdapter.addItem(item);
@@ -333,7 +346,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     startActivity(i);
                 } else {
                     Intent i = new Intent(getApplicationContext(), InfosBien.class);
-                    Log.e("idbien-debugkt", String.valueOf(listeBiens.get((position) - listCorrespondance.get((position)) - 1)));
 
                     //i.putExtra("IDBIEN", (position)-listCorrespondance.get((position)));
                     i.putExtra("IDBIEN", listeBiens.get((position) - listCorrespondance.get((position)) - 1).getId_bien());

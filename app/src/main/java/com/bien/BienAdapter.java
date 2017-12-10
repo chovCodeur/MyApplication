@@ -28,6 +28,7 @@ public class BienAdapter extends BaseAdapter {
     private static final int TYPE_SEPARATOR = 1;
 
     private ArrayList<String> mData = new ArrayList<String>();
+
     private TreeSet<Integer> sectionHeader = new TreeSet<Integer>();
 
     private Context context;
@@ -42,12 +43,17 @@ public class BienAdapter extends BaseAdapter {
 
     public void addItem(final String item) {
         mData.add(item);
+        Log.e("adapter1.1-debugkt",item);
+        Log.e("adapter1.2-debugkt",String.valueOf(mData));
         notifyDataSetChanged();
     }
 
     public void addSectionHeaderItem(final String item) {
         mData.add(item);
+        Log.e("adapter2.1-debugkt",item);
+        Log.e("adapter2.2-debugkt",String.valueOf(mData));
         sectionHeader.add(mData.size() - 1);
+        Log.e("adapter2.3-debugkt",String.valueOf(sectionHeader));
         notifyDataSetChanged();
     }
 
