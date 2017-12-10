@@ -1,6 +1,11 @@
 package com.bien;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +18,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.MainActivity;
@@ -24,6 +33,7 @@ import com.dao.ListeDAO;
 import com.application.inventaire.R;
 import com.liste.Liste;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,6 +53,10 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private EditText numeroSerie;
     private EditText prixBien;
     private String dateSaisie;
+    private ImageView photoPrincipale;
+    private ImageView photo1;
+    private ImageView photo2;
+    private ImageView photo3;
     private ListeDAO listeDAO;
     private ArrayList<Liste> listes;
     private ArrayList<String> nomListes = new ArrayList<>();;
@@ -198,6 +212,67 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 Date actuelle = new Date();
                 DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 dateSaisie = dateFormat.format(actuelle);
+
+                // Affichage des photos
+                if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
+                    final File imgFile = new File(bien.getPhoto_bien_principal());
+                    if (imgFile.exists()) {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        photoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
+                        photoPrincipale.setImageBitmap(myBitmap);
+                        photoPrincipale.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                supprimerPhoto(imgFile, photoPrincipale);
+                            }
+                        });
+                    }
+                }
+
+                if(bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")) {
+                    final File imgFile = new File(bien.getPhoto_bien_miniature1());
+                    if (imgFile.exists()) {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        photo1 = (ImageView) findViewById(R.id.photo1);
+                        photo1.setImageBitmap(myBitmap);
+                        photo1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                supprimerPhoto(imgFile, photo1);
+                            }
+                        });
+                    }
+                }
+
+                if(bien.getPhoto_bien_miniature2() != null && !bien.getPhoto_bien_miniature2().equals("")) {
+                    final File imgFile = new File(bien.getPhoto_bien_miniature2());
+                    if (imgFile.exists()) {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        photo2 = (ImageView) findViewById(R.id.photo2);
+                        photo2.setImageBitmap(myBitmap);
+                        photo2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                supprimerPhoto(imgFile, photo2);
+                            }
+                        });
+                    }
+                }
+
+                if(bien.getPhoto_bien_miniature3() != null && !bien.getPhoto_bien_miniature3().equals("")) {
+                    final File imgFile = new File(bien.getPhoto_bien_miniature3());
+                    if (imgFile.exists()) {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        photo3 = (ImageView) findViewById(R.id.photo3);
+                        photo3.setImageBitmap(myBitmap);
+                        photo3.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                supprimerPhoto(imgFile, photo3);
+                            }
+                        });
+                    }
+                }
             }
         }
     }
@@ -302,5 +377,61 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             return true;
         }
         return false;
+    }
+
+    public void supprimerPhoto(File file, View photo) {
+        final View view = (ImageView) photo;
+        TextView supprimerImage = new TextView(this);
+        supprimerImage.setText("Voulez-vous vraiment supprimer la photo "+file.getName()+" ?");
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.addView(supprimerImage);
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) supprimerImage.getLayoutParams();
+        params.leftMargin = 100;
+        params.rightMargin = 100;
+        params.topMargin = 50;
+        layout.setLayoutParams(params);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle("Supprimer une photo");
+        builder.setView(layout);
+
+        builder.setPositiveButton("Oui",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (view.getTag().toString()) {
+                            case "principal" : photoPrincipale.setImageBitmap(null);
+                                bien.setPhoto_bien_principal("");
+                                break;
+                            case "1" : photo1.setImageBitmap(null);
+                                bien.setPhoto_bien_miniature1("");
+                                break;
+                            case "2" : photo2.setImageBitmap(null);
+                                bien.setPhoto_bien_miniature2("");
+                                break;
+                            case "3" : photo3.setImageBitmap(null);
+                                bien.setPhoto_bien_miniature3("");
+                                break;
+                        }
+                        bdao.open();
+                        //bdao.modBien();
+                        bdao.close();
+
+                    }
+                });
+
+        builder.setNegativeButton("Non",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+        Dialog dialog = builder.create();
+        dialog.show();
     }
 }

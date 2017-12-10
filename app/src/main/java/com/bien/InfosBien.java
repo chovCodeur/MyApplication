@@ -171,7 +171,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         facture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!bien.getFacture_bien().equals("")) {
+                if(bien.getFacture_bien() != null && !bien.getFacture_bien().equals("")) {
                     Intent intent = new Intent(getApplicationContext(), ReadPDF.class);
                     intent.putExtra("nomPDF", bien.getFacture_bien());
                     startActivity(intent);
