@@ -91,7 +91,9 @@ public class BienAdapter extends BaseAdapter {
                     holder.textView = (TextView) convertView.findViewById(R.id.nomBien);
                     holder.textView2 = (TextView) convertView.findViewById(R.id.descriptionBien);
                     holder.textView.setText(str[0]);
-                    holder.textView2.setText(str[1]);
+                    if(str.length>1) {
+                        holder.textView2.setText(str[1]);
+                    }
                     BienDAO bdao=new BienDAO(context);
                     bdao.open();
                     String img = bdao.getImageBienByNom(str[0]);

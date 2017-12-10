@@ -509,7 +509,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         if (!erreurSaisie) {
 
-            descriptionBien = "En attendant CTRL keke desc";
+            //descriptionBien = "En attendant CTRL keke desc";
             commentaireBien = "En attendant CTRL keke com";
 
             Bien bien = new Bien(0,
