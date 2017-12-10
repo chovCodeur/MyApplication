@@ -4,18 +4,23 @@ package com.bien;
  * Created by Kevin on 19/11/2017.
  */
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.TreeSet;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.application.inventaire.R;
+import com.dao.BienDAO;
 
 public class BienAdapter extends BaseAdapter {
 
@@ -25,11 +30,14 @@ public class BienAdapter extends BaseAdapter {
     private ArrayList<String> mData = new ArrayList<String>();
     private TreeSet<Integer> sectionHeader = new TreeSet<Integer>();
 
+    private Context context;
+
     private LayoutInflater mInflater;
 
     public BienAdapter(Context context) {
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.context = context;
     }
 
     public void addItem(final String item) {
@@ -73,7 +81,7 @@ public class BienAdapter extends BaseAdapter {
         int rowType = getItemViewType(position);
 
         if (convertView == null) {
-            Log.e("MiPA","a"+mData.get(position));
+            Log.d("MiPA","a"+mData.get(position));
             String[] str = mData.get(position).split("#~#");
             holder = new ViewHolder();
             switch (rowType) {
@@ -84,6 +92,17 @@ public class BienAdapter extends BaseAdapter {
                     holder.textView2 = (TextView) convertView.findViewById(R.id.descriptionBien);
                     holder.textView.setText(str[0]);
                     holder.textView2.setText(str[1]);
+                    BienDAO bdao=new BienDAO(context);
+                    bdao.open();
+                    String img = bdao.getImageBienByNom(str[0]);
+                    bdao.close();
+                    if(img != null && !img.equals("")) {
+                        File imgFile = new File(img);
+                        if (imgFile.exists()) {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            holder.imageView.setImageBitmap(myBitmap);
+                        }
+                    }
                     break;
                 case TYPE_SEPARATOR:
                     convertView = mInflater.inflate(R.layout.separator_bien, null);

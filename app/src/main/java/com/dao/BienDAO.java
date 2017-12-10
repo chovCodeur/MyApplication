@@ -159,6 +159,18 @@ public class BienDAO {
         return a;
     }
 
+    public String getImageBienByNom(String nom){
+        String img="";
+
+        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+NOM+"='"+nom+"'", null);
+        if (c.moveToFirst()) {
+            img = c.getString(c.getColumnIndex(PHOTO_PRINCIPALE));
+            c.close();
+        }
+
+        return img;
+    }
+
     /**
      * Méthode permettant de supprimer un bien dans la table bien
      * @param bien Bien : le magasin à supprimer
