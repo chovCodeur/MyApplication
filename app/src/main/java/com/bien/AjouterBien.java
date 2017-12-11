@@ -67,6 +67,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     private Boolean dansListe3 = false;
     private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
     private Boolean checkPermissionActivite = false;
+    private int retourHome = 1;
 
 
     private Menu m;
@@ -493,12 +494,15 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         if (dansListe1) {
             listeIdListe.add(1);
+
         }
         if (dansListe2) {
             listeIdListe.add(2);
+            retourHome = 2;
         }
         if (dansListe3) {
             listeIdListe.add(3);
+            retourHome = 3;
         }
 
         if (listeIdListe.size() == 0 ){
@@ -537,6 +541,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             bienDAO.close();
 
             Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
+            intenthome.putExtra("ID_CURRENT_LIST_FROM_ADD_BIEN", retourHome);
             intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intenthome);
 
