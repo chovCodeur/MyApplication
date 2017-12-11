@@ -301,59 +301,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Log.e("listeBiens2-debugkt", String.valueOf(listeBiens));
         bdao.close();
 
-        // On refait la bonne liste de correspondance
-        cdao.open();
-        mAdapter.addSectionHeaderItem("Catégorie : "+cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
-        listeHeader.put(0,listeBiens.get(0).getId_categorie_bien());
+        if (!listeBiens.isEmpty()) {
+            // On refait la bonne liste de correspondance
+            cdao.open();
+            mAdapter.addSectionHeaderItem("Catégorie : " + cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
+            listeHeader.put(0, listeBiens.get(0).getId_categorie_bien());
 
-        int cpt = 0;
-        int idCat = 1;
-        String item=null;
-        Log.e("header-debugkt", String.valueOf(idCat));
-        Log.e("header2-debugkt", String.valueOf(listeBiens.get(0).getId_categorie_bien()));
-        Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien())));
-        cdao.close();
-        //Log.e("size-debugkt", String.valueOf(listeBiens.size()));
-        for (int i = 0; i < listeBiens.size(); i++) {
+            int cpt = 0;
+            int idCat = 1;
+            String item = null;
+            Log.e("header-debugkt", String.valueOf(idCat));
+            Log.e("header2-debugkt", String.valueOf(listeBiens.get(0).getId_categorie_bien()));
+            Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien())));
+            cdao.close();
+            //Log.e("size-debugkt", String.valueOf(listeBiens.size()));
+            for (int i = 0; i < listeBiens.size(); i++) {
 
-            if (idCat!=listeBiens.get(i).getId_categorie_bien()) {
-                cpt++;
-                cdao.open();
-                Log.e("header-debugkt", String.valueOf(idCat));
-                Log.e("header2-debugkt", String.valueOf(listeBiens.get(i).getId_categorie_bien()));
-                Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien())));
-                mAdapter.addSectionHeaderItem("Catégorie : "+cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
-                listeHeader.put(i+cpt,listeBiens.get(i).getId_categorie_bien());
-                cdao.close();
+                if (idCat != listeBiens.get(i).getId_categorie_bien()) {
+                    cpt++;
+                    cdao.open();
+                    Log.e("header-debugkt", String.valueOf(idCat));
+                    Log.e("header2-debugkt", String.valueOf(listeBiens.get(i).getId_categorie_bien()));
+                    Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien())));
+                    mAdapter.addSectionHeaderItem("Catégorie : " + cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
+                    listeHeader.put(i + cpt, listeBiens.get(i).getId_categorie_bien());
+                    cdao.close();
 
-            }
-            Log.e("Biens-debugkt", String.valueOf(listeBiens.get(i)));
-            listCorrespondance.put(mAdapter.getCount(),Integer.valueOf(cpt));
-            item=listeBiens.get(i).getNom_bien()+"#~#"+listeBiens.get(i).getDescription_bien();
-            mAdapter.addItem(item);
-            idCat=listeBiens.get(i).getId_categorie_bien();
-        }
-        //listCorrespondance.remove(1);
-        Log.d("liste",listCorrespondance.toString());
-        Log.d("header",listeHeader.toString());
-        lv_listeBiens.setAdapter(mAdapter);
-        lv_listeBiens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(listeHeader.containsKey(position)){
-                    Intent i = new Intent(getApplicationContext(), ModifierCategorie.class);
-                    Log.e("idcat-debugkt", String.valueOf(listeHeader.get(position)));
-                    i.putExtra("IDCATEGORIE", listeHeader.get(position));
-                    startActivity(i);
-                } else {
-                    Intent i = new Intent(getApplicationContext(), InfosBien.class);
-
-                    //i.putExtra("IDBIEN", (position)-listCorrespondance.get((position)));
-                    i.putExtra("IDBIEN", listeBiens.get((position) - listCorrespondance.get((position)) - 1).getId_bien());
-                    startActivity(i);
                 }
+                Log.e("Biens-debugkt", String.valueOf(listeBiens.get(i)));
+                listCorrespondance.put(mAdapter.getCount(), Integer.valueOf(cpt));
+                item = listeBiens.get(i).getNom_bien() + "#~#" + listeBiens.get(i).getDescription_bien();
+                mAdapter.addItem(item);
+                idCat = listeBiens.get(i).getId_categorie_bien();
             }
-        });
+            //listCorrespondance.remove(1);
+            Log.d("liste", listCorrespondance.toString());
+            Log.d("header", listeHeader.toString());
+            lv_listeBiens.setAdapter(mAdapter);
+            lv_listeBiens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (listeHeader.containsKey(position)) {
+                        Intent i = new Intent(getApplicationContext(), ModifierCategorie.class);
+                        Log.e("idcat-debugkt", String.valueOf(listeHeader.get(position)));
+                        i.putExtra("IDCATEGORIE", listeHeader.get(position));
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(getApplicationContext(), InfosBien.class);
+
+                        //i.putExtra("IDBIEN", (position)-listCorrespondance.get((position)));
+                        i.putExtra("IDBIEN", listeBiens.get((position) - listCorrespondance.get((position)) - 1).getId_bien());
+                        startActivity(i);
+                    }
+                }
+            });
+        }
     }
 
     public void ajouterCategorie(View v) {
@@ -408,22 +410,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Bitmap icon6 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i6);
 
 */
-        Bien bien1 = new Bien(1,"Lunette","19/11/2017","21/11/2017","","Légèrement rayées sur le coté",251.6f,null,null,null,null,3,"Lunette de marque Rayban","");
-        Bien bien2 = new Bien(2,"Frigo connecté SAMSUNG","19/11/2017","23/11/2017","","",3599.99f,null,null,null,null,1,"Samsung Family Hub","45DG425845DA");
-        Bien bien3 = new Bien(3,"Ordinateur portable","19/11/2017","01/12/2017","","Manque une touche",1099.99f,null,null,null,null,2,"PC Portable Gamer de marque MSI","515D-TGH2336");
-        Bien bien4 = new Bien(4,"Vaisselle en porcelaine","20/11/2017","03/06/2017","","Vaisselle de Mémé",6902.30f,null,null,null,null,1,"En porcelaine chinoise datée de 1640","");
-        Bien bien5 = new Bien(5,"Robot patissier","21/11/2017","19/05/2016","","",350f,null,null,null,null,1,"Marque Kenwood","");
-        Bien bien6 = new Bien(6,"Home Cinema","21/11/2017","19/01/2017","","Une enceinte grésille un peu",400f,null,null,null,null,2,"Marque Pioneer","");
+        Bien bien1 = new Bien(1,"Bien1 Chambre","19/11/2017","21/11/2017","","Légèrement rayées sur le coté",251.6f,null,null,null,null,3,"Lunette de marque Rayban","");
+        Bien bien2 = new Bien(2,"Bien2 Cuisine","19/11/2017","23/11/2017","","",3599.99f,null,null,null,null,1,"Samsung Family Hub","45DG425845DA");
+        Bien bien3 = new Bien(3,"Bien 3 Salon","19/11/2017","01/12/2017","","Manque une touche",1099.99f,null,null,null,null,2,"PC Portable Gamer de marque MSI","515D-TGH2336");
+        Bien bien4 = new Bien(4,"Bien 4 Cuisine","20/11/2017","03/06/2017","","Vaisselle de Mémé",6902.30f,null,null,null,null,1,"En porcelaine chinoise datée de 1640","");
+        Bien bien5 = new Bien(5,"Bien 5 Cuisine","21/11/2017","19/05/2016","","",350f,null,null,null,null,1,"Marque Kenwood","");
+        Bien bien6 = new Bien(6,"Bien 6 Salon","21/11/2017","19/01/2017","","Une enceinte grésille un peu",400f,null,null,null,null,2,"Marque Pioneer","");
 
 
 
         ArrayList<Integer> listeIdListe1_2 = new ArrayList<Integer>();
         listeIdListe1_2.add(1);
-        listeIdListe1_2.add(2);
 
         ArrayList<Integer> listeIdListe1_3 = new ArrayList<Integer>();
         listeIdListe1_3.add(1);
-        listeIdListe1_3.add(3);
 
         bdao.open();
 
