@@ -281,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // On détruit l'affichage courant
         lv_listeBiens.destroyDrawingCache();
+        lv_listeBiens.setAdapter(null);
         lv_listeBiens.setVisibility(ListView.INVISIBLE);
         lv_listeBiens.setVisibility(ListView.VISIBLE);
         mAdapter = new BienAdapter(this);
