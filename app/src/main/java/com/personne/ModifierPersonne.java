@@ -143,7 +143,7 @@ public class ModifierPersonne extends AppCompatActivity {
 
         String nomPersonne = textViewNomPersonne.getText().toString();
         String prenomPersonne = textViewPrenomPersonne.getText().toString();
-        String date = textViewDate.getText().toString();
+        String date = textViewDate.getText().toString().replace("-","/");
         String address = textViewAddress.getText().toString();
         String email = textViewEmail.getText().toString();
         String phoneNumber = textViewPhoneNumber.getText().toString();

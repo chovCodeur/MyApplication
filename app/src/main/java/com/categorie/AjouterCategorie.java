@@ -85,8 +85,7 @@ public class AjouterCategorie extends AppCompatActivity {
             categorieDAO.addCategorie(categorie);
             categorieDAO.close();
 
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            finish();
         }
     }
 }
