@@ -139,149 +139,157 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
                 myToolbar.setTitle(bien.getNom_bien());
                 setSupportActionBar(myToolbar);
-            }
-        }
 
-        // Mise à jour de l'image principale
-        if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
-            File imgFile = new File(bien.getPhoto_bien_principal());
-            if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                photoPrincipale = (ImageButton) findViewById(R.id.photoPrincipaleBien);
-                photoPrincipale.setImageBitmap(myBitmap);
-            }
-        }
-
-        // On met à jour le nom du bien
-        nomBien = (TextView) findViewById(R.id.nomBien);
-        nomBien.setText(bien.getNom_bien());
-
-        // On met à jour le nom de la catégorie du bien
-        categorieBien = (TextView) findViewById(R.id.categorieBien);
-        cdao.open();
-        categorieBien.setText(cdao.getNomCategorieByIdCategorie(bien.getId_categorie_bien()));
-        cdao.close();
-
-        // On met à jour la description du bien
-        descriptionBien = (TextView) findViewById(R.id.descriptionBien);
-        descriptionBien.setText(bien.getDescription_bien());
-
-        // Affichage de la facture au clic du bouton
-        Button facture = (Button) findViewById(R.id.buttonFactureBien);
-        facture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(bien.getFacture_bien() != null && !bien.getFacture_bien().equals("")) {
-                    Intent intent = new Intent(getApplicationContext(), ReadPDF.class);
-                    intent.putExtra("nomPDF", bien.getFacture_bien());
-                    startActivity(intent);
-                } else {
-                    Toast toast = Toast.makeText(context, "Pas de facture pour ce bien", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-            }
-        });
-
-        // Mise à jour des 3 miniatures d'images
-        if(bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")) {
-            File imgFile = new File(bien.getPhoto_bien_miniature1());
-            if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                photoMini1 = (ImageButton) findViewById(R.id.Photo1Bien);
-                photoMini1.setImageBitmap(myBitmap);
-            }
-        }
-
-        if(bien.getPhoto_bien_miniature2() != null && !bien.getPhoto_bien_miniature2().equals("")) {
-            File imgFile = new File(bien.getPhoto_bien_miniature2());
-            if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                photoMini2 = (ImageButton) findViewById(R.id.Photo2Bien);
-                photoMini2.setImageBitmap(myBitmap);
-            }
-        }
-
-        if(bien.getPhoto_bien_miniature3() != null && !bien.getPhoto_bien_miniature3().equals("")) {
-            File imgFile = new File(bien.getPhoto_bien_miniature3());
-            if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                photoMini3 = (ImageButton) findViewById(R.id.Photo3Bien);
-                photoMini3.setImageBitmap(myBitmap);
-            }
-        }
-
-        // Mise à jour des listes dans lequel l'objet apparaît
-        spinnerListe = (Spinner) findViewById(R.id.spinnerListesAppartenanceBien);
-        spinnerListe.setOnItemSelectedListener(this);
-        ArrayAdapter arrayAdapterCategorie = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listes);
-        arrayAdapterCategorie.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerListe.setAdapter(arrayAdapterCategorie);
-
-
-        // Mise à jour date d'acquisition
-        dateAcquisition = (TextView) findViewById(R.id.dateAcquisitionBien);
-        dateAcquisition.setText("Date d'acquisition : "+bien.getDate_achat_bien());
-
-        // Mise à jour date de saisie
-        dateSaisie = (TextView) findViewById(R.id.dateSaisieBien);
-        dateSaisie.setText("Date de saisie : "+bien.getDate_saisie_bien());
-
-        // Mise à jour prix du bien
-        prix = (TextView) findViewById(R.id.prixBien);
-        prix.setText("Prix du bien : "+bien.getPrix_bien()+"€");
-
-        // Mise à jour numéro de série du bien
-        numeroSerie = (TextView) findViewById(R.id.numeroSerieBien);
-        numeroSerie.setText("Numéro de série : "+bien.getNumeroSerie_bien());
-
-        // Mise à jour commentaire du bien
-        commentaire = (TextView) findViewById(R.id.commentairesBien);
-        commentaire.setText(bien.getCommentaire_bien());
-        // }
-
-        ImageButton imageButton = (ImageButton) findViewById(R.id.photoPrincipaleBien);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                // Mise à jour de l'image principale
                 if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
-                    File file = new File(bien.getPhoto_bien_principal());
-                    zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                    File imgFile = new File(bien.getPhoto_bien_principal());
+                    if (imgFile.exists()) {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        photoPrincipale = (ImageButton) findViewById(R.id.photoPrincipaleBien);
+                        photoPrincipale.setImageBitmap(myBitmap);
+                    }
+                } else {
+                    photoPrincipale.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
                 }
-            }
-        });
 
-        ImageButton imageButton1 = (ImageButton) findViewById(R.id.Photo1Bien);
-        imageButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(bien.getPhoto_bien_miniature1() != null  && !bien.getPhoto_bien_miniature1().equals("")) {
-                    File file = new File(bien.getPhoto_bien_miniature1());
-                    zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
-                }
-            }
-        });
+                // On met à jour le nom du bien
+                nomBien = (TextView) findViewById(R.id.nomBien);
+                nomBien.setText(bien.getNom_bien());
 
-        ImageButton imageButton2 = (ImageButton) findViewById(R.id.Photo2Bien);
-        imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(bien.getPhoto_bien_miniature2() != null  && !bien.getPhoto_bien_miniature2().equals("")) {
-                    File file = new File(bien.getPhoto_bien_miniature2());
-                    zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
-                }
-            }
-        });
+                // On met à jour le nom de la catégorie du bien
+                categorieBien = (TextView) findViewById(R.id.categorieBien);
+                cdao.open();
+                categorieBien.setText(cdao.getNomCategorieByIdCategorie(bien.getId_categorie_bien()));
+                cdao.close();
 
-        ImageButton imageButton3 = (ImageButton) findViewById(R.id.Photo3Bien);
-        imageButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(bien.getPhoto_bien_miniature3() != null  && !bien.getPhoto_bien_miniature3().equals("")) {
-                    File file = new File(bien.getPhoto_bien_miniature3());
-                    zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                // On met à jour la description du bien
+                descriptionBien = (TextView) findViewById(R.id.descriptionBien);
+                descriptionBien.setText(bien.getDescription_bien());
+
+                // Affichage de la facture au clic du bouton
+                Button facture = (Button) findViewById(R.id.buttonFactureBien);
+                facture.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(bien.getFacture_bien() != null && !bien.getFacture_bien().equals("")) {
+                            Intent intent = new Intent(getApplicationContext(), ReadPDF.class);
+                            intent.putExtra("nomPDF", bien.getFacture_bien());
+                            startActivity(intent);
+                        } else {
+                            Toast toast = Toast.makeText(context, "Pas de facture pour ce bien", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+                    }
+                });
+
+                // Mise à jour des 3 miniatures d'images
+                if(bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")) {
+                    File imgFile = new File(bien.getPhoto_bien_miniature1());
+                    if (imgFile.exists()) {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        photoMini1 = (ImageButton) findViewById(R.id.Photo1Bien);
+                        photoMini1.setImageBitmap(myBitmap);
+                    }
+                } else {
+                    photoMini1.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
                 }
+
+                if(bien.getPhoto_bien_miniature2() != null && !bien.getPhoto_bien_miniature2().equals("")) {
+                    File imgFile = new File(bien.getPhoto_bien_miniature2());
+                    if (imgFile.exists()) {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        photoMini2 = (ImageButton) findViewById(R.id.Photo2Bien);
+                        photoMini2.setImageBitmap(myBitmap);
+                    }
+                } else {
+                    photoMini2.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
+                }
+
+                if(bien.getPhoto_bien_miniature3() != null && !bien.getPhoto_bien_miniature3().equals("")) {
+                    File imgFile = new File(bien.getPhoto_bien_miniature3());
+                    if (imgFile.exists()) {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        photoMini3 = (ImageButton) findViewById(R.id.Photo3Bien);
+                        photoMini3.setImageBitmap(myBitmap);
+                    }
+                } else {
+                    photoMini3.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
+                }
+
+                // Mise à jour des listes dans lequel l'objet apparaît
+                spinnerListe = (Spinner) findViewById(R.id.spinnerListesAppartenanceBien);
+                spinnerListe.setOnItemSelectedListener(this);
+                ArrayAdapter arrayAdapterCategorie = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listes);
+                arrayAdapterCategorie.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerListe.setAdapter(arrayAdapterCategorie);
+
+
+                // Mise à jour date d'acquisition
+                dateAcquisition = (TextView) findViewById(R.id.dateAcquisitionBien);
+                dateAcquisition.setText("Date d'acquisition : "+bien.getDate_achat_bien());
+
+                // Mise à jour date de saisie
+                dateSaisie = (TextView) findViewById(R.id.dateSaisieBien);
+                dateSaisie.setText("Date de saisie : "+bien.getDate_saisie_bien());
+
+                // Mise à jour prix du bien
+                prix = (TextView) findViewById(R.id.prixBien);
+                prix.setText("Prix du bien : "+bien.getPrix_bien()+"€");
+
+                // Mise à jour numéro de série du bien
+                numeroSerie = (TextView) findViewById(R.id.numeroSerieBien);
+                numeroSerie.setText("Numéro de série : "+bien.getNumeroSerie_bien());
+
+                // Mise à jour commentaire du bien
+                commentaire = (TextView) findViewById(R.id.commentairesBien);
+                commentaire.setText(bien.getCommentaire_bien());
+                // }
+
+                ImageButton imageButton = (ImageButton) findViewById(R.id.photoPrincipaleBien);
+                imageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
+                            File file = new File(bien.getPhoto_bien_principal());
+                            zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                        }
+                    }
+                });
+
+                ImageButton imageButton1 = (ImageButton) findViewById(R.id.Photo1Bien);
+                imageButton1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(bien.getPhoto_bien_miniature1() != null  && !bien.getPhoto_bien_miniature1().equals("")) {
+                            File file = new File(bien.getPhoto_bien_miniature1());
+                            zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                        }
+                    }
+                });
+
+                ImageButton imageButton2 = (ImageButton) findViewById(R.id.Photo2Bien);
+                imageButton2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(bien.getPhoto_bien_miniature2() != null  && !bien.getPhoto_bien_miniature2().equals("")) {
+                            File file = new File(bien.getPhoto_bien_miniature2());
+                            zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                        }
+                    }
+                });
+
+                ImageButton imageButton3 = (ImageButton) findViewById(R.id.Photo3Bien);
+                imageButton3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(bien.getPhoto_bien_miniature3() != null  && !bien.getPhoto_bien_miniature3().equals("")) {
+                            File file = new File(bien.getPhoto_bien_miniature3());
+                            zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
+                        }
+                    }
+                });
             }
-        });
+        }
     }
 
     @Override
