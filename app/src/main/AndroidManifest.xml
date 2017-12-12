@@ -25,7 +25,9 @@
         <activity android:name="com.bien.InfosBien" />
         <activity android:name="com.bien.AjouterBien" />
         <activity android:name="com.bien.ModifierBien" />
-        <activity android:name="com.utils.ReadPDF"></activity>
+        <activity android:name="com.utils.ReadPDF" />
+        <activity android:name="com.liste.ExportListe">
+        </activity>
 
 
     </application>

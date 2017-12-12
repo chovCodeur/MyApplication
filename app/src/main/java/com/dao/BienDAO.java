@@ -31,7 +31,7 @@ public class BienDAO {
 
     public static final String TABLE_NAME = "BIEN";
     public static final String ID = "id_bien";
-    public static final String NOM = "nom";
+    public static final String NOM = "nom_bien";
     public static final String DATESAISIE = "date_saisie";
     public static final String DATEACHAT = "date_achat";
     public static final String FACTURE = "facture";
@@ -132,7 +132,7 @@ public class BienDAO {
 
 
     public Bien getBien(int id){
-        Bien a=new Bien(0, "", "", "", "","", 0,null,null,null,null,0, "", "");
+        Bien a=new Bien(0, "", "", "", "","", "",null,null,null,null,0, "", "");
 
         Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+ID+"="+id, null);
         if (c.moveToFirst()) {
@@ -146,7 +146,7 @@ public class BienDAO {
             a.setPhoto_bien_miniature1(c.getString(c.getColumnIndex(PHOTO_SEC1)));
             a.setPhoto_bien_miniature2(c.getString(c.getColumnIndex(PHOTO_SEC2)));
             a.setPhoto_bien_miniature3(c.getString(c.getColumnIndex(PHOTO_SEC3)));
-            a.setPrix_bien(c.getFloat(c.getColumnIndex(PRIX)));
+            a.setPrix_bien(c.getString(c.getColumnIndex(PRIX)));
             a.setId_categorie_bien(c.getInt(c.getColumnIndex(IDCATEGORIE)));
             a.setDescription_bien(c.getString(c.getColumnIndex(DESCRIPTION)));
             a.setNumeroSerie_bien(c.getString(c.getColumnIndex(NUMSERIE)));
@@ -160,6 +160,7 @@ public class BienDAO {
         String img="";
 
         Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+NOM+"=\""+nom+"\"", null);
+        Log.e("A=","SELECT * FROM "+TABLE_NAME+" WHERE "+NOM+"=\""+nom+"\"");
         if (c.moveToFirst()) {
             img = c.getString(c.getColumnIndex(PHOTO_PRINCIPALE));
             c.close();
@@ -192,7 +193,7 @@ public class BienDAO {
         ArrayList<Bien> liste = new ArrayList<Bien>();
         Cursor curseurBien = db.rawQuery("SELECT * FROM "+TABLE_NAME+" JOIN APPARTIENT ON APPARTIENT.id_bien="+TABLE_NAME+"."+ID+" WHERE id_liste = "+id_liste+" ORDER BY "+IDCATEGORIE, null);
 
-        Bien bienTemp =new Bien(0, "", "", "", "","", 0,null,null,null,null,0, "", "");
+        Bien bienTemp =new Bien(0, "", "", "", "","", "",null,null,null,null,0, "", "");
 
         if (curseurBien.moveToFirst()) {
             do {
@@ -208,13 +209,13 @@ public class BienDAO {
                 bienTemp.setPhoto_bien_miniature2((curseurBien.getString(curseurBien.getColumnIndex(PHOTO_SEC2))));
                 bienTemp.setPhoto_bien_miniature3((curseurBien.getString(curseurBien.getColumnIndex(PHOTO_SEC3))));
 
-                bienTemp.setPrix_bien(curseurBien.getFloat(curseurBien.getColumnIndex(PRIX)));
+                bienTemp.setPrix_bien(curseurBien.getString(curseurBien.getColumnIndex(PRIX)));
                 bienTemp.setId_categorie_bien(curseurBien.getInt(curseurBien.getColumnIndex(IDCATEGORIE)));
                 bienTemp.setDescription_bien(curseurBien.getString(curseurBien.getColumnIndex(DESCRIPTION)));
                 bienTemp.setNumeroSerie_bien(curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE)));
 
                 liste.add(bienTemp);
-                bienTemp =new Bien(0, "", "", "", "","", 0,null,null,null,null,0, "", "");
+                bienTemp =new Bien(0, "", "", "", "","", "",null,null,null,null,0, "", "");
             } while (curseurBien.moveToNext());
         }
         curseurBien.close();

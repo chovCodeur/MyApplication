@@ -73,6 +73,8 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     private Boolean dansListe3 = false;
     //private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
     private int retourHome = 1;
+    private Boolean perm = false;
+
 
 
     private Menu m;
@@ -91,6 +93,9 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     final static int SELECT_IMAGE = 1;
     final static int SELECT_PDF = 2;
+    final static int CHECK_PERM_PICTURE = 4;
+    final static int CHECK_PERM_PDF = 5;
+
 
 
     @Override
@@ -204,15 +209,15 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         });
 
 
+        Log.e("AA","perm"+perm);
+
         Button buttonAjouterPhoto = (Button) findViewById(R.id.ajouterPhoto);
         buttonAjouterPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean perm = verifierPermission();
+                verifierPermission(CHECK_PERM_PICTURE);
                 if (perm) {
                     recupererPhoto();
-                } else {
-                    Toast.makeText(getContext(), "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -221,11 +226,10 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         buttonAjouterFacture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean perm = verifierPermission();
+                verifierPermission(CHECK_PERM_PDF);
+
                 if (perm) {
                     recupererFacture();
-                } else {
-                    Toast.makeText(getContext(), "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -252,12 +256,33 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
-    public Boolean verifierPermission(){
-        if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(AjouterBien.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 4);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == CHECK_PERM_PDF){
+            if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                perm = true;
+                recupererFacture();
+            }
+        } else if (requestCode == CHECK_PERM_PICTURE){
+            if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                perm = true;
+                recupererPhoto();
+            }
+        }
+        Log.e("AA","perm dans le override"+perm);
+
+        if(!perm) {
+            Toast.makeText(getContext(), "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
         }
 
-        return ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public void verifierPermission(int code){
+        if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AjouterBien.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, code);
+        } else {
+            perm = true;
+        }
     }
 
     public void recupererPhoto(){
@@ -476,10 +501,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         String descriptionBien = textViewDescriptionBien.getText().toString();
 
         String prixSaisie =  textViewPrixBien.getText().toString();
-        float prixBien = -1 ;
-        if (prixSaisie != null  && !prixSaisie.equals("")) {
-            prixBien= Float.valueOf(prixSaisie);
-        }
 
         String numeroSerie = textViewNumeroSerie.getText().toString();
         int idCategorieSelectionne = categorieSelectionne.getId_Categorie();
@@ -518,7 +539,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                     dateAchatSaisie,
                     pathPdf,
                     commentaireBien,
-                    prixBien,
+                    prixSaisie,
                     pathPhotoPrincipale,
                     pathPhoto1,
                     pathPhoto2,
@@ -610,7 +631,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         Bitmap bmp = BitmapFactory.decodeFile(src.getAbsolutePath());
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 4, bos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 0, bos);
 
         try (InputStream in = new ByteArrayInputStream(bos.toByteArray())) {
             try (OutputStream out = new FileOutputStream(dst)) {

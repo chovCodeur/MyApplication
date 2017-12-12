@@ -213,9 +213,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/commentairesBien"
-                android:layout_marginLeft="115dp"
+                android:layout_centerHorizontal="true"
                 android:text="Modifier"
                 android:onClick="modifierBien"/>
+            <Button
+                android:id="@+id/supprimerBienButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/modifierBienButton"
+                android:layout_centerHorizontal="true"
+                android:text="Supprimer"
+                android:onClick="supprimerBien"/>
 
         </RelativeLayout>
     </ScrollView>

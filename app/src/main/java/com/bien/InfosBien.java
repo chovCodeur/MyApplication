@@ -422,4 +422,12 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         intent.putExtra("IDBIEN",bien.getId_bien());
         startActivity(intent);
     }
+    public void supprimerBien(View v){
+        Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
+        bdao.open();
+        bdao.deleteBien(bien);
+        bdao.close();
+        intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intenthome);
+    }
 }
