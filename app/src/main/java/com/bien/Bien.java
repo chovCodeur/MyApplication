@@ -14,7 +14,7 @@ public class Bien {
     private String date_achat_bien;
     private String facture_bien;
     private String commentaire_bien;
-    private float prix_bien;
+    private String prix_bien;
     private String photo_bien_principal;
     private String photo_bien_miniature1;
     private String photo_bien_miniature2;
@@ -24,7 +24,7 @@ public class Bien {
     private String numeroSerie_bien;
 
     public Bien(int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String facture_bien,
-                String commentaire_bien, float prix_bien, String photo_bien_principal, String photo_bien_miniature1,
+                String commentaire_bien, String prix_bien, String photo_bien_principal, String photo_bien_miniature1,
                 String photo_bien_miniature2, String photo_bien_miniature3, int id_categorie_bien, String description_bien, String numeroSerie_bien) {
         this.id_bien = id_bien;
         this.nom_bien = nom_bien;
@@ -82,11 +82,11 @@ public class Bien {
         this.commentaire_bien = commentaire_bien;
     }
 
-    public float getPrix_bien() {
+    public String getPrix_bien() {
         return prix_bien;
     }
 
-    public void setPrix_bien(float prix_bien) {
+    public void setPrix_bien(String prix_bien) {
         this.prix_bien = prix_bien;
     }
 

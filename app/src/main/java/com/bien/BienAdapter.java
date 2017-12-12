@@ -103,10 +103,12 @@ public class BienAdapter extends BaseAdapter {
                     BienDAO bdao=new BienDAO(context);
                     bdao.open();
                     String img = bdao.getImageBienByNom(str[0]);
+                    Log.e("aa",str[0]);
                     bdao.close();
                     if(img != null && !img.equals("")) {
                         File imgFile = new File(img);
                         if (imgFile.exists()) {
+                            Log.e("aa", "dans le if");
                             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                             holder.imageView.setImageBitmap(myBitmap);
                         }
