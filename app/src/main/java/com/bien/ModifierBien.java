@@ -299,6 +299,8 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 }
             }
         }
+
+        // TODO MiPa ajouter des photos et changer la facture PDF
     }
 
     public void modifierBien(View v) {

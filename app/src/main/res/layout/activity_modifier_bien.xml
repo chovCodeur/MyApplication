@@ -181,7 +181,7 @@
                 android:layout_below="@+id/prix_bien"
                 android:layout_marginTop="6dp"
                 android:onClick="modifierPhoto"
-                android:text="Modifier la photo principale" />
+                android:text="Ajouter des photos" />
 
             <Button
                 android:id="@+id/modifierFacture"
