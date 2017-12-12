@@ -39,6 +39,7 @@ import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
 import com.dao.PersonneDAO;
 import com.application.inventaire.R;
+import com.liste.ExportListe;
 import com.liste.Liste;
 import com.personne.ModifierPersonne;
 
@@ -369,6 +370,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void exporterListe(View v) {
+        Intent intent = new Intent(this, ExportListe.class);
+        startActivity(intent);
+        //ExportListe exportListe = new ExportListe();
+        //exportListe.exportDB(getApplicationContext());
         Log.d("TEST", "Coucou du bouton 2");
     }
 
