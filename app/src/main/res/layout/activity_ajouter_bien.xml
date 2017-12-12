@@ -127,7 +127,7 @@
                 android:layout_below="@+id/checkListe1"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Date d'achat (jj.mm.aaaa)"
+                android:hint="Date d'achat (jj/mm/aaaa)"
                 android:inputType="date" />
 
             <EditText

@@ -2,6 +2,7 @@ package com.bien;
 
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +29,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -40,6 +44,7 @@ import com.categorie.Categorie;
 import com.liste.Liste;
 import com.application.MainActivity;
 import com.application.inventaire.R;
+import com.personne.ModifierPersonne;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -54,6 +59,7 @@ import java.net.URISyntaxException;
 import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -65,8 +71,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     private Boolean dansListe1 = false;
     private Boolean dansListe2 = false;
     private Boolean dansListe3 = false;
-    private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
-    private Boolean checkPermissionActivite = false;
+    //private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
     private int retourHome = 1;
 
 
@@ -77,6 +82,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     private String pathPhoto1;
     private String pathPhoto2;
     private String pathPhoto3;
+    private DatePickerDialog datePickerDialog;
 
     private ArrayList<Integer> listeIdListe = new ArrayList<Integer>();
 
@@ -91,13 +97,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_bien);
-
-        /*
-        if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(AjouterBien.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 4);
-        }
-
-        */
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle("Ajouter un bien");
@@ -231,6 +230,25 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
         });
 
+        final EditText editTextdate = (EditText) findViewById(R.id.date_achat_bien);
+        editTextdate.setInputType(InputType.TYPE_NULL);
+
+        editTextdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog = new DatePickerDialog(AjouterBien.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        editTextdate.setText(dayOfMonth + "/" +(month + 1) + "/" + year);
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
 
     }
 
@@ -391,30 +409,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
             cursor.close();
         }
-
-            /*
-
-            String uriString = contentUri.toString();
-            File myFile = new File(uriString);
-            String path = myFile.getAbsolutePath();
-            String displayName = null;
-        Log.e("uri","u"+contentUri);
-
-            if (uriString.startsWith("content://")) {
-                Cursor cursor = null;
-                try {
-                    cursor = getContentResolver().query(contentUri, null, null, null, null);
-                    if (cursor != null && cursor.moveToFirst()) {
-                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                    }
-                } finally {
-                    cursor.close();
-                }
-            } else if (uriString.startsWith("file://")) {
-                displayName = myFile.getName();
-            }
-
-        return displayName;*/
         return result;
     }
 
@@ -452,7 +446,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     public void onClickAjouterBien(View view) {
         Boolean erreurSaisie = false;
         TextView textViewNomBien = (TextView) findViewById(R.id.nom_bien);
-        TextView textViewDateAchatBien = (TextView) findViewById(R.id.date_achat_bien);
         TextView textViewDescriptionBien = (TextView) findViewById(R.id.description_bien);
         TextView textViewCommentaireBien = (TextView) findViewById(R.id.commentaire_bien);
         TextView textViewPrixBien = (TextView) findViewById(R.id.prix_bien);
@@ -464,17 +457,20 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             Toast.makeText(this, "Le nom ne peut être vide", Toast.LENGTH_SHORT).show();
             erreurSaisie = true;
         }
-        String dateAchatSaisie = textViewDateAchatBien.getText().toString();
 
-        if (dateAchatSaisie != null && !dateAchatSaisie.equals("")) {
+        TextView editTextdate = (EditText) findViewById(R.id.date_achat_bien);
+
+        String dateAchatSaisie = editTextdate.getText().toString();
+
+        /*if (dateAchatSaisie != null && !dateAchatSaisie.equals("")) {
             if (!dateAchatSaisie.matches(regexDate)){
-                Toast.makeText(this, "La date doit être au format jj.mm.aaaa", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "La date doit être au format jj/mm/aaaa", Toast.LENGTH_SHORT).show();
                 erreurSaisie = true;
             } else {
-                dateAchatSaisie = dateAchatSaisie.replace(".","-");
+                dateAchatSaisie = dateAchatSaisie.replace(".","/");
             }
 
-        }
+        } */
 
         String commentaireBien = textViewCommentaireBien.getText().toString();
         String descriptionBien = textViewDescriptionBien.getText().toString();
@@ -489,7 +485,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         int idCategorieSelectionne = categorieSelectionne.getId_Categorie();
 
         Date dateSaisie = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String dateDeSaisie = sdf.format(dateSaisie);
 
         if (dansListe1) {
