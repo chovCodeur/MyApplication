@@ -141,11 +141,11 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 setSupportActionBar(myToolbar);
 
                 // Mise à jour de l'image principale
+                photoPrincipale = (ImageButton) findViewById(R.id.photoPrincipaleBien);
                 if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_principal());
                     if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        photoPrincipale = (ImageButton) findViewById(R.id.photoPrincipaleBien);
                         photoPrincipale.setImageBitmap(myBitmap);
                     }
                 } else {
@@ -183,33 +183,33 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 });
 
                 // Mise à jour des 3 miniatures d'images
+                photoMini1 = (ImageButton) findViewById(R.id.Photo1Bien);
                 if(bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_miniature1());
                     if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        photoMini1 = (ImageButton) findViewById(R.id.Photo1Bien);
                         photoMini1.setImageBitmap(myBitmap);
                     }
                 } else {
                     photoMini1.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
                 }
 
+                photoMini2 = (ImageButton) findViewById(R.id.Photo2Bien);
                 if(bien.getPhoto_bien_miniature2() != null && !bien.getPhoto_bien_miniature2().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_miniature2());
                     if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        photoMini2 = (ImageButton) findViewById(R.id.Photo2Bien);
                         photoMini2.setImageBitmap(myBitmap);
                     }
                 } else {
                     photoMini2.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
                 }
 
+                photoMini3 = (ImageButton) findViewById(R.id.Photo3Bien);
                 if(bien.getPhoto_bien_miniature3() != null && !bien.getPhoto_bien_miniature3().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_miniature3());
                     if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        photoMini3 = (ImageButton) findViewById(R.id.Photo3Bien);
                         photoMini3.setImageBitmap(myBitmap);
                     }
                 } else {

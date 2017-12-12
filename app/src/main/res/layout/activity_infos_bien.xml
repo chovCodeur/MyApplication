@@ -210,20 +210,23 @@
 
             <Button
                 android:id="@+id/modifierBienButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/commentairesBien"
                 android:layout_centerHorizontal="true"
+                android:onClick="modifierBien"
                 android:text="Modifier"
-                android:onClick="modifierBien"/>
+                android:layout_marginBottom="5dp"/>
+
             <Button
                 android:id="@+id/supprimerBienButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/modifierBienButton"
                 android:layout_centerHorizontal="true"
+                android:onClick="supprimerBien"
                 android:text="Supprimer"
-                android:onClick="supprimerBien"/>
+                android:layout_marginBottom="15dp"/>
 
         </RelativeLayout>
     </ScrollView>
