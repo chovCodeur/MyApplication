@@ -623,7 +623,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
         }
 
-        return fileSrc.getAbsolutePath();
+        return fileDest.getAbsolutePath();
 
     }
 
@@ -631,7 +631,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         Bitmap bmp = BitmapFactory.decodeFile(src.getAbsolutePath());
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 0, bos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 50, bos);
 
         try (InputStream in = new ByteArrayInputStream(bos.toByteArray())) {
             try (OutputStream out = new FileOutputStream(dst)) {
