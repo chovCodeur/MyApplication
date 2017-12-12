@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import com.application.inventaire.R;
 import com.dao.PersonneDAO;
 
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 public class ModifierPersonne extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
@@ -110,7 +112,7 @@ public class ModifierPersonne extends AppCompatActivity {
 
         Personne personne = new Personne(1, nomPersonne, prenomPersonne, date, address, email, phoneNumber);
 
-        if(!nomPersonne.equals("") && !prenomPersonne.equals("") && !date.equals("") && !address.equals("") && email.equals("") && phoneNumber.equals("")) {
+        if(!nomPersonne.equals("") && !prenomPersonne.equals("") && !date.equals("") && !address.equals("") && validEmail(email) && validPhone(phoneNumber)) {
             PersonneDAO personneDAO = new PersonneDAO(this);
             personneDAO.open();
             personneDAO.modPersonne(1, nomPersonne, prenomPersonne, address, email, phoneNumber, date);
@@ -120,5 +122,15 @@ public class ModifierPersonne extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Tous les champs doivent être remplis", Toast.LENGTH_LONG);
             toast.show();
         }
+    }
+
+    private boolean validEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
+    }
+
+    private boolean validPhone(String phone) {
+        Pattern pattern = Pattern.compile("(0|\\+33|0033)[1-9][0-9]{8}");
+        return pattern.matcher(phone).matches();
     }
 }
