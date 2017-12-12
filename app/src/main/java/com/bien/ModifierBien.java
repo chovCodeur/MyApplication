@@ -1,5 +1,6 @@
 package com.bien;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -32,11 +34,13 @@ import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
 import com.application.inventaire.R;
 import com.liste.Liste;
+import com.personne.ModifierPersonne;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ModifierBien extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -69,6 +73,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private CheckedTextView ctvliste1=null;
     private CheckedTextView ctvliste2=null;
     private CheckedTextView ctvliste3=null;
+    private DatePickerDialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +88,25 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         Bundle extras = getIntent().getExtras();
 
         if(extras != null) {
+
+            dateAchat =(EditText) findViewById(R.id.date_achat_bien);
+            dateAchat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Calendar c = Calendar.getInstance();
+                    int mYear = c.get(Calendar.YEAR);
+                    int mMonth = c.get(Calendar.MONTH);
+                    int mDay = c.get(Calendar.DAY_OF_MONTH);
+                    datePickerDialog = new DatePickerDialog(ModifierBien.this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                            dateAchat.setText(dayOfMonth + "/" +(month + 1) + "/" + year);
+                        }
+                    }, mYear, mMonth, mDay);
+                    datePickerDialog.show();
+                }
+            });
+
             id = extras.getInt("IDBIEN");
 
             if(id != 0) {
@@ -210,7 +234,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 prixBien.setText(String.valueOf(bien.getPrix_bien()));
 
                 Date actuelle = new Date();
-                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 dateSaisie = dateFormat.format(actuelle);
 
                 // Affichage des photos
