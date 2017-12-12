@@ -129,9 +129,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         Bundle extras = getIntent().getExtras();
 
-        if (extras != null && extras.get("ID_CURRENT_LIST_FROM_ADD_BIEN") != null) {
+        /*if (extras != null && extras.get("ID_CURRENT_LIST_FROM_ADD_BIEN") != null) {
             idCurrentList = extras.getInt("ID_CURRENT_LIST_FROM_ADD_BIEN");
-        }
+        }*/
         super.onResume();
 
         // on rafraichi simplement l'affichage
