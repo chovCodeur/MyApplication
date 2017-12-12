@@ -278,7 +278,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void modifierBien(View v) {
-        if(!nomBien.getText().toString().equals("") && !dateAchat.getText().toString().equals("") && !descriptionBien.getText().toString().equals("") && !commentaireBien.getText().toString().equals("") && !numeroSerie.getText().toString().equals("") && !prixBien.getText().toString().equals("") && isACheckboxIsChecked()) {
+        if(!nomBien.getText().toString().equals("")) {
             idCategorieSelectionne = categorieSelectionne.getId_Categorie();
             bdao.open();
             bdao.modBien(bien.getId_bien(), nomBien.getText().toString(), dateSaisie, dateAchat.getText().toString(), commentaireBien.getText().toString(), idCategorieSelectionne,
@@ -322,7 +322,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
             finish();
         } else {
-            Toast toast = Toast.makeText(this, "Tous les champs doivent être remplis pour pouvoir modifier un bien", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, "Votre bien doit avoir un nom", Toast.LENGTH_LONG);
             toast.show();
         }
     }
