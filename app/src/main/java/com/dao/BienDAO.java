@@ -108,27 +108,24 @@ public class BienDAO {
         return temp;
     }
 
-    /**
-     * Méthode permettant de modifier un bien dans la table Bien
-     * @param id long : l'id de l'bien
-     * @param nom String : le nom de l'bien
-     * @return int : le nombre de lignes affectées par la requête
-     */
-    public int modBien(int id, String nom, String dateSaisie, String dateAchat, String commentaire, int idCategorie,
-                       String description, float prix, String numeroSerie, String facture){
+    public int modBien(Bien bien){
         ContentValues values = new ContentValues();
-        values.put(NOM,nom);
-        values.put(DATESAISIE,dateSaisie);
-        values.put(DATEACHAT, dateAchat);
-        values.put(FACTURE, facture);
-        values.put(COMMENTAIRE, commentaire);
-        values.put(DESCRIPTION, description);
-        values.put(PRIX, prix);
-        values.put(NUMSERIE, numeroSerie);
-        values.put(IDCATEGORIE, idCategorie);
+        values.put(NOM,bien.getNom_bien());
+        values.put(DATESAISIE,bien.getDate_saisie_bien());
+        values.put(DATEACHAT, bien.getDate_achat_bien());
+        values.put(FACTURE, bien.getFacture_bien());
+        values.put(COMMENTAIRE, bien.getCommentaire_bien());
+        values.put(DESCRIPTION, bien.getDescription_bien());
+        values.put(PRIX, bien.getPrix_bien());
+        values.put(NUMSERIE, bien.getNumeroSerie_bien());
+        values.put(IDCATEGORIE, bien.getId_categorie_bien());
+        values.put(PHOTO_PRINCIPALE, bien.getPhoto_bien_principal());
+        values.put(PHOTO_SEC1, bien.getPhoto_bien_miniature1());
+        values.put(PHOTO_SEC2, bien.getPhoto_bien_miniature2());
+        values.put(PHOTO_SEC3, bien.getPhoto_bien_miniature3());
 
         String where = ID+" = ?";
-        String[] whereArgs = {String.valueOf(id)};
+        String[] whereArgs = {String.valueOf(bien.getId_bien())};
 
         return db.update(TABLE_NAME, values, where, whereArgs);
     }
