@@ -307,8 +307,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         if(!nomBien.getText().toString().equals("")) {
             idCategorieSelectionne = categorieSelectionne.getId_Categorie();
             bdao.open();
-            bdao.modBien(bien.getId_bien(), nomBien.getText().toString(), dateSaisie, dateAchat.getText().toString(), commentaireBien.getText().toString(), idCategorieSelectionne,
-                    descriptionBien.getText().toString(), Float.valueOf(prixBien.getText().toString()), numeroSerie.getText().toString(), null);
+            bdao.modBien(bien);
 
             if (ctvliste1.isChecked()) {
                 idNouvListes.add(1);
@@ -442,9 +441,6 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                                 bien.setPhoto_bien_miniature3("");
                                 break;
                         }
-                        bdao.open();
-                        //bdao.modBien();
-                        bdao.close();
 
                     }
                 });
