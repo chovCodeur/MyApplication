@@ -602,7 +602,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
         }
 
-        return fileSrc.getAbsolutePath();
+        return fileDest.getAbsolutePath();
 
     }
 
