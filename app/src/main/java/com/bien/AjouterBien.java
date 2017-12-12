@@ -209,15 +209,17 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         });
 
 
-        Log.e("AA","perm"+perm);
-
         Button buttonAjouterPhoto = (Button) findViewById(R.id.ajouterPhoto);
         buttonAjouterPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                verifierPermission(CHECK_PERM_PICTURE);
-                if (perm) {
-                    recupererPhoto();
+                if (nbPhoto <= 3) {
+                    verifierPermission(CHECK_PERM_PICTURE);
+                    if (perm) {
+                        recupererPhoto();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -269,7 +271,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                 recupererPhoto();
             }
         }
-        Log.e("AA","perm dans le override"+perm);
 
         if(!perm) {
             Toast.makeText(getContext(), "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
@@ -612,7 +613,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         if (fileSrc.exists()) {
             try {
                 if(type.equals("img")) {
-                    Log.e("a","compress");
                     copyAndCompress(fileSrc, fileDest);
                 } else {
                     copy(fileSrc,fileDest);
@@ -623,6 +623,9 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
         }
 
+        Log.e("SRC SIZE",""+fileSrc.length());
+        Log.e("DST SIZE",""+fileDest.length());
+
         return fileDest.getAbsolutePath();
 
     }
@@ -631,12 +634,12 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         Bitmap bmp = BitmapFactory.decodeFile(src.getAbsolutePath());
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 50, bos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 10, bos);
 
         try (InputStream in = new ByteArrayInputStream(bos.toByteArray())) {
             try (OutputStream out = new FileOutputStream(dst)) {
                 // Transfer bytes from in to out
-                byte[] buf = new byte[1024];
+                byte[] buf = new byte[2048];
                 int len;
                 while ((len = in.read(buf)) > 0) {
                     out.write(buf, 0, len);
@@ -650,7 +653,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         try (InputStream in = new FileInputStream(src)) {
             try (OutputStream out = new FileOutputStream(dst)) {
                 // Transfer bytes from in to out
-                byte[] buf = new byte[1024];
+                byte[] buf = new byte[2048];
                 int len;
                 while ((len = in.read(buf)) > 0) {
                     out.write(buf, 0, len);
