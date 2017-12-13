@@ -420,14 +420,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Bitmap icon6 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i6);
 
 */
-        Bien bien1 = new Bien(1,"Bien1 Chambre","19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6",null,null,null,null,3,"Lunette de marque Rayban","");
+     /*   Bien bien1 = new Bien(1,"Bien1 Chambre","19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6",null,null,null,null,3,"Lunette de marque Rayban","");
         Bien bien2 = new Bien(2,"Bien2 Cuisine","19/11/2017","23/11/2017","","","3599.99",null,null,null,null,1,"Samsung Family Hub","45DG425845DA");
         Bien bien3 = new Bien(3,"Bien 3 Salon","19/11/2017","01/12/2017","","Manque une touche","1099.99",null,null,null,null,2,"PC Portable Gamer de marque MSI","515D-TGH2336");
         Bien bien4 = new Bien(4,"Bien 4 Cuisine","20/11/2017","03/06/2017","","Vaisselle de Mémé","6902.30",null,null,null,null,1,"En porcelaine chinoise datée de 1640","");
         Bien bien5 = new Bien(5,"Bien 5 Cuisine","21/11/2017","19/05/2016","","","350",null,null,null,null,1,"Marque Kenwood","");
         Bien bien6 = new Bien(6,"Bien 6 Salon","21/11/2017","19/01/2017","","Une enceinte grésille un peu","400",null,null,null,null,2,"Marque Pioneer","");
 
-
+*/
 
         ArrayList<Integer> listeIdListe1_2 = new ArrayList<Integer>();
         listeIdListe1_2.add(1);
@@ -436,13 +436,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         listeIdListe1_3.add(1);
 
         bdao.open();
-
+/*
         bdao.addBien(bien1, listeIdListe1_2);
         bdao.addBien(bien2, listeIdListe1_2);
         bdao.addBien(bien3, listeIdListe1_2);
         bdao.addBien(bien4, listeIdListe1_3);
         bdao.addBien(bien5, listeIdListe1_3);
         bdao.addBien(bien6, listeIdListe1_3);
+
+        */
+Bien bien1 = null;
+        for (int i = 0; i < 5; i++) {
+
+
+            bien1 = new Bien(i,"Cuisine auto n 1."+i,"19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6",null,null,null,null,1,"Lunette de marque Rayban","");
+
+            bdao.addBien(bien1, listeIdListe1_3);
+        }
+
+        for (int i = 5; i < 11; i++) {
+            bien1 = new Bien(i,"Salon auto n 2."+i,"19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6",null,null,null,null,2,"Lunette de marque Rayban","");
+
+            bdao.addBien(bien1, listeIdListe1_3);
+
+        }
+
+        for (int i = 11; i < 16; i++) {
+            bien1 = new Bien(i,"Chambre auto n 3."+i,"19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6",null,null,null,null,3,"Lunette de marque Rayban","");
+
+            bdao.addBien(bien1, listeIdListe1_3);
+
+
+        }
 
 
         bdao.close();
