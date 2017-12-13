@@ -523,7 +523,8 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
         }
 
-        /*if (resultCode == RESULT_OK && request == SELECT_IMAGE) {
+        int numPhoto = getFirstNullPicture();
+        if (resultCode == RESULT_OK && request == SELECT_IMAGE) {
             String path = getRealPathFromUri(data.getData());
 
             ImageView imagePhotoPrincipale;
@@ -531,80 +532,86 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             ImageView imagePhoto2;
             ImageView imagePhoto3;
 
+
             if (path != null && !path.equals("")) {
-                switch (nbPhoto) {
+                switch (numPhoto) {
                     case 0:
                         //bitmapPrincipal = BitmapFactory.decodeFile(path);
                         String format = s.format(new Date());
-                        pathPhotoPrincipale = saveFile(path, format.toString(), "img");
+                        String pathPhotoPrincipale = saveFile(path, format.toString(), "img");
 
                         File imgFile = new File(pathPhotoPrincipale);
                         if (imgFile.exists()) {
                             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                             imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
                             imagePhotoPrincipale.setImageBitmap(myBitmap);
+                            bien.setPhoto_bien_principal(pathPhotoPrincipale);
 
                         }
 
-                        nbPhoto++;
                         break;
                     case 1:
 
                         format = s.format(new Date());
-                        pathPhoto1 = saveFile(path, format.toString(), "img");
+                        String pathPhoto1 = saveFile(path, format.toString(), "img");
 
                         imgFile = new File(pathPhoto1);
                         if (imgFile.exists()) {
                             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                             imagePhoto1 = (ImageView) findViewById(R.id.photo1);
                             imagePhoto1.setImageBitmap(myBitmap);
+                            bien.setPhoto_bien_miniature1(pathPhoto1);
+
 
                         }
-
-                        nbPhoto++;
 
                         break;
                     case 2:
                         format = s.format(new Date());
-                        pathPhoto2 = saveFile(path, format.toString(), "img");
+                        String pathPhoto2 = saveFile(path, format.toString(), "img");
 
                         imgFile = new File(pathPhoto2);
                         if (imgFile.exists()) {
                             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                             imagePhoto2 = (ImageView) findViewById(R.id.photo2);
                             imagePhoto2.setImageBitmap(myBitmap);
+                            bien.setPhoto_bien_miniature1(pathPhoto2);
 
                         }
-
-                        nbPhoto++;
 
                         break;
 
                     case 3:
 
                         format = s.format(new Date());
-                        pathPhoto3 = saveFile(path, format.toString(), "img");
+                        String pathPhoto3 = saveFile(path, format.toString(), "img");
 
                         imgFile = new File(pathPhoto3);
                         if (imgFile.exists()) {
                             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                             imagePhoto3 = (ImageView) findViewById(R.id.photo3);
                             imagePhoto3.setImageBitmap(myBitmap);
-
+                            bien.setPhoto_bien_miniature3(pathPhoto3);
                         }
 
-                        nbPhoto++;
 
-
-                        Button buttonAjouterPhoto = (Button) findViewById(R.id.ajouterPhoto);
-
-                        buttonAjouterPhoto.setOnClickListener(null);
+                        break;
+                    case 4:
+                        Toast.makeText(this, "Vous devez déjà supprimer une photo ! ", Toast.LENGTH_LONG).show();
 
                         break;
                 }
             }
         }
-     */
+    }
+
+
+
+    public void recupererPhoto(){
+
+        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, SELECT_IMAGE);
+
     }
 
     public String getRealPathFromUri(Uri contentUri) {
@@ -740,4 +747,25 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    public void modifierPhoto(View v){
+        verifierPermission(CHECK_PERM_PDF);
+        if (perm) {
+            recupererPhoto();
+        }
+    }
+
+
+    public int getFirstNullPicture(){
+        if (bien.getPhoto_bien_principal()!= null && !bien.getPhoto_bien_principal().equals("")){
+            return 0;
+        } else if (bien.getPhoto_bien_miniature1()!= null && !bien.getPhoto_bien_miniature1().equals("")){
+            return  1;
+        } else if (bien.getPhoto_bien_miniature2()!= null && !bien.getPhoto_bien_miniature2().equals("")){
+            return  2;
+        } else if (bien.getPhoto_bien_miniature3()!= null && !bien.getPhoto_bien_miniature3().equals("")) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
 }
