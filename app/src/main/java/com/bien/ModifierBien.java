@@ -525,8 +525,11 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             tv_pathPdf.setText("Facture choisie : " + name);
 
         }
+        Log.e("a","LOG");
 
         int numPhoto = getFirstNullPicture();
+        Log.e("a","LOG"+numPhoto);
+
         if (resultCode == RESULT_OK && request == SELECT_IMAGE) {
             String path = getRealPathFromUri(data.getData());
 
@@ -534,11 +537,13 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             ImageView imagePhoto1;
             ImageView imagePhoto2;
             ImageView imagePhoto3;
+            Log.e("a","LOG");
 
 
             if (path != null && !path.equals("")) {
                 switch (numPhoto) {
                     case 0:
+                        Log.e("a","LOG");
                         //bitmapPrincipal = BitmapFactory.decodeFile(path);
                         String format = s.format(new Date());
                         String pathPhotoPrincipale = saveFile(path, format.toString(), "img");
@@ -597,10 +602,6 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                             bien.setPhoto_bien_miniature3(pathPhoto3);
                         }
 
-
-                        break;
-                    case 4:
-                        Toast.makeText(this, "Vous devez déjà supprimer une photo ! ", Toast.LENGTH_LONG).show();
 
                         break;
                 }
@@ -740,7 +741,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         } else if (requestCode == CHECK_PERM_PICTURE){
             if (ContextCompat.checkSelfPermission(ModifierBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                 perm = true;
-                //recupererPhoto();
+                recupererPhoto();
             }
         }
 
@@ -752,20 +753,26 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     public void modifierPhoto(View v){
         verifierPermission(CHECK_PERM_PDF);
+        int numPhoto = getFirstNullPicture();
         if (perm) {
-            recupererPhoto();
+            if (numPhoto != 4) {
+                recupererPhoto();
+            } else {
+                Toast.makeText(this, "Vous devez déjà supprimer une photo ! ", Toast.LENGTH_LONG).show();
+
+            }
         }
     }
 
 
     public int getFirstNullPicture(){
-        if (bien.getPhoto_bien_principal()!= null && !bien.getPhoto_bien_principal().equals("")){
+        if (bien.getPhoto_bien_principal()== null || bien.getPhoto_bien_principal().equals("")){
             return 0;
-        } else if (bien.getPhoto_bien_miniature1()!= null && !bien.getPhoto_bien_miniature1().equals("")){
+        } else if (bien.getPhoto_bien_miniature1()== null || bien.getPhoto_bien_miniature1().equals("")){
             return  1;
-        } else if (bien.getPhoto_bien_miniature2()!= null && !bien.getPhoto_bien_miniature2().equals("")){
+        } else if (bien.getPhoto_bien_miniature2()== null || bien.getPhoto_bien_miniature2().equals("")){
             return  2;
-        } else if (bien.getPhoto_bien_miniature3()!= null && !bien.getPhoto_bien_miniature3().equals("")) {
+        } else if (bien.getPhoto_bien_miniature3()== null || bien.getPhoto_bien_miniature3().equals("")) {
             return 3;
         } else {
             return 4;

@@ -390,9 +390,9 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                         nbPhoto++;
 
 
-                        Button buttonAjouterPhoto = (Button) findViewById(R.id.ajouterPhoto);
+                        /* Button buttonAjouterPhoto = (Button) findViewById(R.id.ajouterPhoto);
 
-                        buttonAjouterPhoto.setOnClickListener(null);
+                        buttonAjouterPhoto.setOnClickListener(null); */
 
                         break;
                 }
