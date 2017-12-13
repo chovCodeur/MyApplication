@@ -320,11 +320,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myToolbar.setTitle(ldao.getNomListeById(idCurrentList));
         ldao.close();
 
-        // On détruit l'affichage courant
-        lv_listeBiens.destroyDrawingCache();
-        lv_listeBiens.setAdapter(null);
-        lv_listeBiens.setVisibility(ListView.INVISIBLE);
-        lv_listeBiens.setVisibility(ListView.VISIBLE);
         mAdapter = new BienAdapter(this);
         // ici clear de la liste des biens
         listeBiens.clear();
