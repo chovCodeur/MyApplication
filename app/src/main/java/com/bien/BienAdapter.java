@@ -162,7 +162,7 @@ public class BienAdapter extends BaseAdapter {
 
           if (str.length > 2 && str[2] != null && !str[2].equals("")){
                 Log.e("MiPA","Pour le bien "+str[0]+"L'image serait"+str[2]);
-
+/*
                 File imgFile = new File(str[2]);
                 if (imgFile.exists()) {
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -171,6 +171,7 @@ public class BienAdapter extends BaseAdapter {
 
             } else {
                 holder.imageView.setImageResource(R.drawable.no_image);
+                */
             }
 
 
