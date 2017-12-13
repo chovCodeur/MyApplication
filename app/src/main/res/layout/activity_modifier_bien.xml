@@ -181,7 +181,7 @@
                 android:layout_below="@+id/prix_bien"
                 android:layout_marginTop="6dp"
                 android:onClick="modifierPhoto"
-                android:text="Ajouter des photos" />
+                android:text="Rajouter des photos" />
 
             <Button
                 android:id="@+id/modifierFacture"
@@ -201,7 +201,7 @@
                 android:layout_below="@+id/modifierFacture"
                 android:layout_marginTop="6dp"
                 android:onClick="modifierBien"
-                android:text="Modifier le bien" />
+                android:text="Valider les modifications" />
 
             <TextView
                 android:id="@+id/pathPdf"
