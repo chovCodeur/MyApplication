@@ -159,7 +159,7 @@ public class BienAdapter extends BaseAdapter {
             }
 
             /* METHODE A CONSERVER ? RALENTI L'AFFICHAGE JE PENSE */
-          /*
+
           if (str.length > 2 && str[2] != null && !str[2].equals("")){
                 Log.e("MiPA","Pour le bien "+str[0]+"L'image serait"+str[2]);
 
@@ -173,7 +173,7 @@ public class BienAdapter extends BaseAdapter {
                 holder.imageView.setImageResource(R.drawable.no_image);
             }
 
-        */
+
         }
     }
 }
