@@ -646,7 +646,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             inputStream.close();
 
             // The new size we want to scale to
-            final int REQUIRED_SIZE=75;
+            final int REQUIRED_SIZE=30;
 
             // Find the correct scale value. It should be the power of 2.
             int scale = 1;

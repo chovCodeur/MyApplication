@@ -36,8 +36,7 @@ public class BienAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
 
     public BienAdapter(Context context) {
-        mInflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = context;
     }
 
@@ -83,19 +82,22 @@ public class BienAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
+
         ViewHolder holder = null;
         int rowType = getItemViewType(position);
 
+       // Log.e("MiPA", + position +  " type = " + rowType);
         if (convertView == null) {
-            //Log.d("MiPA","a"+mData.get(position));
             String[] str = mData.get(position).split("#~#");
             holder = new ViewHolder();
             switch (rowType) {
                 case TYPE_ITEM:
+
                     convertView = mInflater.inflate(R.layout.item_bien, null);
                     holder.imageView = (ImageView) convertView.findViewById(R.id.imageBien);
                     holder.textView = (TextView) convertView.findViewById(R.id.nomBien);
                     holder.textView2 = (TextView) convertView.findViewById(R.id.descriptionBien);
+/*
                     holder.textView.setText(str[0]);
                     if(str.length>1) {
                         holder.textView2.setText(str[1]);
@@ -113,6 +115,8 @@ public class BienAdapter extends BaseAdapter {
                             holder.imageView.setImageBitmap(myBitmap);
                         }
                     }
+*/
+
                     break;
                 case TYPE_SEPARATOR:
                     convertView = mInflater.inflate(R.layout.separator_bien, null);
@@ -125,6 +129,9 @@ public class BienAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        remplirAffichage(mData.get(position), holder);
+
+
         return convertView;
     }
 
@@ -134,4 +141,39 @@ public class BienAdapter extends BaseAdapter {
         public TextView textView2;
     }
 
+    public void remplirAffichage(String data, ViewHolder holder){
+
+        String[] str = data.split("#~#");
+
+        if (str[0].equals("CATEGORIE_CATEGORIE") && str.length > 1) {
+            holder.textView.setText(str[1]);
+        } else {
+            holder.textView.setText(str[0]);
+            if (str.length > 1 && str[1] != null && !str[1].equals("")){
+                Log.e("MiPA","Je vais mettre les commentaires de : "+ str[0]+" par : "+str[1]);
+                holder.textView2.setText(str[1]);
+            } else {
+                Log.e("MiPA","Je vais mettre les commentaires de : "+ str[0]+" par : chaine vide");
+                holder.textView2.setText("  ");
+
+            }
+
+            /* METHODE A CONSERVER ? RALENTI L'AFFICHAGE JE PENSE */
+          /*
+          if (str.length > 2 && str[2] != null && !str[2].equals("")){
+                Log.e("MiPA","Pour le bien "+str[0]+"L'image serait"+str[2]);
+
+                File imgFile = new File(str[2]);
+                if (imgFile.exists()) {
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    holder.imageView.setImageBitmap(myBitmap);
+                }
+
+            } else {
+                holder.imageView.setImageResource(R.drawable.no_image);
+            }
+
+        */
+        }
+    }
 }

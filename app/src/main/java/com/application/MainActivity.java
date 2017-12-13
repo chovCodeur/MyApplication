@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -121,7 +122,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //refreshAdapterView();
 
         Intent intent = new Intent(this, AjouterBien.class);
+
+        lv_listeBiens.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int mLastFirstVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+
+                if(mLastFirstVisibleItem<firstVisibleItem)
+                {
+                    //Log.e("SCROLLING DOWN","TRUE");
+                    mAdapter.notifyDataSetChanged();
+                }
+                if(mLastFirstVisibleItem>firstVisibleItem)
+                {
+                    //Log.e("SCROLLING UP","TRUE");
+                    mAdapter.notifyDataSetChanged();
+                }
+                mLastFirstVisibleItem=firstVisibleItem;
+
+            }
+        });
        // startActivity(intent);
+
+
 
     }
 
@@ -136,6 +166,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // on rafraichi simplement l'affichage
         refreshAdapterView();
+
+        runOnUiThread(new Runnable() {
+            public void run() {
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
     }
 
     @Override
@@ -279,7 +316,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void refreshAdapterView() {
-
         ldao.open();
         myToolbar.setTitle(ldao.getNomListeById(idCurrentList));
         ldao.close();
@@ -305,12 +341,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Log.e("idCurrentList-debugkt", String.valueOf(idCurrentList));
         //Log.e("listeBiens2-debugkt", String.valueOf(listeBiens));
         bdao.close();
-
+        String TAG = "DEBUG";
         if (!listeBiens.isEmpty()) {
             // On refait la bonne liste de correspondance
             cdao.open();
-            mAdapter.addSectionHeaderItem("Catégorie : " + cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
+            mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#Catégorie : " + cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
             listeHeader.put(0, listeBiens.get(0).getId_categorie_bien());
+            //Log.e(TAG, "LISTE HEADER"+listeHeader.toString());
+            //Log.e(TAG, "LISTE listeBiens"+listeBiens.toString());
 
             int cpt = 0;
             int idCat = 1;
@@ -327,15 +365,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     cdao.open();
                    // Log.e("header-debugkt", String.valueOf(idCat));
                     //Log.e("header2-debugkt", String.valueOf(listeBiens.get(i).getId_categorie_bien()));
-                    //Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien())));
-                    mAdapter.addSectionHeaderItem("Catégorie : " + cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
+                    Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien())));
+                    mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#Catégorie : " + cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
                     listeHeader.put(i + cpt, listeBiens.get(i).getId_categorie_bien());
                     cdao.close();
 
                 }
                 //Log.e("Biens-debugkt", String.valueOf(listeBiens.get(i)));
                 listCorrespondance.put(mAdapter.getCount(), Integer.valueOf(cpt));
-                item = listeBiens.get(i).getNom_bien() + "#~#" + listeBiens.get(i).getDescription_bien();
+                item = listeBiens.get(i).getNom_bien() + "#~#" + listeBiens.get(i).getDescription_bien()+"#~#"+listeBiens.get(i).getPhoto_bien_principal();
                 mAdapter.addItem(item);
                 idCat = listeBiens.get(i).getId_categorie_bien();
             }
@@ -406,27 +444,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         categorieDAO.addCategorie(chambre);
         categorieDAO.close();
 
-        //int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String facture_bien,
-        //String commentaire_bien, float prix_bien, Bitmap photo_bien_principal, Bitmap photo_bien_miniature1,
-         //       Bitmap photo_bien_miniature2, Bitmap photo_bien_miniature3, int id_categorie_bien, String description_bien, String numeroSerie_bien
 
-        /*
-        Bitmap icon1 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i1);
-        Bitmap icon2 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i2);
-        Bitmap icon3 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i3);
-        Bitmap icon4 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i4);
-        Bitmap icon5 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i5);
-        Bitmap icon6 = BitmapFactory.decodeResource(this.getResources(), R.drawable.i6);
+        Bien bien1 = new Bien(1,"Lunette","19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6",null,null,null,null,3,"Lunette de marque Rayban","");
+        Bien bien2 = new Bien(2,"Frigo","19/11/2017","23/11/2017","","","3599.99",null,null,null,null,1,"Samsung Family Hub","45DG425845DA");
+        Bien bien3 = new Bien(3,"Ordinateur","19/11/2017","01/12/2017","","Manque une touche","1099.99",null,null,null,null,2,"PC Portable Gamer de marque MSI","515D-TGH2336");
+        Bien bien4 = new Bien(4,"Vaisselle","20/11/2017","03/06/2017","","Vaisselle de Mémé","6902.30",null,null,null,null,1,"En porcelaine chinoise datée de 1640","");
+        Bien bien5 = new Bien(5,"TV","21/11/2017","19/05/2016","","","350",null,null,null,null,1,"Marque Kenwood","");
+        Bien bien6 = new Bien(6,"Home cinéma","21/11/2017","19/01/2017","","Une enceinte grésille un peu","400",null,null,null,null,2,"Marque Pioneer","");
 
-*/
-     /*   Bien bien1 = new Bien(1,"Bien1 Chambre","19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6",null,null,null,null,3,"Lunette de marque Rayban","");
-        Bien bien2 = new Bien(2,"Bien2 Cuisine","19/11/2017","23/11/2017","","","3599.99",null,null,null,null,1,"Samsung Family Hub","45DG425845DA");
-        Bien bien3 = new Bien(3,"Bien 3 Salon","19/11/2017","01/12/2017","","Manque une touche","1099.99",null,null,null,null,2,"PC Portable Gamer de marque MSI","515D-TGH2336");
-        Bien bien4 = new Bien(4,"Bien 4 Cuisine","20/11/2017","03/06/2017","","Vaisselle de Mémé","6902.30",null,null,null,null,1,"En porcelaine chinoise datée de 1640","");
-        Bien bien5 = new Bien(5,"Bien 5 Cuisine","21/11/2017","19/05/2016","","","350",null,null,null,null,1,"Marque Kenwood","");
-        Bien bien6 = new Bien(6,"Bien 6 Salon","21/11/2017","19/01/2017","","Une enceinte grésille un peu","400",null,null,null,null,2,"Marque Pioneer","");
 
-*/
 
         ArrayList<Integer> listeIdListe1_2 = new ArrayList<Integer>();
         listeIdListe1_2.add(1);
@@ -435,7 +461,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         listeIdListe1_3.add(1);
 
         bdao.open();
-/*
+
         bdao.addBien(bien1, listeIdListe1_2);
         bdao.addBien(bien2, listeIdListe1_2);
         bdao.addBien(bien3, listeIdListe1_2);
@@ -443,7 +469,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bdao.addBien(bien5, listeIdListe1_3);
         bdao.addBien(bien6, listeIdListe1_3);
 
-        */
+        /*
 Bien bien1 = null;
         for (int i = 0; i < 5; i++) {
 
@@ -467,7 +493,7 @@ Bien bien1 = null;
 
 
         }
-
+*/
 
         bdao.close();
     }
