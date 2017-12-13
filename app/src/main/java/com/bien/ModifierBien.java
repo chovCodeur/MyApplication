@@ -500,7 +500,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     public void recupererFacture() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.setType("*/*");
+        intent.setType("application/pdf");
         startActivityForResult(intent, SELECT_PDF);
 
     }
@@ -528,15 +528,15 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         Log.e("a","LOG");
 
         int numPhoto = getFirstNullPicture();
-        Log.e("a","LOG"+numPhoto);
+        Log.e("a","LOG ON VA MODIFIER "+numPhoto);
 
         if (resultCode == RESULT_OK && request == SELECT_IMAGE) {
             String path = getRealPathFromUri(data.getData());
 
-            ImageView imagePhotoPrincipale;
-            ImageView imagePhoto1;
-            ImageView imagePhoto2;
-            ImageView imagePhoto3;
+            final ImageView imagePhotoPrincipale;
+            final ImageView imagePhoto1;
+            final ImageView imagePhoto2;
+            final ImageView imagePhoto3;
             Log.e("a","LOG");
 
 
@@ -548,12 +548,19 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                         String format = s.format(new Date());
                         String pathPhotoPrincipale = saveFile(path, format.toString(), "img");
 
-                        File imgFile = new File(pathPhotoPrincipale);
+                        final File imgFile = new File(pathPhotoPrincipale);
                         if (imgFile.exists()) {
                             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                             imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
                             imagePhotoPrincipale.setImageBitmap(myBitmap);
                             bien.setPhoto_bien_principal(pathPhotoPrincipale);
+                            imagePhotoPrincipale.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    supprimerPhoto(imgFile, imagePhotoPrincipale);
+                                }
+                            });
+
 
                         }
 
@@ -563,13 +570,18 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                         format = s.format(new Date());
                         String pathPhoto1 = saveFile(path, format.toString(), "img");
 
-                        imgFile = new File(pathPhoto1);
-                        if (imgFile.exists()) {
-                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        final File imgFileMiniature1 = new File(pathPhoto1);
+                        if (imgFileMiniature1.exists()) {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFileMiniature1.getAbsolutePath());
                             imagePhoto1 = (ImageView) findViewById(R.id.photo1);
                             imagePhoto1.setImageBitmap(myBitmap);
                             bien.setPhoto_bien_miniature1(pathPhoto1);
-
+                            imagePhoto1.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    supprimerPhoto(imgFileMiniature1, imagePhoto1);
+                                }
+                            });
 
                         }
 
@@ -578,13 +590,18 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                         format = s.format(new Date());
                         String pathPhoto2 = saveFile(path, format.toString(), "img");
 
-                        imgFile = new File(pathPhoto2);
-                        if (imgFile.exists()) {
-                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        final File imgFileMiniature2 = new File(pathPhoto2);
+                        if (imgFileMiniature2.exists()) {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFileMiniature2.getAbsolutePath());
                             imagePhoto2 = (ImageView) findViewById(R.id.photo2);
                             imagePhoto2.setImageBitmap(myBitmap);
-                            bien.setPhoto_bien_miniature1(pathPhoto2);
-
+                            bien.setPhoto_bien_miniature2(pathPhoto2);
+                            imagePhoto2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    supprimerPhoto(imgFileMiniature2, imagePhoto2);
+                                }
+                            });
                         }
 
                         break;
@@ -594,14 +611,19 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                         format = s.format(new Date());
                         String pathPhoto3 = saveFile(path, format.toString(), "img");
 
-                        imgFile = new File(pathPhoto3);
-                        if (imgFile.exists()) {
-                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        final File imgFileMiniature3 = new File(pathPhoto3);
+                        if (imgFileMiniature3.exists()) {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFileMiniature3.getAbsolutePath());
                             imagePhoto3 = (ImageView) findViewById(R.id.photo3);
                             imagePhoto3.setImageBitmap(myBitmap);
                             bien.setPhoto_bien_miniature3(pathPhoto3);
+                            imagePhoto3.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    supprimerPhoto(imgFileMiniature3, imagePhoto3);
+                                }
+                            });
                         }
-
 
                         break;
                 }
@@ -685,7 +707,8 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         if (fileSrc.exists()) {
             try {
                 if(type.equals("img")) {
-                    copyAndCompress(fileSrc, fileDest);
+                    copy(fileSrc,fileDest);
+                    compressImage(fileDest);
                 } else {
                     copy(fileSrc,fileDest);
                 }
@@ -695,11 +718,11 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             }
         }
 
-        return fileSrc.getAbsolutePath();
+        return fileDest.getAbsolutePath();
 
     }
 
-    public static void copyAndCompress(File src, File dst) throws IOException {
+   /* public static void copyAndCompress(File src, File dst) throws IOException {
 
         Bitmap bmp = BitmapFactory.decodeFile(src.getAbsolutePath());
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -715,7 +738,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 }
             }
         }
-    }
+    } */
 
     public static void copy(File src, File dst) throws IOException {
 
@@ -776,6 +799,96 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             return 3;
         } else {
             return 4;
+        }
+    }
+    /*
+
+    public int getFirstNotNullPicture(){
+        if (bien.getPhoto_bien_principal()!= null && !bien.getPhoto_bien_principal().equals("")){
+            return 0;
+        } else if (bien.getPhoto_bien_miniature1()!= null && !bien.getPhoto_bien_miniature1().equals("")){
+            return  1;
+        } else if (bien.getPhoto_bien_miniature2()!= null && !bien.getPhoto_bien_miniature2().equals("")){
+            return  2;
+        } else if (bien.getPhoto_bien_miniature3()!= null && ! bien.getPhoto_bien_miniature3().equals("")) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+
+    public void rangerPhoto(){
+        int premierVide = getFirstNullPicture();
+        int premiereNonVide = getFirstNotNullPicture();
+
+        if (premierVide != 4 && premiereNonVide != 4){
+            switch (premierVide){
+                case 0:
+                    echangerPhotoEnbase(0, premiereNonVide);
+                    break;
+
+                case 1:
+                    echangerPhotoEnbase(1, premiereNonVide);
+
+                    break;
+
+                case 2:
+                    break;
+
+                case 3:
+                    break;
+
+            }
+        }
+    }
+
+    public void echangerPhotoEnbase(int vide, int aDeplacer){
+
+    }
+    */
+
+
+    public File compressImage(File file){
+        try {
+
+            // BitmapFactory options to downsize the image
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            o.inSampleSize = 6;
+            // factor of downsizing the image
+
+            FileInputStream inputStream = new FileInputStream(file);
+            //Bitmap selectedBitmap = null;
+            BitmapFactory.decodeStream(inputStream, null, o);
+            inputStream.close();
+
+            // The new size we want to scale to
+            final int REQUIRED_SIZE=75;
+
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while(o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
+                scale *= 2;
+            }
+
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            inputStream = new FileInputStream(file);
+
+            Bitmap selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2);
+            inputStream.close();
+
+            // here i override the original image file
+            file.createNewFile();
+            FileOutputStream outputStream = new FileOutputStream(file);
+            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , outputStream);
+            outputStream.flush();
+            outputStream.close();
+
+            return file;
+        } catch (Exception e) {
+            return null;
         }
     }
 }

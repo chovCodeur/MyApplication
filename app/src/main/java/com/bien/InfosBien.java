@@ -182,12 +182,13 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                     }
                 });
 
+                Bitmap myBitmap;
                 // Mise à jour des 3 miniatures d'images
                 photoMini1 = (ImageButton) findViewById(R.id.Photo1Bien);
                 if(bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_miniature1());
                     if (imgFile.exists()) {
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         photoMini1.setImageBitmap(myBitmap);
                     }
                 } else {
@@ -198,7 +199,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 if(bien.getPhoto_bien_miniature2() != null && !bien.getPhoto_bien_miniature2().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_miniature2());
                     if (imgFile.exists()) {
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         photoMini2.setImageBitmap(myBitmap);
                     }
                 } else {
@@ -209,7 +210,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 if(bien.getPhoto_bien_miniature3() != null && !bien.getPhoto_bien_miniature3().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_miniature3());
                     if (imgFile.exists()) {
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         photoMini3.setImageBitmap(myBitmap);
                     }
                 } else {
@@ -234,7 +235,12 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
                 // Mise à jour prix du bien
                 prix = (TextView) findViewById(R.id.prixBien);
-                prix.setText("Prix du bien : "+bien.getPrix_bien()+"€");
+                if (bien.getPrix_bien().equals("") || bien.getPrix_bien() == null) {
+                    prix.setText("Prix du bien : ");
+                } else {
+                    prix.setText("Prix du bien : " + bien.getPrix_bien() + "€");
+
+                }
 
                 // Mise à jour numéro de série du bien
                 numeroSerie = (TextView) findViewById(R.id.numeroSerieBien);
@@ -251,6 +257,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                     public void onClick(View view) {
                         if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
                             File file = new File(bien.getPhoto_bien_principal());
+                            Log.e("DEV","PRINC"+file.length());
                             zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
                         }
                     }
@@ -262,6 +269,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                     public void onClick(View view) {
                         if(bien.getPhoto_bien_miniature1() != null  && !bien.getPhoto_bien_miniature1().equals("")) {
                             File file = new File(bien.getPhoto_bien_miniature1());
+                            Log.e("DEV","PETIT1"+file.length());
                             zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
                         }
                     }

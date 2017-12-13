@@ -79,11 +79,11 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     private Menu m;
 
-    private String pathPdf;
-    private String pathPhotoPrincipale;
-    private String pathPhoto1;
-    private String pathPhoto2;
-    private String pathPhoto3;
+    private String pathPdf = "";
+    private String pathPhotoPrincipale = "";
+    private String pathPhoto1 = "";
+    private String pathPhoto2 = "";
+    private String pathPhoto3 = "";
     private DatePickerDialog datePickerDialog;
 
     private ArrayList<Integer> listeIdListe = new ArrayList<Integer>();
@@ -532,7 +532,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         if (!erreurSaisie) {
 
             //descriptionBien = "En attendant CTRL keke desc";
-            commentaireBien = "En attendant CTRL keke com";
+            //commentaireBien = "En attendant CTRL keke com";
 
             Bien bien = new Bien(0,
                     nomBien,
@@ -613,7 +613,10 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         if (fileSrc.exists()) {
             try {
                 if(type.equals("img")) {
-                    copyAndCompress(fileSrc, fileDest);
+                    //copyAndCompress(fileSrc, fileDest);
+                    copy(fileSrc,fileDest);
+                    compressImage(fileDest);
+
                 } else {
                     copy(fileSrc,fileDest);
                 }
@@ -623,31 +626,54 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
         }
 
-        Log.e("SRC SIZE",""+fileSrc.length());
-        Log.e("DST SIZE",""+fileDest.length());
 
         return fileDest.getAbsolutePath();
 
     }
 
-    public static void copyAndCompress(File src, File dst) throws IOException {
+    public File compressImage(File file){
+        try {
 
-        Bitmap bmp = BitmapFactory.decodeFile(src.getAbsolutePath());
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 10, bos);
+            // BitmapFactory options to downsize the image
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            o.inSampleSize = 6;
+            // factor of downsizing the image
 
-        try (InputStream in = new ByteArrayInputStream(bos.toByteArray())) {
-            try (OutputStream out = new FileOutputStream(dst)) {
-                // Transfer bytes from in to out
-                byte[] buf = new byte[2048];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
+            FileInputStream inputStream = new FileInputStream(file);
+            //Bitmap selectedBitmap = null;
+            BitmapFactory.decodeStream(inputStream, null, o);
+            inputStream.close();
+
+            // The new size we want to scale to
+            final int REQUIRED_SIZE=75;
+
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while(o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
+                scale *= 2;
             }
+
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            inputStream = new FileInputStream(file);
+
+            Bitmap selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2);
+            inputStream.close();
+
+            // here i override the original image file
+            file.createNewFile();
+            FileOutputStream outputStream = new FileOutputStream(file);
+            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , outputStream);
+            outputStream.flush();
+            outputStream.close();
+
+            return file;
+        } catch (Exception e) {
+            return null;
         }
     }
-
     public static void copy(File src, File dst) throws IOException {
 
         try (InputStream in = new FileInputStream(src)) {
@@ -658,13 +684,15 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                 while ((len = in.read(buf)) > 0) {
                     out.write(buf, 0, len);
                 }
+                out.flush();
+                out.close();
             }
         }
     }
 
     public void recupererFacture() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.setType("*/*");
+        intent.setType("application/pdf");
         startActivityForResult(intent, SELECT_PDF);
 
     }

@@ -126,6 +126,27 @@ public class CategorieDAO {
         return liste;
     }
 
+    public ArrayList<Categorie> getCategoriesByIdListe(int idListe){
+        ArrayList<Categorie> liste = new ArrayList<Categorie>();
+
+        // DEVELOPPE MAIS JAMAIS UTILSEE. A VERIFIER PAR @TLS
+        Cursor curseurCategorie = db.rawQuery("SELECT DISTINCT " + ID + ", " + NOM + ", "+ DESCRIPTION+"FROM "+TABLE_NAME +" JOIN BIEN ON BIEN.id_categorie = CATEGORIE.id_categorie JOIN APPARTIENT ON APPARTIENT.id_categorie = BIEN.id_categorie WHERE id_liste = "+idListe, null);
+
+        Categorie categorie;
+        if (curseurCategorie.moveToFirst()) {
+            do {
+                categorie = new Categorie(
+                        curseurCategorie.getInt(curseurCategorie.getColumnIndex(ID)),
+                        curseurCategorie.getString(curseurCategorie.getColumnIndex(NOM)),
+                        curseurCategorie.getString(curseurCategorie.getColumnIndex(DESCRIPTION))
+                );
+
+                liste.add(categorie);
+            } while (curseurCategorie.moveToNext());
+        }
+        curseurCategorie.close();
+        return liste;
+    }
     /**
      * Méthode permettant l'ouverture de la table en lecture/ecriture
      */
