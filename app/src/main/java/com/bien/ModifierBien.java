@@ -525,10 +525,8 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             tv_pathPdf.setText("Facture choisie : " + name);
 
         }
-        Log.e("a","LOG");
 
         int numPhoto = getFirstNullPicture();
-        Log.e("a","LOG ON VA MODIFIER "+numPhoto);
 
         if (resultCode == RESULT_OK && request == SELECT_IMAGE) {
             String path = getRealPathFromUri(data.getData());
@@ -537,13 +535,11 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             final ImageView imagePhoto1;
             final ImageView imagePhoto2;
             final ImageView imagePhoto3;
-            Log.e("a","LOG");
 
 
             if (path != null && !path.equals("")) {
                 switch (numPhoto) {
                     case 0:
-                        Log.e("a","LOG");
                         //bitmapPrincipal = BitmapFactory.decodeFile(path);
                         String format = s.format(new Date());
                         String pathPhotoPrincipale = saveFile(path, format.toString(), "img");

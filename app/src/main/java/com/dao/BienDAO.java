@@ -160,7 +160,6 @@ public class BienDAO {
         String img="";
 
         Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+NOM+"=\""+nom+"\"", null);
-        Log.e("A=","SELECT * FROM "+TABLE_NAME+" WHERE "+NOM+"=\""+nom+"\"");
         if (c.moveToFirst()) {
             img = c.getString(c.getColumnIndex(PHOTO_PRINCIPALE));
             c.close();

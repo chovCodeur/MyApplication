@@ -43,17 +43,17 @@ public class BienAdapter extends BaseAdapter {
 
     public void addItem(final String item) {
         mData.add(item);
-        Log.e("adapter1.1-debugkt",item);
-        Log.e("adapter1.2-debugkt",String.valueOf(mData));
+       // Log.e("adapter1.1-debugkt",item);
+        //Log.e("adapter1.2-debugkt",String.valueOf(mData));
         notifyDataSetChanged();
     }
 
     public void addSectionHeaderItem(final String item) {
         mData.add(item);
-        Log.e("adapter2.1-debugkt",item);
-        Log.e("adapter2.2-debugkt",String.valueOf(mData));
+        //Log.e("adapter2.1-debugkt",item);
+        //Log.e("adapter2.2-debugkt",String.valueOf(mData));
         sectionHeader.add(mData.size() - 1);
-        Log.e("adapter2.3-debugkt",String.valueOf(sectionHeader));
+        //Log.e("adapter2.3-debugkt",String.valueOf(sectionHeader));
         notifyDataSetChanged();
     }
 
@@ -87,7 +87,7 @@ public class BienAdapter extends BaseAdapter {
         int rowType = getItemViewType(position);
 
         if (convertView == null) {
-            Log.d("MiPA","a"+mData.get(position));
+            //Log.d("MiPA","a"+mData.get(position));
             String[] str = mData.get(position).split("#~#");
             holder = new ViewHolder();
             switch (rowType) {
@@ -103,12 +103,12 @@ public class BienAdapter extends BaseAdapter {
                     BienDAO bdao=new BienDAO(context);
                     bdao.open();
                     String img = bdao.getImageBienByNom(str[0]);
-                    Log.e("aa",str[0]);
+                   // Log.e("aa",str[0]);
                     bdao.close();
                     if(img != null && !img.equals("")) {
                         File imgFile = new File(img);
                         if (imgFile.exists()) {
-                            Log.e("aa", "dans le if");
+                            //Log.e("aa", "dans le if");
                             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                             holder.imageView.setImageBitmap(myBitmap);
                         }

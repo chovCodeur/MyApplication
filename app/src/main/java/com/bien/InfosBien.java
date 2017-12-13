@@ -112,7 +112,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
             if(id != 0) {
                 bdao.open();
                 bien = bdao.getBien(id);
-                Log.e("AA","aa"+bien.toString());
+                //Log.e("AA","aa"+bien.toString());
 
                 // récupérer les id des listes d'appartenance du bien dans la table Appartient
                 idlistes = bdao.getAllIdListeByIdBien(bien.getId_bien());
@@ -257,7 +257,6 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                     public void onClick(View view) {
                         if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
                             File file = new File(bien.getPhoto_bien_principal());
-                            Log.e("DEV","PRINC"+file.length());
                             zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
                         }
                     }
@@ -269,7 +268,6 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                     public void onClick(View view) {
                         if(bien.getPhoto_bien_miniature1() != null  && !bien.getPhoto_bien_miniature1().equals("")) {
                             File file = new File(bien.getPhoto_bien_miniature1());
-                            Log.e("DEV","PETIT1"+file.length());
                             zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
                         }
                     }

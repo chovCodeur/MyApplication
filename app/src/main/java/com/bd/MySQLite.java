@@ -72,7 +72,6 @@ public class MySQLite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.e("creation base", "MiPas");
         String CREATE_TABLE_LISTE = "CREATE TABLE " + TABLE_LISTE + "("
                 + KEY_ID_LISTE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_LIBELLE + " TEXT, " + KEY_COMMENTAIRE + " TEXT )";
         db.execSQL(CREATE_TABLE_LISTE);

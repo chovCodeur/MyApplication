@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         bdao.open();
         if(bdao.compterBienEnBase()<=0){
-            Log.e("MiPa","On rempli la base");
             remplirBeDeForTest();
         }
 
@@ -316,9 +315,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             int cpt = 0;
             int idCat = 1;
             String item = null;
-            Log.e("header-debugkt", String.valueOf(idCat));
-            Log.e("header2-debugkt", String.valueOf(listeBiens.get(0).getId_categorie_bien()));
-            Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien())));
+            //Log.e("header-debugkt", String.valueOf(idCat));
+            //Log.e("header2-debugkt", String.valueOf(listeBiens.get(0).getId_categorie_bien()));
+            //Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien())));
             cdao.close();
             //Log.e("size-debugkt", String.valueOf(listeBiens.size()));
             for (int i = 0; i < listeBiens.size(); i++) {
@@ -326,30 +325,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (idCat != listeBiens.get(i).getId_categorie_bien()) {
                     cpt++;
                     cdao.open();
-                    Log.e("header-debugkt", String.valueOf(idCat));
-                    Log.e("header2-debugkt", String.valueOf(listeBiens.get(i).getId_categorie_bien()));
-                    Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien())));
+                   // Log.e("header-debugkt", String.valueOf(idCat));
+                    //Log.e("header2-debugkt", String.valueOf(listeBiens.get(i).getId_categorie_bien()));
+                    //Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien())));
                     mAdapter.addSectionHeaderItem("Catégorie : " + cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
                     listeHeader.put(i + cpt, listeBiens.get(i).getId_categorie_bien());
                     cdao.close();
 
                 }
-                Log.e("Biens-debugkt", String.valueOf(listeBiens.get(i)));
+                //Log.e("Biens-debugkt", String.valueOf(listeBiens.get(i)));
                 listCorrespondance.put(mAdapter.getCount(), Integer.valueOf(cpt));
                 item = listeBiens.get(i).getNom_bien() + "#~#" + listeBiens.get(i).getDescription_bien();
                 mAdapter.addItem(item);
                 idCat = listeBiens.get(i).getId_categorie_bien();
             }
             //listCorrespondance.remove(1);
-            Log.d("liste", listCorrespondance.toString());
-            Log.d("header", listeHeader.toString());
+            //Log.d("liste", listCorrespondance.toString());
+            //Log.d("header", listeHeader.toString());
             lv_listeBiens.setAdapter(mAdapter);
             lv_listeBiens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (listeHeader.containsKey(position)) {
                         Intent i = new Intent(getApplicationContext(), ModifierCategorie.class);
-                        Log.e("idcat-debugkt", String.valueOf(listeHeader.get(position)));
+                        //Log.e("idcat-debugkt", String.valueOf(listeHeader.get(position)));
                         i.putExtra("IDCATEGORIE", listeHeader.get(position));
                         startActivity(i);
                     } else {
@@ -374,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         //ExportListe exportListe = new ExportListe();
         //exportListe.exportDB(getApplicationContext());
-        Log.d("TEST", "Coucou du bouton 2");
+        //Log.d("TEST", "Coucou du bouton 2");
     }
 
     public void modifierPersonne(View v) {
