@@ -85,6 +85,7 @@ public class AjouterCategorie extends AppCompatActivity {
             categorieDAO.addCategorie(categorie);
             categorieDAO.close();
 
+            Toast.makeText(this,"La catégorie "+nomCategorie+" a bien été ajoutée",Toast.LENGTH_SHORT).show();
             finish();
         }
     }

@@ -121,38 +121,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //refreshAdapterView();
 
-        Intent intent = new Intent(this, AjouterBien.class);
-
-        lv_listeBiens.setOnScrollListener(new AbsListView.OnScrollListener() {
-            private int mLastFirstVisibleItem;
-
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-
-                if(mLastFirstVisibleItem<firstVisibleItem)
-                {
-                    //Log.e("SCROLLING DOWN","TRUE");
-                    mAdapter.notifyDataSetChanged();
-                }
-                if(mLastFirstVisibleItem>firstVisibleItem)
-                {
-                    //Log.e("SCROLLING UP","TRUE");
-                    mAdapter.notifyDataSetChanged();
-                }
-                mLastFirstVisibleItem=firstVisibleItem;
-
-            }
-        });
-       // startActivity(intent);
-
-
-
     }
 
     @Override
@@ -166,12 +134,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // on rafraichi simplement l'affichage
         refreshAdapterView();
-
-        runOnUiThread(new Runnable() {
-            public void run() {
-                mAdapter.notifyDataSetChanged();
-            }
-        });
 
     }
 
@@ -322,6 +284,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mAdapter = new BienAdapter(this);
         // ici clear de la liste des biens
+        lv_listeBiens.destroyDrawingCache();
+        lv_listeBiens.setAdapter(null);
+        lv_listeBiens.setVisibility(ListView.INVISIBLE);
+        lv_listeBiens.setVisibility(ListView.VISIBLE);
+
         listeBiens.clear();
         listCorrespondance.clear();
         listeHeader.clear();
