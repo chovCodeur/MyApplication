@@ -50,6 +50,7 @@
                 android:layout_alignParentEnd="true"
                 android:ems="10"
                 android:hint="Nom"
+                android:maxLength="40"
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true" />
 
@@ -124,6 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:maxLength="10"
                 android:layout_below="@+id/checkListe1"
                 android:layout_marginTop="6dp"
                 android:ems="10"
@@ -133,6 +135,7 @@
             <EditText
                 android:id="@+id/description_bien"
                 android:layout_width="match_parent"
+                android:maxLength="100"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/date_achat_bien"
@@ -143,6 +146,7 @@
 
             <EditText
                 android:id="@+id/commentaire_bien"
+                android:maxLength="100"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -153,6 +157,7 @@
 
             <EditText
                 android:id="@+id/numero_serie"
+                android:maxLength="100"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

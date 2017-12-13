@@ -90,6 +90,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private CheckedTextView ctvliste1=null;
     private CheckedTextView ctvliste2=null;
     private CheckedTextView ctvliste3=null;
+    private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
     private DatePickerDialog datePickerDialog;
 
     @Override
@@ -117,7 +118,13 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     datePickerDialog = new DatePickerDialog(ModifierBien.this, new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            dateAchat.setText(dayOfMonth + "/" +(month + 1) + "/" + year);
+                            String day ;
+                            if(dayOfMonth <10){
+                                day = "0"+dayOfMonth;
+                            } else {
+                                day = String.valueOf(dayOfMonth);
+                            }
+                            dateAchat.setText(day + "/" +(month + 1) + "/" + year);
                         }
                     }, mYear, mMonth, mDay);
                     datePickerDialog.show();
@@ -319,51 +326,64 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void modifierBien(View v) {
+        Boolean erreurSaisieDate = false;
+        String dateAchatSaisie = dateAchat.getText().toString();
+        Log.e("date",dateAchatSaisie);
+        if (dateAchatSaisie != null && !dateAchatSaisie.equals("")) {
+            if (!dateAchatSaisie.matches(regexDate)){
+                Toast.makeText(this, "La date doit être au format jj/mm/aaaa", Toast.LENGTH_SHORT).show();
+                erreurSaisieDate = true;
+            }
+
+        }
         if(!nomBien.getText().toString().equals("")) {
-            idCategorieSelectionne = categorieSelectionne.getId_Categorie();
-            bdao.open();
-            Bien updateBien = new Bien(bien.getId_bien(), nomBien.getText().toString(), dateSaisie, bien.getDate_achat_bien(), bien.getFacture_bien(),
-                    commentaireBien.getText().toString(), prixBien.getText().toString(), bien.getPhoto_bien_principal(), bien.getPhoto_bien_miniature1(),
-                    bien.getPhoto_bien_miniature2(), bien.getPhoto_bien_miniature3(), idCategorieSelectionne, descriptionBien.getText().toString(), numeroSerie.getText().toString());
-            bdao.modBien(updateBien);
+            if (!erreurSaisieDate) {
+                idCategorieSelectionne = categorieSelectionne.getId_Categorie();
+                bdao.open();
 
-            if (ctvliste1.isChecked()) {
-                idNouvListes.add(1);
-            }
-            if (ctvliste2.isChecked()) {
-                idNouvListes.add(2);
-            }
-            if (ctvliste3.isChecked()) {
-                idNouvListes.add(3);
-            }
+                Bien updateBien = new Bien(bien.getId_bien(), nomBien.getText().toString(), dateSaisie, dateAchatSaisie, bien.getFacture_bien(),
+                        commentaireBien.getText().toString(), prixBien.getText().toString(), bien.getPhoto_bien_principal(), bien.getPhoto_bien_miniature1(),
+                        bien.getPhoto_bien_miniature2(), bien.getPhoto_bien_miniature3(), idCategorieSelectionne, descriptionBien.getText().toString(), numeroSerie.getText().toString());
+                bdao.modBien(updateBien);
 
-            for (int i = 0; i < idPrevListes.size(); i++) {
-                if (idPrevListes.get(i) == 1) {
-                    bdao.supprimerListeAppartenance(bien.getId_bien(), 1);
+                if (ctvliste1.isChecked()) {
+                    idNouvListes.add(1);
                 }
-                if (idPrevListes.get(i) == 2) {
-                    bdao.supprimerListeAppartenance(bien.getId_bien(), 2);
+                if (ctvliste2.isChecked()) {
+                    idNouvListes.add(2);
                 }
-                if (idPrevListes.get(i) == 3) {
-                    bdao.supprimerListeAppartenance(bien.getId_bien(), 3);
+                if (ctvliste3.isChecked()) {
+                    idNouvListes.add(3);
                 }
+
+                for (int i = 0; i < idPrevListes.size(); i++) {
+                    if (idPrevListes.get(i) == 1) {
+                        bdao.supprimerListeAppartenance(bien.getId_bien(), 1);
+                    }
+                    if (idPrevListes.get(i) == 2) {
+                        bdao.supprimerListeAppartenance(bien.getId_bien(), 2);
+                    }
+                    if (idPrevListes.get(i) == 3) {
+                        bdao.supprimerListeAppartenance(bien.getId_bien(), 3);
+                    }
+                }
+
+                for (int i = 0; i < idNouvListes.size(); i++) {
+                    if (idNouvListes.get(i) == 1) {
+                        bdao.addInAppartient(bien.getId_bien(), 1);
+                    }
+                    if (idNouvListes.get(i) == 2) {
+                        bdao.addInAppartient(bien.getId_bien(), 2);
+                    }
+                    if (idNouvListes.get(i) == 3) {
+                        bdao.addInAppartient(bien.getId_bien(), 3);
+                    }
+                }
+
+                bdao.close();
+
+                finish();
             }
-
-            for (int i = 0; i < idNouvListes.size(); i++) {
-                if (idNouvListes.get(i) == 1) {
-                    bdao.addInAppartient(bien.getId_bien(), 1);
-                }
-                if (idNouvListes.get(i) == 2) {
-                    bdao.addInAppartient(bien.getId_bien(), 2);
-                }
-                if (idNouvListes.get(i) == 3) {
-                    bdao.addInAppartient(bien.getId_bien(), 3);
-                }
-            }
-
-            bdao.close();
-
-            finish();
         } else {
             Toast toast = Toast.makeText(this, "Votre bien doit avoir un nom", Toast.LENGTH_LONG);
             toast.show();
@@ -857,7 +877,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             inputStream.close();
 
             // The new size we want to scale to
-            final int REQUIRED_SIZE=20;
+            final int REQUIRED_SIZE=50;
 
             // Find the correct scale value. It should be the power of 2.
             int scale = 1;
@@ -876,7 +896,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             // here i override the original image file
             file.createNewFile();
             FileOutputStream outputStream = new FileOutputStream(file);
-            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 70 , outputStream);
+            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 80 , outputStream);
             outputStream.flush();
             outputStream.close();
 

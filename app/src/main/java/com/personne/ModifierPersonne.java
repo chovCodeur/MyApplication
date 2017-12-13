@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,7 +29,8 @@ public class ModifierPersonne extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Menu m;
     private TextView textViewDate;
-
+    private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
+    private Boolean dejaEnBase = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,33 @@ public class ModifierPersonne extends AppCompatActivity {
         myToolbar.setTitle("Informations du compte");
         setSupportActionBar(myToolbar);
 
-        textViewDate =(TextView) findViewById(R.id.editTextDate);
+        PersonneDAO personneDAO = new PersonneDAO(this);
+        personneDAO.open();
+        Personne per = personneDAO.getPersonne(1);
+        personneDAO.close();
+
+        if (per!=null){
+            dejaEnBase = true;
+        }
+
+        Log.e("per",per.toString());
+
+
+        TextView textViewNomPersonne = (TextView) findViewById(R.id.editNom);
+        TextView textViewPrenomPersonne = (TextView) findViewById(R.id.editPrenom);
+        TextView textViewAddress =(TextView) findViewById(R.id.editAdress);
+        TextView textViewEmail = (TextView) findViewById(R.id.editEmail);
+        TextView textViewPhoneNumber = (TextView) findViewById(R.id.editPhon_Number);
+        textViewDate = (TextView) findViewById(R.id.editTextDate);
+
+        textViewDate.setText(per.getDate());
+        textViewNomPersonne.setText(per.getNom());
+        textViewPrenomPersonne.setText(per.getPrenom());
+        textViewAddress.setText(per.getAddress());
+        textViewEmail.setText(per.getMail());
+        Log.e("aa","phone"+per.getPhoneNumber());
+        textViewPhoneNumber.setText(per.getPhoneNumber());
+
         textViewDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +78,13 @@ public class ModifierPersonne extends AppCompatActivity {
                 datePickerDialog = new DatePickerDialog(ModifierPersonne.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        textViewDate.setText(dayOfMonth + "/" +(month + 1) + "/" + year);
+                        String day ;
+                        if(dayOfMonth <10){
+                            day = "0"+dayOfMonth;
+                        } else {
+                            day = String.valueOf(dayOfMonth);
+                        }
+                        textViewDate.setText(day + "/" +(month + 1) + "/" + year);
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -109,17 +143,27 @@ public class ModifierPersonne extends AppCompatActivity {
         String email = textViewEmail.getText().toString();
         String phoneNumber = textViewPhoneNumber.getText().toString();
 
+        Boolean erreurSaisieDate = false;
+        if (date != null && !date.equals("")) {
+            if (!date.matches(regexDate)){
+                Toast.makeText(this, "La date doit être au format jj/mm/aaaa", Toast.LENGTH_SHORT).show();
+                 erreurSaisieDate = true;
+            }
 
-        Personne personne = new Personne(1, nomPersonne, prenomPersonne, date, address, email, phoneNumber);
+        }
 
-        if(!nomPersonne.equals("") && !prenomPersonne.equals("") && !date.equals("") && !address.equals("") && validEmail(email) && validPhone(phoneNumber)) {
+        if(!erreurSaisieDate && !nomPersonne.equals("") && !prenomPersonne.equals("") && !date.equals("") && !address.equals("") && validEmail(email) && validPhone(phoneNumber)) {
             PersonneDAO personneDAO = new PersonneDAO(this);
             personneDAO.open();
-            personneDAO.modPersonne(1, nomPersonne, prenomPersonne, address, email, phoneNumber, date);
+            if (dejaEnBase) {
+                personneDAO.modPersonne(1, nomPersonne, prenomPersonne, date, address, email, phoneNumber);
+            } else {
+                personneDAO.insertPersonne(nomPersonne, prenomPersonne, date, address, email, phoneNumber);
+            }
             personneDAO.close();
             finish();
         } else {
-            Toast toast = Toast.makeText(this, "Tous les champs doivent être remplis", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, "Tous les champs doivent être remplis correctement", Toast.LENGTH_LONG);
             toast.show();
         }
     }

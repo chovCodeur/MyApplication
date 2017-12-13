@@ -62,8 +62,7 @@ public class PersonneDAO {
      * @param nom String : le nom de l'bien
      * @return int : le nombre de lignes affectées par la requête
      */
-    public int modPersonne(int id, String nom, String prenom, String dateNaissance, String adresse, String mail,
-                       String telephone){
+    public int modPersonne(int id, String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone){
         ContentValues values = new ContentValues();
         values.put(NOM,nom);
         values.put(PRENOM,prenom);
@@ -78,9 +77,22 @@ public class PersonneDAO {
         return db.update(TABLE_NAME, values, where, whereArgs);
     }
 
+    public long insertPersonne(String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone){
+        ContentValues values = new ContentValues();
+        values.put(NOM,nom);
+        values.put(PRENOM,prenom);
+        values.put(DATENAISSANCE, dateNaissance);
+        values.put(ADRESSE, adresse);
+        values.put(MAIL, mail);
+        values.put(TELEPHONE, telephone);
+
+
+        return db.insert(TABLE_NAME, null, values);
+    }
+
 
     public Personne getPersonne(int id){
-        Personne p=new Personne(0,"","","","","","");
+        Personne p = new Personne();
 
         Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+ID+"="+id, null);
         if (c.moveToFirst()) {

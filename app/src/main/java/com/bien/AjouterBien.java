@@ -71,7 +71,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     private Boolean dansListe1 = false;
     private Boolean dansListe2 = false;
     private Boolean dansListe3 = false;
-    //private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
+    private String regexDate = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$";
     private int retourHome = 1;
     private Boolean perm = false;
 
@@ -249,7 +249,13 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                 datePickerDialog = new DatePickerDialog(AjouterBien.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        editTextdate.setText(dayOfMonth + "/" +(month + 1) + "/" + year);
+                        String day ;
+                        if(dayOfMonth <10){
+                            day = "0"+dayOfMonth;
+                        } else {
+                            day = String.valueOf(dayOfMonth);
+                        }
+                        editTextdate.setText(day + "/" +(month + 1) + "/" + year);
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -488,15 +494,13 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         String dateAchatSaisie = editTextdate.getText().toString();
 
-        /*if (dateAchatSaisie != null && !dateAchatSaisie.equals("")) {
+        if (dateAchatSaisie != null && !dateAchatSaisie.equals("")) {
             if (!dateAchatSaisie.matches(regexDate)){
                 Toast.makeText(this, "La date doit être au format jj/mm/aaaa", Toast.LENGTH_SHORT).show();
                 erreurSaisie = true;
-            } else {
-                dateAchatSaisie = dateAchatSaisie.replace(".","/");
             }
 
-        } */
+        }
 
         String commentaireBien = textViewCommentaireBien.getText().toString();
         String descriptionBien = textViewDescriptionBien.getText().toString();
@@ -558,10 +562,11 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
             bienDAO.close();
 
-            Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
+           /* Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
             intenthome.putExtra("ID_CURRENT_LIST_FROM_ADD_BIEN", retourHome);
             intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intenthome);
+            startActivity(intenthome); */
+           finish();
 
         }
 
@@ -646,7 +651,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             inputStream.close();
 
             // The new size we want to scale to
-            final int REQUIRED_SIZE=20;
+            final int REQUIRED_SIZE=50;
 
             // Find the correct scale value. It should be the power of 2.
             int scale = 1;
@@ -665,7 +670,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             // here i override the original image file
             file.createNewFile();
             FileOutputStream outputStream = new FileOutputStream(file);
-            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 70 , outputStream);
+            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 80 , outputStream);
             outputStream.flush();
             outputStream.close();
 

@@ -50,10 +50,12 @@
                 android:layout_marginTop="34dp"
                 android:ems="10"
                 android:hint="Nom"
+                android:maxLength="50"
                 android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/editPrenom"
+                android:maxLength="50"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editNom"
@@ -62,33 +64,18 @@
                 android:ems="10"
                 android:hint="Prenom"
                 android:inputType="textPersonName" />
-            <!--EditText
-        android:id="@+id/editText5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="date"
-        android:textAlignment="center"
-        android:text="Date" />
-    DatePicker
-        android:id="@+id/editTextDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:calendarViewShown="false"
-        android:layout_marginLeft="75dp"
-        android:layout_marginRight="75dp"
-        android:datePickerMode="spinner" /-->
+
             <EditText
                 android:id="@+id/editTextDate"
+                android:maxLength="10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="6dp"
                 android:layout_below="@+id/editPrenom"
                 android:ems="10"
-                android:hint="Select date"
-                android:inputType="date"
-                android:textStyle="italic" />
+                android:hint="Date de naissance (jj/mm/aaaa)"
+                android:inputType="date" />
 
             <EditText
                 android:id="@+id/editEmail"
@@ -97,12 +84,14 @@
                 android:layout_marginTop="6dp"
                 android:layout_below="@+id/editTextDate"
                 android:ems="10"
+                android:maxLength="50"
                 android:hint="Adresse mail"
                 android:inputType="textEmailAddress"
                 android:layout_alignParentEnd="true" />
 
             <EditText
                 android:id="@+id/editAdress"
+                android:maxLength="150"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editEmail"
@@ -114,6 +103,7 @@
 
             <EditText
                 android:id="@+id/editPhon_Number"
+                android:maxLength="14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -121,7 +111,7 @@
                 android:layout_marginTop="6dp"
                 android:ems="10"
                 android:hint="Téléphone"
-                android:inputType="phone" />
+                android:inputType="number" />
 
             <Button
                 android:id="@+id/buttonAjoutInfos"
@@ -131,7 +121,7 @@
                 android:layout_marginTop="50dp"
                 android:layout_below="@+id/editPhon_Number"
                 android:onClick="onClickAjoutInfos"
-                android:text="Ajouter" />
+                android:text="Modifier" />
 
 
         </RelativeLayout>

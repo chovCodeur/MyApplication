@@ -49,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:ems="10"
+                android:maxLength="40"
                 android:hint="Nom"
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true" />
@@ -120,17 +121,19 @@
 
             <EditText
                 android:id="@+id/date_achat_bien"
+                android:maxLength="10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/checkListe1"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Date d'achat (jj.mm.aaaa)"
+                android:hint="Date d'achat (jj/mm/aaaa)"
                 android:inputType="date" />
 
             <EditText
                 android:id="@+id/description_bien"
+                android:maxLength="100"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -144,6 +147,7 @@
                 android:id="@+id/commentaire_bien"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="100"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/description_bien"
                 android:layout_marginTop="6dp"
@@ -156,6 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:maxLength="100"
                 android:layout_below="@+id/commentaire_bien"
                 android:layout_marginTop="6dp"
                 android:ems="10"
@@ -169,6 +174,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/numero_serie"
                 android:layout_marginTop="6dp"
+                android:maxLength="10"
                 android:ems="10"
                 android:hint="Prix"
                 android:inputType="number" />

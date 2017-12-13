@@ -383,7 +383,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void remplirBeDeForTest () {
         pdao.open();
-        pdao.modPersonne(1, "Jacky", "Philippe", "12/04/1995", "10 rue de la verge", "jk.phil@hotmail.com", "0607548796");
+        //pdao.modPersonne(1, "Jacky", "Philippe", "12/04/1995", "10 rue de la verge", "jk.phil@hotmail.com", "0607548796");
         pdao.close();
 
         Liste liste1 = new Liste(1,"Maison","La liste de ma maison");

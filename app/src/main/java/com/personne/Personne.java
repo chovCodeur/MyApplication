@@ -15,6 +15,9 @@ public class Personne {
     private String phoneNumber;
     private String date;
 
+    public Personne(){
+
+    }
     public Personne(int id_Personne, String nom, String prenom, String mail,
                     String address, String phoneNumber, String date) {
         this.id_Personne = id_Personne;
