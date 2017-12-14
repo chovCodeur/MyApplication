@@ -258,7 +258,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                         if((month +1) <10){
                             monthFormat = "0"+(month+1);
                         } else {
-                            monthFormat = String.valueOf(month);
+                            monthFormat = String.valueOf(month+1);
                         }
                         editTextdate.setText(day + "/" +monthFormat+ "/" + year);
                     }
