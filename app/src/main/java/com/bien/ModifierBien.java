@@ -127,7 +127,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
                             String monthFormat ;
                             if((month +1) <10){
-                                monthFormat = "0"+month;
+                                monthFormat = "0"+(month+1);
                             } else {
                                 monthFormat = String.valueOf(month);
                             }
