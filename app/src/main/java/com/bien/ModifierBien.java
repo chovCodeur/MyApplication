@@ -804,24 +804,6 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-   /* public static void copyAndCompress(File src, File dst) throws IOException {
-
-        Bitmap bmp = BitmapFactory.decodeFile(src.getAbsolutePath());
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 0, bos);
-
-        try (InputStream in = new ByteArrayInputStream(bos.toByteArray())) {
-            try (OutputStream out = new FileOutputStream(dst)) {
-                // Transfer bytes from in to out
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-            }
-        }
-    } */
-
     public static void copy(File src, File dst) throws IOException {
 
         try (InputStream in = new FileInputStream(src)) {
@@ -883,51 +865,6 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             return 4;
         }
     }
-    /*
-
-    public int getFirstNotNullPicture(){
-        if (bien.getPhoto_bien_principal()!= null && !bien.getPhoto_bien_principal().equals("")){
-            return 0;
-        } else if (bien.getPhoto_bien_miniature1()!= null && !bien.getPhoto_bien_miniature1().equals("")){
-            return  1;
-        } else if (bien.getPhoto_bien_miniature2()!= null && !bien.getPhoto_bien_miniature2().equals("")){
-            return  2;
-        } else if (bien.getPhoto_bien_miniature3()!= null && ! bien.getPhoto_bien_miniature3().equals("")) {
-            return 3;
-        } else {
-            return 4;
-        }
-    }
-
-    public void rangerPhoto(){
-        int premierVide = getFirstNullPicture();
-        int premiereNonVide = getFirstNotNullPicture();
-
-        if (premierVide != 4 && premiereNonVide != 4){
-            switch (premierVide){
-                case 0:
-                    echangerPhotoEnbase(0, premiereNonVide);
-                    break;
-
-                case 1:
-                    echangerPhotoEnbase(1, premiereNonVide);
-
-                    break;
-
-                case 2:
-                    break;
-
-                case 3:
-                    break;
-
-            }
-        }
-    }
-
-    public void echangerPhotoEnbase(int vide, int aDeplacer){
-
-    }
-    */
 
 
     public File compressImage(File file){
