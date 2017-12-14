@@ -124,7 +124,14 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                             } else {
                                 day = String.valueOf(dayOfMonth);
                             }
-                            dateAchat.setText(day + "/" +(month + 1) + "/" + year);
+
+                            String monthFormat ;
+                            if((month +1) <10){
+                                monthFormat = "0"+month;
+                            } else {
+                                monthFormat = String.valueOf(month);
+                            }
+                            dateAchat.setText(day + "/" +monthFormat+ "/" + year);
                         }
                     }, mYear, mMonth, mDay);
                     datePickerDialog.show();

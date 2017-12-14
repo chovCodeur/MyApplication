@@ -84,7 +84,14 @@ public class ModifierPersonne extends AppCompatActivity {
                         } else {
                             day = String.valueOf(dayOfMonth);
                         }
-                        textViewDate.setText(day + "/" +(month + 1) + "/" + year);
+
+                        String monthFormat ;
+                        if((month +1) <10){
+                            monthFormat = "0"+month;
+                        } else {
+                            monthFormat = String.valueOf(month);
+                        }
+                        textViewDate.setText(day + "/" +monthFormat+ "/" + year);
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
