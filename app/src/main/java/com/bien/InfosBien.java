@@ -434,6 +434,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
     public void modifierBien(View v) {
         Intent intent = new Intent(this, ModifierBien.class);
         intent.putExtra("IDBIEN",bien.getId_bien());
+        intent.putExtra("IDCATEGORIE",bien.getId_categorie_bien());
         startActivity(intent);
     }
     public void supprimerBien(View v){

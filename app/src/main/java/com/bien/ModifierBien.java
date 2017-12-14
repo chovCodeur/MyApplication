@@ -132,6 +132,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             });
 
             id = extras.getInt("IDBIEN");
+            idCategorieSelectionne = extras.getInt("IDCATEGORIE");
 
             if(id != 0) {
                 bdao.open();
@@ -186,6 +187,18 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 ArrayAdapter arrayAdapterListe = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listeCategorieName);
                 arrayAdapterListe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerCategorie.setAdapter(arrayAdapterListe);
+
+                // On sélectionne la catégorie dans laquelle le bien est  déjà
+                CategorieDAO cdao = new CategorieDAO(this);
+                cdao.open();
+                String nomCategorie = cdao.getNomCategorieByIdCategorie(idCategorieSelectionne);
+
+                for(i=0;i<spinnerCategorie.getCount();i++) {
+                     if(spinnerCategorie.getItemAtPosition(i).toString().equals(nomCategorie)) {
+                        spinnerCategorie.setSelection(i);
+                        cdao.close();
+                    }
+                }
 
                 ctvliste1 = (CheckedTextView) findViewById(R.id.checkListe1);
                 ctvliste1.setText(listes.get(0).getLibelle_liste());
