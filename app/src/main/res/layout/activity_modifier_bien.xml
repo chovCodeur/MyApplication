@@ -179,22 +179,41 @@
                 android:hint="Prix"
                 android:inputType="number" />
 
-            <Button
-                android:id="@+id/modifierPhotoPrincipale"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearBouton"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/prix_bien"
+                android:layout_width="match_parent"
                 android:layout_marginTop="6dp"
-                android:onClick="modifierPhoto"
-                android:text="Rajouter des photos" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:onClick="prendrePhoto"
+                    app:srcCompat="@android:drawable/ic_menu_camera" />
+
+
+                <Button
+                    android:id="@+id/ajouterPhoto"
+                    android:onClick="modifierPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Ajouter une photo" />
+
+
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/modifierFacture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/modifierPhotoPrincipale"
+                android:layout_below="@+id/linearBouton"
                 android:layout_marginTop="6dp"
                 android:onClick="modifierFacture"
                 android:text="Modifier la facture" />

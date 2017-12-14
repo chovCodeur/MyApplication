@@ -46,10 +46,12 @@ import com.application.MainActivity;
 import com.application.inventaire.R;
 import com.personne.ModifierPersonne;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -93,6 +95,8 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     final static int SELECT_IMAGE = 1;
     final static int SELECT_PDF = 2;
+    final static int TAKE_IMAGE = 3;
+
     final static int CHECK_PERM_PICTURE = 4;
     final static int CHECK_PERM_PDF = 5;
 
@@ -328,82 +332,101 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         }
 
-        if (resultCode == RESULT_OK && request == SELECT_IMAGE) {
-            String path = getRealPathFromUri(data.getData());
+        if (resultCode == RESULT_OK && (request == SELECT_IMAGE || request == TAKE_IMAGE)) {
+
+            String path;
+            if(request == SELECT_IMAGE) {
+                path = getRealPathFromUri(data.getData());
+            } else {
+                path = "temp";
+            }
 
             ImageView imagePhotoPrincipale;
             ImageView imagePhoto1;
             ImageView imagePhoto2;
             ImageView imagePhoto3;
+            String format = s.format(new Date());
+            File imgFile;
 
             if (path != null && !path.equals("")) {
                 switch (nbPhoto) {
                     case 0:
-                        //bitmapPrincipal = BitmapFactory.decodeFile(path);
-                        String format = s.format(new Date());
-                        pathPhotoPrincipale = saveFile(path, format.toString(), "img");
 
-                        File imgFile = new File(pathPhotoPrincipale);
-                        if (imgFile.exists()) {
-                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                            imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
+                        imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
+
+                        if (request == SELECT_IMAGE) {
+                            pathPhotoPrincipale = saveFile(path, format.toString(), "img");
+                            imgFile = new File(pathPhotoPrincipale);
+                            if (imgFile.exists()) {
+                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                                imagePhotoPrincipale.setImageBitmap(myBitmap);
+                            }
+                        } else {
+                            Bitmap myBitmap= (Bitmap) data.getExtras().get("data");
+                            pathPhotoPrincipale = saveImagePrise(myBitmap, format.toString());
                             imagePhotoPrincipale.setImageBitmap(myBitmap);
-
                         }
 
                         nbPhoto++;
-                        break;
+
+                    break;
                     case 1:
 
-                        format = s.format(new Date());
-                        pathPhoto1 = saveFile(path, format.toString(), "img");
+                        imagePhoto1 = (ImageView) findViewById(R.id.photo1);
 
-                        imgFile = new File(pathPhoto1);
-                        if (imgFile.exists()) {
-                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                            imagePhoto1 = (ImageView) findViewById(R.id.photo1);
+                        if (request == SELECT_IMAGE) {
+                            pathPhoto1 = saveFile(path, format.toString(), "img");
+                            imgFile = new File(pathPhoto1);
+                            if (imgFile.exists()) {
+                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                                imagePhoto1.setImageBitmap(myBitmap);
+                            }
+                        } else {
+                            Bitmap myBitmap= (Bitmap) data.getExtras().get("data");
+                            pathPhoto1 = saveImagePrise(myBitmap, format.toString());
                             imagePhoto1.setImageBitmap(myBitmap);
-
                         }
 
                         nbPhoto++;
 
                         break;
                     case 2:
-                        format = s.format(new Date());
-                        pathPhoto2 = saveFile(path, format.toString(), "img");
+                        imagePhoto2 = (ImageView) findViewById(R.id.photo2);
 
-                        imgFile = new File(pathPhoto2);
-                        if (imgFile.exists()) {
-                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                            imagePhoto2 = (ImageView) findViewById(R.id.photo2);
+                        if (request == SELECT_IMAGE) {
+                            pathPhoto2 = saveFile(path, format.toString(), "img");
+                            imgFile = new File(pathPhoto2);
+                            if (imgFile.exists()) {
+                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                                imagePhoto2.setImageBitmap(myBitmap);
+                            }
+                        } else {
+                            Bitmap myBitmap= (Bitmap) data.getExtras().get("data");
+                            pathPhoto2 = saveImagePrise(myBitmap, format.toString());
                             imagePhoto2.setImageBitmap(myBitmap);
-
                         }
-
                         nbPhoto++;
 
                         break;
 
                     case 3:
 
-                        format = s.format(new Date());
-                        pathPhoto3 = saveFile(path, format.toString(), "img");
+                        imagePhoto3 = (ImageView) findViewById(R.id.photo3);
 
-                        imgFile = new File(pathPhoto3);
-                        if (imgFile.exists()) {
-                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                            imagePhoto3 = (ImageView) findViewById(R.id.photo3);
+                        if (request == SELECT_IMAGE) {
+                            pathPhoto3 = saveFile(path, format.toString(), "img");
+                            imgFile = new File(pathPhoto3);
+                            if (imgFile.exists()) {
+                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                                imagePhoto3.setImageBitmap(myBitmap);
+                            }
+                        } else {
+                            Bitmap myBitmap= (Bitmap) data.getExtras().get("data");
+                            pathPhoto3 = saveImagePrise(myBitmap, format.toString());
                             imagePhoto3.setImageBitmap(myBitmap);
-
                         }
 
                         nbPhoto++;
-
-
-                        /* Button buttonAjouterPhoto = (Button) findViewById(R.id.ajouterPhoto);
-
-                        buttonAjouterPhoto.setOnClickListener(null); */
 
                         break;
                 }
@@ -623,7 +646,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         if (fileSrc.exists()) {
             try {
                 if(type.equals("img")) {
-                    //copyAndCompress(fileSrc, fileDest);
                     copy(fileSrc,fileDest);
                     compressImage(fileDest);
 
@@ -709,6 +731,50 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     public Context getContext(){
         return context;
+    }
+
+    public void prendrePhoto(View view){
+        if (nbPhoto <= 3) {
+            Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, TAKE_IMAGE);
+        } else {
+            Toast.makeText(getContext(), "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public String saveImagePrise(Bitmap bitmap, String nomNouveauFichier) {
+        String separator = "/";
+
+        String dirName = "images";
+        File dir = new File(context.getFilesDir() + separator + dirName);
+
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+
+
+        File fileDest = new File(dir.getAbsolutePath() + separator + nomNouveauFichier);
+
+        if (fileDest.exists()) {
+            fileDest.delete();
+        }
+
+        try {
+
+            FileOutputStream fos = new FileOutputStream(fileDest);
+            final BufferedOutputStream bos = new BufferedOutputStream(fos, 2048);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        compressImage(fileDest);
+        return fileDest.getAbsolutePath();
     }
 
 }
