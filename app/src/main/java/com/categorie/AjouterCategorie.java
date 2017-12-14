@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class AjouterCategorie extends AppCompatActivity {
 
     private Menu m;
@@ -74,19 +76,41 @@ public class AjouterCategorie extends AppCompatActivity {
     public void onClickAddCategorie(View view){
         TextView textViewNomCategorie = (TextView) findViewById(R.id.editCategorie);
         TextView textViewDescription = (TextView) findViewById(R.id.editDescription);
+        CategorieDAO categorieDAO = new CategorieDAO(this);
+
+        ArrayList<Categorie> categories = new ArrayList<Categorie>();
+
 
         String nomCategorie = textViewNomCategorie.getText().toString();
+
+        categorieDAO.open();
+        categories = categorieDAO.getAllCategorie();
+        categorieDAO.close();
+
+        Boolean erreur = false;
+        for (Categorie cate: categories) {
+            if(cate.getNom_Categorie().trim().toLowerCase().equals(nomCategorie.trim().toLowerCase())){
+                erreur = true;
+            }
+
+        }
         String description = textViewDescription.getText().toString();
 
         if(!textViewNomCategorie.getText().toString().equals("")) {
-            CategorieDAO categorieDAO = new CategorieDAO(this);
-            categorieDAO.open();
-            Categorie categorie = new Categorie(0, nomCategorie, description);
-            categorieDAO.addCategorie(categorie);
-            categorieDAO.close();
+            if (!erreur) {
+                categorieDAO.open();
+                Categorie categorie = new Categorie(0, nomCategorie, description);
+                categorieDAO.addCategorie(categorie);
+                categorieDAO.close();
 
-            Toast.makeText(this,"La catégorie "+nomCategorie+" a bien été ajoutée",Toast.LENGTH_SHORT).show();
-            finish();
+                Toast.makeText(this, "La catégorie " + nomCategorie + " a bien été ajoutée", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, "La catégorie " + nomCategorie + " existe déjà", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this,"Le nom ne peut pas être vide",Toast.LENGTH_SHORT).show();
+
         }
     }
 }

@@ -237,8 +237,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         });
 
         final EditText editTextdate = (EditText) findViewById(R.id.date_achat_bien);
-        editTextdate.setInputType(InputType.TYPE_NULL);
-
         editTextdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

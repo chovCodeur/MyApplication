@@ -1,6 +1,7 @@
 package com.categorie;
 //
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +13,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.application.MainActivity;
 import com.application.inventaire.R;
 import com.bien.AjouterBien;
 import com.dao.CategorieDAO;
+
+import java.util.ArrayList;
 
 public class ModifierCategorie extends AppCompatActivity {
 
@@ -30,7 +34,7 @@ public class ModifierCategorie extends AppCompatActivity {
     private Menu m;
     private String nomcat;
     private String nomdescrip;
-
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +73,42 @@ public class ModifierCategorie extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String categorie = editCategorie.getText().toString();
+                String nomCategorie = editCategorie.getText().toString();
                 String description = editDescription.getText().toString();
-                Intent intent = new Intent(ModifierCategorie.this, MainActivity.class);
-                    startActivity(intent);
-                cdao.open();
-                cdao.modCategorie(idcat,categorie,description);
-                cdao.close();
+                //Intent intent = new Intent(ModifierCategorie.this, MainActivity.class);
+                //startActivity(intent);
+
+                CategorieDAO categorieDAO = new CategorieDAO(context);
+                ArrayList<Categorie> categories = new ArrayList<Categorie>();
+
+                categorieDAO.open();
+                categories = categorieDAO.getAllCategorie();
+                categorieDAO.close();
+
+                Boolean erreur = false;
+                for (Categorie cate: categories) {
+                    if(cate.getNom_Categorie().trim().toLowerCase().equals(nomCategorie.trim().toLowerCase())){
+                        erreur = true;
+                    }
+
+                }
+
+                if(!nomCategorie.equals("")) {
+                    if (erreur) {
+                        categorieDAO.open();
+                        Categorie categorie = new Categorie(0, nomCategorie, description);
+                        categorieDAO.addCategorie(categorie);
+                        categorieDAO.close();
+
+                        Toast.makeText(context, "La catégorie " + nomCategorie + " a bien été modifiée", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(context, "La catégorie " + nomCategorie + " existe déjà", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context,"Le nom ne peut pas être vide",Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
     }
