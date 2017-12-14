@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Context context = this;
     private NavigationView navigationView;
     private Toolbar myToolbar;
+    private boolean nomIdentique=false;
+
 
     ArrayList<Bien> listeBiens = new ArrayList<Bien>();
     HashMap<Integer, Integer> listCorrespondance = new HashMap<>();
@@ -462,7 +464,9 @@ Bien bien1 = null;
 
     public void changerNomListe() {
         final EditText libelle = new EditText(context);
-        libelle.setHint("Nom de la liste");
+        ldao.open();
+        libelle.setText(ldao.getNomListeById(idCurrentList));
+        ldao.close();
 
         layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -478,18 +482,42 @@ Bien bien1 = null;
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        libelle.setText(libelle.getText().toString().trim());
                         if(!libelle.getText().toString().equals("")) {
-                            ldao.open();
-                            ldao.modifierListe(idCurrentList, libelle.getText().toString(), "");
-                            switch (idCurrentList) {
-                                case 1: navigationView.getMenu().findItem(R.id.liste1).setTitle(libelle.getText().toString());
-                                    break;
-                                case 2: navigationView.getMenu().findItem(R.id.liste2).setTitle(libelle.getText().toString());
-                                    break;
-                                case 3: navigationView.getMenu().findItem(R.id.liste3).setTitle(libelle.getText().toString());
-                                    break;
+                            if(libelle.getText().length() <= 10) {
+                                for(int i=0;i<3;i++) {
+                                    ldao.open();
+                                    if(libelle.getText().toString().toLowerCase().equals(ldao.getNomListeById(i+1).toLowerCase())) {
+                                        nomIdentique=true;
+                                        ldao.close();
+                                        break;
+                                    }
+                                }
+                                if(!nomIdentique) {
+                                    ldao.open();
+                                    ldao.modifierListe(idCurrentList, libelle.getText().toString(), "");
+                                    switch (idCurrentList) {
+                                        case 1:
+                                            navigationView.getMenu().findItem(R.id.liste1).setTitle(libelle.getText().toString());
+                                            break;
+                                        case 2:
+                                            navigationView.getMenu().findItem(R.id.liste2).setTitle(libelle.getText().toString());
+                                            break;
+                                        case 3:
+                                            navigationView.getMenu().findItem(R.id.liste3).setTitle(libelle.getText().toString());
+                                            break;
+                                    }
+                                    refreshAdapterView();
+                                    ldao.close();
+                                } else {
+                                    nomIdentique=false;
+                                    Toast toast = Toast.makeText(context, "Ce nom de liste existe déjà", Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            } else {
+                                Toast toast = Toast.makeText(context, "Le nom de la liste est trop long", Toast.LENGTH_LONG);
+                                toast.show();
                             }
-                            ldao.close();
                         } else {
                             Toast toast = Toast.makeText(context, "La liste doit avoir un nom", Toast.LENGTH_LONG);
                             toast.show();
