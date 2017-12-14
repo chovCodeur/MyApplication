@@ -121,7 +121,7 @@ public class BienAdapter extends BaseAdapter {
                 case TYPE_SEPARATOR:
                     convertView = mInflater.inflate(R.layout.separator_bien, null);
                     holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
-                    holder.textView.setText(str[0]);
+                    //holder.textView.setText(str[0]);
                     break;
             }
             convertView.setTag(holder);
@@ -158,20 +158,18 @@ public class BienAdapter extends BaseAdapter {
 
             }
 
-            /* METHODE A CONSERVER ? RALENTI L'AFFICHAGE JE PENSE */
-
           if (str.length > 2 && str[2] != null && !str[2].equals("")){
                 Log.e("MiPA","Pour le bien "+str[0]+"L'image serait"+str[2]);
-/*
+
                 File imgFile = new File(str[2]);
                 if (imgFile.exists()) {
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
                     holder.imageView.setImageBitmap(myBitmap);
                 }
 
             } else {
-                holder.imageView.setImageResource(R.drawable.no_image);
-                */
+              holder.imageView.setImageResource(R.drawable.no_image);
             }
 
 

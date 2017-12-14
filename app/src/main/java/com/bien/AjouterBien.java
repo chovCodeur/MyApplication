@@ -651,7 +651,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             inputStream.close();
 
             // The new size we want to scale to
-            final int REQUIRED_SIZE=50;
+            final int REQUIRED_SIZE=80;
 
             // Find the correct scale value. It should be the power of 2.
             int scale = 1;
@@ -670,7 +670,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             // here i override the original image file
             file.createNewFile();
             FileOutputStream outputStream = new FileOutputStream(file);
-            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 80 , outputStream);
+            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , outputStream);
             outputStream.flush();
             outputStream.close();
 

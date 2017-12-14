@@ -409,12 +409,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         categorieDAO.close();
 
 
-        Bien bien1 = new Bien(1,"Lunette","19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6",null,null,null,null,3,"Lunette de marque Rayban","");
-        Bien bien2 = new Bien(2,"Frigo","19/11/2017","23/11/2017","","","3599.99",null,null,null,null,1,"Samsung Family Hub","45DG425845DA");
-        Bien bien3 = new Bien(3,"Ordinateur","19/11/2017","01/12/2017","","Manque une touche","1099.99",null,null,null,null,2,"PC Portable Gamer de marque MSI","515D-TGH2336");
-        Bien bien4 = new Bien(4,"Vaisselle","20/11/2017","03/06/2017","","Vaisselle de Mémé","6902.30",null,null,null,null,1,"En porcelaine chinoise datée de 1640","");
-        Bien bien5 = new Bien(5,"TV","21/11/2017","19/05/2016","","","350",null,null,null,null,1,"Marque Kenwood","");
-        Bien bien6 = new Bien(6,"Home cinéma","21/11/2017","19/01/2017","","Une enceinte grésille un peu","400",null,null,null,null,2,"Marque Pioneer","");
+        Bien bien1 = new Bien(1,"Lunette","19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6","","","","",3,"Lunette de marque Rayban","");
+        Bien bien2 = new Bien(2,"Frigo","19/11/2017","23/11/2017","","","3599.99","","","","",1,"Samsung Family Hub","45DG425845DA");
+        Bien bien3 = new Bien(3,"Ordinateur","19/11/2017","01/12/2017","","Manque une touche","1099.99","","","","",2,"PC Portable Gamer de marque MSI","515D-TGH2336");
+        Bien bien4 = new Bien(4,"Vaisselle","20/11/2017","03/06/2017","","Vaisselle de Mémé","6902.30","","","","",1,"En porcelaine chinoise datée de 1640","");
+        Bien bien5 = new Bien(5,"TV","21/11/2017","19/05/2016","","","350","","","","",1,"Marque Kenwood","");
+        Bien bien6 = new Bien(6,"Home cinéma","21/11/2017","19/01/2017","","Une enceinte grésille un peu","400","","","","",2,"Marque Pioneer","");
 
 
 
@@ -433,15 +433,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bdao.addBien(bien5, listeIdListe1_3);
         bdao.addBien(bien6, listeIdListe1_3);
 
-        /*
-Bien bien1 = null;
-        for (int i = 0; i < 5; i++) {
+ /*
+        Bien bien = null;
+        for (int i = 0; i < 50; i++) {
 
 
-            bien1 = new Bien(i,"Cuisine auto n 1."+i,"19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6",null,null,null,null,1,"Lunette de marque Rayban","");
+            bien = new Bien(i,"Cuisine auto n 1."+i,"19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6","/data/user/0/com.example.michelparis.myapplication/files/images/14122017025850","","","",1,"Lunette de marque Rayban","");
 
-            bdao.addBien(bien1, listeIdListe1_3);
+            bdao.addBien(bien, listeIdListe1_3);
         }
+
 
         for (int i = 5; i < 11; i++) {
             bien1 = new Bien(i,"Salon auto n 2."+i,"19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6",null,null,null,null,2,"Lunette de marque Rayban","");

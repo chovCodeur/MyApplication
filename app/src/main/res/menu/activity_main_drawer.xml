@@ -5,14 +5,14 @@
         <item
             android:id="@+id/liste1"
             android:title="@string/liste1"
-            android:icon="@drawable/ic_youtube"/>
+            android:icon="@drawable/fleche"/>
         <item
             android:id="@+id/liste2"
             android:title="@string/liste2"
-            android:icon="@drawable/ic_youtube"/>
+            android:icon="@drawable/fleche"/>
         <item
             android:id="@+id/liste3"
             android:title="@string/liste3"
-            android:icon="@drawable/ic_youtube"/>
+            android:icon="@drawable/fleche"/>
     </group>
 </menu>
