@@ -27,11 +27,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -45,11 +43,8 @@ import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
 import com.application.inventaire.R;
 import com.liste.Liste;
-import com.personne.ModifierPersonne;
 
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -57,19 +52,28 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Created by Tristan on 11/11/2017.
+ */
+
+/**
+ * Classe servant à modifier les informations que contient l'application pour un bien en particulier.
+ */
 public class ModifierBien extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    // Variables de classe
     private Menu m;
     private int id=0;
     private BienDAO bdao;
     private ListeDAO ldao;
+    private CategorieDAO categorieDAO;
+    private ListeDAO listeDAO;
     private Bien bien;
     private EditText nomBien;
     private EditText dateAchat;
@@ -82,7 +86,6 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private ImageView photo1;
     private ImageView photo2;
     private ImageView photo3;
-    private ListeDAO listeDAO;
     private ArrayList<Liste> listes;
     private ArrayList<String> nomListes = new ArrayList<>();;
     private Spinner spinnerCategorie;
@@ -91,6 +94,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private int idCategorieSelectionne;
     private ArrayList<Integer> idPrevListes = new ArrayList<>();
     private ArrayList<Integer> idNouvListes = new ArrayList<>();
+    private ArrayList<String> listeCategorieName = new ArrayList<String>();
     private CheckedTextView ctvliste1=null;
     private CheckedTextView ctvliste2=null;
     private CheckedTextView ctvliste3=null;
@@ -103,6 +107,10 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private final static int CHECK_PERM_PICTURE = 4;
     private final static int CHECK_PERM_PDF = 5;
 
+    /**
+     * Procédure lancée à la création de l'activité.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,55 +118,31 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
+        // Instanciation des DAO nécessaires
         bdao = new BienDAO(this);
         ldao = new ListeDAO(this);
+        listeDAO = new ListeDAO(this);
+        categorieDAO = new CategorieDAO(this);
 
+        // Récupération des paramètres en provenance des autres activités
         Bundle extras = getIntent().getExtras();
 
+        // S'il y a des paramètres, on stocke l'id du bien et de sa catégorie courante
         if(extras != null) {
-
-            dateAchat =(EditText) findViewById(R.id.date_achat_bien);
-            dateAchat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final Calendar c = Calendar.getInstance();
-                    int mYear = c.get(Calendar.YEAR);
-                    int mMonth = c.get(Calendar.MONTH);
-                    int mDay = c.get(Calendar.DAY_OF_MONTH);
-                    datePickerDialog = new DatePickerDialog(ModifierBien.this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            String day ;
-                            if(dayOfMonth <10){
-                                day = "0"+dayOfMonth;
-                            } else {
-                                day = String.valueOf(dayOfMonth);
-                            }
-
-                            String monthFormat ;
-                            if((month +1) <10){
-                                monthFormat = "0"+(month+1);
-                            } else {
-                                monthFormat = String.valueOf(month+1);
-                            }
-                            dateAchat.setText(day + "/" +monthFormat+ "/" + year);
-                        }
-                    }, mYear, mMonth, mDay);
-                    datePickerDialog.show();
-                }
-            });
-
             id = extras.getInt("IDBIEN");
             idCategorieSelectionne = extras.getInt("IDCATEGORIE");
 
+            // Si l'id du bien n'est pas nul
             if(id != 0) {
+                // On ouvre le DAO et on récupère le bien bien son id
                 bdao.open();
                 bien = bdao.getBien(id);
 
-                // récupérer les id des listes d'appartenance du bien dans la table Appartient
+                // On récupère les id des listes d'appartenance du bien dans la table Appartient
                 idPrevListes = bdao.getAllIdListeByIdBien(bien.getId_bien());
 
-                // récupérer le nom des listes dans lequel le bien existe
+                // On récupère le nom des listes dans lequel le bien existe grâce aux id récupérés
+                // et on les ajoute à notre liste éphémère
                 ldao.open();
                 for(int i=0;i<idPrevListes.size();i++) {
                     if(idPrevListes.get(i) == 1) {
@@ -177,10 +161,11 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 ldao.close();
                 bdao.close();
 
+                // On ajoute le nom du bien en tant que titre de notre toolbar
                 myToolbar.setTitle(bien.getNom_bien());
                 setSupportActionBar(myToolbar);
 
-                listeDAO = new ListeDAO(this);
+                // On récupère toutes les listes de l'application
                 listeDAO.open();
                 listes  = listeDAO.getallListe();
                 listeDAO.close();
@@ -188,35 +173,37 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 spinnerCategorie =(Spinner) findViewById(R.id.select_categorie);
                 spinnerCategorie.setOnItemSelectedListener(this);
 
-                ArrayList<String> listeCategorieName = new ArrayList<String>();
-                CategorieDAO categorieDAO = new CategorieDAO(this);
+                // On récupère toutes les catégories de l'application
                 categorieDAO.open();
                 categoriesList = categorieDAO.getAllCategorie();
                 categorieDAO.close();
 
-
+                // On récupère et on stocke le nom des catégories dans une liste
                 int i =0;
                 for (Categorie categorie: categoriesList) {
                     listeCategorieName.add(i,categorie.getNom_Categorie());
                     i++;
                 }
 
+                // On utilise la liste fraîchement créée pour la mettre dans le spinner des catégories
                 ArrayAdapter arrayAdapterListe = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listeCategorieName);
                 arrayAdapterListe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerCategorie.setAdapter(arrayAdapterListe);
 
-                // On sélectionne la catégorie dans laquelle le bien est  déjà
-                CategorieDAO cdao = new CategorieDAO(this);
-                cdao.open();
-                String nomCategorie = cdao.getNomCategorieByIdCategorie(idCategorieSelectionne);
+                // On sélectionne la catégorie dans laquelle le bien est avant d'éventuellement la modifier
+                categorieDAO.open();
+                String nomCategorie = categorieDAO.getNomCategorieByIdCategorie(idCategorieSelectionne);
 
+                // On boucle dans les éléments du spinner
                 for(i=0;i<spinnerCategorie.getCount();i++) {
-                     if(spinnerCategorie.getItemAtPosition(i).toString().equals(nomCategorie)) {
+                    // Lorsque l'on trouve la bonne catégorie dans le spinner, on la sélectionne
+                    if(spinnerCategorie.getItemAtPosition(i).toString().equals(nomCategorie)) {
                         spinnerCategorie.setSelection(i);
-                        cdao.close();
+                        categorieDAO.close();
                     }
                 }
 
+                // On récupère la première checkbox, on lui donne le nom de la première liste et on lui ajoute un listener pour cocher/décocher
                 ctvliste1 = (CheckedTextView) findViewById(R.id.checkListe1);
                 ctvliste1.setText(listes.get(0).getLibelle_liste());
                 ctvliste1.setOnClickListener(new View.OnClickListener() {
@@ -230,7 +217,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     }
                 });
 
-
+                // On récupère la deuxième checkbox, on lui donne le nom de la deuxième liste et on lui ajoute un listener pour cocher/décocher
                 ctvliste2 = (CheckedTextView) findViewById(R.id.checkListe2);
                 ctvliste2.setText(listes.get(1).getLibelle_liste());
                 ctvliste2.setOnClickListener(new View.OnClickListener() {
@@ -244,6 +231,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     }
                 });
 
+                // On récupère la troisième checkbox, on lui donne le nom de la troisième liste et on lui ajoute un listener pour cocher/décocher
                 ctvliste3 = (CheckedTextView) findViewById(R.id.checkListe3);
                 ctvliste3.setText(listes.get(2).getLibelle_liste());
                 ctvliste3.setOnClickListener(new View.OnClickListener() {
@@ -257,6 +245,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     }
                 });
 
+                // On coche les listes dans lesquelles le bien figure déjà
                 for(i=0;i<idPrevListes.size();i++) {
                     if(idPrevListes.get(i) == 1) {
                         ctvliste1.setChecked(true);
@@ -269,35 +258,74 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     }
                 }
 
+                // On met à jour le nom du bien
                 nomBien = (EditText) findViewById(R.id.nom_bien);
                 nomBien.setText(bien.getNom_bien());
 
+                // On met à jour la date d'achat du bien
                 dateAchat = (EditText) findViewById(R.id.date_achat_bien);
                 dateAchat.setText(bien.getDate_achat_bien());
 
+                // Ajout d'un listener sur la date d'achat pour la modifier grâce à un DatePicker
+                dateAchat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Calendar c = Calendar.getInstance();
+                        int mYear = c.get(Calendar.YEAR);
+                        int mMonth = c.get(Calendar.MONTH);
+                        int mDay = c.get(Calendar.DAY_OF_MONTH);
+                        datePickerDialog = new DatePickerDialog(ModifierBien.this, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                String day ;
+                                if(dayOfMonth <10){
+                                    day = "0"+dayOfMonth;
+                                } else {
+                                    day = String.valueOf(dayOfMonth);
+                                }
+
+                                String monthFormat ;
+                                if((month +1) <10){
+                                    monthFormat = "0"+(month+1);
+                                } else {
+                                    monthFormat = String.valueOf(month+1);
+                                }
+                                dateAchat.setText(day + "/" +monthFormat+ "/" + year);
+                            }
+                        }, mYear, mMonth, mDay);
+                        datePickerDialog.show();
+                    }
+                });
+
+                // On met à jour la description du bien
                 descriptionBien = (EditText) findViewById(R.id.description_bien);
                 descriptionBien.setText(bien.getDescription_bien());
 
+                // On met à jour le commentaire du bien
                 commentaireBien = (EditText) findViewById(R.id.commentaire_bien);
                 commentaireBien.setText(bien.getCommentaire_bien());
 
+                // On met à jour le numéro de série du bien
                 numeroSerie = (EditText) findViewById(R.id.numero_serie);
                 numeroSerie.setText(bien.getNumeroSerie_bien());
 
+                // On met à jour le prix du bien
                 prixBien = (EditText) findViewById(R.id.prix_bien);
                 prixBien.setText(String.valueOf(bien.getPrix_bien()));
 
+                // On récupère la date actuelle et on l'affecte à la date de saisie
                 Date actuelle = new Date();
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 dateSaisie = dateFormat.format(actuelle);
 
-                // Affichage des photos
+                // Affichage des photos lorsqu'elles existent pour le bien
                 if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
                     final File imgFile = new File(bien.getPhoto_bien_principal());
                     if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         photoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
                         photoPrincipale.setImageBitmap(myBitmap);
+                        // On ajoute un listener pour supprimer la photo lorsque l'utilisateur clique dessus
                         photoPrincipale.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -313,6 +341,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         photo1 = (ImageView) findViewById(R.id.photo1);
                         photo1.setImageBitmap(myBitmap);
+                        // On ajoute un listener pour supprimer la photo lorsque l'utilisateur clique dessus
                         photo1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -328,6 +357,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         photo2 = (ImageView) findViewById(R.id.photo2);
                         photo2.setImageBitmap(myBitmap);
+                        // On ajoute un listener pour supprimer la photo lorsque l'utilisateur clique dessus
                         photo2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -343,6 +373,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         photo3 = (ImageView) findViewById(R.id.photo3);
                         photo3.setImageBitmap(myBitmap);
+                        // On ajoute un listener pour supprimer la photo lorsque l'utilisateur clique dessus
                         photo3.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -355,10 +386,15 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    /**
+     * Méthode permettant d'effectuer la modification du bien dans la base de données.
+     * @param v une View
+     */
     public void modifierBien(View v) {
         Boolean erreurSaisieDate = false;
         String dateAchatSaisie = dateAchat.getText().toString();
-        Log.e("date",dateAchatSaisie);
+
+        // Remonter une erreur si la date saisie est incorrecte
         if (dateAchatSaisie != null && !dateAchatSaisie.equals("")) {
             if (!dateAchatSaisie.matches(regexDate)){
                 Toast.makeText(this, "La date doit être au format jj/mm/aaaa", Toast.LENGTH_SHORT).show();
@@ -366,65 +402,77 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             }
 
         }
-        if(!nomBien.getText().toString().equals("")) {
-            if (!erreurSaisieDate) {
-                idCategorieSelectionne = categorieSelectionne.getId_Categorie();
-                bdao.open();
 
-                Bien updateBien = new Bien(bien.getId_bien(), nomBien.getText().toString(), dateSaisie, dateAchatSaisie, bien.getFacture_bien(),
-                        commentaireBien.getText().toString(), prixBien.getText().toString(), bien.getPhoto_bien_principal(), bien.getPhoto_bien_miniature1(),
-                        bien.getPhoto_bien_miniature2(), bien.getPhoto_bien_miniature3(), idCategorieSelectionne, descriptionBien.getText().toString(), numeroSerie.getText().toString());
-                bdao.modBien(updateBien);
+        // On procède à la modification seulement si le nom du bien n'est pas vide, que la date saisie est valide et que le bien est dans au moins une liste
+        if(!nomBien.getText().toString().trim().equals("") && isACheckboxIsChecked() && !erreurSaisieDate) {
+            idCategorieSelectionne = categorieSelectionne.getId_Categorie();
+            bdao.open();
 
-                if (ctvliste1.isChecked()) {
-                    idNouvListes.add(1);
-                }
-                if (ctvliste2.isChecked()) {
-                    idNouvListes.add(2);
-                }
-                if (ctvliste3.isChecked()) {
-                    idNouvListes.add(3);
-                }
+            // On créé un nouveau bien avec les champs renseignés par l'utilisateur puis on modifie le bien dans la base
+            Bien updateBien = new Bien(bien.getId_bien(), nomBien.getText().toString(), dateSaisie, dateAchatSaisie, bien.getFacture_bien(),
+                    commentaireBien.getText().toString(), prixBien.getText().toString(), bien.getPhoto_bien_principal(), bien.getPhoto_bien_miniature1(),
+                    bien.getPhoto_bien_miniature2(), bien.getPhoto_bien_miniature3(), idCategorieSelectionne, descriptionBien.getText().toString(), numeroSerie.getText().toString());
+            bdao.modBien(updateBien);
 
-                for (int i = 0; i < idPrevListes.size(); i++) {
-                    if (idPrevListes.get(i) == 1) {
-                        bdao.supprimerListeAppartenance(bien.getId_bien(), 1);
-                    }
-                    if (idPrevListes.get(i) == 2) {
-                        bdao.supprimerListeAppartenance(bien.getId_bien(), 2);
-                    }
-                    if (idPrevListes.get(i) == 3) {
-                        bdao.supprimerListeAppartenance(bien.getId_bien(), 3);
-                    }
-                }
-
-                for (int i = 0; i < idNouvListes.size(); i++) {
-                    if (idNouvListes.get(i) == 1) {
-                        bdao.addInAppartient(bien.getId_bien(), 1);
-                    }
-                    if (idNouvListes.get(i) == 2) {
-                        bdao.addInAppartient(bien.getId_bien(), 2);
-                    }
-                    if (idNouvListes.get(i) == 3) {
-                        bdao.addInAppartient(bien.getId_bien(), 3);
-                    }
-                }
-
-                bdao.close();
-
-                finish();
+            // On récupère les nouvelles listes d'appartenance
+            if (ctvliste1.isChecked()) {
+                idNouvListes.add(1);
             }
+            if (ctvliste2.isChecked()) {
+                idNouvListes.add(2);
+            }
+            if (ctvliste3.isChecked()) {
+                idNouvListes.add(3);
+            }
+
+            // On supprime toutes les listes d'appartenance dans la table Appartient
+            for (int i = 0; i < idPrevListes.size(); i++) {
+                if (idPrevListes.get(i) == 1) {
+                    bdao.supprimerListeAppartenance(bien.getId_bien(), 1);
+                }
+                if (idPrevListes.get(i) == 2) {
+                    bdao.supprimerListeAppartenance(bien.getId_bien(), 2);
+                }
+                if (idPrevListes.get(i) == 3) {
+                    bdao.supprimerListeAppartenance(bien.getId_bien(), 3);
+                }
+            }
+
+            // On recréé les entrées de la table Appartient en fonction des listes choisies
+            for (int i = 0; i < idNouvListes.size(); i++) {
+                if (idNouvListes.get(i) == 1) {
+                    bdao.addInAppartient(bien.getId_bien(), 1);
+                }
+                if (idNouvListes.get(i) == 2) {
+                    bdao.addInAppartient(bien.getId_bien(), 2);
+                }
+                if (idNouvListes.get(i) == 3) {
+                    bdao.addInAppartient(bien.getId_bien(), 3);
+                }
+            }
+
+            bdao.close();
+
+            finish();
         } else {
             Toast toast = Toast.makeText(this, "Votre bien doit avoir un nom", Toast.LENGTH_LONG);
             toast.show();
         }
     }
 
+    /**
+     * Procédure gérant l'action du bouton physique retour du téléphone.
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
+    /**
+     * Méthode permettant d'assigner le menu et ses options à l'activité.
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -434,6 +482,11 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         return true;
     }
 
+    /**
+     * Méthode permettant de faire différentes actions suivant le bouton du menu cliqué.
+     * @param item du menu
+     * @return un booléen indiquant quel item a été sélectionné.
+     */
     @Override
     public boolean onOptionsItemSelected (MenuItem item) {
         Intent intent;
@@ -455,6 +508,13 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Méthode permettant de récupérer l'id de la catégorie sélectionnée dans le spinner.
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position,long id) {
         categorieSelectionne = categoriesList.get(position);
@@ -465,6 +525,10 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    /**
+     * Fonction permettant de savoir si le bien appartient au moins à une liste ou non.
+     * @return un booléen contenant true si le bien appartient à au moins une liste, false sinon.
+     */
     public boolean isACheckboxIsChecked() {
         if(ctvliste1.isChecked() || ctvliste2.isChecked() || ctvliste3.isChecked()) {
             return true;
@@ -472,29 +536,39 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         return false;
     }
 
+    /**
+     * Méthode permettant de supprimer une photo pour le bien.
+     * @param fileName String contenant le chemin d'accès de la photo sur le téléphone.
+     * @param photo View permettant de savoir quelle photo il faut supprimer.
+     */
     public void supprimerPhoto(String fileName, View photo) {
-        final View view = (ImageView) photo;
+        final ImageView view = (ImageView) photo;
+
         TextView supprimerImage = new TextView(this);
         supprimerImage.setText("Voulez-vous vraiment supprimer la photo "+fileName+" ?");
 
         LinearLayout layout = new LinearLayout(this);
         layout.addView(supprimerImage);
 
+        // On règle les marges du layout
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) supprimerImage.getLayoutParams();
         params.leftMargin = 100;
         params.rightMargin = 100;
         params.topMargin = 50;
         layout.setLayoutParams(params);
 
+        // On construit un AlertDialog permettant de récupérer le choix de l'utilisateur
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle("Supprimer une photo");
         builder.setView(layout);
 
+        // S'il clique sur le bouton "Oui"
         builder.setPositiveButton("Oui",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        // Suivant le tag de la vue sur laquelle il a cliqué, on supprime la photo correspondante
                         switch (view.getTag().toString()) {
                             case "principal" : photoPrincipale.setImageBitmap(null);
                                 bien.setPhoto_bien_principal("");
@@ -513,6 +587,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     }
                 });
 
+        // S'il clique sur non, on ne fait rien
         builder.setNegativeButton("Non",
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -525,8 +600,14 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         dialog.show();
     }
 
+    /**
+     * Méthoder permettant de modifier la facture du bien
+     * @param v une View
+     */
     public void modifierFacture(View v){
+        // On vérifie si l'application peut accéder à la mémoire du téléphone
         verifierPermission(CHECK_PERM_PDF);
+        // Si oui, on invoque la méthode permettant de récupérer une facture
         if (perm) {
             recupererFacture();
         }
@@ -596,12 +677,12 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
                         imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
                         final String pathPhotoPrincipale;
-                            pathPhotoPrincipale = saveFile(path, format.toString(), "img");
-                            imgFile = new File(pathPhotoPrincipale);
-                            if (imgFile.exists()) {
-                                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                                imagePhotoPrincipale.setImageBitmap(myBitmap);
-                            }
+                        pathPhotoPrincipale = saveFile(path, format.toString(), "img");
+                        imgFile = new File(pathPhotoPrincipale);
+                        if (imgFile.exists()) {
+                            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            imagePhotoPrincipale.setImageBitmap(myBitmap);
+                        }
 
 
 
@@ -621,12 +702,12 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
                         imagePhoto1 = (ImageView) findViewById(R.id.photo1);
                         final String pathPhoto1;
-                            pathPhoto1 = saveFile(path, format.toString(), "img");
-                            imgFile = new File(pathPhoto1);
-                            if (imgFile.exists()) {
-                                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                                imagePhoto1.setImageBitmap(myBitmap);
-                            }
+                        pathPhoto1 = saveFile(path, format.toString(), "img");
+                        imgFile = new File(pathPhoto1);
+                        if (imgFile.exists()) {
+                            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            imagePhoto1.setImageBitmap(myBitmap);
+                        }
                         imagePhoto1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -641,12 +722,12 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                         imagePhoto2 = (ImageView) findViewById(R.id.photo2);
                         final String pathPhoto2;
 
-                            pathPhoto2 = saveFile(path, format.toString(), "img");
-                            imgFile = new File(pathPhoto2);
-                            if (imgFile.exists()) {
-                                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                                imagePhoto2.setImageBitmap(myBitmap);
-                            }
+                        pathPhoto2 = saveFile(path, format.toString(), "img");
+                        imgFile = new File(pathPhoto2);
+                        if (imgFile.exists()) {
+                            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            imagePhoto2.setImageBitmap(myBitmap);
+                        }
 
                         imagePhoto2.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -662,12 +743,12 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
                         imagePhoto3 = (ImageView) findViewById(R.id.photo3);
                         final String pathPhoto3;
-                            pathPhoto3 = saveFile(path, format.toString(), "img");
-                            imgFile = new File(pathPhoto3);
-                            if (imgFile.exists()) {
-                                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                                imagePhoto3.setImageBitmap(myBitmap);
-                            }
+                        pathPhoto3 = saveFile(path, format.toString(), "img");
+                        imgFile = new File(pathPhoto3);
+                        if (imgFile.exists()) {
+                            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            imagePhoto3.setImageBitmap(myBitmap);
+                        }
 
                         imagePhoto3.setOnClickListener(new View.OnClickListener() {
                             @Override
