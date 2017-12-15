@@ -82,6 +82,11 @@ public class CategorieDAO {
         return db.delete(TABLE_NAME, where, whereArgs);
     }
 
+    /**
+     * Méthode permettant de récupérer le nom d'une catégorie grâce à son identifiant.
+     * @param id int : identifiant de la catégorie recherchée.
+     * @return String : contient le nom de la catégorie ou est vide en cas d'échec.
+     */
     public String getNomCategorieByIdCategorie(int id) {
         String nom="";
         String selectQuery = "SELECT " + NOM +" FROM " + TABLE_NAME + " WHERE " + ID + "= " +id ;
@@ -94,6 +99,11 @@ public class CategorieDAO {
         return nom;
     }
 
+    /**
+     * Méthode permettant de récupérer la description d'une catégorie grâce à son identifiant.
+     * @param id int : identifiant de la catégorie recherchée.
+     * @return String : contient la description de la catégorie ou est vide en cas d'échec.
+     */
     public String getDescriptionCategorieByIdCategorie(int id) {
         String description="";
         String selectQuery = "SELECT " + DESCRIPTION +" FROM " + TABLE_NAME + " WHERE " + ID + "= " +id ;
@@ -106,6 +116,10 @@ public class CategorieDAO {
         return description;
     }
 
+    /**
+     * Méthode permettant de récupérer toutes les catégories de la table Catégorie.
+     * @return ArrayList<Categorie> contenant toutes les catégories en cas de réussite, vide sinon.
+     */
     public ArrayList<Categorie> getAllCategorie(){
         ArrayList<Categorie> liste = new ArrayList<Categorie>();
         Cursor curseurCategorie = db.rawQuery("SELECT * FROM "+TABLE_NAME, null);
@@ -126,7 +140,7 @@ public class CategorieDAO {
         return liste;
     }
 
-    public ArrayList<Categorie> getCategoriesByIdListe(int idListe){
+    /*public ArrayList<Categorie> getCategoriesByIdListe(int idListe){
         ArrayList<Categorie> liste = new ArrayList<Categorie>();
 
         // DEVELOPPE MAIS JAMAIS UTILSEE. A VERIFIER PAR @TLS
@@ -146,7 +160,8 @@ public class CategorieDAO {
         }
         curseurCategorie.close();
         return liste;
-    }
+    }*/
+
     /**
      * Méthode permettant l'ouverture de la table en lecture/ecriture
      */

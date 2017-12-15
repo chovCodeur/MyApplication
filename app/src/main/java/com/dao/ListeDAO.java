@@ -70,6 +70,11 @@ public class ListeDAO {
         return liste;
     }
 
+    /**
+     * Méthode permettant de récupérer le nom d'une liste grâce à son identifiant.
+     * @param id int : identifiant de la liste.
+     * @return String : contenant le nom de la liste en cas de réussite, vide sinon.
+     */
     public String getNomListeById(int id){
         String nom="";
         Cursor curseurListe = db.rawQuery("SELECT libelle FROM "+TABLE_NAME+" WHERE id_liste = "+id, null);
