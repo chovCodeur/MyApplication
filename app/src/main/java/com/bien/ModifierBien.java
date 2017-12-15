@@ -3,6 +3,7 @@ package com.bien;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -56,6 +57,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -574,18 +576,17 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             if(request == SELECT_IMAGE) {
                 path = getRealPathFromUri(data.getData());
             } else {
-                path = "temp";
+                path = getRealPathFromUri(imageUriTest);
             }
 
             final ImageView imagePhotoPrincipale;
             final ImageView imagePhoto1;
             final ImageView imagePhoto2;
             final ImageView imagePhoto3;
-
+            Bitmap myBitmap;
             String format = s.format(new Date());
-            final String [] tab;
-            final int last;
-            File imgFile;
+
+            final File imgFile;
 
 
 
@@ -595,25 +596,19 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
                         imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
                         final String pathPhotoPrincipale;
-                        if (request == SELECT_IMAGE) {
                             pathPhotoPrincipale = saveFile(path, format.toString(), "img");
                             imgFile = new File(pathPhotoPrincipale);
                             if (imgFile.exists()) {
-                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                                 imagePhotoPrincipale.setImageBitmap(myBitmap);
                             }
-                        } else {
-                            Bitmap myBitmap = (Bitmap) data.getExtras().get("data");
-                            pathPhotoPrincipale = saveImagePrise(myBitmap, format.toString());
-                            imagePhotoPrincipale.setImageBitmap(myBitmap);
-                        }
 
-                        tab = pathPhotoPrincipale.split("/");
-                        last = tab.length;
+
+
                         imagePhotoPrincipale.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                supprimerPhoto(tab[last-1], imagePhotoPrincipale);
+                                supprimerPhoto(imgFile.getName(), imagePhotoPrincipale);
                             }
                         });
 
@@ -626,25 +621,16 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
                         imagePhoto1 = (ImageView) findViewById(R.id.photo1);
                         final String pathPhoto1;
-                        if (request == SELECT_IMAGE) {
                             pathPhoto1 = saveFile(path, format.toString(), "img");
                             imgFile = new File(pathPhoto1);
                             if (imgFile.exists()) {
-                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                                 imagePhoto1.setImageBitmap(myBitmap);
                             }
-                        } else {
-                            Bitmap myBitmap = (Bitmap) data.getExtras().get("data");
-                            pathPhoto1 = saveImagePrise(myBitmap, format.toString());
-                            imagePhoto1.setImageBitmap(myBitmap);
-                        }
-
-                        tab = pathPhoto1.split("/");
-                        last = tab.length;
                         imagePhoto1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                supprimerPhoto(tab[last-1], imagePhoto1);
+                                supprimerPhoto(imgFile.getName(), imagePhoto1);
                             }
                         });
 
@@ -654,25 +640,18 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     case 2:
                         imagePhoto2 = (ImageView) findViewById(R.id.photo2);
                         final String pathPhoto2;
-                        if (request == SELECT_IMAGE) {
+
                             pathPhoto2 = saveFile(path, format.toString(), "img");
                             imgFile = new File(pathPhoto2);
                             if (imgFile.exists()) {
-                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                                 imagePhoto2.setImageBitmap(myBitmap);
                             }
-                        } else {
-                            Bitmap myBitmap = (Bitmap) data.getExtras().get("data");
-                            pathPhoto2 = saveImagePrise(myBitmap, format.toString());
-                            imagePhoto2.setImageBitmap(myBitmap);
-                        }
 
-                        tab = pathPhoto2.split("/");
-                        last = tab.length;
                         imagePhoto2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                supprimerPhoto(tab[last-1], imagePhoto2);
+                                supprimerPhoto(imgFile.getName(), imagePhoto2);
                             }
                         });
 
@@ -683,25 +662,17 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
                         imagePhoto3 = (ImageView) findViewById(R.id.photo3);
                         final String pathPhoto3;
-                        if (request == SELECT_IMAGE) {
                             pathPhoto3 = saveFile(path, format.toString(), "img");
                             imgFile = new File(pathPhoto3);
                             if (imgFile.exists()) {
-                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                                 imagePhoto3.setImageBitmap(myBitmap);
                             }
-                        } else {
-                            Bitmap myBitmap = (Bitmap) data.getExtras().get("data");
-                            pathPhoto3 = saveImagePrise(myBitmap, format.toString());
-                            imagePhoto3.setImageBitmap(myBitmap);
-                        }
 
-                        tab = pathPhoto3.split("/");
-                        last = tab.length;
                         imagePhoto3.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                supprimerPhoto(tab[last-1], imagePhoto3);
+                                supprimerPhoto(imgFile.getName(), imagePhoto3);
                             }
                         });
 
@@ -911,12 +882,18 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    private Uri imageUriTest;
     public void prendrePhoto(View view){
-        if (getFirstNullPicture()< 4) {
-            Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (getFirstNullPicture() < 4) {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, "New Picture");
+            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+            imageUriTest = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriTest);
             startActivityForResult(intent, TAKE_IMAGE);
         } else {
-            Toast.makeText(this, "Vous devez déjà supprimer une photo !", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
         }
     }
 

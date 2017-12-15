@@ -3,6 +3,7 @@ package com.bien;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -338,7 +339,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             if(request == SELECT_IMAGE) {
                 path = getRealPathFromUri(data.getData());
             } else {
-                path = "temp";
+                path = getRealPathFromUri(imageUriTest);
             }
 
             ImageView imagePhotoPrincipale;
@@ -354,18 +355,13 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
                         imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
 
-                        if (request == SELECT_IMAGE) {
                             pathPhotoPrincipale = saveFile(path, format.toString(), "img");
                             imgFile = new File(pathPhotoPrincipale);
                             if (imgFile.exists()) {
                                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                                 imagePhotoPrincipale.setImageBitmap(myBitmap);
                             }
-                        } else {
-                            Bitmap myBitmap= (Bitmap) data.getExtras().get("data");
-                            pathPhotoPrincipale = saveImagePrise(myBitmap, format.toString());
-                            imagePhotoPrincipale.setImageBitmap(myBitmap);
-                        }
+
 
                         nbPhoto++;
 
@@ -374,18 +370,12 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
                         imagePhoto1 = (ImageView) findViewById(R.id.photo1);
 
-                        if (request == SELECT_IMAGE) {
                             pathPhoto1 = saveFile(path, format.toString(), "img");
                             imgFile = new File(pathPhoto1);
                             if (imgFile.exists()) {
                                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                                 imagePhoto1.setImageBitmap(myBitmap);
                             }
-                        } else {
-                            Bitmap myBitmap= (Bitmap) data.getExtras().get("data");
-                            pathPhoto1 = saveImagePrise(myBitmap, format.toString());
-                            imagePhoto1.setImageBitmap(myBitmap);
-                        }
 
                         nbPhoto++;
 
@@ -393,18 +383,14 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                     case 2:
                         imagePhoto2 = (ImageView) findViewById(R.id.photo2);
 
-                        if (request == SELECT_IMAGE) {
+
                             pathPhoto2 = saveFile(path, format.toString(), "img");
                             imgFile = new File(pathPhoto2);
                             if (imgFile.exists()) {
                                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                                 imagePhoto2.setImageBitmap(myBitmap);
                             }
-                        } else {
-                            Bitmap myBitmap= (Bitmap) data.getExtras().get("data");
-                            pathPhoto2 = saveImagePrise(myBitmap, format.toString());
-                            imagePhoto2.setImageBitmap(myBitmap);
-                        }
+
                         nbPhoto++;
 
                         break;
@@ -413,18 +399,13 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
                         imagePhoto3 = (ImageView) findViewById(R.id.photo3);
 
-                        if (request == SELECT_IMAGE) {
+
                             pathPhoto3 = saveFile(path, format.toString(), "img");
                             imgFile = new File(pathPhoto3);
                             if (imgFile.exists()) {
                                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                                 imagePhoto3.setImageBitmap(myBitmap);
                             }
-                        } else {
-                            Bitmap myBitmap= (Bitmap) data.getExtras().get("data");
-                            pathPhoto3 = saveImagePrise(myBitmap, format.toString());
-                            imagePhoto3.setImageBitmap(myBitmap);
-                        }
 
                         nbPhoto++;
 
@@ -733,9 +714,15 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         return context;
     }
 
+    private Uri imageUriTest;
     public void prendrePhoto(View view){
         if (nbPhoto <= 3) {
-            Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, "New Picture");
+            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+            imageUriTest = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriTest);
             startActivityForResult(intent, TAKE_IMAGE);
         } else {
             Toast.makeText(getContext(), "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
