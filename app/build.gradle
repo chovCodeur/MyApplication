@@ -30,4 +30,5 @@ dependencies {
     compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
     testCompile 'junit:junit:4.12'
     compile project(':opencsv-4.1')
+    compile 'junit:junit:4.12'
 }
