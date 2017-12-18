@@ -39,11 +39,15 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Created by Rodnor on 11/11/2017.
+ * Created by Tristan on 11/11/2017.
  */
 
+/**
+ * Classe servant à afficher les informations que contient l'application pour un bien en particulier.
+ */
 public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    // Variables de classe
     private BienDAO bdao;
     private CategorieDAO cdao;
     private ListeDAO ldao;
@@ -69,19 +73,29 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
     private Menu m = null;
     private Context context = this;
 
+    /**
+     * Procédure lancée à la création de l'activité.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infos_bien);
-
-
     }
 
+    /**
+     * Procédure gérant l'action du bouton physique retour du téléphone.
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
+    /**
+     * Méthode permettant d'assigner le menu et ses options à l'activité.
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -91,33 +105,43 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         return true;
     }
 
+    /**
+     * Méthode lancée à chaque arrivée sur l'activité.
+     */
     @Override
     protected void onResume() {
         super.onResume();
 
+        // On vide la liste contenant le nom des listes dans lequel le bien se situe
         listes.clear();
 
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
+        // On instancie les DAO dont on a besoin dans l'activité
         bdao = new BienDAO(this);
         cdao = new CategorieDAO(this);
         ldao = new ListeDAO(this);
 
+        // On récupère les paramètres provenants d'une autre activité
         Bundle extras = getIntent().getExtras();
 
+        // On effectue les traitements suivants seulement si l'on récupère des paramètres
         if(extras != null) {
+            // On stocke l'id du bien dont les informations doivent être affichées
             id = extras.getInt("IDBIEN");
 
+            // Si l'id du bien n'est pas nul
             if(id != 0) {
+                // On ouvre le DAO et on récupère le bien par son id
                 bdao.open();
                 bien = bdao.getBien(id);
-                //Log.e("AA","aa"+bien.toString());
 
-                // récupérer les id des listes d'appartenance du bien dans la table Appartient
+                // On récupère les id des listes d'appartenance du bien dans la table Appartient
                 idlistes = bdao.getAllIdListeByIdBien(bien.getId_bien());
 
-                // récupérer le nom des listes dans lequel le bien existe
+                // On récupère le nom des listes dans lequel le bien existe grâce aux id récupérés
+                // et on les ajoute à notre liste éphémère
                 ldao.open();
                 for(int i=0;i<idlistes.size();i++) {
                     if(idlistes.get(i) == 1) {
@@ -137,17 +161,20 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
                 bdao.close();
 
+                // On récupère le nom du bien et on l'affiche dans la toolbar customisée
                 myToolbar.setTitle(bien.getNom_bien());
                 setSupportActionBar(myToolbar);
 
                 // Mise à jour de l'image principale
                 photoPrincipale = (ImageButton) findViewById(R.id.photoPrincipaleBien);
+                // Si le bien contient une photo principale, on créé une image bitmap que l'on affiche
                 if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_principal());
                     if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         photoPrincipale.setImageBitmap(myBitmap);
                     }
+                // Sinon, on affiche une image par défaut
                 } else {
                     photoPrincipale.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
                 }
@@ -183,7 +210,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 });
 
                 Bitmap myBitmap;
-                // Mise à jour des 3 miniatures d'images
+                // Mise à jour des 3 miniatures d'images sur le même principe que l'image principale
                 photoMini1 = (ImageButton) findViewById(R.id.Photo1Bien);
                 if(bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_miniature1());
@@ -217,7 +244,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                     photoMini3.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
                 }
 
-                // Mise à jour des listes dans lequel l'objet apparaît
+                // Mise à jour du spinner contenant le nom des listes d'appartenance du bien
                 spinnerListe = (Spinner) findViewById(R.id.spinnerListesAppartenanceBien);
                 spinnerListe.setOnItemSelectedListener(this);
                 ArrayAdapter arrayAdapterCategorie = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listes);
@@ -249,8 +276,8 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 // Mise à jour commentaire du bien
                 commentaire = (TextView) findViewById(R.id.commentairesBien);
                 commentaire.setText(bien.getCommentaire_bien());
-                // }
 
+                // Lorsque l'on clique sur l'une des images du bien, si elle existe, un effet de zoom est appliqué
                 ImageButton imageButton = (ImageButton) findViewById(R.id.photoPrincipaleBien);
                 imageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -298,10 +325,16 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         }
     }
 
+    /**
+     * Méthode permettant de faire différentes actions suivant le bouton du menu cliqué.
+     * @param item du menu
+     * @return un booléen indiquant quel item a été sélectionné.
+     */
     @Override
     public boolean onOptionsItemSelected (MenuItem item) {
         Intent intent;
         switch(item.getItemId()) {
+            // Si l'on clique sur l'icone "Home", on retourne directement à la page d'accueil
             case R.id.home:
                 Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
                 intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -309,6 +342,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
                 return true;
 
+            // Si l'on clique sur l'icone "+", on accède à l'activité permettant d'ajouter un bien
             case R.id.plus:
                 intent = new Intent(this, AjouterBien.class);
                 startActivity(intent);
@@ -329,6 +363,11 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
     }
 
+    /**
+     * Méthode permettant d'effectuer un zoom sur une image.
+     * @param thumbView vue contenant l'image que l'on veut zoomer.
+     * @param image sur laquelle on veut zoomer.
+     */
     private void zoomImageFromThumb(final View thumbView, Bitmap image) {
         if (mCurrentAnimator != null) {
             mCurrentAnimator.cancel();
@@ -431,17 +470,27 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         });
     }
 
+    /**
+     * Méthode permettant de lancer l'activité de modification d'un bien.
+     * @param v un objet View.
+     */
     public void modifierBien(View v) {
         Intent intent = new Intent(this, ModifierBien.class);
         intent.putExtra("IDBIEN",bien.getId_bien());
         intent.putExtra("IDCATEGORIE",bien.getId_categorie_bien());
         startActivity(intent);
     }
+
+    /**
+     * Méthode permettant de déclencher la suppression d'un bien.
+     * @param v un objet View.
+     */
     public void supprimerBien(View v){
-        Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
         bdao.open();
         bdao.deleteBien(bien);
         bdao.close();
+
+        Intent intenthome = new Intent(this, MainActivity.class);
         intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intenthome);
     }

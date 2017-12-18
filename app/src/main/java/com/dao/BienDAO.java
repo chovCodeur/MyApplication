@@ -108,6 +108,11 @@ public class BienDAO {
         return temp;
     }
 
+    /**
+     * Méthode permettant de modifier un bien dans la table Bien
+     * @param bien Bien : bien à modifier
+     * @return int l'id du nouvel enregistrement inséré, ou -1 en cas d'erreur
+     */
     public int modBien(Bien bien){
         ContentValues values = new ContentValues();
         values.put(NOM,bien.getNom_bien());
@@ -130,7 +135,11 @@ public class BienDAO {
         return db.update(TABLE_NAME, values, where, whereArgs);
     }
 
-
+    /**
+     * Méthode permettant de récupérer un bien dans la table Bien
+     * @param id int : id du bien à récupérer
+     * @return Bien : un bien de la Table s'il existe ou un bien vide avec un id de 0 sinon.
+     */
     public Bien getBien(int id){
         Bien a=new Bien(0, "", "", "", "","", "",null,null,null,null,0, "", "");
 
@@ -154,18 +163,6 @@ public class BienDAO {
         }
 
         return a;
-    }
-
-    public String getImageBienByNom(String nom){
-        String img="";
-
-        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+NOM+"=\""+nom+"\"", null);
-        if (c.moveToFirst()) {
-            img = c.getString(c.getColumnIndex(PHOTO_PRINCIPALE));
-            c.close();
-        }
-
-        return img;
     }
 
     /**
@@ -221,6 +218,12 @@ public class BienDAO {
         return liste;
     }
 
+    /**
+     * Méthode permettant de lier un bien à une liste dans la table Appartient.
+     * @param idBienInsere long : id du bien que l'on veut insérer.
+     * @param idListe int : id de la liste dans laquelle on veut mettre le bien.
+     * @return long : id de l'entrée dans la table Appartient ou -1 en cas d'échec.
+     */
     public long addInAppartient(long idBienInsere, int idListe){
         ContentValues values = new ContentValues();
         values.put(ID, idBienInsere);
@@ -232,6 +235,12 @@ public class BienDAO {
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME);
     }
 
+    /**
+     * Méthode permettant de supprimer une relation entre un bien et sa liste dans la table Appartient.
+     * @param idBien int : id du bien.
+     * @param prevIdListe int : id de la liste.
+     * @return un entier contenant l'id de la ligne supprimée dans la table Appartient ou -1 en cas d'échec.
+     */
     public int supprimerListeAppartenance(int idBien, int prevIdListe) {
         String where = "id_bien = ? AND id_liste = ?";
         String[] whereArgs = {idBien+"", prevIdListe+""};
@@ -239,6 +248,11 @@ public class BienDAO {
         return db.delete("APPARTIENT", where, whereArgs);
     }
 
+    /**
+     * Méthode permettant de récupérer l'ensemble des id des listes contenant un bien en particulier.
+     * @param id int : id du bien
+     * @return ArrayList<Integer> contenant les identifiants des listes en cas de réussite ou vide sinon.
+     */
     public ArrayList<Integer> getAllIdListeByIdBien(int id) {
         ArrayList<Integer> idListes = new ArrayList<>();
 
