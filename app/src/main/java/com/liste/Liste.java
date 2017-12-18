@@ -9,6 +9,7 @@ public class Liste {
     private String libelle_liste;
     private String commentaire_liste;
 
+
     public Liste(int id_liste, String libelle_liste, String commentaire_liste) {
         this.id_liste = id_liste;
         this.libelle_liste = libelle_liste;
@@ -38,4 +39,6 @@ public class Liste {
     public void setCommentaire_liste(String commentaire_liste) {
         this.commentaire_liste = commentaire_liste;
     }
+
+
 }

@@ -44,7 +44,7 @@
             android:layout_marginRight="20dp">
 
             <EditText
-                android:id="@+id/nom_liste"
+                android:id="@+id/nomListeAexporter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -53,34 +53,46 @@
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true" />
 
-            <TextView
-                android:id="@+id/explicationCategorie"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/checkListe1"
-                android:layout_marginTop="10dp"
-                android:text="Selectionner une catégorie :" />
+            <!--
+                        <TextView
+                            android:id="@+id/explicationCategorie"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_below="@+id/checkListe1"
+                            android:layout_marginTop="10dp"
+                            android:layout_centerHorizontal="true"
+                            android:text="Selectionner une catégorie :" />
 
-            <Spinner
-                android:id="@+id/select_categorie"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/explicationCategorie"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp" />
+                                    <Button
+                                        android:id="@+id/select_categorie"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_below="@+id/explicationCategorie"
+                                        android:onClick="annexe"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_marginTop="10dp" /> -->
 
             <TextView
                 android:id="@+id/explicationListe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/nom_liste"
+                android:layout_below="@+id/nomListeAexporter"
                 android:layout_marginTop="10dp"
                 android:text="Selectionner une ou plusieurs listes :" />
 
-            <CheckedTextView
+            <TextView
+                android:id="@+id/affichageCategorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkListe1"
+                android:layout_marginTop="10dp"
+                android:visibility="invisible"
+                />
+
+            <RadioButton
                 android:id="@+id/checkListe3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,11 +102,12 @@
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:checked="false"
                 android:layout_marginTop="10dp"
-                android:text="L3"
+                android:text=""
                 android:textSize="18sp"
+                android:onClick="annexe"
                 android:visibility="visible" />
 
-            <CheckedTextView
+            <RadioButton
                 android:id="@+id/checkListe2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -105,9 +118,10 @@
                 android:layout_marginTop="10dp"
                 android:text=""
                 android:textSize="18sp"
+                android:onClick="annexe"
                 android:visibility="visible" />
 
-            <CheckedTextView
+            <RadioButton
                 android:id="@+id/checkListe1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -117,8 +131,9 @@
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:checked="false"
                 android:layout_marginTop="10dp"
-                android:text="L1"
+                android:text=""
                 android:textSize="18sp"
+                android:onClick="annexe"
                 android:visibility="visible" />
 
             <Button
@@ -126,8 +141,9 @@
                 android:layout_width="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/select_categorie"
-                android:layout_marginTop="6dp"
+                android:layout_below="@+id/affichageCategorie"
+                android:layout_marginTop="10dp"
+                android:onClick="onClickExportListe"
                 android:text="Exporter au format CSV" />
 
         </RelativeLayout>

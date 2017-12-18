@@ -9,6 +9,8 @@ public class Categorie {
     private int id_Categorie;
     private String nom_Categorie;
     private String description;
+    private String title;
+    private boolean selected;
 
     public Categorie(int id_Categorie, String nom_Categorie, String description) {
         this.id_Categorie = id_Categorie;
@@ -47,7 +49,25 @@ public class Categorie {
                 "id_Categorie=" + id_Categorie +
                 ", nom_Categorie='" + nom_Categorie + '\'' +
                 ", description='" + description + '\'' +
+                ", selected='" + selected + '\'' +
                 '}';
+    }
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
 

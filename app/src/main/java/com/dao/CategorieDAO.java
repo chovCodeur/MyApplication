@@ -140,11 +140,12 @@ public class CategorieDAO {
         return liste;
     }
 
-    /*public ArrayList<Categorie> getCategoriesByIdListe(int idListe){
+    public ArrayList<Categorie> getCategoriesByIdListe(int idListe){
         ArrayList<Categorie> liste = new ArrayList<Categorie>();
 
         // DEVELOPPE MAIS JAMAIS UTILSEE. A VERIFIER PAR @TLS
-        Cursor curseurCategorie = db.rawQuery("SELECT DISTINCT " + ID + ", " + NOM + ", "+ DESCRIPTION+"FROM "+TABLE_NAME +" JOIN BIEN ON BIEN.id_categorie = CATEGORIE.id_categorie JOIN APPARTIENT ON APPARTIENT.id_categorie = BIEN.id_categorie WHERE id_liste = "+idListe, null);
+        Cursor curseurCategorie = db.rawQuery("SELECT DISTINCT CATEGORIE.id_categorie, CATEGORIE.nom, CATEGORIE.description FROM "+TABLE_NAME +" JOIN BIEN ON BIEN.id_categorie = CATEGORIE.id_categorie JOIN APPARTIENT ON APPARTIENT.id_bien = BIEN.id_bien WHERE APPARTIENT.id_liste = "+idListe, null);
+        //Cursor curseurCategorie = db.rawQuery("SELECT DISTINCT " + ID + ", " + NOM + ", "+ DESCRIPTION+"FROM "+TABLE_NAME +" JOIN BIEN ON BIEN.id_categorie = CATEGORIE.id_categorie JOIN APPARTIENT ON APPARTIENT.id_categorie = BIEN.id_categorie WHERE id_liste = "+idListe, null);
 
         Categorie categorie;
         if (curseurCategorie.moveToFirst()) {
@@ -160,7 +161,7 @@ public class CategorieDAO {
         }
         curseurCategorie.close();
         return liste;
-    }*/
+    }
 
     /**
      * Méthode permettant l'ouverture de la table en lecture/ecriture
