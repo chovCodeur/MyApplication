@@ -1,14 +1,18 @@
 package com.liste;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -35,6 +39,7 @@ import android.widget.Toolbar;
 import com.application.MainActivity;
 import com.application.inventaire.R;
 import com.bd.MySQLite;
+import com.bien.AjouterBien;
 import com.categorie.Categorie;
 import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
@@ -52,6 +57,7 @@ import java.util.ArrayList;
 
 public class ExportListe extends AppCompatActivity {
 
+    private String nomFichierCsv = "";
     private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
     private SQLiteDatabase db;
     //private Menu m;
@@ -71,6 +77,7 @@ public class ExportListe extends AppCompatActivity {
 
     private ArrayList<Categorie> listeCategorieSelected;
     private ListeAdapter myAdapter;
+    private Boolean perm = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,11 +281,14 @@ public class ExportListe extends AppCompatActivity {
 
     public void onClickExportListe(View view) {
         EditText editTextNomFichier = (EditText) findViewById(R.id.nomListeAexporter);
-        String nomFichier = editTextNomFichier.getText().toString();
-        if (nomFichier != null && !nomFichier.equals("")){
+        nomFichierCsv = editTextNomFichier.getText().toString();
+        if (nomFichierCsv != null && !nomFichierCsv.equals("")){
             if (idliste != 0) {
                 if (!listeCategorieSelected.isEmpty()){
-                    exportDB(getApplicationContext(), nomFichier);
+                    verifierPermission();
+                    if (perm) {
+                        exportDB(getApplicationContext(), nomFichierCsv);
+                    }
                 } else {
                     Toast.makeText(this, "Vous devez sélectionner au moins une categorie", Toast.LENGTH_SHORT).show();
                 }
@@ -326,5 +336,26 @@ public class ExportListe extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    public void verifierPermission() {
+        if (ContextCompat.checkSelfPermission(ExportListe.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ExportListe.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        } else {
+            perm = true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (ContextCompat.checkSelfPermission(ExportListe.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            perm = true;
+            exportDB(getApplicationContext(), nomFichierCsv);
+        }
+
+        if (!perm) {
+            Toast.makeText(this, "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
+        }
+
+    }
 
 }
