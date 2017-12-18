@@ -48,7 +48,10 @@ import com.opencsv.CSVWriter;
 import android.widget.AdapterView;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -239,7 +242,11 @@ public class ExportListe extends AppCompatActivity {
         Log.d("pouet2", exportDir.toString());
         try {
             file.createNewFile();
-            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            FileOutputStream os = new FileOutputStream(file);
+            os.write(0xef);
+            os.write(0xbb);
+            os.write(0xbf);
+            CSVWriter csvWrite = new CSVWriter(new OutputStreamWriter(os));
 
             SQLiteDatabase db = new MySQLite(context).getWritableDatabase();
 
