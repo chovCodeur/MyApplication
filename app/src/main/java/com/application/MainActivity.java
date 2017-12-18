@@ -313,11 +313,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bdao.close();
         if (!listeBiens.isEmpty()) {
             cdao.open();
-            //mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#Catégorie : " + cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
-            //listeHeader.put(0, listeBiens.get(0).getId_categorie_bien());
+
+            mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#Catégorie : " + cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
+            listeHeader.put(0, listeBiens.get(0).getId_categorie_bien());
 
             int cpt = 0;
-            int idCat = 0;
+            int idCat = 1;
             String item = null;
 
             cdao.close();
