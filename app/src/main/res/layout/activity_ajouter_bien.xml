@@ -208,7 +208,7 @@
 
             <Button
                 android:id="@+id/ajouterFacture"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/linearBouton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -220,7 +220,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/linearBouton"
+                android:layout_below="@+id/ajouterFacture"
                 android:onClick="onClickAjouterBien"
                 android:text="Ajouter le bien" />
 

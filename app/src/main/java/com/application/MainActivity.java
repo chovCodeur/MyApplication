@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ListeDAO ldao;
     private PersonneDAO pdao;
     private CategorieDAO cdao;
-    private int idCurrentList=1;
+    private int idCurrentList = 1;
     private Menu m;
     private AlertDialog dialog;
     private AlertDialog.Builder builder;
@@ -124,14 +124,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //refreshAdapterView();
 
     }
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+            if (savedInstanceState.getString("ID_CURRENT_LISTE") != null && !savedInstanceState.getString("ID_CURRENT_LISTE").equals("")){
+                idCurrentList = Integer.valueOf(savedInstanceState.getString("ID_CURRENT_LISTE"));
+            } else {
+                idCurrentList = 1;
+            }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("ID_CURRENT_LISTE", String.valueOf(idCurrentList));
+
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     protected void onResume() {
-        Bundle extras = getIntent().getExtras();
-
-        /*if (extras != null && extras.get("ID_CURRENT_LIST_FROM_ADD_BIEN") != null) {
-            idCurrentList = extras.getInt("ID_CURRENT_LIST_FROM_ADD_BIEN");
-        }*/
         super.onResume();
 
         // on rafraichi simplement l'affichage
