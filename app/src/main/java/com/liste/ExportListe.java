@@ -39,6 +39,7 @@ import com.categorie.Categorie;
 import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
 import com.opencsv.CSVWriter;
+
 import android.widget.AdapterView;
 
 import java.io.File;
@@ -49,52 +50,41 @@ import java.util.ArrayList;
  * Created by Thib on 06/12/2017.
  */
 
-public class ExportListe extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class ExportListe extends AppCompatActivity {
 
     private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
     private SQLiteDatabase db;
     //private Menu m;
-    private ArrayList<Categorie> categoriesList = new ArrayList<Categorie>();
+    private ArrayList<Categorie> listeCategorieEnBase = new ArrayList<Categorie>();
     private Spinner spinnerCategorie;
     public EditText nomListe;
-    private Categorie categorieSelectionne;
     RadioButton ctvliste1;
     RadioButton ctvliste2;
     RadioButton ctvliste3;
     private Menu m;
-    private int idliste=1;
+    private int idliste = 0;
     private Boolean dansListe1 = false;
     private Boolean dansListe2 = false;
     private Boolean dansListe3 = false;
     private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
     private Boolean checkPermissionActivite = false;
 
-    private ArrayList<Categorie> listeSelected;
+    private ArrayList<Categorie> listeCategorieSelected;
     private ListeAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exporter_liste);
-        this.listeSelected=new ArrayList<>();
-
-        /*
-        if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(AjouterBien.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 4);
-        }
-        */
+        this.listeCategorieSelected = new ArrayList<>();
 
         android.support.v7.widget.Toolbar myToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle("Exporter une liste");
         setSupportActionBar(myToolbar);
 
-
         ListeDAO listeDAO = new ListeDAO(this);
-
         listeDAO.open();
-
         ArrayList<Liste> listes = listeDAO.getallListe();
-
         listeDAO.close();
 
         final RadioButton liste1 = (RadioButton) findViewById(R.id.checkListe1);
@@ -108,18 +98,18 @@ public class ExportListe extends AppCompatActivity implements AdapterView.OnItem
         liste1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if (liste1.isChecked()){
-                        liste1.setChecked(true);
-                        liste2.setChecked(false);
-                        liste3.setChecked(false);
-                        if (idliste != 1){
-                        idliste=1;
-                        listeSelected = new ArrayList<>();
-                        }
-                        TextView tv = (TextView)findViewById(R.id.affichageCategorie);
-                        tv.setText("");
-                        annexe(v);
-            }
+                if (liste1.isChecked()) {
+                    liste1.setChecked(true);
+                    liste2.setChecked(false);
+                    liste3.setChecked(false);
+                    if (idliste != 1) {
+                        idliste = 1;
+                        listeCategorieSelected = new ArrayList<>();
+                    }
+                    TextView tv = (TextView) findViewById(R.id.affichageCategorie);
+                    tv.setText("");
+                    annexe(v);
+                }
 
             }
         });
@@ -127,173 +117,177 @@ public class ExportListe extends AppCompatActivity implements AdapterView.OnItem
         liste2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if (liste2.isChecked()){
+                if (liste2.isChecked()) {
                     liste2.setChecked(true);
                     liste1.setChecked(false);
                     liste3.setChecked(false);
-                        if (idliste != 2) {
-                            idliste = 2;
-                            listeSelected = new ArrayList<>();
-                        }
-                        TextView tv = (TextView)findViewById(R.id.affichageCategorie);
-                        tv.setText("");
-                        annexe(v);
-            }}
+                    if (idliste != 2) {
+                        idliste = 2;
+                        listeCategorieSelected = new ArrayList<>();
+                    }
+                    TextView tv = (TextView) findViewById(R.id.affichageCategorie);
+                    tv.setText("");
+                    annexe(v);
+                }
+            }
         });
 
         liste3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if (liste3.isChecked()) {
-                        liste3.setChecked(true);
-                        liste1.setChecked(false);
-                        liste2.setChecked(false);
-                        if (idliste != 3) {
-                            idliste = 3;
-                            listeSelected = new ArrayList<>();
-                        }
-                        TextView tv = (TextView)findViewById(R.id.affichageCategorie);
-                        tv.setText("");
-                        annexe(v);
+                if (liste3.isChecked()) {
+                    liste3.setChecked(true);
+                    liste1.setChecked(false);
+                    liste2.setChecked(false);
+                    if (idliste != 3) {
+                        idliste = 3;
+                        listeCategorieSelected = new ArrayList<>();
                     }
+                    TextView tv = (TextView) findViewById(R.id.affichageCategorie);
+                    tv.setText("");
+                    annexe(v);
+                }
 
-                }});
+            }
+        });
 
     }
 
-    public void annexe(View view){
-        ArrayList<Categorie> categorieSelected = new ArrayList<>();
+    public void annexe(View view) {
+        //final ArrayList<Categorie> categorieSelected = new ArrayList<>();
         AlertDialog.Builder builder = new AlertDialog.Builder(ExportListe.this);
         builder.setTitle("Choix des catégories à exporter :");
+
         LinearLayout corps = new LinearLayout(getApplicationContext());
         corps.setOrientation(LinearLayout.VERTICAL);
+
+        TextView tvSelected = (TextView) findViewById(R.id.affichageCategorie);
+
+
         CategorieDAO categorieDAO = new CategorieDAO(this);
         categorieDAO.open();
-        Log.d("idListe", String.valueOf(idliste));
-        categoriesList = categorieDAO.getCategoriesByIdListe(idliste);
+        listeCategorieEnBase = categorieDAO.getCategoriesByIdListe(idliste);
         categorieDAO.close();
-        Log.d("niktamere", String.valueOf(listeSelected.size()));
-        ListeAdapter categorieChooserAdapter = new ListeAdapter(getApplicationContext(), 0, categoriesList, listeSelected);
+
+        if (listeCategorieSelected == null || listeCategorieSelected.isEmpty()){
+            listeCategorieSelected = listeCategorieEnBase;
+            afficherCategories(tvSelected);
+            tvSelected.setVisibility(View.VISIBLE);
+        }
+
+        final ListeAdapter categorieChooserAdapter = new ListeAdapter(getApplicationContext(), 0, listeCategorieEnBase, listeCategorieSelected);
         final ListView listeCategorie = new ListView(getApplicationContext());
         listeCategorie.setAdapter(categorieChooserAdapter);
         builder.setView(listeCategorie);
         builder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                listeSelected=new ArrayList<Categorie>();
-                for (int j=0; j<categoriesList.size(); j++){
+                listeCategorieSelected = new ArrayList<Categorie>();
+                for (int j = 0; j < listeCategorieEnBase.size(); j++) {
                     Categorie cat = (Categorie) listeCategorie.getItemAtPosition(j);
-                    if (cat.isSelected()){
-                        listeSelected.add(cat);
+                    if (cat.isSelected()) {
+                        listeCategorieSelected.add(cat);
                     }
                 }
-                TextView tvSelected = (TextView)findViewById(R.id.affichageCategorie);
+
+
+                TextView tvSelected = (TextView) findViewById(R.id.affichageCategorie);
                 tvSelected.setText(null);
-                if(listeSelected.isEmpty()){
+                if (listeCategorieSelected.isEmpty()) {
                     tvSelected.setVisibility(View.INVISIBLE);
                 } else {
-                    String displaySelected="";
-                    for (Categorie cat : listeSelected){
-                       displaySelected+=cat.getNom_Categorie()+" ";
-                        Log.d("listSelectedboucle", listeSelected.toString());
-                    }
-                    tvSelected.setText(displaySelected);
+                    afficherCategories(tvSelected);
                     tvSelected.setVisibility(View.VISIBLE);
                 }
-                Log.d("listSelected", listeSelected.toString());
             }
         });
         builder.show();
     }
 
+    public void afficherCategories(TextView tvSelected){
+        String displaySelected = "";
+        int cpt = 0;
+        int dernierElt = listeCategorieSelected.size() -1;
+        for (Categorie cat : listeCategorieSelected) {
+            if (cpt != dernierElt) {
+                displaySelected += cat.getNom_Categorie() + ", ";
+            } else {
+                displaySelected += cat.getNom_Categorie();
+            }
+            cpt ++;
+        }
+        tvSelected.setText(displaySelected.trim());
+    }
 
     public void exportDB(Context context, String nom) {
 
         File exportDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "");
-        Log.d("pouet",Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
+        Log.d("pouet", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
 
-        if (!exportDir.exists())
-        {
+        if (!exportDir.exists()) {
             exportDir.mkdirs();
         }
-        Log.d("pouet2",exportDir.toString());
-        File file = new File(exportDir, nom+".csv");
-        Log.d("pouet2",exportDir.toString());
-        try
-        {
+        Log.d("pouet2", exportDir.toString());
+        File file = new File(exportDir, nom + ".csv");
+        Log.d("pouet2", exportDir.toString());
+        try {
             file.createNewFile();
             CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+
             SQLiteDatabase db = new MySQLite(context).getWritableDatabase();
-            String selectQuery = "SELECT * FROM BIEN";
-            Cursor curCSV = db.rawQuery(selectQuery,null);
+
+            String inWhereClause = "";
+            int i = 0;
+            int dernierElt = listeCategorieSelected.size() -1;
+            for (Categorie cat : listeCategorieSelected) {
+                if (i == 0){
+                    inWhereClause += " (\"" + cat.getId_Categorie() + "\", ";
+                } else if (i == dernierElt) {
+                    inWhereClause += "\"" + cat.getId_Categorie() + "\")";
+                } else {
+                    inWhereClause += "\"" + cat.getId_Categorie() + "\", ";
+                }
+                i++;
+            }
+
+            //id_bien,"","","","","","","","","id_categorie","photo_principale","photo_sec1","photo_sec2","photo_sec3","id_bien","id_liste"
+            String nomColonne = "nom_bien as Nom, date_saisie as Date_de_saisie, date_achat as Date_achat, numero_serie as Numéro_serie, prix as Prix, description as Description, commentaire as Commentaire";
+            String selectQuery = "SELECT "+nomColonne+" FROM BIEN JOIN APPARTIENT ON APPARTIENT.id_bien = BIEN.id_bien WHERE BIEN.id_categorie IN"+inWhereClause;
+
+            Log.e("miPa",""+selectQuery);
+            Cursor curCSV = db.rawQuery(selectQuery, null);
 
             csvWrite.writeNext(curCSV.getColumnNames());
-            while(curCSV.moveToNext())
-            {
+            while (curCSV.moveToNext()) {
                 //Which column you want to export
-                String arrStr[] ={curCSV.getString(0),curCSV.getString(1), curCSV.getString(2)};
+                String arrStr[] = {curCSV.getString(0), curCSV.getString(1), curCSV.getString(2), curCSV.getString(3), curCSV.getString(4),curCSV.getString(5),curCSV.getString(6)};
                 csvWrite.writeNext(arrStr);
             }
             csvWrite.close();
             curCSV.close();
-        }
-        catch(Exception sqlEx)
-        {
-            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
-        }
-    }
-
-//    public void modifierSpinner(int idliste){
-//
-//        spinnerCategorie = (Spinner) findViewById(R.id.select_categorie);
-//
-//        CategorieDAO categorieDAO = new CategorieDAO(this);
-//        categorieDAO.open();
-//        categoriesList = categorieDAO.getCategoriesByIdListe(idliste);
-//        categorieDAO.close();
-//
-//
-//        //spinnerCategorie.setOnItemSelectedListener(this);
-//
-//        /*ArrayList<String> listeCategorieName = new ArrayList<String>();
-//        CategorieDAO categorieDAO = new CategorieDAO(this);
-//        categorieDAO.open();
-//        categoriesList = categorieDAO.getCategoriesByIdListe(idliste);
-//        categorieDAO.close();*/
-//
-//        myAdapter = new ListeAdapter(this, 0, categoriesList);
-//
-//       /* ArrayAdapter arrayAdapterListe = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listeCategorieName);
-//        arrayAdapterListe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
-//        spinnerCategorie.setAdapter(myAdapter);
-//
-//
-//
-//    }
-
-    public void itemClicked(View v) {
-        //code to check if this checkbox is checked!
-        CheckBox checkBox = (CheckBox)v;
-        if(checkBox.isChecked()){
-
+            Toast.makeText(this, "Votre fichier CSV se trouve dans le dossier téléchargement", Toast.LENGTH_LONG).show();
+            finish();
+        } catch (Exception sqlEx) {
+            Log.e(sqlEx.getMessage(), sqlEx.toString());
         }
     }
 
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        categorieSelectionne = categoriesList.get(position);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-
-    }
-    public void onClickExportListe(View view){
-        EditText nomListe = (EditText) findViewById(R.id.nomListeAexporter);
-
-        ExportListe exportListe = new ExportListe();
-        exportListe.exportDB(getApplicationContext(), nomListe.getText().toString());
+    public void onClickExportListe(View view) {
+        EditText editTextNomFichier = (EditText) findViewById(R.id.nomListeAexporter);
+        String nomFichier = editTextNomFichier.getText().toString();
+        if (nomFichier != null && !nomFichier.equals("")){
+            if (idliste != 0) {
+                if (!listeCategorieSelected.isEmpty()){
+                    exportDB(getApplicationContext(), nomFichier);
+                } else {
+                    Toast.makeText(this, "Vous devez sélectionner au moins une categorie", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Vous devez sélectionner une liste à exporter", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Vous devez écrire un nom de fichier", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -311,9 +305,9 @@ public class ExportListe extends AppCompatActivity implements AdapterView.OnItem
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.home:
                 Intent intenthome = new Intent(getApplicationContext(), com.application.MainActivity.class);
                 intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
