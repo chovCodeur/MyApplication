@@ -189,11 +189,10 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/prendrePhoto"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
-                    android:onClick="prendrePhoto"
                     app:srcCompat="@android:drawable/ic_menu_camera" />
 
 
@@ -246,21 +245,24 @@
                     android:id="@+id/photoPrincipale"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:tag="principal"/>
 
                 <ImageView
                     android:id="@+id/photo1"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="5dp"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitCenter"
+                    android:tag="1"/>
 
                 <ImageView
                     android:id="@+id/photo2"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="5dp"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitCenter"
+                    android:tag="2"/>
 
 
                 <ImageView
@@ -268,7 +270,8 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="5dp"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitCenter"
+                    android:tag="3"/>
             </LinearLayout>
 
 

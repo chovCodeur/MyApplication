@@ -294,69 +294,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         listeBiens.clear();
         listCorrespondance.clear();
         listeHeader.clear();
-        //Log.e("listeBiens-debugkt", String.valueOf(listeBiens));
-        //Log.e("listCorrespon-debugkt", String.valueOf(listCorrespondance));
-        //Log.e("listeHeader-debugkt", String.valueOf(listeHeader));
 
         // Ouverture du BienDAO, on retrouve la liste des biens de la liste désignée et on ferme le DAO
         bdao.open();
         // Récupération de la liste en fonction l'id
         listeBiens = bdao.getBiensByListe(idCurrentList);
-        //Log.e("idCurrentList-debugkt", String.valueOf(idCurrentList));
-        //Log.e("listeBiens2-debugkt", String.valueOf(listeBiens));
+
         bdao.close();
-        String TAG = "DEBUG";
         if (!listeBiens.isEmpty()) {
-            // On refait la bonne liste de correspondance
             cdao.open();
             mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#Catégorie : " + cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
             listeHeader.put(0, listeBiens.get(0).getId_categorie_bien());
-            //Log.e(TAG, "LISTE HEADER"+listeHeader.toString());
-            //Log.e(TAG, "LISTE listeBiens"+listeBiens.toString());
 
             int cpt = 0;
             int idCat = 1;
             String item = null;
-            //Log.e("header-debugkt", String.valueOf(idCat));
-            //Log.e("header2-debugkt", String.valueOf(listeBiens.get(0).getId_categorie_bien()));
-            //Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien())));
+
             cdao.close();
-            //Log.e("size-debugkt", String.valueOf(listeBiens.size()));
             for (int i = 0; i < listeBiens.size(); i++) {
 
                 if (idCat != listeBiens.get(i).getId_categorie_bien()) {
                     cpt++;
                     cdao.open();
-                   // Log.e("header-debugkt", String.valueOf(idCat));
-                    //Log.e("header2-debugkt", String.valueOf(listeBiens.get(i).getId_categorie_bien()));
-                    Log.e("header3-debugkt", String.valueOf(cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien())));
                     mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#Catégorie : " + cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
                     listeHeader.put(i + cpt, listeBiens.get(i).getId_categorie_bien());
                     cdao.close();
 
                 }
-                //Log.e("Biens-debugkt", String.valueOf(listeBiens.get(i)));
                 listCorrespondance.put(mAdapter.getCount(), Integer.valueOf(cpt));
                 item = listeBiens.get(i).getNom_bien() + "#~#" + listeBiens.get(i).getDescription_bien()+"#~#"+listeBiens.get(i).getPhoto_bien_principal();
                 mAdapter.addItem(item);
                 idCat = listeBiens.get(i).getId_categorie_bien();
             }
-            //listCorrespondance.remove(1);
-            //Log.d("liste", listCorrespondance.toString());
-            //Log.d("header", listeHeader.toString());
+
             lv_listeBiens.setAdapter(mAdapter);
             lv_listeBiens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (listeHeader.containsKey(position)) {
                         Intent i = new Intent(getApplicationContext(), ModifierCategorie.class);
-                        //Log.e("idcat-debugkt", String.valueOf(listeHeader.get(position)));
                         i.putExtra("IDCATEGORIE", listeHeader.get(position));
                         startActivity(i);
                     } else {
                         Intent i = new Intent(getApplicationContext(), InfosBien.class);
 
-                        //i.putExtra("IDBIEN", (position)-listCorrespondance.get((position)));
                         i.putExtra("IDBIEN", listeBiens.get((position) - listCorrespondance.get((position)) - 1).getId_bien());
                         startActivity(i);
                     }
@@ -373,9 +354,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void exporterListe(View v) {
         Intent intent = new Intent(this, ExportListe.class);
         startActivity(intent);
-        //ExportListe exportListe = new ExportListe();
-        //exportListe.exportDB(getApplicationContext());
-        //Log.d("TEST", "Coucou du bouton 2");
+
     }
 
     public void modifierPersonne(View v) {

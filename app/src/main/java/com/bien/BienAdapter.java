@@ -42,17 +42,12 @@ public class BienAdapter extends BaseAdapter {
 
     public void addItem(final String item) {
         mData.add(item);
-       // Log.e("adapter1.1-debugkt",item);
-        //Log.e("adapter1.2-debugkt",String.valueOf(mData));
         notifyDataSetChanged();
     }
 
     public void addSectionHeaderItem(final String item) {
         mData.add(item);
-        //Log.e("adapter2.1-debugkt",item);
-        //Log.e("adapter2.2-debugkt",String.valueOf(mData));
         sectionHeader.add(mData.size() - 1);
-        //Log.e("adapter2.3-debugkt",String.valueOf(sectionHeader));
         notifyDataSetChanged();
     }
 
@@ -86,7 +81,6 @@ public class BienAdapter extends BaseAdapter {
         ViewHolder holder = null;
         int rowType = getItemViewType(position);
 
-       // Log.e("MiPA", + position +  " type = " + rowType);
         if (convertView == null) {
             String[] str = mData.get(position).split("#~#");
             holder = new ViewHolder();
@@ -97,25 +91,6 @@ public class BienAdapter extends BaseAdapter {
                     holder.imageView = (ImageView) convertView.findViewById(R.id.imageBien);
                     holder.textView = (TextView) convertView.findViewById(R.id.nomBien);
                     holder.textView2 = (TextView) convertView.findViewById(R.id.descriptionBien);
-/*
-                    holder.textView.setText(str[0]);
-                    if(str.length>1) {
-                        holder.textView2.setText(str[1]);
-                    }
-                    BienDAO bdao=new BienDAO(context);
-                    bdao.open();
-                    String img = bdao.getImageBienByNom(str[0]);
-                   // Log.e("aa",str[0]);
-                    bdao.close();
-                    if(img != null && !img.equals("")) {
-                        File imgFile = new File(img);
-                        if (imgFile.exists()) {
-                            //Log.e("aa", "dans le if");
-                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                            holder.imageView.setImageBitmap(myBitmap);
-                        }
-                    }
-*/
 
                     break;
                 case TYPE_SEPARATOR:
@@ -150,17 +125,13 @@ public class BienAdapter extends BaseAdapter {
         } else {
             holder.textView.setText(str[0]);
             if (str.length > 1 && str[1] != null && !str[1].equals("")){
-                Log.e("MiPA","Je vais mettre les commentaires de : "+ str[0]+" par : "+str[1]);
                 holder.textView2.setText(str[1]);
             } else {
-                Log.e("MiPA","Je vais mettre les commentaires de : "+ str[0]+" par : chaine vide");
                 holder.textView2.setText("  ");
 
             }
 
           if (str.length > 2 && str[2] != null && !str[2].equals("")){
-                Log.e("MiPA","Pour le bien "+str[0]+"L'image serait"+str[2]);
-
                 File imgFile = new File(str[2]);
                 if (imgFile.exists()) {
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());

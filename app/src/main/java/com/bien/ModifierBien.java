@@ -883,52 +883,21 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private Uri imageUriTest;
+
     public void prendrePhoto(View view){
-        if (getFirstNullPicture() < 4) {
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, "New Picture");
-            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-            imageUriTest = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriTest);
-            startActivityForResult(intent, TAKE_IMAGE);
-        } else {
-            Toast.makeText(this, "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
+        verifierPermission(CHECK_PERM_PDF);
+        if (perm) {
+            if (getFirstNullPicture() < 4) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.TITLE, "New Picture");
+                values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                imageUriTest = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriTest);
+                startActivityForResult(intent, TAKE_IMAGE);
+            } else {
+                Toast.makeText(this, "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
+            }
         }
-    }
-
-    public String saveImagePrise(Bitmap bitmap, String nomNouveauFichier) {
-        String separator = "/";
-
-        String dirName = "images";
-        File dir = new File(this.getFilesDir() + separator + dirName);
-
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-
-
-        File fileDest = new File(dir.getAbsolutePath() + separator + nomNouveauFichier);
-
-        if (fileDest.exists()) {
-            fileDest.delete();
-        }
-
-        try {
-
-            FileOutputStream fos = new FileOutputStream(fileDest);
-            final BufferedOutputStream bos = new BufferedOutputStream(fos, 2048);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            bos.flush();
-            bos.close();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        compressImage(fileDest);
-        return fileDest.getAbsolutePath();
     }
 }

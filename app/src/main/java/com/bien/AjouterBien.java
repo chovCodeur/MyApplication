@@ -3,8 +3,10 @@ package com.bien;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,6 +19,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -34,6 +37,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,10 +79,12 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     private Boolean dansListe2 = false;
     private Boolean dansListe3 = false;
     private String regexDate = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$";
-    private int retourHome = 1;
     private Boolean perm = false;
 
-
+    private ImageView imagePhotoPrincipale;
+    private ImageView imagePhoto1;
+    private ImageView imagePhoto2;
+    private ImageView imagePhoto3;
 
     private Menu m;
 
@@ -88,10 +94,12 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     private String pathPhoto2 = "";
     private String pathPhoto3 = "";
     private DatePickerDialog datePickerDialog;
+    private Uri uriImage;
+
 
     private ArrayList<Integer> listeIdListe = new ArrayList<Integer>();
 
-    int nbPhoto = 0;
+    //int nbPhoto = 0;
     private Context context = this;
 
     final static int SELECT_IMAGE = 1;
@@ -100,7 +108,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     final static int CHECK_PERM_PICTURE = 4;
     final static int CHECK_PERM_PDF = 5;
-
+    final static int CHECK_TAKE_PICTURE = 5;
 
 
     @Override
@@ -218,13 +226,13 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         buttonAjouterPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nbPhoto <= 3) {
+                if (getFirstNullPicture() <= 3) {
                     verifierPermission(CHECK_PERM_PICTURE);
                     if (perm) {
                         recupererPhoto();
                     }
                 } else {
-                    Toast.makeText(getContext(), "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Vous devez déjà supprimer une photo.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -241,6 +249,22 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
         });
 
+
+        ImageButton buttonPrendrePhoto = (ImageButton) findViewById(R.id.prendrePhoto);
+        buttonPrendrePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getFirstNullPicture() <= 3) {
+                    verifierPermission(CHECK_TAKE_PICTURE);
+                    if (perm) {
+                        prendrePhoto();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Vous devez déjà supprimer une photo.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         final EditText editTextdate = (EditText) findViewById(R.id.date_achat_bien);
         editTextdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,20 +276,20 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                 datePickerDialog = new DatePickerDialog(AjouterBien.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String day ;
-                        if(dayOfMonth <10){
-                            day = "0"+dayOfMonth;
+                        String day;
+                        if (dayOfMonth < 10) {
+                            day = "0" + dayOfMonth;
                         } else {
                             day = String.valueOf(dayOfMonth);
                         }
 
-                        String monthFormat ;
-                        if((month +1) <10){
-                            monthFormat = "0"+(month+1);
+                        String monthFormat;
+                        if ((month + 1) < 10) {
+                            monthFormat = "0" + (month + 1);
                         } else {
-                            monthFormat = String.valueOf(month+1);
+                            monthFormat = String.valueOf(month + 1);
                         }
-                        editTextdate.setText(day + "/" +monthFormat+ "/" + year);
+                        editTextdate.setText(day + "/" + monthFormat + "/" + year);
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -276,25 +300,30 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == CHECK_PERM_PDF){
-            if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == CHECK_PERM_PDF) {
+            if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 perm = true;
                 recupererFacture();
             }
-        } else if (requestCode == CHECK_PERM_PICTURE){
-            if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+        } else if (requestCode == CHECK_PERM_PICTURE) {
+            if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 perm = true;
                 recupererPhoto();
             }
+        } else if (requestCode == CHECK_TAKE_PICTURE) {
+            if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                perm = true;
+                prendrePhoto();
+            }
         }
 
-        if(!perm) {
+        if (!perm) {
             Toast.makeText(getContext(), "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
         }
 
     }
 
-    public void verifierPermission(int code){
+    public void verifierPermission(int code) {
         if (ContextCompat.checkSelfPermission(AjouterBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(AjouterBien.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, code);
         } else {
@@ -302,7 +331,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         }
     }
 
-    public void recupererPhoto(){
+    public void recupererPhoto() {
 
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, SELECT_IMAGE);
@@ -325,7 +354,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
             if (path != null && !path.equals("")) {
                 String format = s.format(new Date());
-                pathPdf = saveFile(path+"/"+name, format.toString(), "pdf");
+                pathPdf = saveFile(path + "/" + name, format.toString(), "pdf");
             }
 
             TextView tv_pathPdf = (TextView) findViewById(R.id.pathPdf);
@@ -336,62 +365,72 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         if (resultCode == RESULT_OK && (request == SELECT_IMAGE || request == TAKE_IMAGE)) {
 
             String path;
-            if(request == SELECT_IMAGE) {
+            if (request == SELECT_IMAGE) {
                 path = getRealPathFromUri(data.getData());
             } else {
-                path = getRealPathFromUri(imageUriTest);
+                path = getRealPathFromUri(uriImage);
             }
 
-            ImageView imagePhotoPrincipale;
-            ImageView imagePhoto1;
-            ImageView imagePhoto2;
-            ImageView imagePhoto3;
+
             String format = s.format(new Date());
-            File imgFile;
+            final File imgFile;
 
             if (path != null && !path.equals("")) {
-                switch (nbPhoto) {
+                switch (getFirstNullPicture()) {
                     case 0:
 
                         imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
 
-                            pathPhotoPrincipale = saveFile(path, format.toString(), "img");
-                            imgFile = new File(pathPhotoPrincipale);
-                            if (imgFile.exists()) {
-                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                                imagePhotoPrincipale.setImageBitmap(myBitmap);
+                        pathPhotoPrincipale = saveFile(path, format.toString(), "img");
+                        imgFile = new File(pathPhotoPrincipale);
+                        if (imgFile.exists()) {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            imagePhotoPrincipale.setImageBitmap(myBitmap);
+                        }
+
+                        imagePhotoPrincipale.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                supprimerPhoto(imgFile.getName(), imagePhotoPrincipale);
                             }
+                        });
 
-
-                        nbPhoto++;
-
-                    break;
+                        break;
                     case 1:
 
                         imagePhoto1 = (ImageView) findViewById(R.id.photo1);
 
-                            pathPhoto1 = saveFile(path, format.toString(), "img");
-                            imgFile = new File(pathPhoto1);
-                            if (imgFile.exists()) {
-                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                                imagePhoto1.setImageBitmap(myBitmap);
+                        pathPhoto1 = saveFile(path, format.toString(), "img");
+                        imgFile = new File(pathPhoto1);
+                        if (imgFile.exists()) {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            imagePhoto1.setImageBitmap(myBitmap);
+                        }
+
+                        imagePhoto1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                supprimerPhoto(imgFile.getName(), imagePhoto1);
                             }
-
-                        nbPhoto++;
-
+                        });
                         break;
                     case 2:
                         imagePhoto2 = (ImageView) findViewById(R.id.photo2);
 
 
-                            pathPhoto2 = saveFile(path, format.toString(), "img");
-                            imgFile = new File(pathPhoto2);
-                            if (imgFile.exists()) {
-                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                                imagePhoto2.setImageBitmap(myBitmap);
-                            }
+                        pathPhoto2 = saveFile(path, format.toString(), "img");
+                        imgFile = new File(pathPhoto2);
+                        if (imgFile.exists()) {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            imagePhoto2.setImageBitmap(myBitmap);
+                        }
 
-                        nbPhoto++;
+                        imagePhoto2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                supprimerPhoto(imgFile.getName(), imagePhoto2);
+                            }
+                        });
 
                         break;
 
@@ -400,15 +439,19 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                         imagePhoto3 = (ImageView) findViewById(R.id.photo3);
 
 
-                            pathPhoto3 = saveFile(path, format.toString(), "img");
-                            imgFile = new File(pathPhoto3);
-                            if (imgFile.exists()) {
-                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                                imagePhoto3.setImageBitmap(myBitmap);
+                        pathPhoto3 = saveFile(path, format.toString(), "img");
+                        imgFile = new File(pathPhoto3);
+                        if (imgFile.exists()) {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            imagePhoto3.setImageBitmap(myBitmap);
+                        }
+
+                        imagePhoto3.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                supprimerPhoto(imgFile.getName(), imagePhoto3);
                             }
-
-                        nbPhoto++;
-
+                        });
                         break;
                 }
             }
@@ -504,7 +547,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         String dateAchatSaisie = editTextdate.getText().toString();
 
         if (dateAchatSaisie != null && !dateAchatSaisie.equals("")) {
-            if (!dateAchatSaisie.matches(regexDate)){
+            if (!dateAchatSaisie.matches(regexDate)) {
                 Toast.makeText(this, "La date doit être au format jj/mm/aaaa", Toast.LENGTH_SHORT).show();
                 erreurSaisie = true;
             }
@@ -514,7 +557,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         String commentaireBien = textViewCommentaireBien.getText().toString();
         String descriptionBien = textViewDescriptionBien.getText().toString();
 
-        String prixSaisie =  textViewPrixBien.getText().toString();
+        String prixSaisie = textViewPrixBien.getText().toString();
 
         String numeroSerie = textViewNumeroSerie.getText().toString();
         int idCategorieSelectionne = categorieSelectionne.getId_Categorie();
@@ -529,14 +572,12 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         }
         if (dansListe2) {
             listeIdListe.add(2);
-            retourHome = 2;
         }
         if (dansListe3) {
             listeIdListe.add(3);
-            retourHome = 3;
         }
 
-        if (listeIdListe.size() == 0 ){
+        if (listeIdListe.size() == 0) {
             erreurSaisie = true;
             Toast.makeText(this, "Veuillez selectionner au moins une liste", Toast.LENGTH_SHORT).show();
 
@@ -575,11 +616,9 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             intenthome.putExtra("ID_CURRENT_LIST_FROM_ADD_BIEN", retourHome);
             intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intenthome); */
-           finish();
+            finish();
 
         }
-
-
 
 
     }
@@ -626,12 +665,12 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         if (fileSrc.exists()) {
             try {
-                if(type.equals("img")) {
-                    copy(fileSrc,fileDest);
+                if (type.equals("img")) {
+                    copy(fileSrc, fileDest);
                     compressImage(fileDest);
 
                 } else {
-                    copy(fileSrc,fileDest);
+                    copy(fileSrc, fileDest);
                 }
             } catch (IOException e) {
 
@@ -644,7 +683,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
-    public File compressImage(File file){
+    public File compressImage(File file) {
         try {
 
             // BitmapFactory options to downsize the image
@@ -659,11 +698,11 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             inputStream.close();
 
             // The new size we want to scale to
-            final int REQUIRED_SIZE=80;
+            final int REQUIRED_SIZE = 80;
 
             // Find the correct scale value. It should be the power of 2.
             int scale = 1;
-            while(o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+            while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
                     o.outHeight / scale / 2 >= REQUIRED_SIZE) {
                 scale *= 2;
             }
@@ -678,7 +717,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             // here i override the original image file
             file.createNewFile();
             FileOutputStream outputStream = new FileOutputStream(file);
-            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , outputStream);
+            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
 
@@ -687,6 +726,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             return null;
         }
     }
+
     public static void copy(File src, File dst) throws IOException {
 
         try (InputStream in = new FileInputStream(src)) {
@@ -710,58 +750,99 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
-    public Context getContext(){
+    public Context getContext() {
         return context;
     }
 
-    private Uri imageUriTest;
-    public void prendrePhoto(View view){
-        if (nbPhoto <= 3) {
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, "New Picture");
-            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-            imageUriTest = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriTest);
-            startActivityForResult(intent, TAKE_IMAGE);
+    public void prendrePhoto() {
+
+        verifierPermission(CHECK_TAKE_PICTURE);
+
+        if (perm) {
+            if (getFirstNullPicture() <= 3) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.TITLE, "New Picture");
+                values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                uriImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
+                startActivityForResult(intent, TAKE_IMAGE);
+            } else {
+                Toast.makeText(getContext(), "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+    public int getFirstNullPicture() {
+        if (pathPhotoPrincipale == null || pathPhotoPrincipale.equals("")) {
+            return 0;
+        } else if (pathPhoto1 == null || pathPhoto1.equals("")) {
+            return 1;
+        } else if (pathPhoto2 == null || pathPhoto2.equals("")) {
+            return 2;
+        } else if (pathPhoto3 == null || pathPhoto3.equals("")) {
+            return 3;
         } else {
-            Toast.makeText(getContext(), "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
+            return 4;
         }
     }
 
-    public String saveImagePrise(Bitmap bitmap, String nomNouveauFichier) {
-        String separator = "/";
 
-        String dirName = "images";
-        File dir = new File(context.getFilesDir() + separator + dirName);
+    public void supprimerPhoto(String fileName, View photo) {
+        final View view = (ImageView) photo;
+        TextView supprimerImage = new TextView(this);
+        supprimerImage.setText("Voulez-vous vraiment supprimer la photo " + fileName + " ?");
 
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
+        LinearLayout layout = new LinearLayout(this);
+        layout.addView(supprimerImage);
 
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) supprimerImage.getLayoutParams();
+        params.leftMargin = 100;
+        params.rightMargin = 100;
+        params.topMargin = 50;
+        layout.setLayoutParams(params);
 
-        File fileDest = new File(dir.getAbsolutePath() + separator + nomNouveauFichier);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle("Supprimer une photo");
+        builder.setView(layout);
 
-        if (fileDest.exists()) {
-            fileDest.delete();
-        }
+        builder.setPositiveButton("Oui",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (view.getTag().toString()) {
+                            case "principal":
+                                imagePhotoPrincipale.setImageBitmap(null);
+                                pathPhotoPrincipale = ("");
+                                break;
+                            case "1":
+                                imagePhoto1.setImageBitmap(null);
+                                pathPhoto1 = ("");
+                                break;
+                            case "2":
+                                imagePhoto2.setImageBitmap(null);
+                                pathPhoto2 = ("");
+                                break;
+                            case "3":
+                                imagePhoto3.setImageBitmap(null);
+                                pathPhoto3 = ("");
+                                break;
+                        }
 
-        try {
+                    }
+                });
 
-            FileOutputStream fos = new FileOutputStream(fileDest);
-            final BufferedOutputStream bos = new BufferedOutputStream(fos, 2048);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            bos.flush();
-            bos.close();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        builder.setNegativeButton("Non",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-        compressImage(fileDest);
-        return fileDest.getAbsolutePath();
+                    }
+                });
+
+        Dialog dialog = builder.create();
+        dialog.show();
     }
-
 }
