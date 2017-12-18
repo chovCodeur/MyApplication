@@ -94,10 +94,9 @@ public class ModifierCategorie extends AppCompatActivity {
                 }
 
                 if(!nomCategorie.equals("")) {
-                    if (erreur) {
+                    if (!erreur) {
                         categorieDAO.open();
-                        Categorie categorie = new Categorie(0, nomCategorie, description);
-                        categorieDAO.addCategorie(categorie);
+                        categorieDAO.modCategorie(idcat, nomCategorie, description);
                         categorieDAO.close();
 
                         Toast.makeText(context, "La catégorie " + nomCategorie + " a bien été modifiée", Toast.LENGTH_SHORT).show();

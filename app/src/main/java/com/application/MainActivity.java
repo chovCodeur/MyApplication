@@ -318,13 +318,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             listeHeader.put(0, listeBiens.get(0).getId_categorie_bien());
 
             int cpt = 0;
-            int idCat = 1;
+            int idCatEnTete = listeBiens.get(0).getId_categorie_bien();
             String item = null;
 
             cdao.close();
             for (int i = 0; i < listeBiens.size(); i++) {
 
-                if (idCat != listeBiens.get(i).getId_categorie_bien()) {
+                if (idCatEnTete != listeBiens.get(i).getId_categorie_bien()) {
                     cpt++;
                     cdao.open();
                     mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#Catégorie : " + cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
@@ -335,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 listCorrespondance.put(mAdapter.getCount(), Integer.valueOf(cpt));
                 item = listeBiens.get(i).getNom_bien() + "#~#" + listeBiens.get(i).getDescription_bien()+"#~#"+listeBiens.get(i).getPhoto_bien_principal();
                 mAdapter.addItem(item);
-                idCat = listeBiens.get(i).getId_categorie_bien();
+                idCatEnTete = listeBiens.get(i).getId_categorie_bien();
             }
 
             lv_listeBiens.setAdapter(mAdapter);
