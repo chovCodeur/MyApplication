@@ -115,7 +115,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         //creation de l'activité
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle("Ajouter un bien");
+        myToolbar.setTitle(getResources().getString(R.string.toolbar_title_ajouter_bien));
         setSupportActionBar(myToolbar);
 
         // spinner pour gérer les catégories
@@ -234,7 +234,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                         recupererPhoto();
                     }
                 } else {
-                    Toast.makeText(getContext(), "Vous devez déjà supprimer une photo.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.delete_photo_bien, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -267,7 +267,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                         prendrePhoto();
                     }
                 } else {
-                    Toast.makeText(getContext(), "Vous devez déjà supprimer une photo.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.delete_photo_bien, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -339,7 +339,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         // si l'utilisateur n'a pas accepté
         if (!perm) {
-            Toast.makeText(getContext(), "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.permission_denied, Toast.LENGTH_LONG).show();
         }
 
     }
@@ -394,7 +394,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
 
             TextView tv_pathPdf = (TextView) findViewById(R.id.pathPdf);
-            tv_pathPdf.setText("Facture choisie : " + name);
+            tv_pathPdf.setText(getResources().getString(R.string.pdf_file) + name);
 
         }
 
@@ -613,7 +613,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         // controle du nom du bien
         if (nomBien == null || nomBien.equals("")) {
-            Toast.makeText(this, "Le nom ne peut être vide", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.control_item_name, Toast.LENGTH_SHORT).show();
             erreurSaisie = true;
         }
 
@@ -623,7 +623,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         // controle de la date d'achat saisie
         if (dateAchatSaisie != null && !dateAchatSaisie.equals("")) {
             if (!dateAchatSaisie.matches(regexDate)) {
-                Toast.makeText(this, "La date doit être au format jj/mm/aaaa", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.date_format_message, Toast.LENGTH_SHORT).show();
                 erreurSaisie = true;
             }
 
@@ -656,7 +656,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         // il faut selectionner au moins une liste
         if (listeIdListe.size() == 0) {
             erreurSaisie = true;
-            Toast.makeText(this, "Veuillez selectionner au moins une liste", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.empty_list, Toast.LENGTH_SHORT).show();
 
         }
 
@@ -738,7 +738,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             // si c'est un pdf, on crée le repertoire factures
 
         } else if (type.equals("pdf")) {
-            String dirName = "factures";
+            String dirName = getResources().getString(R.string.bills_directory_name);
             dir = new File(context.getFilesDir() + separator + dirName);
             if (!dir.exists()) {
                 dir.mkdir();
@@ -872,15 +872,15 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         if (perm) {
             // si l'application est autorisé
             ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, "Nouvelle photo");
-            values.put(MediaStore.Images.Media.DESCRIPTION, "Depuis votre caméra");
+            values.put(MediaStore.Images.Media.TITLE, getResources().getString(R.string.new_picture));
+            values.put(MediaStore.Images.Media.DESCRIPTION, getResources().getString(R.string.from_camera));
             // on demarrer la nouvelle activité
             uriImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
             startActivityForResult(intent, TAKE_IMAGE);
         } else {
-            Toast.makeText(getContext(), "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.number_pictures_max, Toast.LENGTH_LONG).show();
         }
 
     }
@@ -917,7 +917,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         // on configure l'affichage du dialog
         TextView supprimerImage = new TextView(this);
-        supprimerImage.setText("Voulez-vous vraiment supprimer la photo " + fileName + " ?");
+        supprimerImage.setText(getResources().getString(R.string.delete_photo_approval) + fileName + " ?");
         LinearLayout layout = new LinearLayout(this);
         layout.addView(supprimerImage);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) supprimerImage.getLayoutParams();
@@ -928,10 +928,10 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
-        builder.setTitle("Supprimer une photo");
+        builder.setTitle(getResources().getString(R.string.title_delete_photo));
         builder.setView(layout);
 
-        builder.setPositiveButton("Oui",
+        builder.setPositiveButton(R.string.ajouter_bien_dialog_positive_option,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -959,7 +959,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                 });
 
         // on ne fait rien si l'utilisateur clique sur Non
-        builder.setNegativeButton("Non",
+        builder.setNegativeButton(R.string.ajouter_bien_dialog_negative_option,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
