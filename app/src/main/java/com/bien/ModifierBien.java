@@ -401,7 +401,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         // Remonter une erreur si la date saisie est incorrecte
         if (dateAchatSaisie != null && !dateAchatSaisie.equals("")) {
             if (!dateAchatSaisie.matches(regexDate)) {
-                Toast.makeText(this, "La date doit être au format jj/mm/aaaa", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.date_format_message, Toast.LENGTH_SHORT).show();
                 erreurSaisieDate = true;
             }
 
@@ -459,7 +459,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
             finish();
         } else {
-            Toast toast = Toast.makeText(this, "Votre bien doit avoir un nom", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, R.string.control_item_name, Toast.LENGTH_LONG);
             toast.show();
         }
     }
@@ -554,7 +554,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         final ImageView view = (ImageView) photo;
 
         TextView supprimerImage = new TextView(this);
-        supprimerImage.setText("Voulez-vous vraiment supprimer la photo " + fileName + " ?");
+        supprimerImage.setText(getResources().getString(R.string.delete_photo_approval) + fileName + " ?");
 
         LinearLayout layout = new LinearLayout(this);
         layout.addView(supprimerImage);
@@ -569,11 +569,11 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         // On construit un AlertDialog permettant de récupérer le choix de l'utilisateur
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
-        builder.setTitle("Supprimer une photo");
+        builder.setTitle(getResources().getString(R.string.title_delete_photo));
         builder.setView(layout);
 
         // S'il clique sur le bouton "Oui"
-        builder.setPositiveButton("Oui",
+        builder.setPositiveButton(R.string.ajouter_bien_dialog_positive_option,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -601,7 +601,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 });
 
         // S'il clique sur non, on ne fait rien
-        builder.setNegativeButton("Non",
+        builder.setNegativeButton(R.string.ajouter_bien_dialog_negative_option,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

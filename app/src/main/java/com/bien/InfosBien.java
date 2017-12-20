@@ -204,7 +204,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                             intent.putExtra("nomPDF", bien.getFacture_bien());
                             startActivity(intent);
                         } else {
-                            Toast toast = Toast.makeText(context, "Pas de facture pour ce bien", Toast.LENGTH_LONG);
+                            Toast toast = Toast.makeText(context, R.string.no_bill, Toast.LENGTH_LONG);
                             toast.show();
                         }
                     }
@@ -255,24 +255,24 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
                 // Mise à jour date d'acquisition
                 dateAcquisition = (TextView) findViewById(R.id.dateAcquisitionBien);
-                dateAcquisition.setText("Date d'acquisition : " + bien.getDate_achat_bien());
+                dateAcquisition.setText(getResources().getString(R.string.acquisition_date) + bien.getDate_achat_bien());
 
                 // Mise à jour date de saisie
                 dateSaisie = (TextView) findViewById(R.id.dateSaisieBien);
-                dateSaisie.setText("Date de saisie : " + bien.getDate_saisie_bien());
+                dateSaisie.setText(getResources().getString(R.string.entry_date) + bien.getDate_saisie_bien());
 
                 // Mise à jour prix du bien
                 prix = (TextView) findViewById(R.id.prixBien);
                 if (bien.getPrix_bien().equals("") || bien.getPrix_bien() == null) {
-                    prix.setText("Prix du bien : ");
+                    prix.setText(getResources().getString(R.string.item_price));
                 } else {
-                    prix.setText("Prix du bien : " + bien.getPrix_bien() + "€");
+                    prix.setText(getResources().getString(R.string.item_price) + bien.getPrix_bien() + "€");
 
                 }
 
                 // Mise à jour numéro de série du bien
                 numeroSerie = (TextView) findViewById(R.id.numeroSerieBien);
-                numeroSerie.setText("Numéro de série : " + bien.getNumeroSerie_bien());
+                numeroSerie.setText(getResources().getString(R.string.serial_number) + bien.getNumeroSerie_bien());
 
                 // Mise à jour commentaire du bien
                 commentaire = (TextView) findViewById(R.id.commentairesBien);

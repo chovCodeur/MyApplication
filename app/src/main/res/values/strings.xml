@@ -1,22 +1,80 @@
 <resources>
-    <string name="app_name">Inventory</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="app_name">Inventaire</string>
+    <string name="title_home">Accueil</string>
+    <string name="title_dashboard">Tableau de bord</string>
     <string name="title_notifications">Notifications</string>
-    <string name="liste1">List 1</string>
-    <string name="liste2">List 2</string>
-    <string name="liste3">List 3</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="liste1">Liste 1</string>
+    <string name="liste2">Liste 2</string>
+    <string name="liste3">Liste 3</string>
+    <string name="navigation_drawer_open">Ouvrir le panneau latéral</string>
+    <string name="navigation_drawer_close">Fermer le panneau latéral</string>
+
 
     <!-- Messages -->
-    <string name="message_empty_layout_changes">Add an item above to get started.</string>
-    <string name="message_zoom_touch_expand">Touch a photo to expand it.</string>
+    <string name="message_empty_layout_changes">Ajoutez un bien pour commencer.</string>
+    <string name="message_zoom_touch_expand">Toucher une photo pour l\'agrandir.</string>
+
 
     <!-- Accessibility-only descriptions -->
     <string name="description_image_1">Image 1</string>
     <string name="description_image_2">Image 2</string>
-    <string name="description_zoom_touch_close">Expanded image (touch to close)</string>
+    <string name="description_zoom_touch_close">Image agrandie (touchez pour fermer)</string>
 
+
+    <!-- Main -->
+    <string name="title_change_list_name">Changer le libellé</string>
+    <string name="dialog_positive_option">OK</string>
+    <string name="list_name_already_exists">Ce nom de liste existe déjà</string>
+    <string name="list_name_too_long">Le nom de la liste est trop long</string>
+    <string name="list_name_empty">La liste doit avoir un nom</string>
+    <string name="dialog_negative_option">Annuler</string>
+
+
+    <!-- AjouterBien -->
+    <string name="toolbar_title_ajouter_bien">Ajouter un bien</string>
+    <string name="delete_photo_bien">Vous devez déjà supprimer une photo</string>
+    <string name="permission_denied">L\'application n\'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil</string>
+    <string name="pdf_file">Facture choisie : </string>
+    <string name="control_item_name">Le nom ne peut être vide</string>
+    <string name="date_format_message">La date doit être au format jj/mm/aaaa</string>
+    <string name="empty_list">Veuillez selectionner au moins une liste</string>
+    <string name="bills_directory_name">factures</string>
+    <string name="new_picture">Nouvelle photo</string>
+    <string name="from_camera">Depuis votre caméra</string>
+    <string name="number_pictures_max">Vous ne pouvez mettre que 4 photos pour un bien</string>
+    <string name="delete_photo_approval">Voulez-vous vraiment supprimer la photo </string>
+    <string name="title_delete_photo">Supprimer une photo</string>
+    <string name="ajouter_bien_dialog_positive_option">Oui</string>
+    <string name="ajouter_bien_dialog_negative_option">Non</string>
+
+
+    <!-- InfosBien -->
+    <string name="no_bill">Pas de facture pour ce bien</string>
+    <string name="acquisition_date">Date d\'acquisition : </string>
+    <string name="entry_date">Date de saisie : </string>
+    <string name="item_price">Prix du bien : </string>
+    <string name="serial_number">Numéro de série : </string>
+
+
+    <!-- ModifierBien -->
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
 
 </resources>
