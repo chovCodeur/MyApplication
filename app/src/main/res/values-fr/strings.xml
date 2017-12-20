@@ -76,10 +76,10 @@
     <string name="select_one_categorie">Vous devez sélectionner au moins une categorie</string>
     <string name="select_one_list">Vous devez sélectionner une liste à exporter</string>
     <string name="file_name">Vous devez écrire un nom de fichier</string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
+
+
+    <!-- ModifierPersonne -->
+    <string name="toolbar_title_modifier_personne">Informations du compte</string>
+    <string name="missing_fields">Tous les champs doivent être remplis correctement</string>
 
 </resources>

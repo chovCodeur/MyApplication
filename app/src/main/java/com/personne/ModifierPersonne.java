@@ -37,7 +37,7 @@ public class ModifierPersonne extends AppCompatActivity {
         setContentView(R.layout.activity_modifier_personne);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle("Informations du compte");
+        myToolbar.setTitle(getResources().getString(R.string.toolbar_title_modifier_personne));
         setSupportActionBar(myToolbar);
 
         PersonneDAO personneDAO = new PersonneDAO(this);
@@ -152,7 +152,7 @@ public class ModifierPersonne extends AppCompatActivity {
         Boolean erreurSaisieDate = false;
         if (date != null && !date.equals("")) {
             if (!date.matches(regexDate)) {
-                Toast.makeText(this, "La date doit être au format jj/mm/aaaa", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.date_format_message, Toast.LENGTH_SHORT).show();
                 erreurSaisieDate = true;
             }
 
@@ -169,7 +169,7 @@ public class ModifierPersonne extends AppCompatActivity {
             personneDAO.close();
             finish();
         } else {
-            Toast toast = Toast.makeText(this, "Tous les champs doivent être remplis correctement", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, R.string.missing_fields, Toast.LENGTH_LONG);
             toast.show();
         }
     }
