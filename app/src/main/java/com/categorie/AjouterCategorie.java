@@ -1,24 +1,19 @@
 package com.categorie;
 //
+
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.application.MainActivity;
-import com.application.inventaire.R;
-import com.bien.AjouterBien;
-import com.dao.CategorieDAO;
-
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.application.inventaire.R;
+import com.dao.CategorieDAO;
 
 import java.util.ArrayList;
 
@@ -52,9 +47,9 @@ public class AjouterCategorie extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.home:
                 Intent intenthome = new Intent(getApplicationContext(), com.application.MainActivity.class);
                 intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -73,7 +68,7 @@ public class AjouterCategorie extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClickAddCategorie(View view){
+    public void onClickAddCategorie(View view) {
         TextView textViewNomCategorie = (TextView) findViewById(R.id.editCategorie);
         TextView textViewDescription = (TextView) findViewById(R.id.editDescription);
         CategorieDAO categorieDAO = new CategorieDAO(this);
@@ -88,15 +83,15 @@ public class AjouterCategorie extends AppCompatActivity {
         categorieDAO.close();
 
         Boolean erreur = false;
-        for (Categorie cate: categories) {
-            if(cate.getNom_Categorie().trim().toLowerCase().equals(nomCategorie.trim().toLowerCase())){
+        for (Categorie cate : categories) {
+            if (cate.getNom_Categorie().trim().toLowerCase().equals(nomCategorie.trim().toLowerCase())) {
                 erreur = true;
             }
 
         }
         String description = textViewDescription.getText().toString();
 
-        if(!textViewNomCategorie.getText().toString().equals("")) {
+        if (!textViewNomCategorie.getText().toString().equals("")) {
             if (!erreur) {
                 categorieDAO.open();
                 Categorie categorie = new Categorie(0, nomCategorie, description);
@@ -109,7 +104,7 @@ public class AjouterCategorie extends AppCompatActivity {
                 Toast.makeText(this, "La catégorie " + nomCategorie + " existe déjà", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this,"Le nom ne peut pas être vide",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Le nom ne peut pas être vide", Toast.LENGTH_SHORT).show();
 
         }
     }

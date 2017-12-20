@@ -32,7 +32,7 @@ public class Categorie {
     }
 
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -40,7 +40,8 @@ public class Categorie {
 
         return nom_Categorie;
     }
-    public void setNom_Categorie(String  nom_Categorie) {
+
+    public void setNom_Categorie(String nom_Categorie) {
         this.nom_Categorie = nom_Categorie;
     }
 

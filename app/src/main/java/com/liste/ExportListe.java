@@ -7,51 +7,35 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
-import com.application.MainActivity;
 import com.application.inventaire.R;
 import com.bd.MySQLite;
-import com.bien.AjouterBien;
 import com.categorie.Categorie;
 import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
 import com.opencsv.CSVWriter;
 
-import android.widget.AdapterView;
-
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -179,7 +163,7 @@ public class ExportListe extends AppCompatActivity {
         listeCategorieEnBase = categorieDAO.getCategoriesByIdListe(idliste);
         categorieDAO.close();
 
-        if (listeCategorieSelected == null || listeCategorieSelected.isEmpty()){
+        if (listeCategorieSelected == null || listeCategorieSelected.isEmpty()) {
             listeCategorieSelected = listeCategorieEnBase;
             afficherCategories(tvSelected);
             tvSelected.setVisibility(View.VISIBLE);
@@ -214,17 +198,17 @@ public class ExportListe extends AppCompatActivity {
         builder.show();
     }
 
-    public void afficherCategories(TextView tvSelected){
+    public void afficherCategories(TextView tvSelected) {
         String displaySelected = "";
         int cpt = 0;
-        int dernierElt = listeCategorieSelected.size() -1;
+        int dernierElt = listeCategorieSelected.size() - 1;
         for (Categorie cat : listeCategorieSelected) {
             if (cpt != dernierElt) {
                 displaySelected += cat.getNom_Categorie() + ", ";
             } else {
                 displaySelected += cat.getNom_Categorie();
             }
-            cpt ++;
+            cpt++;
         }
         tvSelected.setText(displaySelected.trim());
     }
@@ -252,9 +236,9 @@ public class ExportListe extends AppCompatActivity {
 
             String inWhereClause = "";
             int i = 0;
-            int dernierElt = listeCategorieSelected.size() -1;
+            int dernierElt = listeCategorieSelected.size() - 1;
             for (Categorie cat : listeCategorieSelected) {
-                if (i == 0){
+                if (i == 0) {
                     inWhereClause += " (\"" + cat.getId_Categorie() + "\", ";
                 } else if (i == dernierElt) {
                     inWhereClause += "\"" + cat.getId_Categorie() + "\")";
@@ -266,15 +250,15 @@ public class ExportListe extends AppCompatActivity {
 
             //id_bien,"","","","","","","","","id_categorie","photo_principale","photo_sec1","photo_sec2","photo_sec3","id_bien","id_liste"
             String nomColonne = "nom_bien as Nom, date_saisie as Date_de_saisie, date_achat as Date_achat, numero_serie as Numéro_serie, prix as Prix, description as Description, commentaire as Commentaire";
-            String selectQuery = "SELECT "+nomColonne+" FROM BIEN JOIN APPARTIENT ON APPARTIENT.id_bien = BIEN.id_bien WHERE BIEN.id_categorie IN"+inWhereClause;
+            String selectQuery = "SELECT " + nomColonne + " FROM BIEN JOIN APPARTIENT ON APPARTIENT.id_bien = BIEN.id_bien WHERE BIEN.id_categorie IN" + inWhereClause;
 
-            Log.e("miPa",""+selectQuery);
+            Log.e("miPa", "" + selectQuery);
             Cursor curCSV = db.rawQuery(selectQuery, null);
 
             csvWrite.writeNext(curCSV.getColumnNames());
             while (curCSV.moveToNext()) {
                 //Which column you want to export
-                String arrStr[] = {curCSV.getString(0), curCSV.getString(1), curCSV.getString(2), curCSV.getString(3), curCSV.getString(4),curCSV.getString(5),curCSV.getString(6)};
+                String arrStr[] = {curCSV.getString(0), curCSV.getString(1), curCSV.getString(2), curCSV.getString(3), curCSV.getString(4), curCSV.getString(5), curCSV.getString(6)};
                 csvWrite.writeNext(arrStr);
             }
             csvWrite.close();
@@ -289,9 +273,9 @@ public class ExportListe extends AppCompatActivity {
     public void onClickExportListe(View view) {
         EditText editTextNomFichier = (EditText) findViewById(R.id.nomListeAexporter);
         nomFichierCsv = editTextNomFichier.getText().toString();
-        if (nomFichierCsv != null && !nomFichierCsv.equals("")){
+        if (nomFichierCsv != null && !nomFichierCsv.equals("")) {
             if (idliste != 0) {
-                if (!listeCategorieSelected.isEmpty()){
+                if (!listeCategorieSelected.isEmpty()) {
                     verifierPermission();
                     if (perm) {
                         exportDB(getApplicationContext(), nomFichierCsv);

@@ -7,7 +7,6 @@ import com.application.inventaire.R;
 import com.joanzapata.pdfview.PDFView;
 import com.joanzapata.pdfview.listener.OnPageChangeListener;
 
-
 import java.io.File;
 
 /**
@@ -26,6 +25,7 @@ public class ReadPDF extends AppCompatActivity implements OnPageChangeListener {
 
     /**
      * Procédure lancée à la création de l'activité.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -39,7 +39,7 @@ public class ReadPDF extends AppCompatActivity implements OnPageChangeListener {
         Bundle extras = getIntent().getExtras();
 
         // Si des informations existent, on stocke le nom du PDF et on l'affiche
-        if(extras != null) {
+        if (extras != null) {
             pdfName = extras.getString("nomPDF");
             display(pdfName, true);
         }
@@ -47,13 +47,14 @@ public class ReadPDF extends AppCompatActivity implements OnPageChangeListener {
 
     /**
      * Méthode permettant d'afficher un PDF.
-     * @param assetFileName String : contient le nom du PDF à lire.
+     *
+     * @param assetFileName   String : contient le nom du PDF à lire.
      * @param jumpToFirstPage Boolean : contient la page à laquelle commencer l'affichage du PDF.
      */
     private void display(String assetFileName, boolean jumpToFirstPage) {
         if (jumpToFirstPage) pageNumber = 1;
 
-        File file = new File (assetFileName);
+        File file = new File(assetFileName);
         pdfView.fromFile(file)
                 .defaultPage(pageNumber)
                 .onPageChange(this)
@@ -62,7 +63,8 @@ public class ReadPDF extends AppCompatActivity implements OnPageChangeListener {
 
     /**
      * Méthode permettant de gérer le numéro de page courant lors de la lecture d'un PDF.
-     * @param page int : contient le numéro de la page lue.
+     *
+     * @param page      int : contient le numéro de la page lue.
      * @param pageCount int.
      */
     @Override

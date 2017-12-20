@@ -9,14 +9,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 
-import com.bien.Bien;
 import com.bd.MySQLite;
+import com.bien.Bien;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
@@ -49,41 +45,42 @@ public class BienDAO {
     private static final String TABLE_APPARTIENT = "APPARTIENT";
 
 
-
     private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
     private SQLiteDatabase db;
 
     /**
      * Contructeur de la classe BienDAO
+     *
      * @param context le contexte
      */
-    public BienDAO (Context context){
+    public BienDAO(Context context) {
         maBaseSQLite = MySQLite.getInstance(context);
     }
 
     /**
      * Méthode permettant l'ouverture de la table en lecture/ecriture
      */
-    public void open(){
-        db=maBaseSQLite.getWritableDatabase();
+    public void open() {
+        db = maBaseSQLite.getWritableDatabase();
     }
 
     /**
      * Méthode permettant la fermeture de la base de données
      */
-    public void close(){
+    public void close() {
         db.close();
     }
 
     /**
      * Méthode permettant d'ajouter un bien dans la table Bien
+     *
      * @param bien Bien : l'bien à ajouter
      * @return long l'id du nouvel enregistrement inséré, ou -1 en cas d'erreur
      */
-    public long addBien(Bien bien, ArrayList<Integer> listeIdListe){
+    public long addBien(Bien bien, ArrayList<Integer> listeIdListe) {
         ContentValues values = new ContentValues();
-        values.put(NOM,bien.getNom_bien());
-        values.put(DATESAISIE,bien.getDate_saisie_bien());
+        values.put(NOM, bien.getNom_bien());
+        values.put(DATESAISIE, bien.getDate_saisie_bien());
         values.put(DATEACHAT, bien.getDate_achat_bien());
         values.put(FACTURE, bien.getFacture_bien());
         values.put(COMMENTAIRE, bien.getCommentaire_bien());
@@ -97,10 +94,10 @@ public class BienDAO {
         values.put(NUMSERIE, bien.getNumeroSerie_bien());
         values.put(IDCATEGORIE, bien.getId_categorie_bien());
 
-        long temp = db.insert(TABLE_NAME,null,values);
+        long temp = db.insert(TABLE_NAME, null, values);
 
 
-        for (Integer id: listeIdListe) {
+        for (Integer id : listeIdListe) {
             addInAppartient(temp, id);
 
         }
@@ -110,13 +107,14 @@ public class BienDAO {
 
     /**
      * Méthode permettant de modifier un bien dans la table Bien
+     *
      * @param bien Bien : bien à modifier
      * @return int l'id du nouvel enregistrement inséré, ou -1 en cas d'erreur
      */
-    public int modBien(Bien bien){
+    public int modBien(Bien bien) {
         ContentValues values = new ContentValues();
-        values.put(NOM,bien.getNom_bien());
-        values.put(DATESAISIE,bien.getDate_saisie_bien());
+        values.put(NOM, bien.getNom_bien());
+        values.put(DATESAISIE, bien.getDate_saisie_bien());
         values.put(DATEACHAT, bien.getDate_achat_bien());
         values.put(FACTURE, bien.getFacture_bien());
         values.put(COMMENTAIRE, bien.getCommentaire_bien());
@@ -129,7 +127,7 @@ public class BienDAO {
         values.put(PHOTO_SEC2, bien.getPhoto_bien_miniature2());
         values.put(PHOTO_SEC3, bien.getPhoto_bien_miniature3());
 
-        String where = ID+" = ?";
+        String where = ID + " = ?";
         String[] whereArgs = {String.valueOf(bien.getId_bien())};
 
         return db.update(TABLE_NAME, values, where, whereArgs);
@@ -137,13 +135,14 @@ public class BienDAO {
 
     /**
      * Méthode permettant de récupérer un bien dans la table Bien
+     *
      * @param id int : id du bien à récupérer
      * @return Bien : un bien de la Table s'il existe ou un bien vide avec un id de 0 sinon.
      */
-    public Bien getBien(int id){
-        Bien a=new Bien(0, "", "", "", "","", "",null,null,null,null,0, "", "");
+    public Bien getBien(int id) {
+        Bien a = new Bien(0, "", "", "", "", "", "", null, null, null, null, 0, "", "");
 
-        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+ID+"="+id, null);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + ID + "=" + id, null);
         if (c.moveToFirst()) {
             a.setId_bien(c.getInt(c.getColumnIndex(ID)));
             a.setNom_bien(c.getString(c.getColumnIndex(NOM)));
@@ -167,6 +166,7 @@ public class BienDAO {
 
     /**
      * Méthode permettant de supprimer un bien dans la table bien
+     *
      * @param bien Bien : le magasin à supprimer
      * @return int : le nombre de lignes affectées par la clause WHERE, 0 sinon
      */
@@ -174,22 +174,23 @@ public class BienDAO {
         // suppression d'un enregistrement
         // valeur de retour : (int) nombre de lignes affectées par la clause WHERE, 0 sinon
 
-        String where = ID+" = ?";
-        String[] whereArgs = {bien.getId_bien()+""};
+        String where = ID + " = ?";
+        String[] whereArgs = {bien.getId_bien() + ""};
 
         return db.delete(TABLE_NAME, where, whereArgs);
     }
 
     /**
      * Méthode permettant de retrouver tous les biens pour un magasin donné
+     *
      * @param id_liste long : l'id du magasin dans lequel il faut retrouver les biens
      * @return ArrayList<Bien> la liste des biens dans le magasin
      */
-    public ArrayList<Bien> getBiensByListe(int id_liste){
+    public ArrayList<Bien> getBiensByListe(int id_liste) {
         ArrayList<Bien> liste = new ArrayList<Bien>();
-        Cursor curseurBien = db.rawQuery("SELECT * FROM "+TABLE_NAME+" JOIN APPARTIENT ON APPARTIENT.id_bien="+TABLE_NAME+"."+ID+" WHERE id_liste = "+id_liste+" ORDER BY "+IDCATEGORIE, null);
+        Cursor curseurBien = db.rawQuery("SELECT * FROM " + TABLE_NAME + " JOIN APPARTIENT ON APPARTIENT.id_bien=" + TABLE_NAME + "." + ID + " WHERE id_liste = " + id_liste + " ORDER BY " + IDCATEGORIE, null);
 
-        Bien bienTemp =new Bien(0, "", "", "", "","", "",null,null,null,null,0, "", "");
+        Bien bienTemp = new Bien(0, "", "", "", "", "", "", null, null, null, null, 0, "", "");
 
         if (curseurBien.moveToFirst()) {
             do {
@@ -211,7 +212,7 @@ public class BienDAO {
                 bienTemp.setNumeroSerie_bien(curseurBien.getString(curseurBien.getColumnIndex(NUMSERIE)));
 
                 liste.add(bienTemp);
-                bienTemp =new Bien(0, "", "", "", "","", "",null,null,null,null,0, "", "");
+                bienTemp = new Bien(0, "", "", "", "", "", "", null, null, null, null, 0, "", "");
             } while (curseurBien.moveToNext());
         }
         curseurBien.close();
@@ -220,43 +221,46 @@ public class BienDAO {
 
     /**
      * Méthode permettant de lier un bien à une liste dans la table Appartient.
+     *
      * @param idBienInsere long : id du bien que l'on veut insérer.
-     * @param idListe int : id de la liste dans laquelle on veut mettre le bien.
+     * @param idListe      int : id de la liste dans laquelle on veut mettre le bien.
      * @return long : id de l'entrée dans la table Appartient ou -1 en cas d'échec.
      */
-    public long addInAppartient(long idBienInsere, int idListe){
+    public long addInAppartient(long idBienInsere, int idListe) {
         ContentValues values = new ContentValues();
         values.put(ID, idBienInsere);
-        values.put(KEY_ID_LISTE,idListe);
-        return db.insert(TABLE_APPARTIENT,null,values);
+        values.put(KEY_ID_LISTE, idListe);
+        return db.insert(TABLE_APPARTIENT, null, values);
     }
 
-    public long compterBienEnBase(){
+    public long compterBienEnBase() {
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME);
     }
 
     /**
      * Méthode permettant de supprimer une relation entre un bien et sa liste dans la table Appartient.
-     * @param idBien int : id du bien.
+     *
+     * @param idBien      int : id du bien.
      * @param prevIdListe int : id de la liste.
      * @return un entier contenant l'id de la ligne supprimée dans la table Appartient ou -1 en cas d'échec.
      */
     public int supprimerListeAppartenance(int idBien, int prevIdListe) {
         String where = "id_bien = ? AND id_liste = ?";
-        String[] whereArgs = {idBien+"", prevIdListe+""};
+        String[] whereArgs = {idBien + "", prevIdListe + ""};
 
         return db.delete("APPARTIENT", where, whereArgs);
     }
 
     /**
      * Méthode permettant de récupérer l'ensemble des id des listes contenant un bien en particulier.
+     *
      * @param id int : id du bien
      * @return ArrayList<Integer> contenant les identifiants des listes en cas de réussite ou vide sinon.
      */
     public ArrayList<Integer> getAllIdListeByIdBien(int id) {
         ArrayList<Integer> idListes = new ArrayList<>();
 
-        Cursor curseur = db.rawQuery("SELECT id_liste FROM APPARTIENT WHERE id_bien = "+id,null);
+        Cursor curseur = db.rawQuery("SELECT id_liste FROM APPARTIENT WHERE id_bien = " + id, null);
 
         if (curseur.moveToFirst()) {
             do {

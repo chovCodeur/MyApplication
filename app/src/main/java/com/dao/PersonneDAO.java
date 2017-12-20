@@ -36,51 +36,53 @@ public class PersonneDAO {
 
     /**
      * Contructeur de la classe BienDAO
+     *
      * @param context le contexte
      */
-    public PersonneDAO(Context context){
+    public PersonneDAO(Context context) {
         maBaseSQLite = MySQLite.getInstance(context);
     }
 
     /**
      * Méthode permettant l'ouverture de la table en lecture/ecriture
      */
-    public void open(){
-        db=maBaseSQLite.getWritableDatabase();
+    public void open() {
+        db = maBaseSQLite.getWritableDatabase();
     }
 
     /**
      * Méthode permettant la fermeture de la base de données
      */
-    public void close(){
+    public void close() {
         db.close();
     }
 
     /**
      * Méthode permettant de modifier un bien dans la table Bien
-     * @param id long : l'id de l'bien
+     *
+     * @param id  long : l'id de l'bien
      * @param nom String : le nom de l'bien
      * @return int : le nombre de lignes affectées par la requête
      */
-    public int modPersonne(int id, String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone){
+    public int modPersonne(int id, String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone) {
         ContentValues values = new ContentValues();
-        values.put(NOM,nom);
-        values.put(PRENOM,prenom);
+        values.put(NOM, nom);
+        values.put(PRENOM, prenom);
         values.put(DATENAISSANCE, dateNaissance);
         values.put(ADRESSE, adresse);
         values.put(MAIL, mail);
         values.put(TELEPHONE, telephone);
 
-        String where = ID+" = ?";
+        String where = ID + " = ?";
         String[] whereArgs = {String.valueOf(id)};
 
         return db.update(TABLE_NAME, values, where, whereArgs);
     }
 
-    public long insertPersonne(String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone){
+    public long insertPersonne(String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone) {
         ContentValues values = new ContentValues();
-        values.put(NOM,nom);
-        values.put(PRENOM,prenom);
+        values.put(NOM, nom);
+        values.put(PRENOM, prenom);
         values.put(DATENAISSANCE, dateNaissance);
         values.put(ADRESSE, adresse);
         values.put(MAIL, mail);
@@ -91,10 +93,10 @@ public class PersonneDAO {
     }
 
 
-    public Personne getPersonne(int id){
+    public Personne getPersonne(int id) {
         Personne p = new Personne();
 
-        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+ID+"="+id, null);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + ID + "=" + id, null);
         if (c.moveToFirst()) {
             p.setId_Personne(c.getInt(c.getColumnIndex(ID)));
             p.setNom(c.getString(c.getColumnIndex(NOM)));

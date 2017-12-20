@@ -1,7 +1,5 @@
 package com.bien;
 
-import android.graphics.Bitmap;
-
 /**
  * Created by Kevin on 11/11/2017.
  */

@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="120dp"
             android:text="Ajouter une catégorie"
-            android:onClick="ajouterCategorie"/>
+            android:onClick="ajouterCategorie" />
 
         <Button
             android:id="@+id/btnImportExport"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="170dp"
             android:text="Exporter une liste"
-            android:onClick="exporterListe"/>
+            android:onClick="exporterListe" />
 
     </FrameLayout>
 

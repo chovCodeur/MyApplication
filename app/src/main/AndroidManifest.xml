@@ -26,13 +26,14 @@
         <activity android:name="com.bien.AjouterBien" />
         <activity android:name="com.bien.ModifierBien" />
         <activity android:name="com.utils.ReadPDF" />
-        <activity android:name="com.liste.ExportListe">
-        </activity>
+        <activity android:name="com.liste.ExportListe"></activity>
 
 
     </application>
-    <uses-feature android:name="android.hardware.camera"
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 

@@ -38,47 +38,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
-    <EditText
-        android:id="@+id/editCategorie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.08"
-        android:ems="10"
-        android:maxLength="20"
-        android:inputType="textPersonName"
-        android:hint="Nom"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="34dp" />
+            <EditText
+                android:id="@+id/editCategorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.08"
+                android:ems="10"
+                android:maxLength="20"
+                android:inputType="textPersonName"
+                android:hint="Nom"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="34dp" />
 
-    <EditText
-        android:id="@+id/editDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:maxLength="100"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Description"
-        android:layout_below="@+id/editCategorie"
-        android:layout_alignParentEnd="true" />
+            <EditText
+                android:id="@+id/editDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:maxLength="100"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="Description"
+                android:layout_below="@+id/editCategorie"
+                android:layout_alignParentEnd="true" />
 
-    <Button
-        android:id="@+id/buttonAddCategorie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:onClick="onClickAddCategorie"
-        android:layout_below="@+id/editDescription"
-        android:text="Ajouter" />
+            <Button
+                android:id="@+id/buttonAddCategorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="150dp"
+                android:onClick="onClickAddCategorie"
+                android:layout_below="@+id/editDescription"
+                android:text="Ajouter" />
 
 
-    </RelativeLayout>
+        </RelativeLayout>
     </ScrollView>
 
 

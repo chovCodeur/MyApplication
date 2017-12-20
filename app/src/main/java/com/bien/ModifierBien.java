@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
@@ -18,7 +19,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,11 +36,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.MainActivity;
+import com.application.inventaire.R;
 import com.categorie.Categorie;
 import com.dao.BienDAO;
 import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
-import com.application.inventaire.R;
 import com.liste.Liste;
 
 import java.io.File;
@@ -66,7 +66,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     // Variables de classe
     private Menu m;
-    private int id=0;
+    private int id = 0;
     private BienDAO bdao;
     private ListeDAO ldao;
     private CategorieDAO categorieDAO;
@@ -74,7 +74,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private Bien bien;
     private EditText nomBien;
     private EditText dateAchat;
-    private EditText descriptionBien ;
+    private EditText descriptionBien;
     private EditText commentaireBien;
     private EditText numeroSerie;
     private EditText prixBien;
@@ -84,7 +84,8 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private ImageView photo2;
     private ImageView photo3;
     private ArrayList<Liste> listes;
-    private ArrayList<String> nomListes = new ArrayList<>();;
+    private ArrayList<String> nomListes = new ArrayList<>();
+    ;
     private Spinner spinnerCategorie;
     private ArrayList<Categorie> categoriesList = new ArrayList<Categorie>();
     private Categorie categorieSelectionne;
@@ -92,9 +93,9 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private ArrayList<Integer> idPrevListes = new ArrayList<>();
     private ArrayList<Integer> idNouvListes = new ArrayList<>();
     private ArrayList<String> listeCategorieName = new ArrayList<String>();
-    private CheckedTextView ctvliste1=null;
-    private CheckedTextView ctvliste2=null;
-    private CheckedTextView ctvliste3=null;
+    private CheckedTextView ctvliste1 = null;
+    private CheckedTextView ctvliste2 = null;
+    private CheckedTextView ctvliste3 = null;
     private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
     private DatePickerDialog datePickerDialog;
     private Boolean perm = false;
@@ -110,6 +111,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * Procédure lancée à la création de l'activité.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -129,12 +131,12 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         Bundle extras = getIntent().getExtras();
 
         // S'il y a des paramètres, on stocke l'id du bien et de sa catégorie courante
-        if(extras != null) {
+        if (extras != null) {
             id = extras.getInt("IDBIEN");
             idCategorieSelectionne = extras.getInt("IDCATEGORIE");
 
             // Si l'id du bien n'est pas nul
-            if(id != 0) {
+            if (id != 0) {
                 // On ouvre le DAO et on récupère le bien bien son id
                 bdao.open();
                 bien = bdao.getBien(id);
@@ -145,16 +147,16 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 // On récupère le nom des listes dans lequel le bien existe grâce aux id récupérés
                 // et on les ajoute à notre liste éphémère
                 ldao.open();
-                for(int i=0;i<idPrevListes.size();i++) {
-                    if(idPrevListes.get(i) == 1) {
+                for (int i = 0; i < idPrevListes.size(); i++) {
+                    if (idPrevListes.get(i) == 1) {
                         String nom = ldao.getNomListeById(1);
                         nomListes.add(nom);
                     }
-                    if(idPrevListes.get(i) == 2) {
+                    if (idPrevListes.get(i) == 2) {
                         String nom = ldao.getNomListeById(2);
                         nomListes.add(nom);
                     }
-                    if(idPrevListes.get(i) == 3) {
+                    if (idPrevListes.get(i) == 3) {
                         String nom = ldao.getNomListeById(3);
                         nomListes.add(nom);
                     }
@@ -168,10 +170,10 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
                 // On récupère toutes les listes de l'application
                 listeDAO.open();
-                listes  = listeDAO.getallListe();
+                listes = listeDAO.getallListe();
                 listeDAO.close();
 
-                spinnerCategorie =(Spinner) findViewById(R.id.select_categorie);
+                spinnerCategorie = (Spinner) findViewById(R.id.select_categorie);
                 spinnerCategorie.setOnItemSelectedListener(this);
 
                 // On récupère toutes les catégories de l'application
@@ -180,14 +182,14 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 categorieDAO.close();
 
                 // On récupère et on stocke le nom des catégories dans une liste
-                int i =0;
-                for (Categorie categorie: categoriesList) {
-                    listeCategorieName.add(i,categorie.getNom_Categorie());
+                int i = 0;
+                for (Categorie categorie : categoriesList) {
+                    listeCategorieName.add(i, categorie.getNom_Categorie());
                     i++;
                 }
 
                 // On utilise la liste fraîchement créée pour la mettre dans le spinner des catégories
-                ArrayAdapter arrayAdapterListe = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listeCategorieName);
+                ArrayAdapter arrayAdapterListe = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listeCategorieName);
                 arrayAdapterListe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerCategorie.setAdapter(arrayAdapterListe);
 
@@ -196,9 +198,9 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 String nomCategorie = categorieDAO.getNomCategorieByIdCategorie(idCategorieSelectionne);
 
                 // On boucle dans les éléments du spinner
-                for(i=0;i<spinnerCategorie.getCount();i++) {
+                for (i = 0; i < spinnerCategorie.getCount(); i++) {
                     // Lorsque l'on trouve la bonne catégorie dans le spinner, on la sélectionne
-                    if(spinnerCategorie.getItemAtPosition(i).toString().equals(nomCategorie)) {
+                    if (spinnerCategorie.getItemAtPosition(i).toString().equals(nomCategorie)) {
                         spinnerCategorie.setSelection(i);
                         categorieDAO.close();
                     }
@@ -247,14 +249,14 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 });
 
                 // On coche les listes dans lesquelles le bien figure déjà
-                for(i=0;i<idPrevListes.size();i++) {
-                    if(idPrevListes.get(i) == 1) {
+                for (i = 0; i < idPrevListes.size(); i++) {
+                    if (idPrevListes.get(i) == 1) {
                         ctvliste1.setChecked(true);
                     }
-                    if(idPrevListes.get(i) == 2) {
+                    if (idPrevListes.get(i) == 2) {
                         ctvliste2.setChecked(true);
                     }
-                    if(idPrevListes.get(i) == 3) {
+                    if (idPrevListes.get(i) == 3) {
                         ctvliste3.setChecked(true);
                     }
                 }
@@ -278,20 +280,20 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                         datePickerDialog = new DatePickerDialog(ModifierBien.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                String day ;
-                                if(dayOfMonth <10){
-                                    day = "0"+dayOfMonth;
+                                String day;
+                                if (dayOfMonth < 10) {
+                                    day = "0" + dayOfMonth;
                                 } else {
                                     day = String.valueOf(dayOfMonth);
                                 }
 
-                                String monthFormat ;
-                                if((month +1) <10){
-                                    monthFormat = "0"+(month+1);
+                                String monthFormat;
+                                if ((month + 1) < 10) {
+                                    monthFormat = "0" + (month + 1);
                                 } else {
-                                    monthFormat = String.valueOf(month+1);
+                                    monthFormat = String.valueOf(month + 1);
                                 }
-                                dateAchat.setText(day + "/" +monthFormat+ "/" + year);
+                                dateAchat.setText(day + "/" + monthFormat + "/" + year);
                             }
                         }, mYear, mMonth, mDay);
                         datePickerDialog.show();
@@ -320,7 +322,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 dateSaisie = dateFormat.format(actuelle);
 
                 // Affichage des photos lorsqu'elles existent pour le bien
-                if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
+                if (bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
                     final File imgFile = new File(bien.getPhoto_bien_principal());
                     if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -336,7 +338,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     }
                 }
 
-                if(bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")) {
+                if (bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")) {
                     final File imgFile = new File(bien.getPhoto_bien_miniature1());
                     if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -352,7 +354,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     }
                 }
 
-                if(bien.getPhoto_bien_miniature2() != null && !bien.getPhoto_bien_miniature2().equals("")) {
+                if (bien.getPhoto_bien_miniature2() != null && !bien.getPhoto_bien_miniature2().equals("")) {
                     final File imgFile = new File(bien.getPhoto_bien_miniature2());
                     if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -368,7 +370,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     }
                 }
 
-                if(bien.getPhoto_bien_miniature3() != null && !bien.getPhoto_bien_miniature3().equals("")) {
+                if (bien.getPhoto_bien_miniature3() != null && !bien.getPhoto_bien_miniature3().equals("")) {
                     final File imgFile = new File(bien.getPhoto_bien_miniature3());
                     if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -389,6 +391,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * Méthode permettant d'effectuer la modification du bien dans la base de données.
+     *
      * @param v une View
      */
     public void modifierBien(View v) {
@@ -397,7 +400,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
         // Remonter une erreur si la date saisie est incorrecte
         if (dateAchatSaisie != null && !dateAchatSaisie.equals("")) {
-            if (!dateAchatSaisie.matches(regexDate)){
+            if (!dateAchatSaisie.matches(regexDate)) {
                 Toast.makeText(this, "La date doit être au format jj/mm/aaaa", Toast.LENGTH_SHORT).show();
                 erreurSaisieDate = true;
             }
@@ -405,7 +408,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         }
 
         // On procède à la modification seulement si le nom du bien n'est pas vide, que la date saisie est valide et que le bien est dans au moins une liste
-        if(!nomBien.getText().toString().trim().equals("") && isACheckboxIsChecked() && !erreurSaisieDate) {
+        if (!nomBien.getText().toString().trim().equals("") && isACheckboxIsChecked() && !erreurSaisieDate) {
             idCategorieSelectionne = categorieSelectionne.getId_Categorie();
             bdao.open();
 
@@ -471,6 +474,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * Méthode permettant d'assigner le menu et ses options à l'activité.
+     *
      * @param menu
      * @return
      */
@@ -485,13 +489,14 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * Méthode permettant de faire différentes actions suivant le bouton du menu cliqué.
+     *
      * @param item du menu
      * @return un booléen indiquant quel item a été sélectionné.
      */
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.home:
                 Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
                 intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -511,13 +516,14 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * Méthode permettant de récupérer l'id de la catégorie sélectionnée dans le spinner.
+     *
      * @param parent
      * @param view
      * @param position
      * @param id
      */
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position,long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         categorieSelectionne = categoriesList.get(position);
     }
 
@@ -528,10 +534,11 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * Fonction permettant de savoir si le bien appartient au moins à une liste ou non.
+     *
      * @return un booléen contenant true si le bien appartient à au moins une liste, false sinon.
      */
     public boolean isACheckboxIsChecked() {
-        if(ctvliste1.isChecked() || ctvliste2.isChecked() || ctvliste3.isChecked()) {
+        if (ctvliste1.isChecked() || ctvliste2.isChecked() || ctvliste3.isChecked()) {
             return true;
         }
         return false;
@@ -539,14 +546,15 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * Méthode permettant de supprimer une photo pour le bien.
+     *
      * @param fileName String contenant le chemin d'accès de la photo sur le téléphone.
-     * @param photo View permettant de savoir quelle photo il faut supprimer.
+     * @param photo    View permettant de savoir quelle photo il faut supprimer.
      */
     public void supprimerPhoto(String fileName, View photo) {
         final ImageView view = (ImageView) photo;
 
         TextView supprimerImage = new TextView(this);
-        supprimerImage.setText("Voulez-vous vraiment supprimer la photo "+fileName+" ?");
+        supprimerImage.setText("Voulez-vous vraiment supprimer la photo " + fileName + " ?");
 
         LinearLayout layout = new LinearLayout(this);
         layout.addView(supprimerImage);
@@ -571,16 +579,20 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                     public void onClick(DialogInterface dialog, int which) {
                         // Suivant le tag de la vue sur laquelle il a cliqué, on supprime la photo correspondante
                         switch (view.getTag().toString()) {
-                            case "principal" : photoPrincipale.setImageBitmap(null);
+                            case "principal":
+                                photoPrincipale.setImageBitmap(null);
                                 bien.setPhoto_bien_principal("");
                                 break;
-                            case "1" : photo1.setImageBitmap(null);
+                            case "1":
+                                photo1.setImageBitmap(null);
                                 bien.setPhoto_bien_miniature1("");
                                 break;
-                            case "2" : photo2.setImageBitmap(null);
+                            case "2":
+                                photo2.setImageBitmap(null);
                                 bien.setPhoto_bien_miniature2("");
                                 break;
-                            case "3" : photo3.setImageBitmap(null);
+                            case "3":
+                                photo3.setImageBitmap(null);
                                 bien.setPhoto_bien_miniature3("");
                                 break;
                         }
@@ -603,9 +615,10 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * Méthoder permettant de modifier la facture du bien
+     *
      * @param v une View
      */
-    public void modifierFacture(View v){
+    public void modifierFacture(View v) {
         // On vérifie si l'application peut accéder à la mémoire du téléphone
         verifierPermission(CHECK_PERM_PDF);
         // Si oui, on invoque la méthode permettant de récupérer une facture
@@ -614,8 +627,12 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-
-    public void verifierPermission(int code){
+    /**
+     * Permet d'appeler la méthode de verification des permissions en fonction de l'action utilisateur
+     *
+     * @param code
+     */
+    public void verifierPermission(int code) {
         if (ContextCompat.checkSelfPermission(ModifierBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(ModifierBien.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, code);
         } else {
@@ -623,6 +640,9 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    /**
+     * Pour lancer l'activité de récuperation de facture
+     */
     public void recupererFacture() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("application/pdf");
@@ -630,11 +650,19 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    /**
+     * Quand on revient sur l'activité d'ajout de bien
+     *
+     * @param request
+     * @param resultCode
+     * @param data
+     */
     protected void onActivityResult(int request, int resultCode, Intent data) {
         super.onActivityResult(request, resultCode, data);
 
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
 
+        // si on vient d'aller chercher un PDF
         if (resultCode == RESULT_OK && request == SELECT_PDF) {
 
             String name = getRealPathFromUriPDF(data.getData());
@@ -642,7 +670,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
             if (path != null && !path.equals("")) {
                 String format = s.format(new Date());
-                String pathPdf = saveFile(path+"/"+name, format.toString(), "pdf");
+                String pathPdf = saveFile(path + "/" + name, format.toString(), "pdf");
                 bien.setFacture_bien(pathPdf);
             }
 
@@ -652,10 +680,13 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         }
 
         int numPhoto = getFirstNullPicture();
+        // si on vient de selectionner ou de prendre une photo
 
         if (resultCode == RESULT_OK && (request == SELECT_IMAGE || request == TAKE_IMAGE)) {
             String path;
-            if(request == SELECT_IMAGE) {
+
+            // on récupère le path
+            if (request == SELECT_IMAGE) {
                 path = getRealPathFromUri(data.getData());
             } else {
                 path = getRealPathFromUri(uriImagePrise);
@@ -671,13 +702,14 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             final File imgFile;
 
 
-
             if (path != null && !path.equals("")) {
                 switch (numPhoto) {
                     case 0:
-
+                        // en fonction de la première place disponible
                         imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
                         final String pathPhotoPrincipale;
+
+                        // on enregistre la photo dans la mémoire interne
                         pathPhotoPrincipale = saveFile(path, format.toString(), "img");
                         imgFile = new File(pathPhotoPrincipale);
                         if (imgFile.exists()) {
@@ -685,8 +717,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                             imagePhotoPrincipale.setImageBitmap(myBitmap);
                         }
 
-
-
+                        // pour supprimer la photo
                         imagePhotoPrincipale.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -703,12 +734,15 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
                         imagePhoto1 = (ImageView) findViewById(R.id.photo1);
                         final String pathPhoto1;
+                        // on enregistre la photo dans la mémoire interne
                         pathPhoto1 = saveFile(path, format.toString(), "img");
                         imgFile = new File(pathPhoto1);
                         if (imgFile.exists()) {
                             myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                             imagePhoto1.setImageBitmap(myBitmap);
                         }
+
+                        // pour supprimer la photo
                         imagePhoto1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -723,6 +757,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                         imagePhoto2 = (ImageView) findViewById(R.id.photo2);
                         final String pathPhoto2;
 
+                        // on enregistre la photo dans la mémoire interne
                         pathPhoto2 = saveFile(path, format.toString(), "img");
                         imgFile = new File(pathPhoto2);
                         if (imgFile.exists()) {
@@ -730,6 +765,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                             imagePhoto2.setImageBitmap(myBitmap);
                         }
 
+                        // pour supprimer la photo
                         imagePhoto2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -744,6 +780,8 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
                         imagePhoto3 = (ImageView) findViewById(R.id.photo3);
                         final String pathPhoto3;
+
+                        // on enregistre la photo dans la mémoire interne
                         pathPhoto3 = saveFile(path, format.toString(), "img");
                         imgFile = new File(pathPhoto3);
                         if (imgFile.exists()) {
@@ -751,6 +789,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                             imagePhoto3.setImageBitmap(myBitmap);
                         }
 
+                        // pour supprimer la photo
                         imagePhoto3.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -767,14 +806,23 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-
-    public void recupererPhoto(){
+    /**
+     * Permet de demarrer l'activité pour la récupération de photo depuis la gallerie
+     */
+    public void recupererPhoto() {
 
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, SELECT_IMAGE);
 
     }
 
+
+    /**
+     * Pour récuperer le path d'origine d'une photo
+     *
+     * @param contentUri
+     * @return path
+     */
     public String getRealPathFromUri(Uri contentUri) {
         String result = "";
 
@@ -793,6 +841,12 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         return result;
     }
 
+    /**
+     * Pour récuperer le path d'origine d'un PDF
+     *
+     * @param contentUri
+     * @return path
+     */
     public String getRealPathFromUriPDF(Uri contentUri) {
         String result = "";
 
@@ -811,11 +865,20 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         return result;
     }
 
+    /**
+     * Pour sauvegarder un fichier dans la mémoire interne de l'appareil
+     *
+     * @param pathFichierOrigine
+     * @param nomNouveauFichier
+     * @param type
+     * @return path
+     */
     private String saveFile(String pathFichierOrigine, String nomNouveauFichier, String type) {
 
         String separator = "/";
         File dir = null;
 
+        // si c'est une image, on crée le repertoire image
         if (type.equals("img")) {
             String dirName = "images";
             dir = new File(this.getFilesDir() + separator + dirName);
@@ -824,6 +887,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 dir.mkdir();
             }
 
+            // si c'est un pdf, on crée le repertoire factures
         } else if (type.equals("pdf")) {
             String dirName = "factures";
             dir = new File(this.getFilesDir() + separator + dirName);
@@ -841,11 +905,13 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
         if (fileSrc.exists()) {
             try {
-                if(type.equals("img")) {
-                    copy(fileSrc,fileDest);
+                if (type.equals("img")) {
+                    // c'est une image, on copie et on compresse le fichier destination
+                    copy(fileSrc, fileDest);
                     compressImage(fileDest);
                 } else {
-                    copy(fileSrc,fileDest);
+                    // sinon, c'est une facture, on copie vers le fichier destination
+                    copy(fileSrc, fileDest);
                 }
             } catch (IOException e) {
 
@@ -857,11 +923,18 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    /**
+     * Pour copier une fichier source vers un fichier de destination
+     *
+     * @param src
+     * @param dst
+     * @throws IOException
+     */
     public static void copy(File src, File dst) throws IOException {
 
         try (InputStream in = new FileInputStream(src)) {
             try (OutputStream out = new FileOutputStream(dst)) {
-                // Transfer bytes from in to out
+                // On transfert le byte par le buffer
                 byte[] buf = new byte[1024];
                 int len;
                 while ((len = in.read(buf)) > 0) {
@@ -871,35 +944,52 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    /**
+     * Méthode appelée après la verification des permissions
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == CHECK_PERM_PDF){
-            if (ContextCompat.checkSelfPermission(ModifierBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == CHECK_PERM_PDF) {
+            // appelé avant l'ouverture d'un PDF
+            if (ContextCompat.checkSelfPermission(ModifierBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 perm = true;
                 recupererPhoto();
             }
-        } else if (requestCode == CHECK_PERM_PICTURE){
-            if (ContextCompat.checkSelfPermission(ModifierBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            // appelé avant l'ouverture d'une PHOTO
+        } else if (requestCode == CHECK_PERM_PICTURE) {
+            if (ContextCompat.checkSelfPermission(ModifierBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 perm = true;
                 recupererFacture();
             }
-        } else if (requestCode == CHECK_TAKE_PHOTO){
-            if (ContextCompat.checkSelfPermission(ModifierBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            // appelé avant la prise d'une photo par la caméra
+        } else if (requestCode == CHECK_TAKE_PHOTO) {
+            if (ContextCompat.checkSelfPermission(ModifierBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 perm = true;
                 prendrePhoto(null);
             }
         }
 
-        if(!perm) {
+        // si l'utilisateur n'a pas accepté
+        if (!perm) {
             Toast.makeText(this, "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
         }
 
     }
 
-    public void modifierPhoto(View v){
+    /**
+     * Méthode appelée pour la modification des photos depuis la gallerie
+     *
+     * @param v la vue
+     */
+    public void modifierPhoto(View v) {
         verifierPermission(CHECK_PERM_PDF);
         int numPhoto = getFirstNullPicture();
         if (perm) {
+            // si le nombre de photo est < 4 et que les permissions le permettent
             if (numPhoto != 4) {
                 recupererPhoto();
             } else {
@@ -909,15 +999,20 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-
-    public int getFirstNullPicture(){
-        if (bien.getPhoto_bien_principal()== null || bien.getPhoto_bien_principal().equals("")){
+    /**
+     * Permet de retourner la première place disponible pour une photo (prise de puis la caméra ou la gallerie
+     * Retourne 4 s'il n'y a plus de place
+     *
+     * @return premierePlaceDisponible
+     */
+    public int getFirstNullPicture() {
+        if (bien.getPhoto_bien_principal() == null || bien.getPhoto_bien_principal().equals("")) {
             return 0;
-        } else if (bien.getPhoto_bien_miniature1()== null || bien.getPhoto_bien_miniature1().equals("")){
-            return  1;
-        } else if (bien.getPhoto_bien_miniature2()== null || bien.getPhoto_bien_miniature2().equals("")){
-            return  2;
-        } else if (bien.getPhoto_bien_miniature3()== null || bien.getPhoto_bien_miniature3().equals("")) {
+        } else if (bien.getPhoto_bien_miniature1() == null || bien.getPhoto_bien_miniature1().equals("")) {
+            return 1;
+        } else if (bien.getPhoto_bien_miniature2() == null || bien.getPhoto_bien_miniature2().equals("")) {
+            return 2;
+        } else if (bien.getPhoto_bien_miniature3() == null || bien.getPhoto_bien_miniature3().equals("")) {
             return 3;
         } else {
             return 4;
@@ -925,41 +1020,43 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    public File compressImage(File file){
+    /**
+     * Pour compresser une image
+     *
+     * @param file
+     * @return file
+     */
+    public File compressImage(File file) {
         try {
 
-            // BitmapFactory options to downsize the image
+            // Pour parametrer la compression
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inJustDecodeBounds = true;
             o.inSampleSize = 6;
-            // factor of downsizing the image
 
             FileInputStream inputStream = new FileInputStream(file);
-            //Bitmap selectedBitmap = null;
             BitmapFactory.decodeStream(inputStream, null, o);
             inputStream.close();
 
-            // The new size we want to scale to
-            final int REQUIRED_SIZE=80;
-
-            // Find the correct scale value. It should be the power of 2.
+            // Compression du flux
+            final int REQUIRED_SIZE = 80;
             int scale = 1;
-            while(o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+            while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
                     o.outHeight / scale / 2 >= REQUIRED_SIZE) {
                 scale *= 2;
             }
 
+            // nouvelle compression
             BitmapFactory.Options o2 = new BitmapFactory.Options();
             o2.inSampleSize = scale;
             inputStream = new FileInputStream(file);
-
             Bitmap selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2);
             inputStream.close();
 
-            // here i override the original image file
+            // Compression du flux
             file.createNewFile();
             FileOutputStream outputStream = new FileOutputStream(file);
-            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , outputStream);
+            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
 
@@ -969,14 +1066,18 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-
-    public void prendrePhoto(View view){
+    /**
+     * Pour lancer l'activité de prise de photo
+     */
+    public void prendrePhoto(View view) {
         verifierPermission(CHECK_TAKE_PHOTO);
         if (perm) {
+            // si il reste de la place pour une photo
             if (getFirstNullPicture() < 4) {
                 ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.TITLE, "New Picture");
-                values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                values.put(MediaStore.Images.Media.TITLE, "Nouvelle photo");
+                values.put(MediaStore.Images.Media.DESCRIPTION, "Depuis votre caméra");
+                // on demarrer la nouvelle activité
                 uriImagePrise = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uriImagePrise);

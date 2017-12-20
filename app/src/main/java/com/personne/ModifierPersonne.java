@@ -1,9 +1,10 @@
 package com.personne;
 //
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Patterns;
@@ -11,15 +12,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bien.AjouterBien;
 import com.application.MainActivity;
 import com.application.inventaire.R;
+import com.bien.AjouterBien;
 import com.dao.PersonneDAO;
 
 import java.util.Calendar;
@@ -46,16 +45,16 @@ public class ModifierPersonne extends AppCompatActivity {
         Personne per = personneDAO.getPersonne(1);
         personneDAO.close();
 
-        if (per!=null){
+        if (per != null) {
             dejaEnBase = true;
         }
 
-        Log.e("per",per.toString());
+        Log.e("per", per.toString());
 
 
         TextView textViewNomPersonne = (TextView) findViewById(R.id.editNom);
         TextView textViewPrenomPersonne = (TextView) findViewById(R.id.editPrenom);
-        TextView textViewAddress =(TextView) findViewById(R.id.editAdress);
+        TextView textViewAddress = (TextView) findViewById(R.id.editAdress);
         TextView textViewEmail = (TextView) findViewById(R.id.editEmail);
         TextView textViewPhoneNumber = (TextView) findViewById(R.id.editPhon_Number);
         textViewDate = (TextView) findViewById(R.id.editTextDate);
@@ -65,7 +64,7 @@ public class ModifierPersonne extends AppCompatActivity {
         textViewPrenomPersonne.setText(per.getPrenom());
         textViewAddress.setText(per.getAddress());
         textViewEmail.setText(per.getMail());
-        Log.e("aa","phone"+per.getPhoneNumber());
+        Log.e("aa", "phone" + per.getPhoneNumber());
         textViewPhoneNumber.setText(per.getPhoneNumber());
 
         textViewDate.setOnClickListener(new View.OnClickListener() {
@@ -78,20 +77,20 @@ public class ModifierPersonne extends AppCompatActivity {
                 datePickerDialog = new DatePickerDialog(ModifierPersonne.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String day ;
-                        if(dayOfMonth <10){
-                            day = "0"+dayOfMonth;
+                        String day;
+                        if (dayOfMonth < 10) {
+                            day = "0" + dayOfMonth;
                         } else {
                             day = String.valueOf(dayOfMonth);
                         }
 
-                        String monthFormat ;
-                        if((month +1) <10){
-                            monthFormat = "0"+(month+1);
+                        String monthFormat;
+                        if ((month + 1) < 10) {
+                            monthFormat = "0" + (month + 1);
                         } else {
-                            monthFormat = String.valueOf(month+1);
+                            monthFormat = String.valueOf(month + 1);
                         }
-                        textViewDate.setText(day + "/" +monthFormat+ "/" + year);
+                        textViewDate.setText(day + "/" + monthFormat + "/" + year);
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -114,9 +113,9 @@ public class ModifierPersonne extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.home:
                 Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
                 intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -135,11 +134,11 @@ public class ModifierPersonne extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClickAjoutInfos (View view){
+    public void onClickAjoutInfos(View view) {
 
         TextView textViewNomPersonne = (TextView) findViewById(R.id.editNom);
         TextView textViewPrenomPersonne = (TextView) findViewById(R.id.editPrenom);
-        TextView textViewAddress =(TextView) findViewById(R.id.editAdress);
+        TextView textViewAddress = (TextView) findViewById(R.id.editAdress);
         TextView textViewEmail = (TextView) findViewById(R.id.editEmail);
         TextView textViewPhoneNumber = (TextView) findViewById(R.id.editPhon_Number);
 
@@ -152,14 +151,14 @@ public class ModifierPersonne extends AppCompatActivity {
 
         Boolean erreurSaisieDate = false;
         if (date != null && !date.equals("")) {
-            if (!date.matches(regexDate)){
+            if (!date.matches(regexDate)) {
                 Toast.makeText(this, "La date doit être au format jj/mm/aaaa", Toast.LENGTH_SHORT).show();
-                 erreurSaisieDate = true;
+                erreurSaisieDate = true;
             }
 
         }
 
-        if(!erreurSaisieDate && !nomPersonne.equals("") && !prenomPersonne.equals("") && !date.equals("") && !address.equals("") && validEmail(email) && validPhone(phoneNumber)) {
+        if (!erreurSaisieDate && !nomPersonne.equals("") && !prenomPersonne.equals("") && !date.equals("") && !address.equals("") && validEmail(email) && validPhone(phoneNumber)) {
             PersonneDAO personneDAO = new PersonneDAO(this);
             personneDAO.open();
             if (dejaEnBase) {

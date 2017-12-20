@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 
 /**
@@ -27,7 +26,7 @@ public class MySQLite extends SQLiteOpenHelper {
     // Nom des colonnes de la table Liste
     private static final String KEY_ID_LISTE = "id_liste";
     private static final String KEY_LIBELLE = "libelle";
-    private static final String KEY_COMMENTAIRE= "commentaire";
+    private static final String KEY_COMMENTAIRE = "commentaire";
 
     // Nom des colonnes de la table Bien
     private static final String KEY_ID_BIEN = "id_bien";
@@ -44,14 +43,14 @@ public class MySQLite extends SQLiteOpenHelper {
     private static final String KEY_PHOTO_SEC1 = "photo_sec1";
     private static final String KEY_PHOTO_SEC2 = "photo_sec2";
     private static final String KEY_PHOTO_SEC3 = "photo_sec3";
-    private static final String KEY_CATEGORIE_BIEN= "id_categorie";
+    private static final String KEY_CATEGORIE_BIEN = "id_categorie";
 
     // Nom des colonnes de la table Catégorie
     private static final String KEY_ID_CATEGORIE = "id_categorie";
 
     // Nom des colonnes de la table Personne
     private static final String KEY_ID_PERSONNE = "id_personne";
-    private static final String KEY_PRENOM= "prenom";
+    private static final String KEY_PRENOM = "prenom";
     private static final String KEY_NAISSANCE = "date_naissance";
     private static final String KEY_ADRESSE = "adresse";
     private static final String KEY_MAIL = "mail";
@@ -61,7 +60,8 @@ public class MySQLite extends SQLiteOpenHelper {
 
     public static synchronized MySQLite getInstance(Context context) {
         if (sInstance == null) {
-            sInstance = new MySQLite(context); }
+            sInstance = new MySQLite(context);
+        }
         return sInstance;
     }
 
@@ -77,7 +77,7 @@ public class MySQLite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_LISTE);
 
         String CREATE_TABLE_BIEN = "CREATE TABLE " + TABLE_BIEN + "("
-                + KEY_ID_BIEN + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM_BIEN + " TEXT, " + KEY_DATESAISIE + " TEXT, " + KEY_DATEACHAT + " TEXT,"+ KEY_FACTURE +" TEXT," + KEY_NUMERO_SERIE + " TEXT, " + KEY_PRIX + " REAL, " + KEY_DESCRIPTION + " TEXT, " + KEY_COMMENTAIRE + " TEXT, " + KEY_CATEGORIE_BIEN + " INTEGER, " + KEY_PHOTO_PRINCIPALE + " TEXT," + KEY_PHOTO_SEC1 + " TEXT," + KEY_PHOTO_SEC2 + " TEXT," + KEY_PHOTO_SEC3 + " TEXT, FOREIGN KEY (" + KEY_CATEGORIE_BIEN + ") REFERENCES " + TABLE_CATEGORIE + "(" + KEY_ID_CATEGORIE + "))";
+                + KEY_ID_BIEN + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM_BIEN + " TEXT, " + KEY_DATESAISIE + " TEXT, " + KEY_DATEACHAT + " TEXT," + KEY_FACTURE + " TEXT," + KEY_NUMERO_SERIE + " TEXT, " + KEY_PRIX + " REAL, " + KEY_DESCRIPTION + " TEXT, " + KEY_COMMENTAIRE + " TEXT, " + KEY_CATEGORIE_BIEN + " INTEGER, " + KEY_PHOTO_PRINCIPALE + " TEXT," + KEY_PHOTO_SEC1 + " TEXT," + KEY_PHOTO_SEC2 + " TEXT," + KEY_PHOTO_SEC3 + " TEXT, FOREIGN KEY (" + KEY_CATEGORIE_BIEN + ") REFERENCES " + TABLE_CATEGORIE + "(" + KEY_ID_CATEGORIE + "))";
         db.execSQL(CREATE_TABLE_BIEN);
 
         String CREATE_TABLE_CATEGORIE = "CREATE TABLE " + TABLE_CATEGORIE + "("
@@ -94,12 +94,12 @@ public class MySQLite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_APPARTIENT);
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ID_PERSONNE,1);
-        values.put(KEY_PRENOM,"");
-        values.put(KEY_NAISSANCE,"");
-        values.put(KEY_ADRESSE,"");
-        values.put(KEY_MAIL,"");
-        values.put(KEY_TELEPHONE,"");
+        values.put(KEY_ID_PERSONNE, 1);
+        values.put(KEY_PRENOM, "");
+        values.put(KEY_NAISSANCE, "");
+        values.put(KEY_ADRESSE, "");
+        values.put(KEY_MAIL, "");
+        values.put(KEY_TELEPHONE, "");
         db.insert(TABLE_PERSONNE, null, values);
     }
 

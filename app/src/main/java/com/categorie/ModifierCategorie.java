@@ -45,7 +45,7 @@ public class ModifierCategorie extends AppCompatActivity {
         myToolbar.setTitle("Modifier une catégorie");
         setSupportActionBar(myToolbar);
 
-        cdao=new CategorieDAO(this);
+        cdao = new CategorieDAO(this);
 
         editCategorie = (EditText) findViewById(R.id.editCategorie);
         editDescription = (EditText) findViewById(R.id.editDescription);
@@ -53,14 +53,14 @@ public class ModifierCategorie extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
-        if(extras != null) {
+        if (extras != null) {
             idcat = extras.getInt("IDCATEGORIE");
             Log.d("IDCATEGORIE", String.valueOf(idcat));
-            if(idcat != 0) {
+            if (idcat != 0) {
                 cdao.open();
                 //categorie = cdao.getCategorieById(idcat);
-                nomcat=cdao.getNomCategorieByIdCategorie(idcat);
-                nomdescrip=cdao.getDescriptionCategorieByIdCategorie(idcat);
+                nomcat = cdao.getNomCategorieByIdCategorie(idcat);
+                nomdescrip = cdao.getDescriptionCategorieByIdCategorie(idcat);
 
                 Log.d("NOMCATEGORIE", cdao.getNomCategorieByIdCategorie(idcat));
                 cdao.close();
@@ -86,14 +86,14 @@ public class ModifierCategorie extends AppCompatActivity {
                 categorieDAO.close();
 
                 Boolean erreur = false;
-                for (Categorie cate: categories) {
-                    if(cate.getNom_Categorie().trim().toLowerCase().equals(nomCategorie.trim().toLowerCase())){
+                for (Categorie cate : categories) {
+                    if (cate.getNom_Categorie().trim().toLowerCase().equals(nomCategorie.trim().toLowerCase())) {
                         erreur = true;
                     }
 
                 }
 
-                if(!nomCategorie.equals("")) {
+                if (!nomCategorie.equals("")) {
                     if (!erreur) {
                         categorieDAO.open();
                         categorieDAO.modCategorie(idcat, nomCategorie, description);
@@ -105,7 +105,7 @@ public class ModifierCategorie extends AppCompatActivity {
                         Toast.makeText(context, "La catégorie " + nomCategorie + " existe déjà", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(context,"Le nom ne peut pas être vide",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Le nom ne peut pas être vide", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -127,9 +127,9 @@ public class ModifierCategorie extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.home:
                 Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
                 intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

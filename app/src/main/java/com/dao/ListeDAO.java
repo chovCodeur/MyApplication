@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.liste.Liste;
 import com.bd.MySQLite;
+import com.liste.Liste;
 
 import java.util.ArrayList;
 
@@ -27,33 +27,35 @@ public class ListeDAO {
 
     /**
      * Contructeur de la classe ListeDAO
+     *
      * @param context le contexte
      */
-    public ListeDAO(Context context){
+    public ListeDAO(Context context) {
         maBaseSQLite = MySQLite.getInstance(context);
     }
 
     /**
      * Méthode permettant l'ouverture de la table en lecture/ecriture
      */
-    public void open(){
-        db=maBaseSQLite.getWritableDatabase();
+    public void open() {
+        db = maBaseSQLite.getWritableDatabase();
     }
 
     /**
      * Méthode permettant la fermeture de la base de données
      */
-    public void close(){
+    public void close() {
         db.close();
     }
 
     /**
      * Méthode permettant de retrouver l'intégralité des listes
+     *
      * @return ArrayList<Liste> une liste de liste
      */
-    public ArrayList<Liste> getallListe(){
+    public ArrayList<Liste> getallListe() {
         ArrayList<Liste> liste = new ArrayList<Liste>();
-        Cursor curseurListe = db.rawQuery("SELECT * FROM "+TABLE_NAME, null);
+        Cursor curseurListe = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
         Liste listeTemp;
         if (curseurListe.moveToFirst()) {
@@ -72,12 +74,13 @@ public class ListeDAO {
 
     /**
      * Méthode permettant de récupérer le nom d'une liste grâce à son identifiant.
+     *
      * @param id int : identifiant de la liste.
      * @return String : contenant le nom de la liste en cas de réussite, vide sinon.
      */
-    public String getNomListeById(int id){
-        String nom="";
-        Cursor curseurListe = db.rawQuery("SELECT libelle FROM "+TABLE_NAME+" WHERE id_liste = "+id, null);
+    public String getNomListeById(int id) {
+        String nom = "";
+        Cursor curseurListe = db.rawQuery("SELECT libelle FROM " + TABLE_NAME + " WHERE id_liste = " + id, null);
 
         if (curseurListe.moveToFirst()) {
             do {
@@ -90,33 +93,34 @@ public class ListeDAO {
 
     /**
      * Méthode permettant de modifier une liste dans la table liste
-     * @param id_liste int : l'id de la liste
-     * @param libelle String : le libelle de la liste
+     *
+     * @param id_liste    int : l'id de la liste
+     * @param libelle     String : le libelle de la liste
      * @param commentaire String : commentaire sur la liste
      * @return int : le nombre de lignes affectées par la requête
      */
-    public int modifierListe(int id_liste, String libelle, String commentaire){
+    public int modifierListe(int id_liste, String libelle, String commentaire) {
         ContentValues values = new ContentValues();
-        values.put(LIBELLE,libelle);
+        values.put(LIBELLE, libelle);
         values.put(COMMENTAIRE, commentaire);
 
-        String where = ID+" = ?";
+        String where = ID + " = ?";
         String[] whereArgs = {String.valueOf(id_liste)};
         return db.update(TABLE_NAME, values, where, whereArgs);
     }
 
     /**
      * Méthode permettant d'ajouter une liste dans la table liste
+     *
      * @param liste Liste : liste
      * @return int : le nombre de lignes affectées par la requête
      */
-    public long ajouterListe(Liste liste){
+    public long ajouterListe(Liste liste) {
         ContentValues values = new ContentValues();
-        values.put(LIBELLE,liste.getLibelle_liste());
+        values.put(LIBELLE, liste.getLibelle_liste());
         values.put(COMMENTAIRE, liste.getCommentaire_liste());
-        return db.insert(TABLE_NAME,null,values);
+        return db.insert(TABLE_NAME, null, values);
     }
-
 
 
 }

@@ -89,8 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/checkListe1"
                 android:layout_marginTop="10dp"
-                android:visibility="invisible"
-                />
+                android:visibility="invisible" />
 
             <RadioButton
                 android:id="@+id/checkListe3"

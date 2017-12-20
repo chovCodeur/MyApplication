@@ -246,7 +246,7 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_margin="5dp"
-                    android:tag="principal"/>
+                    android:tag="principal" />
 
                 <ImageView
                     android:id="@+id/photo1"
@@ -254,7 +254,7 @@
                     android:layout_height="100dp"
                     android:layout_margin="5dp"
                     android:scaleType="fitCenter"
-                    android:tag="1"/>
+                    android:tag="1" />
 
                 <ImageView
                     android:id="@+id/photo2"
@@ -262,7 +262,7 @@
                     android:layout_height="100dp"
                     android:layout_margin="5dp"
                     android:scaleType="fitCenter"
-                    android:tag="2"/>
+                    android:tag="2" />
 
 
                 <ImageView
@@ -271,7 +271,7 @@
                     android:layout_height="100dp"
                     android:layout_margin="5dp"
                     android:scaleType="fitCenter"
-                    android:tag="3"/>
+                    android:tag="3" />
             </LinearLayout>
 
 

@@ -104,6 +104,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Méthode appelée à la creation de l'activité
+     *
      * @param savedInstanceState
      */
 
@@ -154,7 +155,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             fromIdListe = extras.getInt("ID_CURRENT_LIST");
         }
 
-        // si on la connait, on coche par défaut la checkbock qui correspond à la liste d'ou l'on vient
+        // si on la connait, on coche par défaut la checkbox qui correspond à la liste d'ou l'on vient
         if (fromIdListe == 1) {
             ctvliste1.setChecked(true);
             dansListe1 = true;
@@ -178,7 +179,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         final CheckedTextView ctvliste2 = (CheckedTextView) findViewById(R.id.checkListe2);
         ctvliste2.setText(listes.get(1).getLibelle_liste());
 
-        // si on la connait, on coche par défaut la checkbock qui correspond à la liste d'ou l'on vient
+        // si on la connait, on coche par défaut la checkbox qui correspond à la liste d'ou l'on vient
 
         if (fromIdListe == 2) {
             ctvliste2.setChecked(true);
@@ -201,7 +202,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         final CheckedTextView ctvliste3 = (CheckedTextView) findViewById(R.id.checkListe3);
         ctvliste3.setText(listes.get(2).getLibelle_liste());
 
-        // si on la connait, on coche par défaut la checkbock qui correspond à la liste d'ou l'on vient
+        // si on la connait, on coche par défaut la checkbox qui correspond à la liste d'ou l'on vient
         if (fromIdListe == 3) {
             ctvliste3.setChecked(true);
             dansListe3 = true;
@@ -308,6 +309,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Méthode appelée après la verification des permissions
+     *
      * @param requestCode
      * @param permissions
      * @param grantResults
@@ -344,6 +346,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Permet d'appeler la méthode de verification des permissions en fonction de l'action utilisateur
+     *
      * @param code
      */
     public void verifierPermission(int code) {
@@ -368,6 +371,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Quand on revient sur l'activité d'ajout de bien
+     *
      * @param request
      * @param resultCode
      * @param data
@@ -501,6 +505,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Pour récuperer le path d'origine d'une photo
+     *
      * @param contentUri
      * @return path
      */
@@ -524,6 +529,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Pour récuperer le path d'origine d'un PDF
+     *
      * @param contentUri
      * @return path
      */
@@ -546,7 +552,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     }
 
     /**
-     * Quand on presse le bouton retour
+     * Procédure gérant l'action du bouton physique retour du téléphone.
      */
     @Override
     public void onBackPressed() {
@@ -554,9 +560,11 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     }
 
     /**
-     *  TODO
+     * Méthode permettant d'assigner le menu et ses options à l'activité.
+     *
+     * @param menu
+     * @return
      */
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -579,7 +587,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                 startActivity(intenthome);
                 return true;
 
-                // rien pour le bouton plus car nous sommes déja dans l'activité d'ajout d'un bien
+            // rien pour le bouton plus car nous sommes déja dans l'activité d'ajout d'un bien
             case R.id.plus:
                 return true;
 
@@ -589,6 +597,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Lorsque que l'on clique sur le bouton d'ajout d'un bien
+     *
      * @param view
      */
     public void onClickAjouterBien(View view) {
@@ -683,6 +692,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Pour retrouner la catégorie selectionnée dans le spinner
+     *
      * @param parent
      * @param view
      * @param position
@@ -695,6 +705,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Quand rien n'est selectionné dans spinner
+     *
      * @param adapterView
      */
     @Override
@@ -705,6 +716,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Pour sauvegarder un fichier dans la mémoire interne de l'appareil
+     *
      * @param pathFichierOrigine
      * @param nomNouveauFichier
      * @param type
@@ -765,6 +777,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Pour compresser une image
+     *
      * @param file
      * @return file
      */
@@ -810,6 +823,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Pour copier une fichier source vers un fichier de destination
+     *
      * @param src
      * @param dst
      * @throws IOException
@@ -842,6 +856,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Getteur pour retourner le context de l'activité
+     *
      * @return context
      */
     public Context getContext() {
@@ -855,24 +870,25 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         verifierPermission(CHECK_TAKE_PICTURE);
 
         if (perm) {
-            // si il reste de la place pour une photo
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.TITLE, "Nouvelle photo");
-                values.put(MediaStore.Images.Media.DESCRIPTION, "Depuis votre caméra");
-                // on demarrer la nouvelle activité
-                uriImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
-                startActivityForResult(intent, TAKE_IMAGE);
-            } else {
-                Toast.makeText(getContext(), "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
-            }
+            // si l'application est autorisé
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, "Nouvelle photo");
+            values.put(MediaStore.Images.Media.DESCRIPTION, "Depuis votre caméra");
+            // on demarrer la nouvelle activité
+            uriImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
+            startActivityForResult(intent, TAKE_IMAGE);
+        } else {
+            Toast.makeText(getContext(), "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
+        }
 
     }
 
     /**
      * Permet de retourner la première place disponible pour une photo (prise de puis la caméra ou la gallerie
      * Retourne 4 s'il n'y a plus de place
+     *
      * @return premierePlaceDisponible
      */
     public int getFirstNullPicture() {
@@ -892,6 +908,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Pour supprimer une photo de la vue
+     *
      * @param fileName
      * @param photo
      */

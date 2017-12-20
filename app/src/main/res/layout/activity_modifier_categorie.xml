@@ -44,40 +44,40 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp">
 
-    <EditText
-        android:id="@+id/editCategorie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.08"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Nom"
-        android:maxLength="20"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="34dp" />
+            <EditText
+                android:id="@+id/editCategorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.08"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Nom"
+                android:maxLength="20"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="34dp" />
 
-    <EditText
-        android:id="@+id/editDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:maxLength="100"
-        android:hint="Description"
-        android:layout_below="@+id/editCategorie"
-        android:layout_alignParentEnd="true" />
+            <EditText
+                android:id="@+id/editDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:maxLength="100"
+                android:hint="Description"
+                android:layout_below="@+id/editCategorie"
+                android:layout_alignParentEnd="true" />
 
-    <Button
-        android:id="@+id/buttonModifierCategorie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:onClick="onClickModifCategorie"
-        android:layout_below="@+id/editDescription"
-        android:text="Modifier" />
+            <Button
+                android:id="@+id/buttonModifierCategorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="150dp"
+                android:onClick="onClickModifCategorie"
+                android:layout_below="@+id/editDescription"
+                android:text="Modifier" />
 
-</RelativeLayout>
+        </RelativeLayout>
     </ScrollView>
 
 

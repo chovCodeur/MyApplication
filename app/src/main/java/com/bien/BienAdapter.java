@@ -4,23 +4,21 @@ package com.bien;
  * Created by Kevin on 19/11/2017.
  */
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.TreeSet;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.application.inventaire.R;
-import com.dao.BienDAO;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class BienAdapter extends BaseAdapter {
 
@@ -116,7 +114,7 @@ public class BienAdapter extends BaseAdapter {
         public TextView textView2;
     }
 
-    public void remplirAffichage(String data, ViewHolder holder){
+    public void remplirAffichage(String data, ViewHolder holder) {
 
         String[] str = data.split("#~#");
 
@@ -124,14 +122,14 @@ public class BienAdapter extends BaseAdapter {
             holder.textView.setText(str[1]);
         } else {
             holder.textView.setText(str[0]);
-            if (str.length > 1 && str[1] != null && !str[1].equals("")){
+            if (str.length > 1 && str[1] != null && !str[1].equals("")) {
                 holder.textView2.setText(str[1]);
             } else {
                 holder.textView2.setText("  ");
 
             }
 
-          if (str.length > 2 && str[2] != null && !str[2].equals("")){
+            if (str.length > 2 && str[2] != null && !str[2].equals("")) {
                 File imgFile = new File(str[2]);
                 if (imgFile.exists()) {
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -140,7 +138,7 @@ public class BienAdapter extends BaseAdapter {
                 }
 
             } else {
-              holder.imageView.setImageResource(R.drawable.no_image);
+                holder.imageView.setImageResource(R.drawable.no_image);
             }
 
 

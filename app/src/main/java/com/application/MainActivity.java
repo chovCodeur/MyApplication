@@ -3,10 +3,7 @@ package com.application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,20 +11,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.application.inventaire.R;
 import com.bien.AjouterBien;
 import com.bien.Bien;
 import com.bien.BienAdapter;
@@ -39,13 +34,10 @@ import com.dao.BienDAO;
 import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
 import com.dao.PersonneDAO;
-import com.application.inventaire.R;
 import com.liste.ExportListe;
 import com.liste.Liste;
 import com.personne.ModifierPersonne;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -66,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Context context = this;
     private NavigationView navigationView;
     private Toolbar myToolbar;
-    private boolean nomIdentique=false;
+    private boolean nomIdentique = false;
 
 
     ArrayList<Bien> listeBiens = new ArrayList<Bien>();
@@ -94,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
 
         bdao.open();
-        if(bdao.compterBienEnBase()<=0){
+        if (bdao.compterBienEnBase() <= 0) {
             remplirBeDeForTest();
         }
 
@@ -124,13 +116,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //refreshAdapterView();
 
     }
+
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
-            if (savedInstanceState.getString("ID_CURRENT_LISTE") != null && !savedInstanceState.getString("ID_CURRENT_LISTE").equals("")){
-                idCurrentList = Integer.valueOf(savedInstanceState.getString("ID_CURRENT_LISTE"));
-            } else {
-                idCurrentList = 1;
-            }
+        if (savedInstanceState.getString("ID_CURRENT_LISTE") != null && !savedInstanceState.getString("ID_CURRENT_LISTE").equals("")) {
+            idCurrentList = Integer.valueOf(savedInstanceState.getString("ID_CURRENT_LISTE"));
+        } else {
+            idCurrentList = 1;
+        }
     }
 
     @Override
@@ -193,9 +186,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.home:
 
                 return true;
@@ -215,10 +208,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        ViewGroup navigationMenuView = (ViewGroup)navigationView.getChildAt(0);
-        ViewGroup navigationMenuItemView1 = (ViewGroup)navigationMenuView.getChildAt(1);
-        ViewGroup navigationMenuItemView2 = (ViewGroup)navigationMenuView.getChildAt(2);
-        ViewGroup navigationMenuItemView3 = (ViewGroup)navigationMenuView.getChildAt(3);
+        ViewGroup navigationMenuView = (ViewGroup) navigationView.getChildAt(0);
+        ViewGroup navigationMenuItemView1 = (ViewGroup) navigationMenuView.getChildAt(1);
+        ViewGroup navigationMenuItemView2 = (ViewGroup) navigationMenuView.getChildAt(2);
+        ViewGroup navigationMenuItemView3 = (ViewGroup) navigationMenuView.getChildAt(3);
         View appCompatCheckedTextView1 = navigationMenuItemView1.getChildAt(0);
         View appCompatCheckedTextView2 = navigationMenuItemView2.getChildAt(0);
         View appCompatCheckedTextView3 = navigationMenuItemView3.getChildAt(0);
@@ -333,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
                 listCorrespondance.put(mAdapter.getCount(), Integer.valueOf(cpt));
-                item = listeBiens.get(i).getNom_bien() + "#~#" + listeBiens.get(i).getDescription_bien()+"#~#"+listeBiens.get(i).getPhoto_bien_principal();
+                item = listeBiens.get(i).getNom_bien() + "#~#" + listeBiens.get(i).getDescription_bien() + "#~#" + listeBiens.get(i).getPhoto_bien_principal();
                 mAdapter.addItem(item);
                 idCatEnTete = listeBiens.get(i).getId_categorie_bien();
             }
@@ -373,14 +366,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
 
-    public void remplirBeDeForTest () {
+    public void remplirBeDeForTest() {
         pdao.open();
         //pdao.modPersonne(1, "Jacky", "Philippe", "12/04/1995", "10 rue de la verge", "jk.phil@hotmail.com", "0607548796");
         pdao.close();
 
-        Liste liste1 = new Liste(1,"Maison","La liste de ma maison");
-        Liste liste2 = new Liste(2,"Garage","La liste de mon garage");
-        Liste liste3 = new Liste(3,"Magasin","La liste de mon magasin");
+        Liste liste1 = new Liste(1, "Maison", "La liste de ma maison");
+        Liste liste2 = new Liste(2, "Garage", "La liste de mon garage");
+        Liste liste3 = new Liste(3, "Magasin", "La liste de mon magasin");
 
         ldao.open();
         ldao.ajouterListe(liste1);
@@ -399,13 +392,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         categorieDAO.close();
 
 
-        Bien bien1 = new Bien(1,"Lunette","19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6","","","","",3,"Lunette de marque Rayban","");
-        Bien bien2 = new Bien(2,"Frigo","19/11/2017","23/11/2017","","","3599.99","","","","",1,"Samsung Family Hub","45DG425845DA");
-        Bien bien3 = new Bien(3,"Ordinateur","19/11/2017","01/12/2017","","Manque une touche","1099.99","","","","",2,"PC Portable Gamer de marque MSI","515D-TGH2336");
-        Bien bien4 = new Bien(4,"Vaisselle","20/11/2017","03/06/2017","","Vaisselle de Mémé","6902.30","","","","",1,"En porcelaine chinoise datée de 1640","");
-        Bien bien5 = new Bien(5,"TV","21/11/2017","19/05/2016","","","350","","","","",1,"Marque Kenwood","");
-        Bien bien6 = new Bien(6,"Home cinéma","21/11/2017","19/01/2017","","Une enceinte grésille un peu","400","","","","",2,"Marque Pioneer","");
-
+        Bien bien1 = new Bien(1, "Lunette", "19/11/2017", "21/11/2017", "", "Légèrement rayées sur le coté", "251.6", "", "", "", "", 3, "Lunette de marque Rayban", "");
+        Bien bien2 = new Bien(2, "Frigo", "19/11/2017", "23/11/2017", "", "", "3599.99", "", "", "", "", 1, "Samsung Family Hub", "45DG425845DA");
+        Bien bien3 = new Bien(3, "Ordinateur", "19/11/2017", "01/12/2017", "", "Manque une touche", "1099.99", "", "", "", "", 2, "PC Portable Gamer de marque MSI", "515D-TGH2336");
+        Bien bien4 = new Bien(4, "Vaisselle", "20/11/2017", "03/06/2017", "", "Vaisselle de Mémé", "6902.30", "", "", "", "", 1, "En porcelaine chinoise datée de 1640", "");
+        Bien bien5 = new Bien(5, "TV", "21/11/2017", "19/05/2016", "", "", "350", "", "", "", "", 1, "Marque Kenwood", "");
+        Bien bien6 = new Bien(6, "Home cinéma", "21/11/2017", "19/01/2017", "", "Une enceinte grésille un peu", "400", "", "", "", "", 2, "Marque Pioneer", "");
 
 
         ArrayList<Integer> listeIdListe1_2 = new ArrayList<Integer>();
@@ -474,17 +466,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         libelle.setText(libelle.getText().toString().trim());
-                        if(!libelle.getText().toString().equals("")) {
-                            if(libelle.getText().length() <= 10) {
-                                for(int i=0;i<3;i++) {
+                        if (!libelle.getText().toString().equals("")) {
+                            if (libelle.getText().length() <= 10) {
+                                for (int i = 0; i < 3; i++) {
                                     ldao.open();
-                                    if(libelle.getText().toString().toLowerCase().equals(ldao.getNomListeById(i+1).toLowerCase())) {
-                                        nomIdentique=true;
+                                    if (libelle.getText().toString().toLowerCase().equals(ldao.getNomListeById(i + 1).toLowerCase())) {
+                                        nomIdentique = true;
                                         ldao.close();
                                         break;
                                     }
                                 }
-                                if(!nomIdentique) {
+                                if (!nomIdentique) {
                                     ldao.open();
                                     ldao.modifierListe(idCurrentList, libelle.getText().toString(), "");
                                     switch (idCurrentList) {
@@ -501,7 +493,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     refreshAdapterView();
                                     ldao.close();
                                 } else {
-                                    nomIdentique=false;
+                                    nomIdentique = false;
                                     Toast toast = Toast.makeText(context, "Ce nom de liste existe déjà", Toast.LENGTH_LONG);
                                     toast.show();
                                 }

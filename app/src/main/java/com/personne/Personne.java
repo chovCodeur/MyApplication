@@ -15,9 +15,10 @@ public class Personne {
     private String phoneNumber;
     private String date;
 
-    public Personne(){
+    public Personne() {
 
     }
+
     public Personne(int id_Personne, String nom, String prenom, String mail,
                     String address, String phoneNumber, String date) {
         this.id_Personne = id_Personne;
@@ -30,23 +31,28 @@ public class Personne {
 
     }
 
-    public int getId_Personne(){
+    public int getId_Personne() {
 
         return id_Personne;
     }
-    public void setId_Personne(int id_Personne){
+
+    public void setId_Personne(int id_Personne) {
         this.id_Personne = id_Personne;
     }
+
     public String getNom() {
 
         return nom;
     }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
+
     public String getPrenom() {
         return prenom;
     }
+
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
@@ -64,21 +70,26 @@ public class Personne {
 
         return address;
     }
-    public void setAddress (String address){
+
+    public void setAddress(String address) {
         this.address = address;
     }
+
     public String getPhoneNumber() {
 
         return phoneNumber;
     }
-    public void setPhoneNumber(String  phoneNumber) {
+
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
     public String getDate() {
 
         return date;
     }
-    public void setDate(String  date) {
+
+    public void setDate(String date) {
         this.date = date;
     }
 

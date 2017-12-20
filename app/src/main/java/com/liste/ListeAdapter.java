@@ -1,7 +1,6 @@
 package com.liste;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +12,7 @@ import android.widget.TextView;
 import com.application.inventaire.R;
 import com.categorie.Categorie;
 
-import java.security.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Thib on 14/12/2017.
@@ -57,8 +53,8 @@ public class ListeAdapter extends ArrayAdapter<Categorie> {
             holder.mCheckBox = (CheckBox) convertView.findViewById(R.id.checkbox);
             holder.mTextView.setText(listState.get(position).getNom_Categorie());
 
-            for (Categorie categorieSelectionee: listSelected) {
-                if(categorieSelectionee.getId_Categorie() == getItem(position).getId_Categorie()){
+            for (Categorie categorieSelectionee : listSelected) {
+                if (categorieSelectionee.getId_Categorie() == getItem(position).getId_Categorie()) {
                     holder.mCheckBox.setChecked(true);
                     listState.get(position).setSelected(true);
                 }

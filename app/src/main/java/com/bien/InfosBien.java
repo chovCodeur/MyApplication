@@ -13,7 +13,6 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,11 +27,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.application.MainActivity;
+import com.application.inventaire.R;
 import com.dao.BienDAO;
 import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
-import com.application.MainActivity;
-import com.application.inventaire.R;
 import com.utils.ReadPDF;
 
 import java.io.File;
@@ -75,6 +74,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
     /**
      * Procédure lancée à la création de l'activité.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -93,6 +93,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
     /**
      * Méthode permettant d'assigner le menu et ses options à l'activité.
+     *
      * @param menu
      * @return
      */
@@ -127,12 +128,12 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
         Bundle extras = getIntent().getExtras();
 
         // On effectue les traitements suivants seulement si l'on récupère des paramètres
-        if(extras != null) {
+        if (extras != null) {
             // On stocke l'id du bien dont les informations doivent être affichées
             id = extras.getInt("IDBIEN");
 
             // Si l'id du bien n'est pas nul
-            if(id != 0) {
+            if (id != 0) {
                 // On ouvre le DAO et on récupère le bien par son id
                 bdao.open();
                 bien = bdao.getBien(id);
@@ -143,16 +144,16 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 // On récupère le nom des listes dans lequel le bien existe grâce aux id récupérés
                 // et on les ajoute à notre liste éphémère
                 ldao.open();
-                for(int i=0;i<idlistes.size();i++) {
-                    if(idlistes.get(i) == 1) {
+                for (int i = 0; i < idlistes.size(); i++) {
+                    if (idlistes.get(i) == 1) {
                         String nom = ldao.getNomListeById(1);
                         listes.add(nom);
                     }
-                    if(idlistes.get(i) == 2) {
+                    if (idlistes.get(i) == 2) {
                         String nom = ldao.getNomListeById(2);
                         listes.add(nom);
                     }
-                    if(idlistes.get(i) == 3) {
+                    if (idlistes.get(i) == 3) {
                         String nom = ldao.getNomListeById(3);
                         listes.add(nom);
                     }
@@ -168,13 +169,13 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 // Mise à jour de l'image principale
                 photoPrincipale = (ImageButton) findViewById(R.id.photoPrincipaleBien);
                 // Si le bien contient une photo principale, on créé une image bitmap que l'on affiche
-                if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
+                if (bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_principal());
                     if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         photoPrincipale.setImageBitmap(myBitmap);
                     }
-                // Sinon, on affiche une image par défaut
+                    // Sinon, on affiche une image par défaut
                 } else {
                     photoPrincipale.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
                 }
@@ -198,7 +199,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 facture.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(bien.getFacture_bien() != null && !bien.getFacture_bien().equals("")) {
+                        if (bien.getFacture_bien() != null && !bien.getFacture_bien().equals("")) {
                             Intent intent = new Intent(getApplicationContext(), ReadPDF.class);
                             intent.putExtra("nomPDF", bien.getFacture_bien());
                             startActivity(intent);
@@ -212,7 +213,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 Bitmap myBitmap;
                 // Mise à jour des 3 miniatures d'images sur le même principe que l'image principale
                 photoMini1 = (ImageButton) findViewById(R.id.Photo1Bien);
-                if(bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")) {
+                if (bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_miniature1());
                     if (imgFile.exists()) {
                         myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -223,7 +224,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 }
 
                 photoMini2 = (ImageButton) findViewById(R.id.Photo2Bien);
-                if(bien.getPhoto_bien_miniature2() != null && !bien.getPhoto_bien_miniature2().equals("")) {
+                if (bien.getPhoto_bien_miniature2() != null && !bien.getPhoto_bien_miniature2().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_miniature2());
                     if (imgFile.exists()) {
                         myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -234,7 +235,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 }
 
                 photoMini3 = (ImageButton) findViewById(R.id.Photo3Bien);
-                if(bien.getPhoto_bien_miniature3() != null && !bien.getPhoto_bien_miniature3().equals("")) {
+                if (bien.getPhoto_bien_miniature3() != null && !bien.getPhoto_bien_miniature3().equals("")) {
                     File imgFile = new File(bien.getPhoto_bien_miniature3());
                     if (imgFile.exists()) {
                         myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -247,18 +248,18 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 // Mise à jour du spinner contenant le nom des listes d'appartenance du bien
                 spinnerListe = (Spinner) findViewById(R.id.spinnerListesAppartenanceBien);
                 spinnerListe.setOnItemSelectedListener(this);
-                ArrayAdapter arrayAdapterCategorie = new ArrayAdapter(this,android.R.layout.simple_spinner_item, listes);
+                ArrayAdapter arrayAdapterCategorie = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listes);
                 arrayAdapterCategorie.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerListe.setAdapter(arrayAdapterCategorie);
 
 
                 // Mise à jour date d'acquisition
                 dateAcquisition = (TextView) findViewById(R.id.dateAcquisitionBien);
-                dateAcquisition.setText("Date d'acquisition : "+bien.getDate_achat_bien());
+                dateAcquisition.setText("Date d'acquisition : " + bien.getDate_achat_bien());
 
                 // Mise à jour date de saisie
                 dateSaisie = (TextView) findViewById(R.id.dateSaisieBien);
-                dateSaisie.setText("Date de saisie : "+bien.getDate_saisie_bien());
+                dateSaisie.setText("Date de saisie : " + bien.getDate_saisie_bien());
 
                 // Mise à jour prix du bien
                 prix = (TextView) findViewById(R.id.prixBien);
@@ -271,7 +272,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
                 // Mise à jour numéro de série du bien
                 numeroSerie = (TextView) findViewById(R.id.numeroSerieBien);
-                numeroSerie.setText("Numéro de série : "+bien.getNumeroSerie_bien());
+                numeroSerie.setText("Numéro de série : " + bien.getNumeroSerie_bien());
 
                 // Mise à jour commentaire du bien
                 commentaire = (TextView) findViewById(R.id.commentairesBien);
@@ -282,7 +283,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 imageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
+                        if (bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
                             File file = new File(bien.getPhoto_bien_principal());
                             zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
                         }
@@ -293,7 +294,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 imageButton1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(bien.getPhoto_bien_miniature1() != null  && !bien.getPhoto_bien_miniature1().equals("")) {
+                        if (bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")) {
                             File file = new File(bien.getPhoto_bien_miniature1());
                             zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
                         }
@@ -304,7 +305,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 imageButton2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(bien.getPhoto_bien_miniature2() != null  && !bien.getPhoto_bien_miniature2().equals("")) {
+                        if (bien.getPhoto_bien_miniature2() != null && !bien.getPhoto_bien_miniature2().equals("")) {
                             File file = new File(bien.getPhoto_bien_miniature2());
                             zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
                         }
@@ -315,7 +316,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
                 imageButton3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(bien.getPhoto_bien_miniature3() != null  && !bien.getPhoto_bien_miniature3().equals("")) {
+                        if (bien.getPhoto_bien_miniature3() != null && !bien.getPhoto_bien_miniature3().equals("")) {
                             File file = new File(bien.getPhoto_bien_miniature3());
                             zoomImageFromThumb(view, BitmapFactory.decodeFile(file.getAbsolutePath()));
                         }
@@ -327,13 +328,14 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
     /**
      * Méthode permettant de faire différentes actions suivant le bouton du menu cliqué.
+     *
      * @param item du menu
      * @return un booléen indiquant quel item a été sélectionné.
      */
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             // Si l'on clique sur l'icone "Home", on retourne directement à la page d'accueil
             case R.id.home:
                 Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
@@ -354,7 +356,7 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position,long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
     }
 
@@ -365,8 +367,9 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
     /**
      * Méthode permettant d'effectuer un zoom sur une image.
+     *
      * @param thumbView vue contenant l'image que l'on veut zoomer.
-     * @param image sur laquelle on veut zoomer.
+     * @param image     sur laquelle on veut zoomer.
      */
     private void zoomImageFromThumb(final View thumbView, Bitmap image) {
         if (mCurrentAnimator != null) {
@@ -472,20 +475,22 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
 
     /**
      * Méthode permettant de lancer l'activité de modification d'un bien.
+     *
      * @param v un objet View.
      */
     public void modifierBien(View v) {
         Intent intent = new Intent(this, ModifierBien.class);
-        intent.putExtra("IDBIEN",bien.getId_bien());
-        intent.putExtra("IDCATEGORIE",bien.getId_categorie_bien());
+        intent.putExtra("IDBIEN", bien.getId_bien());
+        intent.putExtra("IDCATEGORIE", bien.getId_categorie_bien());
         startActivity(intent);
     }
 
     /**
      * Méthode permettant de déclencher la suppression d'un bien.
+     *
      * @param v un objet View.
      */
-    public void supprimerBien(View v){
+    public void supprimerBien(View v) {
         bdao.open();
         bdao.deleteBien(bien);
         bdao.close();
