@@ -457,11 +457,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         builder = new AlertDialog.Builder(context);
         builder.setCancelable(true);
-        builder.setTitle("Changer le libellé");
+        builder.setTitle(R.string.title_change_list_name);
         builder.setView(layout);
         // Si on clique sur "OK" et que toutes les conditions de modification requises sont remplies,
         // On modifie la quantité et le nom de l'article suivant les choix de l'opérateur
-        builder.setPositiveButton("OK",
+        builder.setPositiveButton(R.string.dialog_positive_option,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -494,20 +494,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     ldao.close();
                                 } else {
                                     nomIdentique = false;
-                                    Toast toast = Toast.makeText(context, "Ce nom de liste existe déjà", Toast.LENGTH_LONG);
+                                    Toast toast = Toast.makeText(context, R.string.list_name_already_exists, Toast.LENGTH_LONG);
                                     toast.show();
                                 }
                             } else {
-                                Toast toast = Toast.makeText(context, "Le nom de la liste est trop long", Toast.LENGTH_LONG);
+                                Toast toast = Toast.makeText(context, R.string.list_name_too_long, Toast.LENGTH_LONG);
                                 toast.show();
                             }
                         } else {
-                            Toast toast = Toast.makeText(context, "La liste doit avoir un nom", Toast.LENGTH_LONG);
+                            Toast toast = Toast.makeText(context, R.string.list_name_empty, Toast.LENGTH_LONG);
                             toast.show();
                         }
                     }
                 });
-        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.dialog_negative_option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
