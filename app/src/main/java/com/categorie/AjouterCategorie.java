@@ -98,13 +98,13 @@ public class AjouterCategorie extends AppCompatActivity {
                 categorieDAO.addCategorie(categorie);
                 categorieDAO.close();
 
-                Toast.makeText(this, "La catégorie " + nomCategorie + " a bien été ajoutée", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.message_categorie_added_1_2) + nomCategorie + getResources().getString(R.string.message_categorie_added_2_2), Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(this, "La catégorie " + nomCategorie + " existe déjà", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.message_categorie_added_1_2) + nomCategorie + getResources().getString(R.string.categorie_exists), Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this, "Le nom ne peut pas être vide", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.control_item_name, Toast.LENGTH_SHORT).show();
 
         }
     }

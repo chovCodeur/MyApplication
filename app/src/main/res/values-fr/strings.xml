@@ -58,12 +58,14 @@
 
     <!-- AjouterCategorie -->
     <string name="toolbar_title_ajouter_categorie">Ajouter une catégorie</string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
+    <string name="message_categorie_added_1_2">La catégorie </string>
+    <string name="message_categorie_added_2_2"> a bien été ajoutée</string>
+    <string name="categorie_exists"> existe déjà</string>
+
+
+    <!-- ModifierCategorie -->
+    <string name="toolbar_title_modifier_categorie">Modifier une catégorie</string>
+    <string name="modified_categorie"> a bien été modifiée</string>
     <string name=""></string>
     <string name=""></string>
     <string name=""></string>

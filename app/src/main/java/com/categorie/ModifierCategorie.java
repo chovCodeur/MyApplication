@@ -24,13 +24,11 @@ import java.util.ArrayList;
 
 public class ModifierCategorie extends AppCompatActivity {
 
-
     private Button modifCategorie;
     private EditText editCategorie;
     private EditText editDescription;
     private int idcat;
     private CategorieDAO cdao;
-    private Categorie categorie;
     private Menu m;
     private String nomcat;
     private String nomdescrip;
@@ -42,7 +40,7 @@ public class ModifierCategorie extends AppCompatActivity {
         setContentView(R.layout.activity_modifier_categorie);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle("Modifier une catégorie");
+        myToolbar.setTitle(getResources().getString(R.string.toolbar_title_modifier_categorie));
         setSupportActionBar(myToolbar);
 
         cdao = new CategorieDAO(this);
@@ -99,13 +97,13 @@ public class ModifierCategorie extends AppCompatActivity {
                         categorieDAO.modCategorie(idcat, nomCategorie, description);
                         categorieDAO.close();
 
-                        Toast.makeText(context, "La catégorie " + nomCategorie + " a bien été modifiée", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, getResources().getString(R.string.message_categorie_added_1_2) + nomCategorie + getResources().getString(R.string.modified_categorie), Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast.makeText(context, "La catégorie " + nomCategorie + " existe déjà", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, getResources().getString(R.string.message_categorie_added_1_2) + nomCategorie + getResources().getString(R.string.categorie_exists), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(context, "Le nom ne peut pas être vide", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.control_item_name, Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -147,6 +145,4 @@ public class ModifierCategorie extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
