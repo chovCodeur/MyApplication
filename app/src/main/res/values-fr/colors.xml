@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#0277BD</color>
+    <color name="white">#ffffff</color>
+    <color name="defaultImageBackground">#40b7ad</color>
+    <color name="hint_foreground_material_light">#00000000</color>
+    <color name="hint_foreground_material_dark">#00000000</color>
+    <color name="gray">#7E7E7E</color>
+    <color name="black">#000000</color>
+    <color name="star">#ffc000</color>
+</resources>
