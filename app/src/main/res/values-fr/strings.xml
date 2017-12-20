@@ -28,6 +28,7 @@
     <string name="list_name_too_long">Le nom de la liste est trop long</string>
     <string name="list_name_empty">La liste doit avoir un nom</string>
     <string name="dialog_negative_option">Annuler</string>
+    <string name="category">Catégorie : </string>
 
 
     <!-- AjouterBien -->
