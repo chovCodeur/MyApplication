@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (!listeBiens.isEmpty()) {
             cdao.open();
 
-            mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#"+ getResources().getString(R.string.category) + cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
+            mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#"+ getResources().getString(R.string.category) +" "+ cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
             listeHeader.put(0, listeBiens.get(0).getId_categorie_bien());
 
             int cpt = 0;
@@ -320,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (idCatEnTete != listeBiens.get(i).getId_categorie_bien()) {
                     cpt++;
                     cdao.open();
-                    mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#"+ getResources().getString(R.string.category) + cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
+                    mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#"+ getResources().getString(R.string.category) +" "+ cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
                     listeHeader.put(i + cpt, listeBiens.get(i).getId_categorie_bien());
                     cdao.close();
 
