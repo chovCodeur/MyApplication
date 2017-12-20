@@ -4,6 +4,9 @@ package com.bien;
  * Created by Kevin on 11/11/2017.
  */
 
+/**
+ * Classe permettant de gérer un Bien
+ */
 public class Bien {
 
     private int id_bien;
@@ -21,6 +24,23 @@ public class Bien {
     private String description_bien;
     private String numeroSerie_bien;
 
+    /**
+     * Constructeur de l'objet bien
+     * @param id_bien
+     * @param nom_bien
+     * @param date_saisie_bien
+     * @param date_achat_bien
+     * @param facture_bien
+     * @param commentaire_bien
+     * @param prix_bien
+     * @param photo_bien_principal
+     * @param photo_bien_miniature1
+     * @param photo_bien_miniature2
+     * @param photo_bien_miniature3
+     * @param id_categorie_bien
+     * @param description_bien
+     * @param numeroSerie_bien
+     */
     public Bien(int id_bien, String nom_bien, String date_saisie_bien, String date_achat_bien, String facture_bien,
                 String commentaire_bien, String prix_bien, String photo_bien_principal, String photo_bien_miniature1,
                 String photo_bien_miniature2, String photo_bien_miniature3, int id_categorie_bien, String description_bien, String numeroSerie_bien) {
@@ -152,6 +172,10 @@ public class Bien {
         this.photo_bien_miniature3 = photo_bien_miniature3;
     }
 
+    /**
+     * Surcharge de la méthode toString()
+     * @return string
+     */
     @Override
     public String toString() {
         return "Bien{" +

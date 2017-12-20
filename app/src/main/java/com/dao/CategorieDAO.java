@@ -25,7 +25,7 @@ public class CategorieDAO {
     private SQLiteDatabase db;
 
     /**
-     * Contructeur de la classe ListeDAO
+     * Contructeur de la classe CategorieDAO
      *
      * @param context le contexte
      */
@@ -147,12 +147,15 @@ public class CategorieDAO {
         return liste;
     }
 
+    /**
+     * Méthode permettant de récuperer toutes les acatégories d'une liste
+     * @param idListe
+     * @return listeCategorie
+     */
     public ArrayList<Categorie> getCategoriesByIdListe(int idListe) {
         ArrayList<Categorie> liste = new ArrayList<Categorie>();
 
-        // DEVELOPPE MAIS JAMAIS UTILSEE. A VERIFIER PAR @TLS
         Cursor curseurCategorie = db.rawQuery("SELECT DISTINCT CATEGORIE.id_categorie, CATEGORIE.nom, CATEGORIE.description FROM " + TABLE_NAME + " JOIN BIEN ON BIEN.id_categorie = CATEGORIE.id_categorie JOIN APPARTIENT ON APPARTIENT.id_bien = BIEN.id_bien WHERE APPARTIENT.id_liste = " + idListe, null);
-        //Cursor curseurCategorie = db.rawQuery("SELECT DISTINCT " + ID + ", " + NOM + ", "+ DESCRIPTION+"FROM "+TABLE_NAME +" JOIN BIEN ON BIEN.id_categorie = CATEGORIE.id_categorie JOIN APPARTIENT ON APPARTIENT.id_categorie = BIEN.id_categorie WHERE id_liste = "+idListe, null);
 
         Categorie categorie;
         if (curseurCategorie.moveToFirst()) {
@@ -171,7 +174,7 @@ public class CategorieDAO {
     }
 
     /**
-     * Méthode permettant l'ouverture de la table en lecture/ecriture
+     * Méthode permettant la fermeture de la table en lecture/ecriture
      */
     public void close() {
         db.close();

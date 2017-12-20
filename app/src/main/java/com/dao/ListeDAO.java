@@ -122,5 +122,4 @@ public class ListeDAO {
         return db.insert(TABLE_NAME, null, values);
     }
 
-
 }

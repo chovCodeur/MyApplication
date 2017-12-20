@@ -15,11 +15,6 @@ import com.bien.Bien;
 
 import java.util.ArrayList;
 
-
-/**
- * Created by Kevin on 16/11/2017.
- */
-
 /**
  * Classe BienDAO gère les interactions avec la base de données pour tout ce qui touche à la classe Bien
  */
@@ -271,27 +266,5 @@ public class BienDAO {
 
         return idListes;
     }
-/*
-    public byte[] convertBitmapAsByteArray(Bitmap bitmap) {
-        if (bitmap != null ) {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-            return outputStream.toByteArray();
-        } else {
-            return null;
-        }
-    }
-
-    public Bitmap convertByteArrayAsBitmap(byte[] bytes) {
-
-        if (bytes != null){
-            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        } else {
-            return null;
-        }
-
-    }
-
-*/
 }
 

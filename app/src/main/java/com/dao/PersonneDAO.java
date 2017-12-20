@@ -12,11 +12,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.bd.MySQLite;
 import com.personne.Personne;
 
-
-/**
- * Created by Kevin on 16/11/2017.
- */
-
 /**
  * Classe BienDAO gère les interactions avec la base de données pour tout ce qui touche à la classe Bien
  */
@@ -35,7 +30,7 @@ public class PersonneDAO {
     private SQLiteDatabase db;
 
     /**
-     * Contructeur de la classe BienDAO
+     * Contructeur de la classe PersonneDao
      *
      * @param context le contexte
      */
@@ -57,12 +52,19 @@ public class PersonneDAO {
         db.close();
     }
 
+
     /**
-     * Méthode permettant de modifier un bien dans la table Bien
      *
-     * @param id  long : l'id de l'bien
-     * @param nom String : le nom de l'bien
-     * @return int : le nombre de lignes affectées par la requête
+     * Méthode permettant de modifier une personne dans la table Personne
+     *
+     * @param id
+     * @param nom
+     * @param prenom
+     * @param dateNaissance
+     * @param adresse
+     * @param mail
+     * @param telephone
+     * @return
      */
     public int modPersonne(int id, String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone) {
         ContentValues values = new ContentValues();
@@ -79,6 +81,18 @@ public class PersonneDAO {
         return db.update(TABLE_NAME, values, where, whereArgs);
     }
 
+    /**
+     *
+     * Méthode permettant d'inserer une personne dans la table Personne
+     * @param nom
+     * @param prenom
+     * @param dateNaissance
+     * @param adresse
+     * @param mail
+     * @param telephone
+     * @return
+     */
+
     public long insertPersonne(String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone) {
         ContentValues values = new ContentValues();
         values.put(NOM, nom);
@@ -92,6 +106,11 @@ public class PersonneDAO {
         return db.insert(TABLE_NAME, null, values);
     }
 
+    /**
+     * Méthode permettant de récuperer les informations de la personne en fonction de son ID
+     * @param id
+     * @return
+     */
 
     public Personne getPersonne(int id) {
         Personne p = new Personne();
