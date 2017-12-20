@@ -675,7 +675,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             }
 
             TextView tv_pathPdf = (TextView) findViewById(R.id.pathPdf);
-            tv_pathPdf.setText("Facture choisie : " + name);
+            tv_pathPdf.setText(getResources().getString(R.string.pdf_file) + name);
 
         }
 
@@ -889,7 +889,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
             // si c'est un pdf, on crée le repertoire factures
         } else if (type.equals("pdf")) {
-            String dirName = "factures";
+            String dirName = getResources().getString(R.string.bills_directory_name);
             dir = new File(this.getFilesDir() + separator + dirName);
             if (!dir.exists()) {
                 dir.mkdir();
@@ -975,7 +975,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
         // si l'utilisateur n'a pas accepté
         if (!perm) {
-            Toast.makeText(this, "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_LONG).show();
         }
 
     }
@@ -993,7 +993,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             if (numPhoto != 4) {
                 recupererPhoto();
             } else {
-                Toast.makeText(this, "Vous devez déjà supprimer une photo ! ", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.delete_photo_bien, Toast.LENGTH_LONG).show();
 
             }
         }
@@ -1075,15 +1075,15 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             // si il reste de la place pour une photo
             if (getFirstNullPicture() < 4) {
                 ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.TITLE, "Nouvelle photo");
-                values.put(MediaStore.Images.Media.DESCRIPTION, "Depuis votre caméra");
+                values.put(MediaStore.Images.Media.TITLE, getResources().getString(R.string.new_picture));
+                values.put(MediaStore.Images.Media.DESCRIPTION, getResources().getString(R.string.from_camera));
                 // on demarrer la nouvelle activité
                 uriImagePrise = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uriImagePrise);
                 startActivityForResult(intent, TAKE_IMAGE);
             } else {
-                Toast.makeText(this, "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.number_pictures_max, Toast.LENGTH_LONG).show();
             }
         }
     }
