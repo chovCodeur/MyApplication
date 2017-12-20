@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:ems="10"
-                android:hint="Nom"
+                android:hint="@string/hint_name"
                 android:maxLength="40"
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true" />
@@ -61,7 +61,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/nom_bien"
                 android:layout_marginTop="6dp"
-                android:text="Selectionner une catégorie :" />
+                android:text="@string/select_categorie" />
 
             <Spinner
                 android:id="@+id/select_categorie"
@@ -79,7 +79,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/select_categorie"
                 android:layout_marginTop="6dp"
-                android:text="Selectionner une ou plusieurs listes :" />
+                android:text="@string/select_list" />
 
             <CheckedTextView
                 android:id="@+id/checkListe1"
@@ -129,7 +129,7 @@
                 android:layout_below="@+id/checkListe1"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Date d'achat (jj/mm/aaaa)"
+                android:hint="@string/purchase_date_hint"
                 android:inputType="date" />
 
             <EditText
@@ -141,7 +141,7 @@
                 android:layout_below="@+id/date_achat_bien"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Description du bien"
+                android:hint="@string/description_item_hint"
                 android:inputType="textMultiLine" />
 
             <EditText
@@ -152,7 +152,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/description_bien"
                 android:ems="10"
-                android:hint="Commentaire sur le bien"
+                android:hint="@string/item_comments_hint"
                 android:inputType="textMultiLine" />
 
             <EditText
@@ -164,7 +164,7 @@
                 android:layout_below="@+id/commentaire_bien"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Numéro de serie"
+                android:hint="@string/serial_number_hint"
                 android:inputType="text" />
 
             <EditText
@@ -175,7 +175,7 @@
                 android:layout_below="@+id/numero_serie"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Prix"
+                android:hint="@string/price_hint"
                 android:maxLength="10"
                 android:inputType="numberDecimal" />
 
@@ -200,7 +200,7 @@
                     android:id="@+id/ajouterPhoto"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Ajouter une photo" />
+                    android:text="@string/button_add_photo" />
 
 
             </LinearLayout>
@@ -213,7 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="6dp"
-                android:text="Ajouter une facture" />
+                android:text="@string/button_add_bill" />
 
             <Button
                 android:id="@+id/ajouterBien"
@@ -222,7 +222,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/ajouterFacture"
                 android:onClick="onClickAjouterBien"
-                android:text="Ajouter le bien" />
+                android:text="@string/button_add_item" />
 
             <TextView
                 android:id="@+id/pathPdf"

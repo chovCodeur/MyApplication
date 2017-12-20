@@ -33,16 +33,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="120dp"
-            android:text="Ajouter une catégorie"
-            android:onClick="ajouterCategorie" />
+            android:onClick="ajouterCategorie"
+            android:text="@string/toolbar_title_ajouter_categorie" />
 
         <Button
             android:id="@+id/btnImportExport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="170dp"
-            android:text="Exporter une liste"
-            android:onClick="exporterListe" />
+            android:onClick="exporterListe"
+            android:text="@string/toolbar_title_exporter_liste" />
 
     </FrameLayout>
 

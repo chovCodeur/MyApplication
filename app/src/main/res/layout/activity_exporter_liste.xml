@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:ems="10"
-                android:hint="Nom du fichier"
+                android:hint="@string/file_name_exporter_list"
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true" />
 
@@ -81,7 +81,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/nomListeAexporter"
                 android:layout_marginTop="10dp"
-                android:text="Selectionner une ou plusieurs listes :" />
+                android:text="@string/select_list" />
 
             <TextView
                 android:id="@+id/affichageCategorie"
@@ -143,7 +143,7 @@
                 android:layout_below="@+id/affichageCategorie"
                 android:layout_marginTop="10dp"
                 android:onClick="onClickExportListe"
-                android:text="Exporter au format CSV" />
+                android:text="@string/export_list_button" />
 
         </RelativeLayout>
     </ScrollView>

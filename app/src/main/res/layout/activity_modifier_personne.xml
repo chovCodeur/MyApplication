@@ -49,79 +49,79 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="34dp"
                 android:ems="10"
-                android:hint="Nom"
-                android:maxLength="50"
-                android:inputType="textPersonName" />
+                android:hint="@string/hint_name"
+                android:inputType="textPersonName"
+                android:maxLength="50" />
 
             <EditText
                 android:id="@+id/editPrenom"
-                android:maxLength="50"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/editNom"
                 android:layout_marginTop="6dp"
-                android:layout_alignParentStart="true"
                 android:ems="10"
-                android:hint="Prenom"
-                android:inputType="textPersonName" />
+                android:hint="@string/surname_hint"
+                android:inputType="textPersonName"
+                android:maxLength="50" />
 
             <EditText
                 android:id="@+id/editTextDate"
-                android:maxLength="10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="6dp"
                 android:layout_below="@+id/editPrenom"
+                android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Date de naissance (jj/mm/aaaa)"
-                android:inputType="date" />
+                android:hint="@string/birth_date_hint"
+                android:inputType="date"
+                android:maxLength="10" />
 
             <EditText
                 android:id="@+id/editEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/editTextDate"
+                android:layout_marginTop="6dp"
                 android:ems="10"
-                android:maxLength="50"
-                android:hint="Adresse mail"
+                android:hint="@string/mail_adress_hint"
                 android:inputType="textEmailAddress"
-                android:layout_alignParentEnd="true" />
+                android:maxLength="50" />
 
             <EditText
                 android:id="@+id/editAdress"
-                android:maxLength="150"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/editEmail"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/editEmail"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Adresse Postale"
-                android:inputType="textPostalAddress" />
+                android:hint="@string/postal_adress_hint"
+                android:inputType="textPostalAddress"
+                android:maxLength="150" />
 
             <EditText
                 android:id="@+id/editPhon_Number"
-                android:maxLength="14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/editAdress"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Téléphone"
-                android:inputType="number" />
+                android:hint="@string/phone_hint"
+                android:inputType="number"
+                android:maxLength="14" />
 
             <Button
                 android:id="@+id/buttonAjoutInfos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="50dp"
                 android:layout_below="@+id/editPhon_Number"
+                android:layout_marginTop="50dp"
                 android:onClick="onClickAjoutInfos"
-                android:text="Modifier" />
+                android:text="@string/modify_button" />
 
 
         </RelativeLayout>

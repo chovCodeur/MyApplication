@@ -49,9 +49,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:ems="10"
-                android:maxLength="40"
-                android:hint="Nom"
+                android:hint="@string/hint_name"
                 android:inputType="textPersonName"
+                android:maxLength="40"
                 android:selectAllOnFocus="true" />
 
             <TextView
@@ -61,7 +61,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/nom_bien"
                 android:layout_marginTop="6dp"
-                android:text="Selectionner une catégorie :" />
+                android:text="@string/select_categorie" />
 
             <Spinner
                 android:id="@+id/select_categorie"
@@ -76,10 +76,9 @@
                 android:id="@+id/explicationListe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/select_categorie"
-                android:layout_marginTop="6dp"
-                android:text="Selectionner une ou plusieurs listes :" />
+                android:text="@string/select_list" />
 
             <CheckedTextView
                 android:id="@+id/checkListe1"
@@ -133,39 +132,39 @@
 
             <EditText
                 android:id="@+id/description_bien"
-                android:maxLength="100"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/date_achat_bien"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Description du bien"
-                android:inputType="textMultiLine" />
+                android:hint="@string/item_description"
+                android:inputType="textMultiLine"
+                android:maxLength="100" />
 
             <EditText
                 android:id="@+id/commentaire_bien"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="100"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/description_bien"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Commentaire sur le bien"
-                android:inputType="textMultiLine" />
+                android:hint="@string/item_comments_hint"
+                android:inputType="textMultiLine"
+                android:maxLength="100" />
 
             <EditText
                 android:id="@+id/numero_serie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:maxLength="100"
                 android:layout_below="@+id/commentaire_bien"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="Numéro de serie"
-                android:inputType="text" />
+                android:hint="@string/serial_number_hint"
+                android:inputType="text"
+                android:maxLength="100" />
 
             <EditText
                 android:id="@+id/prix_bien"
@@ -174,10 +173,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/numero_serie"
                 android:layout_marginTop="6dp"
-                android:maxLength="10"
                 android:ems="10"
-                android:hint="Prix"
-                android:inputType="number" />
+                android:hint="@string/price_hint"
+                android:inputType="number"
+                android:maxLength="10" />
 
             <LinearLayout
                 android:id="@+id/linearBouton"
@@ -199,10 +198,10 @@
 
                 <Button
                     android:id="@+id/ajouterPhoto"
-                    android:onClick="modifierPhoto"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Ajouter une photo" />
+                    android:onClick="modifierPhoto"
+                    android:text="@string/button_add_photo" />
 
 
             </LinearLayout>
@@ -216,7 +215,7 @@
                 android:layout_below="@+id/linearBouton"
                 android:layout_marginTop="6dp"
                 android:onClick="modifierFacture"
-                android:text="Modifier la facture" />
+                android:text="@string/modify_bill_button" />
 
             <Button
                 android:id="@+id/modifierBien"
@@ -226,7 +225,7 @@
                 android:layout_below="@+id/modifierFacture"
                 android:layout_marginTop="6dp"
                 android:onClick="modifierBien"
-                android:text="Valider les modifications" />
+                android:text="@string/validate_item_modifications_button" />
 
             <TextView
                 android:id="@+id/pathPdf"

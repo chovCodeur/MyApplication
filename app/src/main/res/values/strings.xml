@@ -46,6 +46,20 @@
     <string name="title_delete_photo">Supprimer une photo</string>
     <string name="ajouter_bien_dialog_positive_option">Oui</string>
     <string name="ajouter_bien_dialog_negative_option">Non</string>
+    <string name="hint_name">Nom</string>
+    <string name="select_categorie">Selectionner une catégorie :</string>
+    <string name="select_list">Selectionner une ou plusieurs listes :</string>
+    <string name="purchase_date_hint">Date d\'achat (jj/mm/aaaa)</string>
+    <string name="description_item_hint">Description du bien</string>
+    <string name="item_comments_hint">Commentaire sur le bien</string>
+    <string name="serial_number_hint">Numéro de serie</string>
+    <string name="price_hint">Prix</string>
+    <string name="button_add_photo">Ajouter une photo</string>
+    <string name="button_add_bill">Ajouter une facture</string>
+    <string name="button_add_item">Ajouter le bien</string>
+    <string name="item_description">Description du bien</string>
+    <string name="modify_bill_button">Modifier la facture</string>
+    <string name="validate_item_modifications_button">Valider les modifications</string>
 
 
     <!-- InfosBien -->
@@ -54,6 +68,12 @@
     <string name="entry_date">Date de saisie : </string>
     <string name="item_price">Prix du bien : </string>
     <string name="serial_number">Numéro de série : </string>
+    <string name="item_infos">Informations sur le bien</string>
+    <string name="list_appartenance">Listes d\'appartenance : </string>
+    <string name="comments">Commentaires : </string>
+    <string name="display_bill_button">Afficher la facture</string>
+    <string name="modify_button">Modifier</string>
+    <string name="delete_button">Supprimer</string>
 
 
     <!-- AjouterCategorie -->
@@ -61,6 +81,8 @@
     <string name="message_categorie_added_1_2">La catégorie </string>
     <string name="message_categorie_added_2_2"> a bien été ajoutée</string>
     <string name="categorie_exists"> existe déjà</string>
+    <string name="description_hint">Description</string>
+    <string name="add_button">Ajouter</string>
 
 
     <!-- ModifierCategorie -->
@@ -69,17 +91,24 @@
 
 
     <!-- ExporterListe -->
-    <string name="toolbar_title_exporter_liste"></string>
+    <string name="toolbar_title_exporter_liste">Exporter une liste</string>
     <string name="categories_to_export">Choix des catégories à exporter : </string>
     <string name="exporter_liste_dialog_negative_option">Valider</string>
     <string name="location_csv_file">Votre fichier CSV se trouve dans le dossier téléchargement</string>
     <string name="select_one_categorie">Vous devez sélectionner au moins une categorie</string>
     <string name="select_one_list">Vous devez sélectionner une liste à exporter</string>
     <string name="file_name">Vous devez écrire un nom de fichier</string>
+    <string name="file_name_exporter_list">Nom du fichier</string>
+    <string name="export_list_button">Exporter au format CSV</string>
 
 
     <!-- ModifierPersonne -->
     <string name="toolbar_title_modifier_personne">Informations du compte</string>
     <string name="missing_fields">Tous les champs doivent être remplis correctement</string>
+    <string name="surname_hint">Prénom</string>
+    <string name="birth_date_hint">Date de naissance (jj/mm/aaaa)</string>
+    <string name="mail_adress_hint">Adresse mail</string>
+    <string name="postal_adress_hint">Adresse Postale</string>
+    <string name="phone_hint">Téléphone</string>
 
 </resources>

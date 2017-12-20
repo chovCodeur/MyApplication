@@ -48,34 +48,34 @@
                 android:id="@+id/editCategorie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="34dp"
                 android:layout_weight="0.08"
                 android:ems="10"
+                android:hint="@string/hint_name"
                 android:inputType="textPersonName"
-                android:hint="Nom"
-                android:maxLength="20"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="34dp" />
+                android:maxLength="20" />
 
             <EditText
                 android:id="@+id/editDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/editCategorie"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:maxLength="100"
-                android:hint="Description"
-                android:layout_below="@+id/editCategorie"
-                android:layout_alignParentEnd="true" />
+                android:hint="@string/description_hint"
+                android:inputType="textMultiLine"
+                android:maxLength="100" />
 
             <Button
                 android:id="@+id/buttonModifierCategorie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/editDescription"
                 android:layout_marginTop="150dp"
                 android:onClick="onClickModifCategorie"
-                android:layout_below="@+id/editDescription"
-                android:text="Modifier" />
+                android:text="@string/modify_button" />
 
         </RelativeLayout>
     </ScrollView>

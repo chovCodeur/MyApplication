@@ -56,7 +56,6 @@
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="Nom du bien"
                 android:textAlignment="center"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -67,22 +66,20 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/nomBien"
-                android:text="TextView"
                 android:textAlignment="center"
-                android:textSize="24sp"
-                tools:text="Catégorie du bien" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/informationsBien"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Informations sur le bien"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/Photo3Bien"
-                android:layout_alignParentStart="true" />
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/item_infos"
+                android:textAlignment="center"
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/descriptionBien"
@@ -90,16 +87,14 @@
                 android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/categorieBien"
-                android:text="Ceci est la description du bien de l'utilisateur de cette application."
                 android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/commentairesBien"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Cette zone est réservée à d'éventuels commentaires concernant l'objet saisi par son propriétaire."
-                android:layout_below="@+id/labelCommentaires"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/labelCommentaires"
                 android:layout_marginTop="11dp" />
 
             <TextView
@@ -107,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:text="Commentaires :"
+                android:text="@string/comments"
                 android:textSize="18sp"
                 android:layout_below="@+id/numeroSerieBien"
                 android:layout_alignParentStart="true" />
@@ -204,9 +199,9 @@
                 android:layout_height="45dp"
                 android:layout_alignStart="@+id/descriptionBien"
                 android:layout_below="@+id/descriptionBien"
-                android:layout_marginStart="21dp"
                 android:layout_marginBottom="30dp"
-                android:text="Afficher la facture" />
+                android:layout_marginStart="21dp"
+                android:text="@string/display_bill_button" />
 
             <Button
                 android:id="@+id/modifierBienButton"
@@ -214,9 +209,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/commentairesBien"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
                 android:onClick="modifierBien"
-                android:text="Modifier"
-                android:layout_marginBottom="5dp" />
+                android:text="@string/modify_button" />
 
             <Button
                 android:id="@+id/supprimerBienButton"
@@ -224,9 +219,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/modifierBienButton"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="15dp"
                 android:onClick="supprimerBien"
-                android:text="Supprimer"
-                android:layout_marginBottom="15dp" />
+                android:text="@string/delete_button" />
 
         </RelativeLayout>
     </ScrollView>
@@ -234,7 +229,7 @@
     <ImageView
         android:id="@+id/expanded_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"
-        android:contentDescription="@string/description_zoom_touch_close" />
+        android:layout_height="10dp"
+        android:contentDescription="@string/description_zoom_touch_close"
+        android:visibility="invisible" />
 </RelativeLayout>
