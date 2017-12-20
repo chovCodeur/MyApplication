@@ -66,13 +66,16 @@
     <!-- ModifierCategorie -->
     <string name="toolbar_title_modifier_categorie">Modifier une catégorie</string>
     <string name="modified_categorie"> a bien été modifiée</string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
+
+
+    <!-- ExporterListe -->
+    <string name="toolbar_title_exporter_liste"></string>
+    <string name="categories_to_export">Choix des catégories à exporter : </string>
+    <string name="exporter_liste_dialog_negative_option">Valider</string>
+    <string name="location_csv_file">Votre fichier CSV se trouve dans le dossier téléchargement</string>
+    <string name="select_one_categorie">Vous devez sélectionner au moins une categorie</string>
+    <string name="select_one_list">Vous devez sélectionner une liste à exporter</string>
+    <string name="file_name">Vous devez écrire un nom de fichier</string>
     <string name=""></string>
     <string name=""></string>
     <string name=""></string>

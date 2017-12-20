@@ -73,7 +73,7 @@ public class ExportListe extends AppCompatActivity {
         this.listeCategorieSelected = new ArrayList<>();
 
         android.support.v7.widget.Toolbar myToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle("Exporter une liste");
+        myToolbar.setTitle(getResources().getString(R.string.toolbar_title_exporter_liste));
         setSupportActionBar(myToolbar);
 
         ListeDAO listeDAO = new ListeDAO(this);
@@ -150,7 +150,7 @@ public class ExportListe extends AppCompatActivity {
     public void annexe(View view) {
         //final ArrayList<Categorie> categorieSelected = new ArrayList<>();
         AlertDialog.Builder builder = new AlertDialog.Builder(ExportListe.this);
-        builder.setTitle("Choix des catégories à exporter :");
+        builder.setTitle(getResources().getString(R.string.categories_to_export));
 
         LinearLayout corps = new LinearLayout(getApplicationContext());
         corps.setOrientation(LinearLayout.VERTICAL);
@@ -173,7 +173,7 @@ public class ExportListe extends AppCompatActivity {
         final ListView listeCategorie = new ListView(getApplicationContext());
         listeCategorie.setAdapter(categorieChooserAdapter);
         builder.setView(listeCategorie);
-        builder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.exporter_liste_dialog_negative_option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 listeCategorieSelected = new ArrayList<Categorie>();
@@ -263,7 +263,7 @@ public class ExportListe extends AppCompatActivity {
             }
             csvWrite.close();
             curCSV.close();
-            Toast.makeText(this, "Votre fichier CSV se trouve dans le dossier téléchargement", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.location_csv_file, Toast.LENGTH_LONG).show();
             finish();
         } catch (Exception sqlEx) {
             Log.e(sqlEx.getMessage(), sqlEx.toString());
@@ -281,13 +281,13 @@ public class ExportListe extends AppCompatActivity {
                         exportDB(getApplicationContext(), nomFichierCsv);
                     }
                 } else {
-                    Toast.makeText(this, "Vous devez sélectionner au moins une categorie", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.select_one_categorie, Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, "Vous devez sélectionner une liste à exporter", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.select_one_list, Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this, "Vous devez écrire un nom de fichier", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.file_name, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -344,7 +344,7 @@ public class ExportListe extends AppCompatActivity {
         }
 
         if (!perm) {
-            Toast.makeText(this, "L'application n'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l'appareil.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_LONG).show();
         }
 
     }
