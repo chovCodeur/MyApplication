@@ -20,7 +20,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,10 +43,8 @@ import com.dao.ListeDAO;
 import com.application.inventaire.R;
 import com.liste.Liste;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -106,6 +103,10 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private final static int TAKE_IMAGE = 3;
     private final static int CHECK_PERM_PICTURE = 4;
     private final static int CHECK_PERM_PDF = 5;
+    private final static int CHECK_TAKE_PHOTO = 6;
+
+    private Uri uriImagePrise;
+
 
     /**
      * Procédure lancée à la création de l'activité.
@@ -657,7 +658,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
             if(request == SELECT_IMAGE) {
                 path = getRealPathFromUri(data.getData());
             } else {
-                path = getRealPathFromUri(imageUriTest);
+                path = getRealPathFromUri(uriImagePrise);
             }
 
             final ImageView imagePhotoPrincipale;
@@ -882,6 +883,11 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 perm = true;
                 recupererFacture();
             }
+        } else if (requestCode == CHECK_TAKE_PHOTO){
+            if (ContextCompat.checkSelfPermission(ModifierBien.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                perm = true;
+                prendrePhoto(null);
+            }
         }
 
         if(!perm) {
@@ -963,18 +969,17 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    private Uri imageUriTest;
 
     public void prendrePhoto(View view){
-        verifierPermission(CHECK_PERM_PDF);
+        verifierPermission(CHECK_TAKE_PHOTO);
         if (perm) {
             if (getFirstNullPicture() < 4) {
                 ContentValues values = new ContentValues();
                 values.put(MediaStore.Images.Media.TITLE, "New Picture");
                 values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-                imageUriTest = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                uriImagePrise = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriTest);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uriImagePrise);
                 startActivityForResult(intent, TAKE_IMAGE);
             } else {
                 Toast.makeText(this, "Vous ne pouvez mettre que 4 photos pour un bien.", Toast.LENGTH_LONG).show();
