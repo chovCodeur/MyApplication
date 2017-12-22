@@ -20,6 +20,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ import com.dao.BienDAO;
 import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
 import com.liste.Liste;
+import com.utils.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -96,7 +98,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private CheckedTextView ctvliste1 = null;
     private CheckedTextView ctvliste2 = null;
     private CheckedTextView ctvliste3 = null;
-    private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
+    private String regexDate;
     private DatePickerDialog datePickerDialog;
     private Boolean perm = false;
     private final static int SELECT_IMAGE = 1;
@@ -107,6 +109,8 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     private final static int CHECK_TAKE_PHOTO = 6;
 
     private Uri uriImagePrise;
+
+    private Utils utils;
 
 
     /**
@@ -120,6 +124,10 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_modifier_bien);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+
+        // Création de la classe utilitaire et récupération de la Regexp de contrôle du format des dates
+        utils = new Utils(this);
+        regexDate = utils.getRegexDate();
 
         // Instanciation des DAO nécessaires
         bdao = new BienDAO(this);
@@ -293,7 +301,12 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                                 } else {
                                     monthFormat = String.valueOf(month + 1);
                                 }
-                                dateAchat.setText(day + "/" + monthFormat + "/" + year);
+                                switch (utils.getLocale()) {
+                                    case "US" : dateAchat.setText(monthFormat + "/" + day + "/" + year);
+                                        break;
+                                    default : dateAchat.setText(day + "/" + monthFormat + "/" + year);
+                                        break;
+                                }
                             }
                         }, mYear, mMonth, mDay);
                         datePickerDialog.show();
@@ -318,7 +331,8 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
 
                 // On récupère la date actuelle et on l'affecte à la date de saisie
                 Date actuelle = new Date();
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                //DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                DateFormat dateFormat = new SimpleDateFormat(utils.getDateSimpleDateFormat());
                 dateSaisie = dateFormat.format(actuelle);
 
                 // Affichage des photos lorsqu'elles existent pour le bien
@@ -660,7 +674,8 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
     protected void onActivityResult(int request, int resultCode, Intent data) {
         super.onActivityResult(request, resultCode, data);
 
-        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        //SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        SimpleDateFormat s = new SimpleDateFormat(utils.getDateStockageFichier());
 
         // si on vient d'aller chercher un PDF
         if (resultCode == RESULT_OK && request == SELECT_PDF) {

@@ -46,6 +46,7 @@ import com.dao.BienDAO;
 import com.dao.CategorieDAO;
 import com.dao.ListeDAO;
 import com.liste.Liste;
+import com.utils.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -70,7 +71,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     private Boolean dansListe1 = false;
     private Boolean dansListe2 = false;
     private Boolean dansListe3 = false;
-    private String regexDate = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$";
+    private String regexDate;
     private Boolean perm = false;
 
     private ImageView imagePhotoPrincipale;
@@ -101,6 +102,8 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     private final static int CHECK_PERM_PDF = 5;
     private final static int CHECK_TAKE_PICTURE = 6;
 
+    private Utils utils;
+
 
     /**
      * Méthode appelée à la creation de l'activité
@@ -117,6 +120,10 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle(getResources().getString(R.string.toolbar_title_ajouter_bien));
         setSupportActionBar(myToolbar);
+
+        // Création de la classe utilitaire et récupération de la Regexp de contrôle du format des dates
+        utils = new Utils(this);
+        regexDate = utils.getRegexDate();
 
         // spinner pour gérer les catégories
         spinnerCategorie = (Spinner) findViewById(R.id.select_categorie);
@@ -298,7 +305,12 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                         } else {
                             monthFormat = String.valueOf(month + 1);
                         }
-                        editTextdate.setText(day + "/" + monthFormat + "/" + year);
+                        switch (utils.getLocale()) {
+                            case "US" : editTextdate.setText(monthFormat + "/" + day + "/" + year);
+                                break;
+                            default : editTextdate.setText(day + "/" + monthFormat + "/" + year);
+                                break;
+                        }
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -379,7 +391,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
     protected void onActivityResult(int request, int resultCode, Intent data) {
         super.onActivityResult(request, resultCode, data);
 
-        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        SimpleDateFormat s = new SimpleDateFormat(utils.getDateStockageFichier());
 
         // si on vient d'aller chercher un PDF
         if (resultCode == RESULT_OK && request == SELECT_PDF) {
@@ -638,7 +650,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         int idCategorieSelectionne = categorieSelectionne.getId_Categorie();
 
         Date dateSaisie = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat(utils.getDateSimpleDateFormat());
         String dateDeSaisie = sdf.format(dateSaisie);
 
         // on regarde dans quelle liste le bien est ajouté
