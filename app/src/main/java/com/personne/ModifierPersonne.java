@@ -20,6 +20,7 @@ import com.application.MainActivity;
 import com.application.inventaire.R;
 import com.bien.AjouterBien;
 import com.dao.PersonneDAO;
+import com.utils.Utils;
 
 import java.util.Calendar;
 import java.util.regex.Pattern;
@@ -28,8 +29,9 @@ public class ModifierPersonne extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Menu m;
     private TextView textViewDate;
-    private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
+    private String regexDate;
     private Boolean dejaEnBase = false;
+    private Utils utils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,10 @@ public class ModifierPersonne extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle(getResources().getString(R.string.toolbar_title_modifier_personne));
         setSupportActionBar(myToolbar);
+
+        // Création de l'utilitaire et récupération de la regexp pour les dates
+        utils = new Utils(this);
+        regexDate = utils.getRegexDate();
 
         PersonneDAO personneDAO = new PersonneDAO(this);
         personneDAO.open();
@@ -90,7 +96,12 @@ public class ModifierPersonne extends AppCompatActivity {
                         } else {
                             monthFormat = String.valueOf(month + 1);
                         }
-                        textViewDate.setText(day + "/" + monthFormat + "/" + year);
+                        switch (utils.getLocale()) {
+                            case "US" : textViewDate.setText(monthFormat + "/" + day + "/" + year);
+                                break;
+                            default : textViewDate.setText(day + "/" + monthFormat + "/" + year);
+                                break;
+                        }
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
