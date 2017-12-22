@@ -263,7 +263,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
 
         // pour prendre une photo depuis la camera directment
-        ImageButton buttonPrendrePhoto = (ImageButton) findViewById(R.id.prendrePhoto);
+        ImageView buttonPrendrePhoto = (ImageView) findViewById(R.id.prendrePhoto);
         buttonPrendrePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
