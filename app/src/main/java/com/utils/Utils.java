@@ -21,7 +21,7 @@ public class Utils {
                 dateStockageFichier = "MMddyyyyhhmmss";
                 break;
             default:
-                regexDate = "^(0[0-9]||1[0-2]).([0-2][0-9]||3[0-1]).([0-9][0-9])?[0-9][0-9]$";
+                regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
                 dateSimpleDateFormat = "dd/MM/yyyy";
                 dateStockageFichier = "ddMMyyyyhhmmss";
                 break;

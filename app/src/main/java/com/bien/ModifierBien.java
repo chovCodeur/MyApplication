@@ -334,6 +334,7 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 //DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 DateFormat dateFormat = new SimpleDateFormat(utils.getDateSimpleDateFormat());
                 dateSaisie = dateFormat.format(actuelle);
+                Log.d("FORMAT", dateSaisie);
 
                 // Affichage des photos lorsqu'elles existent pour le bien
                 if (bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")) {
