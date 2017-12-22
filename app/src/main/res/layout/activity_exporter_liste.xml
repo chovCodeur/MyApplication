@@ -137,13 +137,15 @@
 
             <Button
                 android:id="@+id/exporterListe"
-                android:layout_width="match_parent"
-                android:layout_alignParentEnd="true"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_below="@+id/affichageCategorie"
                 android:layout_marginTop="10dp"
+                android:background="@android:color/holo_green_light"
                 android:onClick="onClickExportListe"
-                android:text="@string/export_list_button" />
+                android:text="@string/export_list_button"
+                android:textColor="@android:color/background_light" />
 
         </RelativeLayout>
     </ScrollView>

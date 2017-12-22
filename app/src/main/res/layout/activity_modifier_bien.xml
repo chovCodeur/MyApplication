@@ -180,52 +180,55 @@
 
             <LinearLayout
                 android:id="@+id/linearBouton"
-                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/prix_bien"
                 android:layout_width="match_parent"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="10dp"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
 
-                <ImageButton
-                    android:id="@+id/imageButton"
+                <ImageView
+                    android:id="@+id/prendrePhoto"
                     android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:onClick="prendrePhoto"
-                    app:srcCompat="@android:drawable/ic_menu_camera" />
-
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/camera" />
 
                 <Button
                     android:id="@+id/ajouterPhoto"
-                    android:layout_width="match_parent"
+                    android:layout_width="210dp"
                     android:layout_height="match_parent"
-                    android:onClick="modifierPhoto"
-                    android:text="@string/button_add_photo" />
-
+                    android:layout_marginLeft="20dp"
+                    android:background="#2899F3"
+                    android:text="@string/button_add_photo"
+                    android:textColor="@android:color/background_light" />
 
             </LinearLayout>
 
-
             <Button
                 android:id="@+id/modifierFacture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/linearBouton"
-                android:layout_marginTop="6dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/holo_blue_light"
+                android:text="@string/modify_bill_button"
                 android:onClick="modifierFacture"
-                android:text="@string/modify_bill_button" />
+                android:textColor="@android:color/background_light" />
 
             <Button
                 android:id="@+id/modifierBien"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
                 android:layout_below="@+id/modifierFacture"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/holo_green_light"
                 android:onClick="modifierBien"
-                android:text="@string/validate_item_modifications_button" />
+                android:text="@string/validate_item_modifications_button"
+                android:textColor="@android:color/background_light" />
 
             <TextView
                 android:id="@+id/pathPdf"

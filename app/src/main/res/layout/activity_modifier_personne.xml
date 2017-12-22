@@ -115,13 +115,15 @@
 
             <Button
                 android:id="@+id/buttonAjoutInfos"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/editPhon_Number"
-                android:layout_marginTop="50dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/holo_blue_dark"
                 android:onClick="onClickAjoutInfos"
-                android:text="@string/modify_button" />
+                android:text="@string/modify_button"
+                android:textColor="@android:color/background_light" />
 
 
         </RelativeLayout>

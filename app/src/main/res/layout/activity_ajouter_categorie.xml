@@ -70,12 +70,15 @@
 
             <Button
                 android:id="@+id/buttonAddCategorie"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editDescription"
-                android:layout_marginTop="150dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/holo_green_light"
                 android:onClick="onClickAddCategorie"
-                android:text="@string/add_button" />
+                android:text="@string/add_button"
+                android:textColor="@android:color/background_light" />
 
 
         </RelativeLayout>

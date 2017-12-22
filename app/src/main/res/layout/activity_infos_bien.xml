@@ -195,33 +195,40 @@
 
             <Button
                 android:id="@+id/buttonFactureBien"
-                android:layout_width="wrap_content"
+                android:layout_width="170dp"
                 android:layout_height="45dp"
                 android:layout_alignStart="@+id/descriptionBien"
                 android:layout_below="@+id/descriptionBien"
                 android:layout_marginBottom="30dp"
                 android:layout_marginStart="21dp"
-                android:text="@string/display_bill_button" />
+                android:background="@android:color/holo_blue_light"
+                android:text="@string/display_bill_button"
+                android:textColor="@android:color/background_light" />
 
             <Button
                 android:id="@+id/modifierBienButton"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/commentairesBien"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="5dp"
+                android:background="@android:color/holo_blue_dark"
                 android:onClick="modifierBien"
-                android:text="@string/modify_button" />
+                android:text="@string/modify_button"
+                android:textColor="@android:color/background_light" />
 
             <Button
                 android:id="@+id/supprimerBienButton"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/modifierBienButton"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/holo_red_dark"
                 android:onClick="supprimerBien"
-                android:text="@string/delete_button" />
+                android:text="@string/delete_button"
+                android:textColor="@android:color/background_light" />
 
         </RelativeLayout>
     </ScrollView>
