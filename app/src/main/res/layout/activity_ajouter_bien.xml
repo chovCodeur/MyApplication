@@ -142,7 +142,7 @@
                 android:layout_below="@+id/date_achat_bien"
                 android:layout_marginTop="6dp"
                 android:ems="10"
-                android:hint="@string/description_item_hint"
+                android:hint="@string/item_description"
                 android:inputType="textMultiLine" />
 
             <EditText

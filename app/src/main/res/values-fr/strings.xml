@@ -11,8 +11,8 @@
 
 
     <!-- Messages -->
-    <string name="message_empty_layout_changes">Ajoutez un bien pour commencer.</string>
-    <string name="message_zoom_touch_expand">Toucher une photo pour l\'agrandir.</string>
+    <string name="message_empty_layout_changes">Ajoutez un bien pour commencer</string>
+    <string name="message_zoom_touch_expand">Toucher une photo pour l\'agrandir</string>
 
 
     <!-- Accessibility-only descriptions -->
@@ -38,7 +38,7 @@
     <string name="pdf_file">Facture choisie :</string>
     <string name="control_item_name">Le nom ne peut être vide</string>
     <string name="date_format_message">La date doit être au format jj/mm/aaaa</string>
-    <string name="empty_list">Veuillez selectionner au moins une liste</string>
+    <string name="empty_list">Veuillez sélectionner au moins une liste</string>
     <string name="bills_directory_name">factures</string>
     <string name="new_picture">Nouvelle photo</string>
     <string name="from_camera">Depuis votre caméra</string>
@@ -48,10 +48,9 @@
     <string name="ajouter_bien_dialog_positive_option">Oui</string>
     <string name="ajouter_bien_dialog_negative_option">Non</string>
     <string name="hint_name">Nom</string>
-    <string name="select_categorie">Selectionner une catégorie :</string>
-    <string name="select_list">Selectionner une ou plusieurs listes :</string>
+    <string name="select_categorie">Sélectionner une catégorie :</string>
+    <string name="select_list">Sélectionner une ou plusieurs listes :</string>
     <string name="purchase_date_hint">Date d\'achat (jj/mm/aaaa)</string>
-    <string name="description_item_hint">Description du bien</string>
     <string name="item_comments_hint">Commentaire sur le bien</string>
     <string name="serial_number_hint">Numéro de serie</string>
     <string name="price_hint">Prix</string>
