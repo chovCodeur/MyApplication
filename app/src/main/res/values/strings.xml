@@ -28,14 +28,14 @@
     <string name="list_name_too_long">Le nom de la liste est trop long</string>
     <string name="list_name_empty">La liste doit avoir un nom</string>
     <string name="dialog_negative_option">Annuler</string>
-    <string name="category">Category : </string>
+    <string name="category">Catégorie :</string>
 
 
     <!-- AjouterBien -->
     <string name="toolbar_title_ajouter_bien">Ajouter un bien</string>
     <string name="delete_photo_bien">Vous devez déjà supprimer une photo</string>
     <string name="permission_denied">L\'application n\'est pas autorisée à accéder aux documents. Verifier les permissions dans les réglages de l\'appareil</string>
-    <string name="pdf_file">Facture choisie : </string>
+    <string name="pdf_file">Facture choisie :</string>
     <string name="control_item_name">Le nom ne peut être vide</string>
     <string name="date_format_message">La date doit être au format jj/mm/aaaa</string>
     <string name="empty_list">Veuillez selectionner au moins une liste</string>
@@ -43,7 +43,7 @@
     <string name="new_picture">Nouvelle photo</string>
     <string name="from_camera">Depuis votre caméra</string>
     <string name="number_pictures_max">Vous ne pouvez mettre que 4 photos pour un bien</string>
-    <string name="delete_photo_approval">Voulez-vous vraiment supprimer la photo </string>
+    <string name="delete_photo_approval">Voulez-vous vraiment supprimer la photo</string>
     <string name="title_delete_photo">Supprimer une photo</string>
     <string name="ajouter_bien_dialog_positive_option">Oui</string>
     <string name="ajouter_bien_dialog_negative_option">Non</string>
@@ -65,13 +65,13 @@
 
     <!-- InfosBien -->
     <string name="no_bill">Pas de facture pour ce bien</string>
-    <string name="acquisition_date">Date d\'acquisition : </string>
-    <string name="entry_date">Date de saisie : </string>
-    <string name="item_price">Prix du bien : </string>
-    <string name="serial_number">Numéro de série : </string>
+    <string name="acquisition_date">Date d\'acquisition :</string>
+    <string name="entry_date">Date de saisie :</string>
+    <string name="item_price">Prix du bien :</string>
+    <string name="serial_number">Numéro de série :</string>
     <string name="item_infos">Informations sur le bien</string>
-    <string name="list_appartenance">Listes d\'appartenance : </string>
-    <string name="comments">Commentaires : </string>
+    <string name="list_appartenance">Listes d\'appartenance :</string>
+    <string name="comments">Commentaires :</string>
     <string name="display_bill_button">Afficher la facture</string>
     <string name="modify_button">Modifier</string>
     <string name="delete_button">Supprimer</string>
@@ -79,21 +79,21 @@
 
     <!-- AjouterCategorie -->
     <string name="toolbar_title_ajouter_categorie">Ajouter une catégorie</string>
-    <string name="message_categorie_added_1_2">La catégorie </string>
-    <string name="message_categorie_added_2_2"> a bien été ajoutée</string>
-    <string name="categorie_exists"> existe déjà</string>
+    <string name="message_categorie_added_1_2">La catégorie</string>
+    <string name="message_categorie_added_2_2">a bien été ajoutée</string>
+    <string name="categorie_exists">existe déjà</string>
     <string name="description_hint">Description</string>
     <string name="add_button">Ajouter</string>
 
 
     <!-- ModifierCategorie -->
     <string name="toolbar_title_modifier_categorie">Modifier une catégorie</string>
-    <string name="modified_categorie"> a bien été modifiée</string>
+    <string name="modified_categorie">a bien été modifiée</string>
 
 
     <!-- ExporterListe -->
     <string name="toolbar_title_exporter_liste">Exporter une liste</string>
-    <string name="categories_to_export">Choix des catégories à exporter : </string>
+    <string name="categories_to_export">Choix des catégories à exporter</string>
     <string name="exporter_liste_dialog_negative_option">Valider</string>
     <string name="location_csv_file">Votre fichier CSV se trouve dans le dossier téléchargement</string>
     <string name="select_one_categorie">Vous devez sélectionner au moins une categorie</string>

@@ -406,7 +406,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
             }
 
             TextView tv_pathPdf = (TextView) findViewById(R.id.pathPdf);
-            tv_pathPdf.setText(getResources().getString(R.string.pdf_file) + name);
+            tv_pathPdf.setText(getResources().getString(R.string.pdf_file) +" "+ name);
 
         }
 
@@ -929,7 +929,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
         // on configure l'affichage du dialog
         TextView supprimerImage = new TextView(this);
-        supprimerImage.setText(getResources().getString(R.string.delete_photo_approval) + fileName + " ?");
+        supprimerImage.setText(getResources().getString(R.string.delete_photo_approval) +" "+ fileName + " ?");
         LinearLayout layout = new LinearLayout(this);
         layout.addView(supprimerImage);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) supprimerImage.getLayoutParams();

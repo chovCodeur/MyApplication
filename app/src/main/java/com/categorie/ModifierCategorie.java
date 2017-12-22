@@ -97,10 +97,10 @@ public class ModifierCategorie extends AppCompatActivity {
                         categorieDAO.modCategorie(idcat, nomCategorie, description);
                         categorieDAO.close();
 
-                        Toast.makeText(context, getResources().getString(R.string.message_categorie_added_1_2) + nomCategorie + getResources().getString(R.string.modified_categorie), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, getResources().getString(R.string.message_categorie_added_1_2) +" "+nomCategorie +" "+ getResources().getString(R.string.modified_categorie), Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast.makeText(context, getResources().getString(R.string.message_categorie_added_1_2) + nomCategorie + getResources().getString(R.string.categorie_exists), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, getResources().getString(R.string.message_categorie_added_1_2) +" "+ nomCategorie +" "+ getResources().getString(R.string.categorie_exists), Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(context, R.string.control_item_name, Toast.LENGTH_SHORT).show();
