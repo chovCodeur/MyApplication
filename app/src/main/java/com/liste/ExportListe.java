@@ -66,6 +66,10 @@ public class ExportListe extends AppCompatActivity {
     private ListeAdapter myAdapter;
     private Boolean perm = false;
 
+    /**
+     * Méthode appelée à la creation de l'activité
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,10 +89,12 @@ public class ExportListe extends AppCompatActivity {
         final RadioButton liste2 = (RadioButton) findViewById(R.id.checkListe2);
         final RadioButton liste3 = (RadioButton) findViewById(R.id.checkListe3);
 
+        //On récupère le nom de chacune des listes
         liste1.setText(listes.get(0).getLibelle_liste());
         liste2.setText(listes.get(1).getLibelle_liste());
         liste3.setText(listes.get(2).getLibelle_liste());
 
+        //Lorsque l'on clique sur la liste1
         liste1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +153,10 @@ public class ExportListe extends AppCompatActivity {
 
     }
 
+    /**
+     * Méthode de création de l'AlertDialog
+     * @param view
+     */
     public void annexe(View view) {
         //final ArrayList<Categorie> categorieSelected = new ArrayList<>();
         AlertDialog.Builder builder = new AlertDialog.Builder(ExportListe.this);
@@ -156,7 +166,6 @@ public class ExportListe extends AppCompatActivity {
         corps.setOrientation(LinearLayout.VERTICAL);
 
         TextView tvSelected = (TextView) findViewById(R.id.affichageCategorie);
-
 
         CategorieDAO categorieDAO = new CategorieDAO(this);
         categorieDAO.open();
@@ -184,7 +193,6 @@ public class ExportListe extends AppCompatActivity {
                     }
                 }
 
-
                 TextView tvSelected = (TextView) findViewById(R.id.affichageCategorie);
                 tvSelected.setText(null);
                 if (listeCategorieSelected.isEmpty()) {
@@ -198,6 +206,10 @@ public class ExportListe extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * Méthode permettant d'afficher les catégories
+     * @param tvSelected
+     */
     public void afficherCategories(TextView tvSelected) {
         String displaySelected = "";
         int cpt = 0;
@@ -213,20 +225,25 @@ public class ExportListe extends AppCompatActivity {
         tvSelected.setText(displaySelected.trim());
     }
 
+    /**
+     * Méthode permettant d'exporter en csv
+     * @param context
+     * @param nom
+     */
     public void exportDB(Context context, String nom) {
 
         File exportDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "");
         Log.d("pouet", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
-
+        //On vérifie si le fichier existe déjà
         if (!exportDir.exists()) {
             exportDir.mkdirs();
         }
-        Log.d("pouet2", exportDir.toString());
         File file = new File(exportDir, nom + ".csv");
-        Log.d("pouet2", exportDir.toString());
+
         try {
             file.createNewFile();
             FileOutputStream os = new FileOutputStream(file);
+            //Permet d'avoir les accents dans le csv
             os.write(0xef);
             os.write(0xbb);
             os.write(0xbf);
@@ -247,7 +264,6 @@ public class ExportListe extends AppCompatActivity {
                 }
                 i++;
             }
-
             //id_bien,"","","","","","","","","id_categorie","photo_principale","photo_sec1","photo_sec2","photo_sec3","id_bien","id_liste"
             String nomColonne = "nom_bien as Nom, date_saisie as Date_de_saisie, date_achat as Date_achat, numero_serie as Numéro_serie, prix as Prix, description as Description, commentaire as Commentaire";
             String selectQuery = "SELECT " + nomColonne + " FROM BIEN JOIN APPARTIENT ON APPARTIENT.id_bien = BIEN.id_bien WHERE BIEN.id_categorie IN" + inWhereClause;
@@ -257,7 +273,7 @@ public class ExportListe extends AppCompatActivity {
 
             csvWrite.writeNext(curCSV.getColumnNames());
             while (curCSV.moveToNext()) {
-                //Which column you want to export
+                //Les colonnes que l'on souhaite exporter
                 String arrStr[] = {curCSV.getString(0), curCSV.getString(1), curCSV.getString(2), curCSV.getString(3), curCSV.getString(4), curCSV.getString(5), curCSV.getString(6)};
                 csvWrite.writeNext(arrStr);
             }
@@ -270,11 +286,16 @@ public class ExportListe extends AppCompatActivity {
         }
     }
 
+    /**
+     * Méthode permettant de faire l'export lorsque l'on click sur le boutton
+     * @param view
+     */
     public void onClickExportListe(View view) {
         EditText editTextNomFichier = (EditText) findViewById(R.id.nomListeAexporter);
         nomFichierCsv = editTextNomFichier.getText().toString();
         if (nomFichierCsv != null && !nomFichierCsv.equals("")) {
             if (idliste != 0) {
+                //On vérifie l
                 if (!listeCategorieSelected.isEmpty()) {
                     verifierPermission();
                     if (perm) {
@@ -291,11 +312,19 @@ public class ExportListe extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
+    /**
+     * Méthode permettant d'assigner le menu et ses options à l'activité.
+     * @param menu
+     * @return true;
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -305,29 +334,33 @@ public class ExportListe extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Methode utilisée par le menu supérieur
+     * @param item
+     * @return onOptionsItemSelected(item)
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.home:
+                //Permet de revenir sur le menu principal
                 Intent intenthome = new Intent(getApplicationContext(), com.application.MainActivity.class);
                 intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intenthome);
-
                 return true;
-
             case R.id.plus:
-
+                //Permet de basculer sur la page AjouterBien
                 intent = new Intent(this, com.bien.AjouterBien.class);
                 startActivity(intent);
-
                 return true;
-
         }
         return super.onOptionsItemSelected(item);
     }
 
-
+    /**
+     * Méthode vérifiant les permissions de lecture sur le stockage interne
+     */
     public void verifierPermission() {
         if (ContextCompat.checkSelfPermission(ExportListe.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(ExportListe.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
@@ -336,13 +369,18 @@ public class ExportListe extends AppCompatActivity {
         }
     }
 
+    /**
+     * Méthode appelée après la verification des permissions
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (ContextCompat.checkSelfPermission(ExportListe.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             perm = true;
             exportDB(getApplicationContext(), nomFichierCsv);
         }
-
         if (!perm) {
             Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_LONG).show();
         }

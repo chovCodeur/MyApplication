@@ -80,7 +80,6 @@ public class CategorieDAO {
     public int deleteCategorie(Categorie categorie) {
         // suppression d'un enregistrement
         // valeur de retour : (int) nombre de lignes affectées par la clause WHERE, 0 sinon
-
         String where = ID + " = ?";
         String[] whereArgs = {categorie.getId_Categorie() + ""};
         return db.delete(TABLE_NAME, where, whereArgs);
@@ -148,7 +147,7 @@ public class CategorieDAO {
     }
 
     /**
-     * Méthode permettant de récuperer toutes les acatégories d'une liste
+     * Méthode permettant de récuperer toutes les catégories d'une liste
      * @param idListe
      * @return listeCategorie
      */

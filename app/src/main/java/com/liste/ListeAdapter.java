@@ -23,7 +23,13 @@ public class ListeAdapter extends ArrayAdapter<Categorie> {
     private ArrayList<Categorie> listState;
     private ArrayList<Categorie> listSelected;
 
-
+    /**
+     * Constructeur de la ListeAdapter
+     * @param context
+     * @param resource
+     * @param objects
+     * @param listeSelected
+     */
     public ListeAdapter(Context context, int resource, ArrayList<Categorie> objects, ArrayList<Categorie> listeSelected) {
         super(context, resource, objects);
         this.mContext = context;
@@ -31,17 +37,37 @@ public class ListeAdapter extends ArrayAdapter<Categorie> {
         this.listSelected = listeSelected;
     }
 
+    /**
+     * Methode permettant de récupérer la DropDownView
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return getCustomView
+     */
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         return getCustomView(position, convertView, parent);
     }
 
+    /**
+     * Méthode permettant de récupérer la view
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return getConvertView
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //Log.e("aa","nb");
         return getCustomView(position, convertView, parent);
     }
 
+    /**
+     * Classe récupérant automatiquement une vue spécifique au sein de l'adapteur
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return convertView
+     */
     public View getCustomView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
         if (convertView == null) {
@@ -53,6 +79,7 @@ public class ListeAdapter extends ArrayAdapter<Categorie> {
             holder.mCheckBox = (CheckBox) convertView.findViewById(R.id.checkbox);
             holder.mTextView.setText(listState.get(position).getNom_Categorie());
 
+            // On cherche la position dans la liste
             for (Categorie categorieSelectionee : listSelected) {
                 if (categorieSelectionee.getId_Categorie() == getItem(position).getId_Categorie()) {
                     holder.mCheckBox.setChecked(true);
@@ -63,12 +90,11 @@ public class ListeAdapter extends ArrayAdapter<Categorie> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
+        //On vérifie si les checkboxs sont selectionnés ou non
         holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //int getPosition = (Integer) buttonView.getTag();
                 if (isChecked) {
                     listState.get(position).setSelected(true);
                 } else {
@@ -79,7 +105,9 @@ public class ListeAdapter extends ArrayAdapter<Categorie> {
         return convertView;
     }
 
-
+    /**
+     * Classe permettant de personnaliser une ligne
+     */
     private class ViewHolder {
         private TextView mTextView;
         private CheckBox mCheckBox;
