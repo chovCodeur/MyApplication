@@ -65,6 +65,15 @@ public class BienAdapter extends BaseAdapter {
     }
 
     /**
+     * Pour connaitre le type de ligne (separateur ou item)
+     * @return 2
+     */
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    /**
      * Pour savoir le type de ligne (separateur ou item)
      * @param position
      * @return
