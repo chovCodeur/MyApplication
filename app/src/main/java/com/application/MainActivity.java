@@ -112,7 +112,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
             }
         });*/
-
+        //ER
+        //REFEDQS
         //refreshAdapterView();
 
     }
