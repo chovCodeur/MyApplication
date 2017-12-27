@@ -191,6 +191,7 @@
                 <ImageView
                     android:id="@+id/prendrePhoto"
                     android:layout_width="50dp"
+                    android:onClick="prendrePhoto"
                     android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
                     android:scaleType="fitCenter"
@@ -199,6 +200,7 @@
                 <Button
                     android:id="@+id/ajouterPhoto"
                     android:layout_width="210dp"
+                    android:onClick="modifierPhoto"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
                     android:background="#2899F3"
