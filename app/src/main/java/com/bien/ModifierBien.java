@@ -708,115 +708,43 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 path = getRealPathFromUri(uriImagePrise);
             }
 
-            final ImageView imagePhotoPrincipale;
-            final ImageView imagePhoto1;
-            final ImageView imagePhoto2;
-            final ImageView imagePhoto3;
-            Bitmap myBitmap;
             String format = s.format(new Date());
-
-            final File imgFile;
-
+            String pathFichier;
 
             if (path != null && !path.equals("")) {
+                // en fonction de la première place disponible
                 switch (numPhoto) {
                     case 0:
-                        // en fonction de la première place disponible
-                        imagePhotoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
-                        final String pathPhotoPrincipale;
-
-                        // on enregistre la photo dans la mémoire interne
-                        pathPhotoPrincipale = saveFile(path, format.toString(), "img");
-                        imgFile = new File(pathPhotoPrincipale);
-                        if (imgFile.exists()) {
-                            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                            imagePhotoPrincipale.setImageBitmap(myBitmap);
-                        }
-
-                        // pour supprimer la photo
-                        imagePhotoPrincipale.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                supprimerPhoto(imgFile.getName(), imagePhotoPrincipale);
-                            }
-                        });
-
-                        bien.setPhoto_bien_principal(pathPhotoPrincipale);
-
+                        // on enregistre l'image
+                        pathFichier = saveFile(path, format.toString(), "img");
+                        // on l'associe au bien
+                        bien.setPhoto_bien_principal(pathFichier);
                         break;
 
 
                     case 1:
-
-                        imagePhoto1 = (ImageView) findViewById(R.id.photo1);
-                        final String pathPhoto1;
-                        // on enregistre la photo dans la mémoire interne
-                        pathPhoto1 = saveFile(path, format.toString(), "img");
-                        imgFile = new File(pathPhoto1);
-                        if (imgFile.exists()) {
-                            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                            imagePhoto1.setImageBitmap(myBitmap);
-                        }
-
-                        // pour supprimer la photo
-                        imagePhoto1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                supprimerPhoto(imgFile.getName(), imagePhoto1);
-                            }
-                        });
-
-                        bien.setPhoto_bien_miniature1(pathPhoto1);
-
+                        // on enregistre l'image
+                        pathFichier = saveFile(path, format.toString(), "img");
+                        // on l'associe au bien
+                        bien.setPhoto_bien_miniature1(pathFichier);
                         break;
                     case 2:
-                        imagePhoto2 = (ImageView) findViewById(R.id.photo2);
-                        final String pathPhoto2;
-
-                        // on enregistre la photo dans la mémoire interne
-                        pathPhoto2 = saveFile(path, format.toString(), "img");
-                        imgFile = new File(pathPhoto2);
-                        if (imgFile.exists()) {
-                            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                            imagePhoto2.setImageBitmap(myBitmap);
-                        }
-
-                        // pour supprimer la photo
-                        imagePhoto2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                supprimerPhoto(imgFile.getName(), imagePhoto2);
-                            }
-                        });
-
-                        bien.setPhoto_bien_miniature2(pathPhoto2);
+                        // on enregistre l'image
+                        pathFichier = saveFile(path, format.toString(), "img");
+                        // on l'associe au bien
+                        bien.setPhoto_bien_miniature2(pathFichier);
                         break;
 
                     case 3:
 
-                        imagePhoto3 = (ImageView) findViewById(R.id.photo3);
-                        final String pathPhoto3;
-
-                        // on enregistre la photo dans la mémoire interne
-                        pathPhoto3 = saveFile(path, format.toString(), "img");
-                        imgFile = new File(pathPhoto3);
-                        if (imgFile.exists()) {
-                            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                            imagePhoto3.setImageBitmap(myBitmap);
-                        }
-
-                        // pour supprimer la photo
-                        imagePhoto3.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                supprimerPhoto(imgFile.getName(), imagePhoto3);
-                            }
-                        });
-
-                        bien.setPhoto_bien_miniature3(pathPhoto3);
-
+                        // on enregistre l'image
+                        pathFichier = saveFile(path, format.toString(), "img");
+                        // on l'associe au bien
+                        bien.setPhoto_bien_miniature3(pathFichier);
                         break;
                 }
+
+                gererAffichageImage();
             }
         }
     }
@@ -1102,5 +1030,141 @@ public class ModifierBien extends AppCompatActivity implements AdapterView.OnIte
                 Toast.makeText(this, R.string.number_pictures_max, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    /**
+     * Méthode permettant de gérer l'affichage des 4 images du bien
+     */
+    public void gererAffichageImage(){
+        Bitmap myBitmap;
+
+        // cas de la grande photo
+        if (bien.getPhoto_bien_principal() != null && !bien.getPhoto_bien_principal().equals("")){
+            final File file = new File(bien.getPhoto_bien_principal());
+            if (file.exists()) {
+                // on mets le bitmap dans la vue
+                photoPrincipale = (ImageView) findViewById(R.id.photoPrincipale);
+                myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                photoPrincipale.setImageBitmap(myBitmap);
+
+                // pour supprimer
+                photoPrincipale.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        supprimerPhoto(file.getName(), photoPrincipale);
+                    }
+                });
+            }
+        }
+
+        if (bien.getPhoto_bien_miniature1() != null && !bien.getPhoto_bien_miniature1().equals("")){
+            final File file = new File(bien.getPhoto_bien_miniature1());
+            if (file.exists()) {
+                // on mets le bitmap dans la vue
+                photo1 = (ImageView) findViewById(R.id.photo1);
+                myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                photo1.setImageBitmap(myBitmap);
+
+                // pour supprimer
+                photo1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        supprimerPhoto(file.getName(), photo1);
+                    }
+                });
+            }
+        }
+
+        if (bien.getPhoto_bien_miniature2() != null && !bien.getPhoto_bien_miniature2().equals("")){
+            final File file = new File(bien.getPhoto_bien_miniature2());
+            if (file.exists()) {
+                // on mets le bitmap dans la vue
+                photo2 = (ImageView) findViewById(R.id.photo2);
+                myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                photo2.setImageBitmap(myBitmap);
+
+                // pour supprimer
+                photo2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        supprimerPhoto(file.getName(), photo2);
+                    }
+                });
+            }
+        }
+
+        if (bien.getPhoto_bien_miniature3() != null && !bien.getPhoto_bien_miniature3().equals("")){
+            final File file = new File(bien.getPhoto_bien_miniature3());
+            if (file.exists()) {
+                // on mets le bitmap dans la vue
+                photo3 = (ImageView) findViewById(R.id.photo3);
+                myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                photo3.setImageBitmap(myBitmap);
+
+                // pour supprimer
+                photo3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        supprimerPhoto(file.getName(), photo3);
+                    }
+                });
+            }
+        }
+
+
+
+    }
+
+
+    /**
+     * Méthode appelée après la rotation de l'appareil, utilisée ici pour restaurer les images et la facture
+     * @param savedInstanceState
+     */
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        // grande image
+        if (savedInstanceState.getString("PATH_PHOTO_PRINCIPALE") != null && !savedInstanceState.getString("PATH_PHOTO_PRINCIPALE").equals("")) {
+            bien.setPhoto_bien_principal(savedInstanceState.getString("PATH_PHOTO_PRINCIPALE"));
+        }
+
+        // image 1
+        if (savedInstanceState.getString("PATH_PHOTO_1") != null && !savedInstanceState.getString("PATH_PHOTO_1").equals("")) {
+          bien.setPhoto_bien_miniature1(savedInstanceState.getString("PATH_PHOTO_1"));
+        }
+
+        // image 2
+        if (savedInstanceState.getString("PATH_PHOTO_2") != null && !savedInstanceState.getString("PATH_PHOTO_2").equals("")) {
+            bien.setPhoto_bien_miniature2(savedInstanceState.getString("PATH_PHOTO_2"));
+        }
+
+        // image 3
+        if (savedInstanceState.getString("PATH_PHOTO_3") != null && !savedInstanceState.getString("PATH_PHOTO_3").equals("")) {
+            bien.setPhoto_bien_miniature3(savedInstanceState.getString("PATH_PHOTO_3"));
+        }
+
+        // facture
+        if (savedInstanceState.getString("PATH_FACTURE") != null && !savedInstanceState.getString("PATH_FACTURE").equals("")) {
+            bien.setFacture_bien(savedInstanceState.getString("PATH_FACTURE"));
+        }
+
+        // on affiche les images
+        gererAffichageImage();
+
+    }
+
+    /**
+     * Méthode appelée avant la rotation de l'affichage, on sauvegarde ici les images et la facture à restaurer après la rotation
+     * @param outState
+     */
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("PATH_PHOTO_PRINCIPALE", bien.getPhoto_bien_principal());
+        outState.putString("PATH_PHOTO_1", bien.getPhoto_bien_miniature1());
+        outState.putString("PATH_PHOTO_2", bien.getPhoto_bien_miniature2());
+        outState.putString("PATH_PHOTO_3", bien.getPhoto_bien_miniature3());
+        outState.putString("PATH_FACTURE", bien.getFacture_bien());
+        super.onSaveInstanceState(outState);
     }
 }
