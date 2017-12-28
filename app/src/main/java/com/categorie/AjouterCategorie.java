@@ -1,5 +1,5 @@
 package com.categorie;
-//
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,11 @@ import com.application.inventaire.R;
 import com.dao.CategorieDAO;
 
 import java.util.ArrayList;
+
+/**
+ * Classe correspondant à l'activité d'ajout d'une catégorie
+ */
+
 
 public class AjouterCategorie extends AppCompatActivity {
 
@@ -67,7 +72,7 @@ public class AjouterCategorie extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+//button d'ajout d'une catégorie
     public void onClickAddCategorie(View view) {
         TextView textViewNomCategorie = (TextView) findViewById(R.id.editCategorie);
         TextView textViewDescription = (TextView) findViewById(R.id.editDescription);
@@ -90,20 +95,22 @@ public class AjouterCategorie extends AppCompatActivity {
 
         }
         String description = textViewDescription.getText().toString();
-
+//condition pour éditer et ajouter une catégorie dans la base de données
         if (!textViewNomCategorie.getText().toString().equals("")) {
             if (!erreur) {
                 categorieDAO.open();
                 Categorie categorie = new Categorie(0, nomCategorie, description);
                 categorieDAO.addCategorie(categorie);
                 categorieDAO.close();
-
-                Toast.makeText(this, getResources().getString(R.string.message_categorie_added_1_2) +" "+ nomCategorie +" "+ getResources().getString(R.string.message_categorie_added_2_2), Toast.LENGTH_SHORT).show();
+// si catégorie n'existe pas, vous aviez la notification de l'ajout
+                Toast.makeText(this, getResources().getString(R.string.message_categorie_added_1_2) + nomCategorie + getResources().getString(R.string.message_categorie_added_2_2), Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(this, getResources().getString(R.string.message_categorie_added_1_2) +" "+ nomCategorie +" "+ getResources().getString(R.string.categorie_exists), Toast.LENGTH_SHORT).show();
+                // Si la catégorie existe, vous seriez notifier à la vilidationS
+                Toast.makeText(this, getResources().getString(R.string.message_categorie_added_1_2) + nomCategorie + getResources().getString(R.string.categorie_exists), Toast.LENGTH_SHORT).show();
             }
         } else {
+            //si catégorie vide, il revoie message pour faire connaître état de la catégorie
             Toast.makeText(this, R.string.control_item_name, Toast.LENGTH_SHORT).show();
 
         }

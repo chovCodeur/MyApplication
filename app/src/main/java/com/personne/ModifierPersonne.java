@@ -72,7 +72,7 @@ public class ModifierPersonne extends AppCompatActivity {
         textViewEmail.setText(per.getMail());
         Log.e("aa", "phone" + per.getPhoneNumber());
         textViewPhoneNumber.setText(per.getPhoneNumber());
-
+// éditer la date avec une datepicker et le choix du format à stocker dans la table
         textViewDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

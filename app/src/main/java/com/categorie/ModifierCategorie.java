@@ -1,5 +1,9 @@
 package com.categorie;
-//
+
+/**
+ * Classe permettant la modification des informations que contient une catégorie.
+ */
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +28,7 @@ import java.util.ArrayList;
 
 public class ModifierCategorie extends AppCompatActivity {
 
+    //variables des classes
     private Button modifCategorie;
     private EditText editCategorie;
     private EditText editDescription;
@@ -42,21 +47,25 @@ public class ModifierCategorie extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle(getResources().getString(R.string.toolbar_title_modifier_categorie));
         setSupportActionBar(myToolbar);
-
+// intenciation de la DAO
         cdao = new CategorieDAO(this);
 
         editCategorie = (EditText) findViewById(R.id.editCategorie);
         editDescription = (EditText) findViewById(R.id.editDescription);
         modifCategorie = (Button) findViewById(R.id.buttonModifierCategorie);
 
+        // Récupération des paramètres en provenance des autres activités
         Bundle extras = getIntent().getExtras();
-
+//on stocke l'id de la catégorie courante
         if (extras != null) {
             idcat = extras.getInt("IDCATEGORIE");
             Log.d("IDCATEGORIE", String.valueOf(idcat));
+            //Si l'id de la catégorie n'est pas null
             if (idcat != 0) {
+                //On ouvre le DAO et on récupère son id
                 cdao.open();
                 //categorie = cdao.getCategorieById(idcat);
+                // On récupère les id de la catégorie du bien
                 nomcat = cdao.getNomCategorieByIdCategorie(idcat);
                 nomdescrip = cdao.getDescriptionCategorieByIdCategorie(idcat);
 
@@ -64,8 +73,11 @@ public class ModifierCategorie extends AppCompatActivity {
                 cdao.close();
             }
         }
+
+
         editCategorie.setText(nomcat);
         editDescription.setText(nomdescrip);
+//Puis on passe à la modification proprement dit et l'on vérifie avec les valeurs existantes dans la table
 
         modifCategorie.setOnClickListener(new View.OnClickListener() {
             @Override

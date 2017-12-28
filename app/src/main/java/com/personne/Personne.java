@@ -3,7 +3,10 @@ package com.personne;
 /**
  * Created by TANGUY on 16-11-17.
  */
-/////
+
+/**
+ * Classe qui gère les informations de la personne
+ */
 
 public class Personne {
 
