@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,10 +38,16 @@ import com.dao.PersonneDAO;
 import com.liste.ExportListe;
 import com.liste.Liste;
 import com.personne.ModifierPersonne;
+import com.utils.Utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * Classe principale appelée au lancement de l'application
+ */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
@@ -66,9 +73,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     HashMap<Integer, Integer> listeHeader = new HashMap<>();
 
 
+    /**
+     * Procédure lancée à la création de l'activité.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        // initialisation des DAO
         pdao = new PersonneDAO(this);
         ldao = new ListeDAO(this);
         bdao = new BienDAO(this);
@@ -77,6 +89,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        // pour remplir la BD lors du premier lancement
+        pdao.open();
+        if (pdao.getPersonne(1) == null){
+            initialiserBD();
+        }
+        pdao.close();
+
+        // initialisation des vues
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         ldao.open();
         myToolbar.setTitle(ldao.getNomListeById(idCurrentList));
@@ -85,13 +105,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         lv_listeBiens = (ListView) findViewById(R.id.listeBiens);
 
-        bdao.open();
-        if (bdao.compterBienEnBase() <= 0) {
-            remplirBeDeForTest();
-        }
 
-        bdao.close();
 
+        // initialisation du drawer sur le coté
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -105,19 +121,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.getMenu().findItem(R.id.liste2).setTitle(ldao.getNomListeById(2));
         navigationView.getMenu().findItem(R.id.liste3).setTitle(ldao.getNomListeById(3));
         ldao.close();
-        /*View headerview = navigationView.getHeaderView(0);
-
-        headerview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });*/
-        //ER
-        //REFEDQS
-        //refreshAdapterView();
 
     }
 
+    /**
+     * Méthode appelée après la rotation de l'appareil, utilisée ici pour restaurer la liste courante
+     * @param savedInstanceState
+     */
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState.getString("ID_CURRENT_LISTE") != null && !savedInstanceState.getString("ID_CURRENT_LISTE").equals("")) {
@@ -127,6 +137,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /**
+     * Méthode appelée avant la rotation de l'appareil, utilisée ici pour sauvegarder la liste courante
+     * @param outState
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString("ID_CURRENT_LISTE", String.valueOf(idCurrentList));
@@ -134,15 +148,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * Méthode appelée lorsque l'on revient sur l'activité
+     */
     @Override
     protected void onResume() {
         super.onResume();
-
-        // on rafraichi simplement l'affichage
         refreshAdapterView();
 
     }
 
+    /**
+     * Méthode appelée lorsque le bouton retour physique de l'appareil est utilisé
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -153,30 +171,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /**
+     * Méthode pour la gestion des menus
+     * @param item
+     * @return true
+     */
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-     /*   int id = item.getItemId();
 
-        if (id == R.id.liste1) {
-            idCurrentList = 1;
-            refreshAdapterView();
-        }
-
-        if (id == R.id.liste2) {
-            idCurrentList = 2;
-            refreshAdapterView();
-        }
-
-        if (id == R.id.liste3) {
-            idCurrentList = 3;
-            refreshAdapterView();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);*/
         return true;
     }
 
+    /**
+     * Méthode pour la création des menus
+     * @param menu
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -186,6 +196,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    /**
+     * Méthode appelée lors de la selection d'un item dans le menu
+     * @param item
+     * @return true
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
@@ -206,9 +221,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Méthode pour la gestion du drawer
+     * @param menu
+     * @return true
+     */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
+        // drawer
         ViewGroup navigationMenuView = (ViewGroup) navigationView.getChildAt(0);
         ViewGroup navigationMenuItemView1 = (ViewGroup) navigationMenuView.getChildAt(1);
         ViewGroup navigationMenuItemView2 = (ViewGroup) navigationMenuView.getChildAt(2);
@@ -217,6 +238,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View appCompatCheckedTextView2 = navigationMenuItemView2.getChildAt(0);
         View appCompatCheckedTextView3 = navigationMenuItemView3.getChildAt(0);
 
+
+        // pour changer le nom de la liste 1
         appCompatCheckedTextView1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -228,6 +251,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        // pour passer sur la liste 1
         appCompatCheckedTextView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,6 +262,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+
+        // pour changer le nom de la liste 2
         appCompatCheckedTextView2.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -249,6 +275,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        // pour passer sur la liste 2
         appCompatCheckedTextView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,6 +286,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        // pour changer le nom de la liste 2
         appCompatCheckedTextView3.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -269,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             }
         });
-
+        // pour passer sur la liste 3
         appCompatCheckedTextView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -283,7 +311,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onPrepareOptionsMenu(menu);
     }
 
+
+    /**
+     * Méthode pour rafraichir l'adapter des biens (liste des biens)
+     */
     public void refreshAdapterView() {
+        // nom de la liste en cours
         ldao.open();
         myToolbar.setTitle(ldao.getNomListeById(idCurrentList));
         ldao.close();
@@ -299,50 +332,57 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         listCorrespondance.clear();
         listeHeader.clear();
 
-        // Ouverture du BienDAO, on retrouve la liste des biens de la liste désignée et on ferme le DAO
         bdao.open();
         // Récupération de la liste en fonction l'id
         listeBiens = bdao.getBiensByListe(idCurrentList);
-
         bdao.close();
+
+        // si la liste n'est pas vide
         if (!listeBiens.isEmpty()) {
             cdao.open();
 
+            // on passe les infos pour le separateur (categorie)
+            // cas particulier pour la première categorie
             mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#"+ getResources().getString(R.string.category) +" "+ cdao.getNomCategorieByIdCategorie(listeBiens.get(0).getId_categorie_bien()));
             listeHeader.put(0, listeBiens.get(0).getId_categorie_bien());
-
             int cpt = 0;
             int idCatEnTete = listeBiens.get(0).getId_categorie_bien();
-            String item = null;
+            String item ;
 
             cdao.close();
+
+            // on parcours la liste des biens
             for (int i = 0; i < listeBiens.size(); i++) {
 
                 if (idCatEnTete != listeBiens.get(i).getId_categorie_bien()) {
                     cpt++;
                     cdao.open();
+                    // on passe les infos pour le separateur (categorie)
                     mAdapter.addSectionHeaderItem("CATEGORIE_CATEGORIE#~#"+ getResources().getString(R.string.category) +" "+ cdao.getNomCategorieByIdCategorie(listeBiens.get(i).getId_categorie_bien()));
                     listeHeader.put(i + cpt, listeBiens.get(i).getId_categorie_bien());
                     cdao.close();
 
                 }
+                // on passe les infos pour l'item (bien)
                 listCorrespondance.put(mAdapter.getCount(), Integer.valueOf(cpt));
                 item = listeBiens.get(i).getNom_bien() + "#~#" + listeBiens.get(i).getDescription_bien() + "#~#" + listeBiens.get(i).getPhoto_bien_principal();
                 mAdapter.addItem(item);
                 idCatEnTete = listeBiens.get(i).getId_categorie_bien();
             }
 
+            // on attribue l'adapter à la listeView
             lv_listeBiens.setAdapter(mAdapter);
             lv_listeBiens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (listeHeader.containsKey(position)) {
+                        // pour modifier une categorie
                         Intent i = new Intent(getApplicationContext(), ModifierCategorie.class);
                         i.putExtra("IDCATEGORIE", listeHeader.get(position));
                         startActivity(i);
                     } else {
+                        // pour voir un bien (infoBien)
                         Intent i = new Intent(getApplicationContext(), InfosBien.class);
-
                         i.putExtra("IDBIEN", listeBiens.get((position) - listCorrespondance.get((position)) - 1).getId_bien());
                         startActivity(i);
                     }
@@ -351,101 +391,107 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /**
+     * Pour ajouter une categorie lorsque l'on clique sur le bouton dans le Drawer
+     * @param v
+     */
     public void ajouterCategorie(View v) {
         Intent intent = new Intent(this, AjouterCategorie.class);
         startActivity(intent);
     }
 
+    /**
+     * Pour exportet des données au foramt CSV lorsque l'on clique sur le bouton dans le Drawer
+     * @param v
+     */
     public void exporterListe(View v) {
         Intent intent = new Intent(this, ExportListe.class);
         startActivity(intent);
 
     }
 
+    /**
+     * Pour modifier les infos de la personne (utile pour le CSV)
+     * @param v
+     */
     public void modifierPersonne(View v) {
         Intent intent = new Intent(this, ModifierPersonne.class);
         startActivity(intent);
     }
 
-    public void remplirBeDeForTest() {
+    /**
+     * Pour remplir la BD lors du premier lancement
+     */
+    public void initialiserBD() {
+
+        // on crée une personne avec tous les champs à vide, cela nous permettra de tester l'existence de la BD pour les futurs lancements.
         pdao.open();
-        //pdao.modPersonne(1, "Jacky", "Philippe", "12/04/1995", "10 rue de la verge", "jk.phil@hotmail.com", "0607548796");
+        pdao.creerPersonnePremierLancement();
         pdao.close();
 
+        // création des 3 listes
         Liste liste1 = new Liste(1, "Maison", "La liste de ma maison");
         Liste liste2 = new Liste(2, "Garage", "La liste de mon garage");
         Liste liste3 = new Liste(3, "Magasin", "La liste de mon magasin");
 
+        // ajout des listes
         ldao.open();
         ldao.ajouterListe(liste1);
         ldao.ajouterListe(liste2);
         ldao.ajouterListe(liste3);
         ldao.close();
 
+        // on ajoute 3 catégories
         CategorieDAO categorieDAO = new CategorieDAO(this);
         categorieDAO.open();
-        Categorie cuisine = new Categorie(0, "Cuisine", "Tous mes objets de la cuisine");
-        Categorie salon = new Categorie(0, "Salon", "Tous mes objets du Salon");
-        Categorie chambre = new Categorie(0, "Chambre", "Tous mes objets de la chambre");
+        Categorie cuisine = new Categorie(0, "Cuisine", "Tous les objets de la cuisine");
+        Categorie salon = new Categorie(0, "Salon", "Tous les objets du Salon");
+        Categorie chambre = new Categorie(0, "Chambre", "Tous les objets de la chambre");
         categorieDAO.addCategorie(cuisine);
         categorieDAO.addCategorie(salon);
         categorieDAO.addCategorie(chambre);
         categorieDAO.close();
 
+        Date date = new Date();
 
-        Bien bien1 = new Bien(1, "Lunette", "19/11/2017", "21/11/2017", "", "Légèrement rayées sur le coté", "251.6", "", "", "", "", 3, "Lunette de marque Rayban", "");
-        Bien bien2 = new Bien(2, "Frigo", "19/11/2017", "23/11/2017", "", "", "3599.99", "", "", "", "", 1, "Samsung Family Hub", "45DG425845DA");
-        Bien bien3 = new Bien(3, "Ordinateur", "19/11/2017", "01/12/2017", "", "Manque une touche", "1099.99", "", "", "", "", 2, "PC Portable Gamer de marque MSI", "515D-TGH2336");
-        Bien bien4 = new Bien(4, "Vaisselle", "20/11/2017", "03/06/2017", "", "Vaisselle de Mémé", "6902.30", "", "", "", "", 1, "En porcelaine chinoise datée de 1640", "");
-        Bien bien5 = new Bien(5, "TV", "21/11/2017", "19/05/2016", "", "", "350", "", "", "", "", 1, "Marque Kenwood", "");
-        Bien bien6 = new Bien(6, "Home cinéma", "21/11/2017", "19/01/2017", "", "Une enceinte grésille un peu", "400", "", "", "", "", 2, "Marque Pioneer", "");
+        // Création de la classe utilitaire pour les dates
+        Utils utils = new Utils(this);
+        String dateSimpleDateFormat = utils.getDateSimpleDateFormat();
+        SimpleDateFormat sdf = new SimpleDateFormat(dateSimpleDateFormat);
+        String dateDuJour = sdf.format(date);
+
+        // texte explicatif
+        String explication = "Cet objet est crée au demarrage de l'application, vous pouvez le supprimer en cliquant dessus.";
+
+        // on ajoute 6 bien pour exemple
+        Bien bien1 = new Bien(1, "Lunette", dateDuJour, dateDuJour, "", "Légèrement rayées sur le coté", "251", "", "", "", "", 2, explication, "");
+        Bien bien2 = new Bien(2, "Frigo", dateDuJour, dateDuJour, "", "", "3599", "", "", "", "", 1, explication, "45DG425845DA");
+        Bien bien3 = new Bien(3, "Ordinateur", dateDuJour, dateDuJour, "", "Manque une touche", "1099", "", "", "", "", 3, explication, "515D-TGH2336");
+        Bien bien4 = new Bien(4, "Vaisselle", dateDuJour, dateDuJour, "", "Vaisselle de Mémé", "6902", "", "", "", "", 1, explication, "");
+        Bien bien5 = new Bien(5, "TV", dateDuJour, dateDuJour, "", "", "350", "", "", "", "", 2, explication, "");
+        Bien bien6 = new Bien(6, "Home cinéma", dateDuJour, dateDuJour, "", "Marque Pioneer - Une enceinte grésille un peu", "400", "", "", "", "", 2, explication, "");
 
 
-        ArrayList<Integer> listeIdListe1_2 = new ArrayList<Integer>();
-        listeIdListe1_2.add(1);
+        // dans la liste 1
+        ArrayList<Integer> listeIdListe1 = new ArrayList<Integer>();
+        listeIdListe1.add(1);
 
-        ArrayList<Integer> listeIdListe1_3 = new ArrayList<Integer>();
-        listeIdListe1_3.add(1);
 
         bdao.open();
 
-        bdao.addBien(bien1, listeIdListe1_2);
-        bdao.addBien(bien2, listeIdListe1_2);
-        bdao.addBien(bien3, listeIdListe1_2);
-        bdao.addBien(bien4, listeIdListe1_3);
-        bdao.addBien(bien5, listeIdListe1_3);
-        bdao.addBien(bien6, listeIdListe1_3);
-
- /*
-        Bien bien = null;
-        for (int i = 0; i < 50; i++) {
-
-
-            bien = new Bien(i,"Cuisine auto n 1."+i,"19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6","/data/user/0/com.example.michelparis.myapplication/files/images/14122017025850","","","",1,"Lunette de marque Rayban","");
-
-            bdao.addBien(bien, listeIdListe1_3);
-        }
-
-
-        for (int i = 5; i < 11; i++) {
-            bien1 = new Bien(i,"Salon auto n 2."+i,"19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6",null,null,null,null,2,"Lunette de marque Rayban","");
-
-            bdao.addBien(bien1, listeIdListe1_3);
-
-        }
-
-        for (int i = 11; i < 16; i++) {
-            bien1 = new Bien(i,"Chambre auto n 3."+i,"19/11/2017","21/11/2017","","Légèrement rayées sur le coté","251.6",null,null,null,null,3,"Lunette de marque Rayban","");
-
-            bdao.addBien(bien1, listeIdListe1_3);
-
-
-        }
-*/
+        bdao.addBien(bien1, listeIdListe1);
+        bdao.addBien(bien2, listeIdListe1);
+        bdao.addBien(bien3, listeIdListe1);
+        bdao.addBien(bien4, listeIdListe1);
+        bdao.addBien(bien5, listeIdListe1);
+        bdao.addBien(bien6, listeIdListe1);
 
         bdao.close();
     }
 
+    /**
+     * Méthode pour changer le nom d'une liste pré-enregistrée
+     */
     public void changerNomListe() {
         final EditText libelle = new EditText(context);
         ldao.open();
@@ -460,13 +506,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         builder.setCancelable(true);
         builder.setTitle(R.string.title_change_list_name);
         builder.setView(layout);
-        // Si on clique sur "OK" et que toutes les conditions de modification requises sont remplies,
-        // On modifie la quantité et le nom de l'article suivant les choix de l'opérateur
+        // Si on clique sur "OK"
         builder.setPositiveButton(R.string.dialog_positive_option,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         libelle.setText(libelle.getText().toString().trim());
+                        // controle du nom trop long ou déjà existant
                         if (!libelle.getText().toString().equals("")) {
                             if (libelle.getText().length() <= 10) {
                                 for (int i = 0; i < 3; i++) {
@@ -477,6 +523,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         break;
                                     }
                                 }
+                                // si le nom est ok
                                 if (!nomIdentique) {
                                     ldao.open();
                                     ldao.modifierListe(idCurrentList, libelle.getText().toString(), "");
@@ -493,21 +540,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     }
                                     refreshAdapterView();
                                     ldao.close();
+                                    // sinon, le nom existe déjà
                                 } else {
                                     nomIdentique = false;
                                     Toast toast = Toast.makeText(context, R.string.list_name_already_exists, Toast.LENGTH_LONG);
                                     toast.show();
                                 }
+                                // le nom est trop long
                             } else {
                                 Toast toast = Toast.makeText(context, R.string.list_name_too_long, Toast.LENGTH_LONG);
                                 toast.show();
                             }
+                            // le nom est vide
                         } else {
                             Toast toast = Toast.makeText(context, R.string.list_name_empty, Toast.LENGTH_LONG);
                             toast.show();
                         }
                     }
                 });
+        // annuler
         builder.setNegativeButton(R.string.dialog_negative_option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

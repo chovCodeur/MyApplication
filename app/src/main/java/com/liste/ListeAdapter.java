@@ -18,6 +18,9 @@ import java.util.ArrayList;
  * Created by Thib on 14/12/2017.
  */
 
+/**
+ * Adapteur pour les catégories d'une liste
+ */
 public class ListeAdapter extends ArrayAdapter<Categorie> {
     private Context mContext;
     private ArrayList<Categorie> listState;
@@ -70,8 +73,9 @@ public class ListeAdapter extends ArrayAdapter<Categorie> {
      */
     public View getCustomView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
-        if (convertView == null) {
 
+        // si la vue est nulle
+        if (convertView == null) {
             LayoutInflater layoutInflator = LayoutInflater.from(mContext);
             convertView = layoutInflator.inflate(R.layout.spinner_item, null);
             holder = new ViewHolder();
@@ -92,7 +96,6 @@ public class ListeAdapter extends ArrayAdapter<Categorie> {
         }
         //On vérifie si les checkboxs sont selectionnés ou non
         holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -106,7 +109,7 @@ public class ListeAdapter extends ArrayAdapter<Categorie> {
     }
 
     /**
-     * Classe permettant de personnaliser une ligne
+     * Classe anonyme permettant de personnaliser une ligne
      */
     private class ViewHolder {
         private TextView mTextView;

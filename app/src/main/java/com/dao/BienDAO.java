@@ -228,10 +228,6 @@ public class BienDAO {
         return db.insert(TABLE_APPARTIENT, null, values);
     }
 
-    public long compterBienEnBase() {
-        return DatabaseUtils.queryNumEntries(db, TABLE_NAME);
-    }
-
     /**
      * Méthode permettant de supprimer une relation entre un bien et sa liste dans la table Appartient.
      *

@@ -14,6 +14,10 @@ import java.util.ArrayList;
  * Created by Thib on 16/11/2017.
  */
 
+
+/**
+ * Classe ListeDAO gère les interactions avec la base de données pour tout ce qui touche à la classe Liste
+ */
 public class ListeDAO {
 
     public static final String TABLE_NAME = "LISTE";

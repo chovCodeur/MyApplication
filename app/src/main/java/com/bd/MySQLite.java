@@ -1,6 +1,5 @@
 package com.bd;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -10,6 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Thib on 16/11/2017.
  */
 
+/**
+ * Pour gérer les interactions avec la BD
+ */
 public class MySQLite extends SQLiteOpenHelper {
 
     // Version de la BDD
@@ -58,6 +60,11 @@ public class MySQLite extends SQLiteOpenHelper {
 
     private static MySQLite sInstance;
 
+    /**
+     * getteur  de l'instance
+     * @param context
+     * @return instance
+     */
     public static synchronized MySQLite getInstance(Context context) {
         if (sInstance == null) {
             sInstance = new MySQLite(context);
@@ -65,44 +72,55 @@ public class MySQLite extends SQLiteOpenHelper {
         return sInstance;
     }
 
+    /**
+     * Constructeur de l'objet
+     * @param context
+     */
     public MySQLite(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
 
+    /**
+     * Appelé à la création
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        // script et création de la table liste
         String CREATE_TABLE_LISTE = "CREATE TABLE " + TABLE_LISTE + "("
                 + KEY_ID_LISTE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_LIBELLE + " TEXT, " + KEY_COMMENTAIRE + " TEXT )";
         db.execSQL(CREATE_TABLE_LISTE);
 
+        // script et création de la table bien
         String CREATE_TABLE_BIEN = "CREATE TABLE " + TABLE_BIEN + "("
                 + KEY_ID_BIEN + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM_BIEN + " TEXT, " + KEY_DATESAISIE + " TEXT, " + KEY_DATEACHAT + " TEXT," + KEY_FACTURE + " TEXT," + KEY_NUMERO_SERIE + " TEXT, " + KEY_PRIX + " REAL, " + KEY_DESCRIPTION + " TEXT, " + KEY_COMMENTAIRE + " TEXT, " + KEY_CATEGORIE_BIEN + " INTEGER, " + KEY_PHOTO_PRINCIPALE + " TEXT," + KEY_PHOTO_SEC1 + " TEXT," + KEY_PHOTO_SEC2 + " TEXT," + KEY_PHOTO_SEC3 + " TEXT, FOREIGN KEY (" + KEY_CATEGORIE_BIEN + ") REFERENCES " + TABLE_CATEGORIE + "(" + KEY_ID_CATEGORIE + "))";
         db.execSQL(CREATE_TABLE_BIEN);
 
+        // script et création de la table categorie
         String CREATE_TABLE_CATEGORIE = "CREATE TABLE " + TABLE_CATEGORIE + "("
                 + KEY_ID_CATEGORIE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM + " TEXT, " + KEY_DESCRIPTION + " TEXT )";
         db.execSQL(CREATE_TABLE_CATEGORIE);
 
+        // script et création de la table personne
         String CREATE_TABLE_PERSONNE = "CREATE TABLE " + TABLE_PERSONNE + "("
                 + KEY_ID_PERSONNE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM + " TEXT, " + KEY_PRENOM + " TEXT, " + KEY_NAISSANCE + " TEXT, " + KEY_ADRESSE + " TEXT, " + KEY_MAIL + " TEXT, " + KEY_TELEPHONE + " TEXT )";
         db.execSQL(CREATE_TABLE_PERSONNE);
 
+        // script et création de la table appartient
         String CREATE_TABLE_APPARTIENT = "CREATE TABLE " + TABLE_APPARTIENT + "("
                 + KEY_ID_BIEN + " INTEGER, " + KEY_ID_LISTE + " INTEGER, PRIMARY KEY (" + KEY_ID_BIEN + " , " + KEY_ID_LISTE + "))";
-
         db.execSQL(CREATE_TABLE_APPARTIENT);
 
-        ContentValues values = new ContentValues();
-        values.put(KEY_ID_PERSONNE, 1);
-        values.put(KEY_PRENOM, "");
-        values.put(KEY_NAISSANCE, "");
-        values.put(KEY_ADRESSE, "");
-        values.put(KEY_MAIL, "");
-        values.put(KEY_TELEPHONE, "");
-        db.insert(TABLE_PERSONNE, null, values);
     }
 
+    /**
+     * Lors d'une mise à jour de la BD
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Suppression des anciennes tables si elles existent
@@ -113,6 +131,4 @@ public class MySQLite extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPARTIENT);
         onCreate(db);
     }
-
-
 }

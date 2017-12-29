@@ -1,5 +1,4 @@
 package com.personne;
-//
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -25,6 +24,9 @@ import com.utils.Utils;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
+/**
+ * Classe permettant de modifier une personne
+ */
 public class ModifierPersonne extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Menu m;
@@ -33,11 +35,18 @@ public class ModifierPersonne extends AppCompatActivity {
     private Boolean dejaEnBase = false;
     private Utils utils;
 
+
+    /**
+     * Méthode appelée à la creation de l'activité
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifier_personne);
 
+        // nom de l'activité
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle(getResources().getString(R.string.toolbar_title_modifier_personne));
         setSupportActionBar(myToolbar);
@@ -47,17 +56,19 @@ public class ModifierPersonne extends AppCompatActivity {
         regexDate = utils.getRegexDate();
 
         PersonneDAO personneDAO = new PersonneDAO(this);
+
+        // on récupére la personne
         personneDAO.open();
         Personne per = personneDAO.getPersonne(1);
         personneDAO.close();
 
+        // si elle est en base, on change le booléen
         if (per != null) {
             dejaEnBase = true;
         }
 
-        Log.e("per", per.toString());
 
-
+        // récupére les objets de la vue pour y mettre les infos
         TextView textViewNomPersonne = (TextView) findViewById(R.id.editNom);
         TextView textViewPrenomPersonne = (TextView) findViewById(R.id.editPrenom);
         TextView textViewAddress = (TextView) findViewById(R.id.editAdress);
@@ -70,9 +81,9 @@ public class ModifierPersonne extends AppCompatActivity {
         textViewPrenomPersonne.setText(per.getPrenom());
         textViewAddress.setText(per.getAddress());
         textViewEmail.setText(per.getMail());
-        Log.e("aa", "phone" + per.getPhoneNumber());
         textViewPhoneNumber.setText(per.getPhoneNumber());
-// éditer la date avec une datepicker et le choix du format à stocker dans la table
+
+        // éditer la date avec une datepicker et le choix du format à stocker dans la table
         textViewDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,11 +120,20 @@ public class ModifierPersonne extends AppCompatActivity {
         });
     }
 
+    /**
+     * Procédure gérant l'action du bouton physique retour du téléphone.
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
+    /**
+     * Méthode permettant d'assigner le menu et ses options à l'activité.
+     *
+     * @param menu
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -123,11 +143,17 @@ public class ModifierPersonne extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Méthode pour le menu supérieur
+     * @param item
+     * @return true
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.home:
+                // retour accueil
                 Intent intenthome = new Intent(getApplicationContext(), MainActivity.class);
                 intenthome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intenthome);
@@ -135,16 +161,19 @@ public class ModifierPersonne extends AppCompatActivity {
                 return true;
 
             case R.id.plus:
-
+                // ajouter un bien
                 intent = new Intent(this, AjouterBien.class);
                 startActivity(intent);
-
                 return true;
 
         }
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Méthode pour modifier les information
+     * @param view
+     */
     public void onClickAjoutInfos(View view) {
 
         TextView textViewNomPersonne = (TextView) findViewById(R.id.editNom);
@@ -161,6 +190,7 @@ public class ModifierPersonne extends AppCompatActivity {
         String phoneNumber = textViewPhoneNumber.getText().toString();
 
         Boolean erreurSaisieDate = false;
+        // on controle la date
         if (date != null && !date.equals("")) {
             if (!date.matches(regexDate)) {
                 Toast.makeText(this, R.string.date_format_message, Toast.LENGTH_SHORT).show();
@@ -169,9 +199,12 @@ public class ModifierPersonne extends AppCompatActivity {
 
         }
 
+        // les champs ne peuvent pas être vides et doivent corrsondre aux regex (mail et telephone)
         if (!erreurSaisieDate && !nomPersonne.equals("") && !prenomPersonne.equals("") && !date.equals("") && !address.equals("") && validEmail(email) && validPhone(phoneNumber)) {
             PersonneDAO personneDAO = new PersonneDAO(this);
             personneDAO.open();
+
+            // on modifie la personne ou on la crée (théoriquement, toujours une modification)
             if (dejaEnBase) {
                 personneDAO.modPersonne(1, nomPersonne, prenomPersonne, date, address, email, phoneNumber);
             } else {
@@ -180,16 +213,27 @@ public class ModifierPersonne extends AppCompatActivity {
             personneDAO.close();
             finish();
         } else {
+            // tous les champs sont obligatoires
             Toast toast = Toast.makeText(this, R.string.missing_fields, Toast.LENGTH_LONG);
             toast.show();
         }
     }
 
+    /**
+     * Permet de verifier le patern de l'adresse mail
+     * @param email
+     * @return true si ok false sinon
+     */
     private boolean validEmail(String email) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         return pattern.matcher(email).matches();
     }
 
+    /**
+     * Permet de verifier le patern du numéro de téléphone
+     * @param phone
+     * @return true si ok false sinon
+     */
     private boolean validPhone(String phone) {
         Pattern pattern = Pattern.compile("(0|\\+33|0033)[1-9][0-9]{8}");
         return pattern.matcher(phone).matches();

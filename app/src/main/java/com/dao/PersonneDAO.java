@@ -13,7 +13,7 @@ import com.bd.MySQLite;
 import com.personne.Personne;
 
 /**
- * Classe BienDAO gère les interactions avec la base de données pour tout ce qui touche à la classe Bien
+ * Classe PersonneDAO gère les interactions avec la base de données pour tout ce qui touche à la classe Personne
  */
 public class PersonneDAO {
 
@@ -26,7 +26,7 @@ public class PersonneDAO {
     public static final String MAIL = "mail";
     public static final String TELEPHONE = "telephone";
 
-    private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
+    private MySQLite maBaseSQLite;
     private SQLiteDatabase db;
 
     /**
@@ -64,7 +64,7 @@ public class PersonneDAO {
      * @param adresse
      * @param mail
      * @param telephone
-     * @return
+     * @return nombre de ligne affectées
      */
     public int modPersonne(int id, String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone) {
         ContentValues values = new ContentValues();
@@ -90,7 +90,7 @@ public class PersonneDAO {
      * @param adresse
      * @param mail
      * @param telephone
-     * @return
+     * @return l'id de la ligne ou -1 si erreur
      */
 
     public long insertPersonne(String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone) {
@@ -109,7 +109,7 @@ public class PersonneDAO {
     /**
      * Méthode permettant de récuperer les informations de la personne en fonction de son ID
      * @param id
-     * @return
+     * @return null si pas trouvée ou la personne trouvée
      */
 
     public Personne getPersonne(int id) {
@@ -126,9 +126,26 @@ public class PersonneDAO {
             p.setPhoneNumber(c.getString(c.getColumnIndex(TELEPHONE)));
 
             c.close();
+        } else {
+            p = null;
         }
 
         return p;
+    }
+
+    /**
+     * Création d'une personne avec tous les champs vides
+     */
+    public void creerPersonnePremierLancement(){
+        ContentValues values = new ContentValues();
+        values.put(ID, 1);
+        values.put(PRENOM, "");
+        values.put(NOM, "");
+        values.put(DATENAISSANCE, "");
+        values.put(ADRESSE, "");
+        values.put(MAIL, "");
+        values.put(TELEPHONE, "");
+        db.insert(TABLE_NAME, null, values);
     }
 }
 

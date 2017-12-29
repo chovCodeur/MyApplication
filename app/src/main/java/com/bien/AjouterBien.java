@@ -114,8 +114,6 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Log.e("MIPA", "OnCreate#"+pathPhotoPrincipale+"#");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_bien);
         //creation de l'activité
@@ -308,6 +306,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
                         } else {
                             monthFormat = String.valueOf(month + 1);
                         }
+
                         switch (utils.getLocale()) {
                             case "US" : editTextdate.setText(monthFormat + "/" + day + "/" + year);
                                 break;
@@ -526,7 +525,7 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
      * Méthode permettant d'assigner le menu et ses options à l'activité.
      *
      * @param menu
-     * @return
+     * @return true
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -537,8 +536,11 @@ public class AjouterBien extends AppCompatActivity implements AdapterView.OnItem
         return true;
     }
 
+
     /**
      * Méthode pour le menu supérieur
+     * @param item
+     * @return true
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -14,6 +14,9 @@ import java.util.ArrayList;
  * Created by Thib on 16/11/2017.
  */
 
+/**
+ * Classe CategorieDAO gère les interactions avec la base de données pour tout ce qui touche à la classe Categorie
+ */
 public class CategorieDAO {
 
     public static final String TABLE_NAME = "CATEGORIE";

@@ -42,28 +42,17 @@ import java.util.ArrayList;
  * Created by Thib on 06/12/2017.
  */
 
+/**
+ * Classe permettant d'exporter une liste de bien au format CSV
+ */
+
 public class ExportListe extends AppCompatActivity {
 
     private String nomFichierCsv = "";
-    private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
-    private SQLiteDatabase db;
-    //private Menu m;
     private ArrayList<Categorie> listeCategorieEnBase = new ArrayList<Categorie>();
-    private Spinner spinnerCategorie;
-    public EditText nomListe;
-    RadioButton ctvliste1;
-    RadioButton ctvliste2;
-    RadioButton ctvliste3;
-    private Menu m;
     private int idliste = 0;
-    private Boolean dansListe1 = false;
-    private Boolean dansListe2 = false;
-    private Boolean dansListe3 = false;
-    private String regexDate = "^([0-2][0-9]||3[0-1]).(0[0-9]||1[0-2]).([0-9][0-9])?[0-9][0-9]$";
-    private Boolean checkPermissionActivite = false;
-
+    private Menu m;
     private ArrayList<Categorie> listeCategorieSelected;
-    private ListeAdapter myAdapter;
     private Boolean perm = false;
 
     /**
@@ -74,17 +63,19 @@ public class ExportListe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exporter_liste);
-        this.listeCategorieSelected = new ArrayList<>();
 
+        // nom dans le menu
         android.support.v7.widget.Toolbar myToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle(getResources().getString(R.string.toolbar_title_exporter_liste));
         setSupportActionBar(myToolbar);
 
+        this.listeCategorieSelected = new ArrayList<>();
         ListeDAO listeDAO = new ListeDAO(this);
         listeDAO.open();
         ArrayList<Liste> listes = listeDAO.getallListe();
         listeDAO.close();
 
+        //on récupére et on affiche le libellé des listes
         final RadioButton liste1 = (RadioButton) findViewById(R.id.checkListe1);
         final RadioButton liste2 = (RadioButton) findViewById(R.id.checkListe2);
         final RadioButton liste3 = (RadioButton) findViewById(R.id.checkListe3);
@@ -99,6 +90,7 @@ public class ExportListe extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (liste1.isChecked()) {
+                    // une seule liste à la fois
                     liste1.setChecked(true);
                     liste2.setChecked(false);
                     liste3.setChecked(false);
@@ -106,6 +98,7 @@ public class ExportListe extends AppCompatActivity {
                         idliste = 1;
                         listeCategorieSelected = new ArrayList<>();
                     }
+                    // catégorie selectionnées
                     TextView tv = (TextView) findViewById(R.id.affichageCategorie);
                     tv.setText("");
                     annexe(v);
@@ -118,6 +111,7 @@ public class ExportListe extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (liste2.isChecked()) {
+                    // une seule liste à la fois
                     liste2.setChecked(true);
                     liste1.setChecked(false);
                     liste3.setChecked(false);
@@ -125,6 +119,7 @@ public class ExportListe extends AppCompatActivity {
                         idliste = 2;
                         listeCategorieSelected = new ArrayList<>();
                     }
+                    // catégories selectionnées
                     TextView tv = (TextView) findViewById(R.id.affichageCategorie);
                     tv.setText("");
                     annexe(v);
@@ -136,6 +131,7 @@ public class ExportListe extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (liste3.isChecked()) {
+                    // une seule liste à la fois
                     liste3.setChecked(true);
                     liste1.setChecked(false);
                     liste2.setChecked(false);
@@ -143,6 +139,7 @@ public class ExportListe extends AppCompatActivity {
                         idliste = 3;
                         listeCategorieSelected = new ArrayList<>();
                     }
+                    // catégories selectionnées
                     TextView tv = (TextView) findViewById(R.id.affichageCategorie);
                     tv.setText("");
                     annexe(v);
@@ -158,26 +155,30 @@ public class ExportListe extends AppCompatActivity {
      * @param view
      */
     public void annexe(View view) {
-        //final ArrayList<Categorie> categorieSelected = new ArrayList<>();
         AlertDialog.Builder builder = new AlertDialog.Builder(ExportListe.this);
+        //nom de la dialog
         builder.setTitle(getResources().getString(R.string.categories_to_export));
 
+        // propriétés de la dialog
         LinearLayout corps = new LinearLayout(getApplicationContext());
         corps.setOrientation(LinearLayout.VERTICAL);
 
         TextView tvSelected = (TextView) findViewById(R.id.affichageCategorie);
-
         CategorieDAO categorieDAO = new CategorieDAO(this);
+
+        // toutes les catégories de cette liste
         categorieDAO.open();
         listeCategorieEnBase = categorieDAO.getCategoriesByIdListe(idliste);
         categorieDAO.close();
 
+        // si la liste est vide
         if (listeCategorieSelected == null || listeCategorieSelected.isEmpty()) {
             listeCategorieSelected = listeCategorieEnBase;
             afficherCategories(tvSelected);
             tvSelected.setVisibility(View.VISIBLE);
         }
 
+        // adapter pour afficher la liste View
         final ListeAdapter categorieChooserAdapter = new ListeAdapter(getApplicationContext(), 0, listeCategorieEnBase, listeCategorieSelected);
         final ListView listeCategorie = new ListView(getApplicationContext());
         listeCategorie.setAdapter(categorieChooserAdapter);
@@ -186,6 +187,8 @@ public class ExportListe extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 listeCategorieSelected = new ArrayList<Categorie>();
+
+                // toute les catégories
                 for (int j = 0; j < listeCategorieEnBase.size(); j++) {
                     Categorie cat = (Categorie) listeCategorie.getItemAtPosition(j);
                     if (cat.isSelected()) {
@@ -193,6 +196,8 @@ public class ExportListe extends AppCompatActivity {
                     }
                 }
 
+
+                // On vide l'affichage précédent
                 TextView tvSelected = (TextView) findViewById(R.id.affichageCategorie);
                 tvSelected.setText(null);
                 if (listeCategorieSelected.isEmpty()) {
@@ -207,7 +212,7 @@ public class ExportListe extends AppCompatActivity {
     }
 
     /**
-     * Méthode permettant d'afficher les catégories
+     * Méthode permettant d'afficher les catégories dans la classe d'export
      * @param tvSelected
      */
     public void afficherCategories(TextView tvSelected) {
@@ -215,6 +220,7 @@ public class ExportListe extends AppCompatActivity {
         int cpt = 0;
         int dernierElt = listeCategorieSelected.size() - 1;
         for (Categorie cat : listeCategorieSelected) {
+            // on affiche le contenu de la liste
             if (cpt != dernierElt) {
                 displaySelected += cat.getNom_Categorie() + ", ";
             } else {
@@ -233,7 +239,6 @@ public class ExportListe extends AppCompatActivity {
     public void exportDB(Context context, String nom) {
 
         File exportDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "");
-        Log.d("pouet", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
         //On vérifie si le fichier existe déjà
         if (!exportDir.exists()) {
             exportDir.mkdirs();
@@ -251,6 +256,8 @@ public class ExportListe extends AppCompatActivity {
 
             SQLiteDatabase db = new MySQLite(context).getWritableDatabase();
 
+            // clause WHERE (IN)
+            // pour selectionnée uniquement les bonnes catégories
             String inWhereClause = "";
             int i = 0;
             int dernierElt = listeCategorieSelected.size() - 1;
@@ -264,11 +271,12 @@ public class ExportListe extends AppCompatActivity {
                 }
                 i++;
             }
-            //id_bien,"","","","","","","","","id_categorie","photo_principale","photo_sec1","photo_sec2","photo_sec3","id_bien","id_liste"
+
+
+            // nom de colonnes personnalisées
             String nomColonne = "nom_bien as Nom, date_saisie as Date_de_saisie, date_achat as Date_achat, numero_serie as Numéro_serie, prix as Prix, description as Description, commentaire as Commentaire";
             String selectQuery = "SELECT " + nomColonne + " FROM BIEN JOIN APPARTIENT ON APPARTIENT.id_bien = BIEN.id_bien WHERE BIEN.id_categorie IN" + inWhereClause;
 
-            Log.e("miPa", "" + selectQuery);
             Cursor curCSV = db.rawQuery(selectQuery, null);
 
             csvWrite.writeNext(curCSV.getColumnNames());
@@ -279,6 +287,8 @@ public class ExportListe extends AppCompatActivity {
             }
             csvWrite.close();
             curCSV.close();
+
+            // confirmation
             Toast.makeText(this, R.string.location_csv_file, Toast.LENGTH_LONG).show();
             finish();
         } catch (Exception sqlEx) {
@@ -293,27 +303,34 @@ public class ExportListe extends AppCompatActivity {
     public void onClickExportListe(View view) {
         EditText editTextNomFichier = (EditText) findViewById(R.id.nomListeAexporter);
         nomFichierCsv = editTextNomFichier.getText().toString();
+        // contrôle du nom de fichier
         if (nomFichierCsv != null && !nomFichierCsv.equals("")) {
+            // il faut selctionner une liste
             if (idliste != 0) {
-                //On vérifie l
+                // il faut au moins une catégorie
                 if (!listeCategorieSelected.isEmpty()) {
                     verifierPermission();
+                    // on vérifie les permissions de lecture/ecriture
                     if (perm) {
                         exportDB(getApplicationContext(), nomFichierCsv);
                     }
                 } else {
+                    // il faut au moins une catégorie
                     Toast.makeText(this, R.string.select_one_categorie, Toast.LENGTH_SHORT).show();
                 }
+                // il faut au moins une liste
             } else {
                 Toast.makeText(this, R.string.select_one_list, Toast.LENGTH_SHORT).show();
             }
+            // le nom est vide
         } else {
             Toast.makeText(this, R.string.file_name, Toast.LENGTH_SHORT).show();
         }
     }
 
+
     /**
-     *
+     * Procédure gérant l'action du bouton physique retour du téléphone.
      */
     @Override
     public void onBackPressed() {
@@ -330,14 +347,13 @@ public class ExportListe extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         m = menu;
-
         return true;
     }
 
     /**
      * Methode utilisée par le menu supérieur
      * @param item
-     * @return onOptionsItemSelected(item)
+     * @return true
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -378,9 +394,12 @@ public class ExportListe extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (ContextCompat.checkSelfPermission(ExportListe.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            // on verifie les permissions
             perm = true;
             exportDB(getApplicationContext(), nomFichierCsv);
         }
+
+        // si les permissions sont KO, on affiche un message d'erreur
         if (!perm) {
             Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_LONG).show();
         }
