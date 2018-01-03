@@ -273,16 +273,24 @@ public class ExportListe extends AppCompatActivity {
 
 
             // nom de colonnes personnalisées
-            String nomColonne = "nom_bien as Nom, date_saisie as Date_de_saisie, date_achat as Date_achat, numero_serie as Numéro_serie, prix as Prix, description as Description, commentaire as Commentaire, PERSONNE.nom as Nom_proprietaire, PERSONNE.prenom as Prenom_proprietaire, PERSONNE.date_naissance as Date_naissance_proprietaire, PERSONNE.adresse as Adresse_proprietaire, PERSONNE.mail as Mail_proprietaire, PERSONNE.telephone as Telephone_personne";
+            String nomColonne = "nom_bien as Nom, date_saisie as Date_de_saisie, date_achat as Date_achat, numero_serie as Numéro_serie, prix as Prix, description as Description, commentaire as Commentaire, '##INFOS##' ,PERSONNE.nom as Nom_proprietaire, PERSONNE.prenom as Prenom_proprietaire, PERSONNE.date_naissance as Date_naissance_proprietaire, PERSONNE.adresse as Adresse_proprietaire, PERSONNE.mail as Mail_proprietaire, PERSONNE.telephone as Telephone_personne";
             String selectQuery = "SELECT " + nomColonne + " FROM PERSONNE, BIEN JOIN APPARTIENT ON APPARTIENT.id_bien = BIEN.id_bien WHERE BIEN.id_categorie IN" + inWhereClause;
 
             Cursor curCSV = db.rawQuery(selectQuery, null);
 
             csvWrite.writeNext(curCSV.getColumnNames());
+            boolean premierPassage = true;
             while (curCSV.moveToNext()) {
                 //Les colonnes que l'on souhaite exporter
-                String arrStr[] = {curCSV.getString(0), curCSV.getString(1), curCSV.getString(2), curCSV.getString(3), curCSV.getString(4), curCSV.getString(5), curCSV.getString(6), curCSV.getString(7), curCSV.getString(8), curCSV.getString(9), curCSV.getString(10), curCSV.getString(11), curCSV.getString(12)};
-                csvWrite.writeNext(arrStr);
+
+                if (premierPassage) {
+                    String arrStr[] = {curCSV.getString(0), curCSV.getString(1), curCSV.getString(2), curCSV.getString(3), curCSV.getString(4), curCSV.getString(5), curCSV.getString(6), curCSV.getString(7), curCSV.getString(8), curCSV.getString(9), curCSV.getString(10), curCSV.getString(11), curCSV.getString(12), curCSV.getString(13)};
+                    csvWrite.writeNext(arrStr);
+                    premierPassage = false;
+                } else {
+                    String arrStr[] = {curCSV.getString(0), curCSV.getString(1), curCSV.getString(2), curCSV.getString(3), curCSV.getString(4), curCSV.getString(5), curCSV.getString(6)};
+                    csvWrite.writeNext(arrStr);
+                }
             }
             csvWrite.close();
             curCSV.close();
