@@ -368,21 +368,26 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
     /**
      * Méthode permettant d'effectuer un zoom sur une image.
      *
-     * @param thumbView vue contenant l'image que l'on veut zoomer.
-     * @param image     sur laquelle on veut zoomer.
+     * @param thumbView View contenant l'image que l'on veut zoomer.
+     * @param image Bitmap sur laquelle on veut zoomer.
      */
     private void zoomImageFromThumb(final View thumbView, Bitmap image) {
+        // Si l'animation existe, on coupe l'animation courante
         if (mCurrentAnimator != null) {
             mCurrentAnimator.cancel();
         }
 
+        // On récupère l'ImageView qui va servir à afficher l'image zoomée et on lui affecte l'image que l'on veut zoomer
         final ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
         expandedImageView.setImageBitmap(image);
 
+        // Création des limites de l'image zoomée
         final Rect startBounds = new Rect();
         final Rect finalBounds = new Rect();
         final Point globalOffset = new Point();
 
+        // On récupère le conteneur qui va contenir l'image zoomée et on la positionne correctement
+        // sur l'écran et avec la taille idéale pour qu'elle loge sur toute la largeur de celui-ci
         thumbView.getGlobalVisibleRect(startBounds);
         findViewById(R.id.container).getGlobalVisibleRect(finalBounds, globalOffset);
         startBounds.offset(-globalOffset.x, -globalOffset.y);
@@ -404,12 +409,14 @@ public class InfosBien extends AppCompatActivity implements AdapterView.OnItemSe
             startBounds.bottom += deltaHeight;
         }
 
+        // On autorise la visibilité du conteneur de l'image zoomée
         thumbView.setAlpha(0f);
         expandedImageView.setVisibility(View.VISIBLE);
 
         expandedImageView.setPivotX(0f);
         expandedImageView.setPivotY(0f);
 
+        // Création et application de l'animation de zoom à notre conteneur
         AnimatorSet set = new AnimatorSet();
         set
                 .play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.left,

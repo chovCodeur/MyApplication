@@ -8,8 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
 /**
- * An image button that uses a blue highlight (@link android.R.attr.selectableItemBackground} to
- * indicate pressed and focused states.
+ * Classe permettant de donner un aspect particulier au clic des ImageButton.
  */
 public class TouchHighlightImageButton extends android.support.v7.widget.AppCompatImageButton {
     /**
@@ -20,35 +19,49 @@ public class TouchHighlightImageButton extends android.support.v7.widget.AppComp
     private Drawable mForegroundDrawable;
 
     /**
-     * The cached bounds of the view.
+     * Création d'un rectangle entourant le bouton.
      */
     private Rect mCachedBounds = new Rect();
 
+    /**
+     * Constructeur de classe.
+     * @param context Context d'appel dans l'application.
+     */
     public TouchHighlightImageButton(Context context) {
         super(context);
         init();
     }
 
+    /**
+     * Constructeur surchargé de la classe.
+     * @param context Context d'appel dans l'application.
+     * @param attrs
+     */
     public TouchHighlightImageButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
+    /**
+     * Constructeur surchargé de la classe.
+     * @param context Context d'appel dans l'application.
+     * @param attrs
+     * @param defStyle
+     */
     public TouchHighlightImageButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
 
     /**
-     * General view initialization used common to all constructors of the view.
+     * Méthode permettant d'initialiser la création du style du ImageButton.
      */
     private void init() {
-        // Reset default ImageButton background and padding.
+        // Reset les paramètres par défaut de l'ImageButton en terme de background et de padding
         setBackgroundColor(0);
         setPadding(0, 0, 0, 0);
 
-        // Retrieve the drawable resource assigned to the android.R.attr.selectableItemBackground
-        // theme attribute from the current theme.
+        // Récupératiion de la ressource drawable assignée à l'attribut android.R.attr.selectableItemBackground du thème courant
         TypedArray a = getContext()
                 .obtainStyledAttributes(new int[]{android.R.attr.selectableItemBackground});
         mForegroundDrawable = a.getDrawable(0);
@@ -56,37 +69,50 @@ public class TouchHighlightImageButton extends android.support.v7.widget.AppComp
         a.recycle();
     }
 
+    /**
+     * Méthode permettant de notifier un changement du style de l'ImageButton.
+     */
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
 
-        // Update the state of the highlight drawable to match
-        // the state of the button.
+        // Mise à jour de l'état du highlight drawable pour correspondre à l'état du bouton
         if (mForegroundDrawable.isStateful()) {
             mForegroundDrawable.setState(getDrawableState());
         }
 
-        // Trigger a redraw.
+        // On déclenche le refresh de l'affichage
         invalidate();
     }
 
+    /**
+     *
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas) {
-        // First draw the image.
+
+        // On dessine l'image
         super.onDraw(canvas);
 
-        // Then draw the highlight on top of it. If the button is neither focused
-        // nor pressed, the drawable will be transparent, so just the image
+        // On dessine le highlight par dessus. Si le bouton n'est ni cliqué ni focus, le highlight sera transparent. Seule l'image est affichée
         // will be drawn.
         mForegroundDrawable.setBounds(mCachedBounds);
         mForegroundDrawable.draw(canvas);
     }
 
+    /**
+     * Méthode permettant de changer la taille des limites lorsque la taille de l'ImageButton change.
+     * @param w int contenant la nouvelle largeur de l'ImageButton.
+     * @param h int contenant la nouvelle hauteur de l'ImageButton.
+     * @param oldw int contenant l'ancienne largeur de l'ImageButton.
+     * @param oldh int contenant l'ancienne hauteur de l'ImageButton.
+     */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        // Cache the view bounds.
+        // On cache les limites de la vue
         mCachedBounds.set(0, 0, w, h);
     }
 }
