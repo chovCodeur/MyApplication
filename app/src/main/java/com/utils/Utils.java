@@ -41,21 +41,52 @@ public class Utils {
         }
     }
 
-    // Getters de classe
-
+    /**
+     * @return the regexDate
+     */
     public String getRegexDate() {
-        return this.regexDate;
+        return regexDate;
     }
-
+    /**
+     * @param regexDate the regexDate to set
+     */
+    public void setRegexDate(String regexDate) {
+        this.regexDate = regexDate;
+    }
+    /**
+     * @return the dateSimpleDateFormat
+     */
     public String getDateSimpleDateFormat() {
         return dateSimpleDateFormat;
     }
-
+    /**
+     * @param dateSimpleDateFormat the dateSimpleDateFormat to set
+     */
+    public void setDateSimpleDateFormat(String dateSimpleDateFormat) {
+        this.dateSimpleDateFormat = dateSimpleDateFormat;
+    }
+    /**
+     * @return the dateStockageFichier
+     */
     public String getDateStockageFichier() {
         return dateStockageFichier;
     }
-
+    /**
+     * @param dateStockageFichier the dateStockageFichier to set
+     */
+    public void setDateStockageFichier(String dateStockageFichier) {
+        this.dateStockageFichier = dateStockageFichier;
+    }
+    /**
+     * @return the locale
+     */
     public String getLocale() {
         return locale;
+    }
+    /**
+     * @param locale the locale to set
+     */
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 }
