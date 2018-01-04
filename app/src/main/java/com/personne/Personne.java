@@ -17,6 +17,7 @@ public class Personne {
     private String address;
     private String phoneNumber;
     private String date;
+    private  String numero_contrat;
 
     /**
      * Constructeur par défaut
@@ -33,9 +34,10 @@ public class Personne {
      * @param address
      * @param phoneNumber
      * @param date
+     * @param numero_contrat
      */
     public Personne(int id_Personne, String nom, String prenom, String mail,
-                    String address, String phoneNumber, String date) {
+                    String address, String phoneNumber, String date, String numero_contrat) {
         this.id_Personne = id_Personne;
         this.nom = nom;
         this.prenom = prenom;
@@ -43,6 +45,7 @@ public class Personne {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.date = date;
+        this.numero_contrat = numero_contrat;
 
     }
 
@@ -135,12 +138,19 @@ public class Personne {
      * Surcharge de la méthode toString()
      * @return string
      */
+    public String getNumero_contrat(){
+        return numero_contrat;
+    }
+    public void setNumero_contrat (String numero_contrat){
+        this.numero_contrat = numero_contrat;
+    }
     @Override
     public String toString() {
         return "Personne{" +
                 "id_Personne=" + id_Personne +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
+                ",numero_contrat='" + numero_contrat +'\''+
                 ", mail='" + mail + '\'' +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

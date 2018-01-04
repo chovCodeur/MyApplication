@@ -74,6 +74,7 @@ public class ModifierPersonne extends AppCompatActivity {
         TextView textViewEmail = (TextView) findViewById(R.id.editEmail);
         TextView textViewPhoneNumber = (TextView) findViewById(R.id.editPhon_Number);
         textViewDate = (TextView) findViewById(R.id.editTextDate);
+        TextView textViewNumberContrat = (TextView) findViewById(R.id.editNumero_contrat);
 
         textViewDate.setText(per.getDate());
         textViewNomPersonne.setText(per.getNom());
@@ -81,6 +82,7 @@ public class ModifierPersonne extends AppCompatActivity {
         textViewAddress.setText(per.getAddress());
         textViewEmail.setText(per.getMail());
         textViewPhoneNumber.setText(per.getPhoneNumber());
+        textViewNumberContrat.setText(per.getNumero_contrat());
 
         // éditer la date avec une datepicker et le choix du format à stocker dans la table
         textViewDate.setOnClickListener(new View.OnClickListener() {
@@ -240,3 +242,4 @@ public class ModifierPersonne extends AppCompatActivity {
         return pattern.matcher(phone).matches();
     }
 }
+//
