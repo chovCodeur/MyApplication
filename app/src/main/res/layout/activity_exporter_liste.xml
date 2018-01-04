@@ -50,29 +50,9 @@
                 android:layout_alignParentEnd="true"
                 android:ems="10"
                 android:hint="@string/file_name_exporter_list"
+                android:maxLength="50"
                 android:inputType="textPersonName"
                 android:selectAllOnFocus="true" />
-
-            <!--
-                        <TextView
-                            android:id="@+id/explicationCategorie"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_below="@+id/checkListe1"
-                            android:layout_marginTop="10dp"
-                            android:layout_centerHorizontal="true"
-                            android:text="Selectionner une catégorie :" />
-
-                                    <Button
-                                        android:id="@+id/select_categorie"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentEnd="true"
-                                        android:layout_below="@+id/explicationCategorie"
-                                        android:onClick="annexe"
-                                        android:layout_marginBottom="10dp"
-                                        android:layout_marginTop="10dp" /> -->
 
             <TextView
                 android:id="@+id/explicationListe"
