@@ -180,6 +180,7 @@ public class ModifierPersonne extends AppCompatActivity {
         TextView textViewAddress = (TextView) findViewById(R.id.editAdress);
         TextView textViewEmail = (TextView) findViewById(R.id.editEmail);
         TextView textViewPhoneNumber = (TextView) findViewById(R.id.editPhon_Number);
+        TextView textViewNumeroContrat = (TextView) findViewById(R.id.editNumero_contrat);
 
         String nomPersonne = textViewNomPersonne.getText().toString();
         String prenomPersonne = textViewPrenomPersonne.getText().toString();
@@ -187,6 +188,7 @@ public class ModifierPersonne extends AppCompatActivity {
         String address = textViewAddress.getText().toString();
         String email = textViewEmail.getText().toString();
         String phoneNumber = textViewPhoneNumber.getText().toString();
+        String numero_Contrat = textViewNumeroContrat.getText().toString();
 
         Boolean erreurSaisieDate = false;
         // on controle la date
