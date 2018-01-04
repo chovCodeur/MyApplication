@@ -25,6 +25,7 @@ public class PersonneDAO {
     public static final String ADRESSE = "adresse";
     public static final String MAIL = "mail";
     public static final String TELEPHONE = "telephone";
+    public static final String NUMERO_CONTRAT = "numero_contrat";
 
     private MySQLite maBaseSQLite;
     private SQLiteDatabase db;
@@ -64,9 +65,10 @@ public class PersonneDAO {
      * @param adresse
      * @param mail
      * @param telephone
+     * @param numero_contrat
      * @return nombre de ligne affectées
      */
-    public int modPersonne(int id, String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone) {
+    public int modPersonne(int id, String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone, String numero_contrat) {
         ContentValues values = new ContentValues();
         values.put(NOM, nom);
         values.put(PRENOM, prenom);
@@ -74,6 +76,7 @@ public class PersonneDAO {
         values.put(ADRESSE, adresse);
         values.put(MAIL, mail);
         values.put(TELEPHONE, telephone);
+        values.put(NUMERO_CONTRAT, numero_contrat);
 
         String where = ID + " = ?";
         String[] whereArgs = {String.valueOf(id)};
@@ -90,10 +93,11 @@ public class PersonneDAO {
      * @param adresse
      * @param mail
      * @param telephone
+     * @param numero_contrat
      * @return l'id de la ligne ou -1 si erreur
      */
 
-    public long insertPersonne(String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone) {
+    public long insertPersonne(String nom, String prenom, String dateNaissance, String adresse, String mail, String telephone, String numero_contrat) {
         ContentValues values = new ContentValues();
         values.put(NOM, nom);
         values.put(PRENOM, prenom);
@@ -101,6 +105,7 @@ public class PersonneDAO {
         values.put(ADRESSE, adresse);
         values.put(MAIL, mail);
         values.put(TELEPHONE, telephone);
+        values.put(NUMERO_CONTRAT, numero_contrat);
 
 
         return db.insert(TABLE_NAME, null, values);
@@ -124,6 +129,7 @@ public class PersonneDAO {
             p.setAddress(c.getString(c.getColumnIndex(ADRESSE)));
             p.setMail(c.getString(c.getColumnIndex(MAIL)));
             p.setPhoneNumber(c.getString(c.getColumnIndex(TELEPHONE)));
+            p.setPhoneNumber(c.getString(c.getColumnIndex(NUMERO_CONTRAT)));
 
             c.close();
         } else {
@@ -145,6 +151,7 @@ public class PersonneDAO {
         values.put(ADRESSE, "");
         values.put(MAIL, "");
         values.put(TELEPHONE, "");
+        values.put(NUMERO_CONTRAT,"");
         db.insert(TABLE_NAME, null, values);
     }
 }

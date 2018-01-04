@@ -57,6 +57,7 @@ public class MySQLite extends SQLiteOpenHelper {
     private static final String KEY_ADRESSE = "adresse";
     private static final String KEY_MAIL = "mail";
     private static final String KEY_TELEPHONE = "telephone";
+    private static final String KEY_NUMERO_CONTRAT = "numero_contrat";
 
     private static MySQLite sInstance;
 
@@ -105,7 +106,7 @@ public class MySQLite extends SQLiteOpenHelper {
 
         // script et création de la table personne
         String CREATE_TABLE_PERSONNE = "CREATE TABLE " + TABLE_PERSONNE + "("
-                + KEY_ID_PERSONNE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM + " TEXT, " + KEY_PRENOM + " TEXT, " + KEY_NAISSANCE + " TEXT, " + KEY_ADRESSE + " TEXT, " + KEY_MAIL + " TEXT, " + KEY_TELEPHONE + " TEXT )";
+                + KEY_ID_PERSONNE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + KEY_NOM + " TEXT, " + KEY_PRENOM + " TEXT, " + KEY_NAISSANCE + " TEXT, " + KEY_ADRESSE + " TEXT, " + KEY_MAIL + " TEXT, " + KEY_TELEPHONE + " TEXT, " + KEY_NUMERO_CONTRAT + " TEXT  )";
         db.execSQL(CREATE_TABLE_PERSONNE);
 
         // script et création de la table appartient
