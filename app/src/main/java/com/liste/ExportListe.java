@@ -274,7 +274,7 @@ public class ExportListe extends AppCompatActivity {
 
             // nom de colonnes personnalisées
             String nomColonne = "nom_bien as Nom, date_saisie as Date_de_saisie, date_achat as Date_achat, numero_serie as Numéro_serie, prix as Prix, description as Description, commentaire as Commentaire, '##INFOS##' ,PERSONNE.nom as Nom_proprietaire, PERSONNE.prenom as Prenom_proprietaire, PERSONNE.date_naissance as Date_naissance_proprietaire, PERSONNE.adresse as Adresse_proprietaire, PERSONNE.mail as Mail_proprietaire, PERSONNE.telephone as Telephone_personne, PERSONNE.numero_contrat as Numero_contrat ";
-            String selectQuery = "SELECT " + nomColonne + " FROM PERSONNE, BIEN JOIN APPARTIENT ON APPARTIENT.id_bien = BIEN.id_bien WHERE BIEN.id_categorie IN" + inWhereClause;
+            String selectQuery = "SELECT " + nomColonne + " FROM PERSONNE, BIEN JOIN APPARTIENT ON APPARTIENT.id_bien = BIEN.id_bien WHERE APPARTIENT.id_liste = "+ idliste+" AND BIEN.id_categorie IN" + inWhereClause;
 
             Cursor curCSV = db.rawQuery(selectQuery, null);
 
