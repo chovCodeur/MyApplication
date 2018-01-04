@@ -129,7 +129,7 @@ public class PersonneDAO {
             p.setAddress(c.getString(c.getColumnIndex(ADRESSE)));
             p.setMail(c.getString(c.getColumnIndex(MAIL)));
             p.setPhoneNumber(c.getString(c.getColumnIndex(TELEPHONE)));
-            p.setPhoneNumber(c.getString(c.getColumnIndex(NUMERO_CONTRAT)));
+            p.setNumero_contrat(c.getString(c.getColumnIndex(NUMERO_CONTRAT)));
 
             c.close();
         } else {
