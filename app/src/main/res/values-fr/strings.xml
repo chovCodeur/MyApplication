@@ -110,5 +110,6 @@
     <string name="mail_adress_hint">Adresse mail</string>
     <string name="postal_adress_hint">Adresse Postale</string>
     <string name="phone_hint">Téléphone</string>
+    <string name="contract_hint">Numéro de contrat</string>
 
 </resources>

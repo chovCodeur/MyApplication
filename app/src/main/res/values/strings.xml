@@ -110,5 +110,7 @@
     <string name="mail_adress_hint">Email</string>
     <string name="postal_adress_hint">Address</string>
     <string name="phone_hint">Phone</string>
+    <string name="contract_hint">Contract number</string>
+
 
 </resources>
