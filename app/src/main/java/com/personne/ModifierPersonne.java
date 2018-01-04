@@ -207,9 +207,9 @@ public class ModifierPersonne extends AppCompatActivity {
 
             // on modifie la personne ou on la crée (théoriquement, toujours une modification)
             if (dejaEnBase) {
-                personneDAO.modPersonne(1, nomPersonne, prenomPersonne, date, address, email, phoneNumber);
+                personneDAO.modPersonne(1, nomPersonne, prenomPersonne, date, address, email, phoneNumber, numero_Contrat);
             } else {
-                personneDAO.insertPersonne(nomPersonne, prenomPersonne, date, address, email, phoneNumber);
+                personneDAO.insertPersonne(nomPersonne, prenomPersonne, date, address, email, phoneNumber, numero_Contrat);
             }
             personneDAO.close();
             finish();
