@@ -2,6 +2,7 @@ package com.utils;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.application.inventaire.R;
 import com.joanzapata.pdfview.PDFView;
